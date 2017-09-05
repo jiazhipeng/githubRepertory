@@ -1,13 +1,13 @@
 
-¸öÈË´úÂë¿ò¼Ü²Ö¿â
-°üº¬£ºmybatis¸ù¾İ±í×Ô¶¯Éú³É´úÂë¹¤¾ß
-	  springMVC+mybatis+maven¾­µäÏîÄ¿
+ä¸ªäººä»£ç æ¡†æ¶ä»“åº“
+åŒ…å«ï¼šmybatisæ ¹æ®è¡¨è‡ªåŠ¨ç”Ÿæˆä»£ç å·¥å…·
+     springMVC+mybatis+mavenç»å…¸é¡¹ç›®
 
-Ö÷Òª¹±Ï×Õß
+ä¸»è¦è´¡çŒ®è€…
 
-ÉòÀí µ±µ±Íø shenli@dangdang.com
-ÍõÓîĞù µ±µ±Íø wangyuxuan@dangdang.com
-Âí½ğ¿­ º«¶¼ÒÂÉá majinkai@handu.com
-Dylan ¶ÀÁ¢¿ª·¢Õß dinguangx@163.com
-Kangfoo ¶ÀÁ¢¿ª·¢Õß
-ÓĞ¼¼ÊõÎÊÌâÇëÒÆ²½´Ë´¦ÌÖÂÛ http://hackerxian.blog.51cto.com/
+æ²ˆç† å½“å½“ç½‘ shenli@dangdang.com
+ç‹å®‡è½© å½“å½“ç½‘ wangyuxuan@dangdang.com
+é©¬é‡‘å‡¯ éŸ©éƒ½è¡£èˆ majinkai@handu.com
+Dylan ç‹¬ç«‹å¼€å‘è€… dinguangx@163.com
+Kangfoo ç‹¬ç«‹å¼€å‘è€…
+æœ‰æŠ€æœ¯é—®é¢˜è¯·ç§»æ­¥æ­¤å¤„è®¨è®º http://hackerxian.blog.51cto.com/
