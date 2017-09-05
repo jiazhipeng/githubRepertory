@@ -1,9 +1,9 @@
 
-##个人代码框架仓库
+个人代码框架仓库
 包含：mybatis根据表自动生成代码工具                                                                       
      springMVC+mybatis+maven经典项目
 
-##主要贡献者
+主要贡献者
 
 沈理 当当网 shenli@dangdang.com
 王宇轩 当当网 wangyuxuan@dangdang.com
