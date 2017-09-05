@@ -1,0 +1,17 @@
+package cn.cuco.annotation;
+
+import java.lang.annotation.*;
+
+/**
+ * Created by WangShuai on 2016/7/21.
+ */
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+public @interface API {
+
+    String value() default "--";
+
+    boolean auth() default true;
+}

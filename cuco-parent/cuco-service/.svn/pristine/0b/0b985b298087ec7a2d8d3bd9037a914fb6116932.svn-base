@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface CityMapper<T> extends BaseDao<T> {
+
+}

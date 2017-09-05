@@ -1,0 +1,71 @@
+package cn.cuco.service.member;
+
+
+import java.util.List;
+
+import cn.cuco.entity.MemberUsecarAddress;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户用车地址相关接口
+ * @author zc.du
+ */
+public interface MemberUsecarAddressService {
+	/** 
+    * @Description: 创建用户用车地址基础方法
+    * @param memberUsecarAddress
+    * @return MemberUsecarAddress
+    * @throws 
+    */
+    public MemberUsecarAddress createMemberUsecarAddress(MemberUsecarAddress memberUsecarAddress) throws Exception;
+    
+    /** 
+    * @Description: 修改用户用车地址基础方法
+    * @param memberUsecarAddress
+    * @return MemberUsecarAddress
+    * @throws 
+    */
+    public MemberUsecarAddress updateMemberUsecarAddress(MemberUsecarAddress memberUsecarAddress) throws Exception;
+    
+    /** 
+    * @Description: 删除用户用车地址基础方法
+    * @param memberUsecarAddress
+    * @return Integer
+    * @throws 
+    */
+    public Integer deleteMemberUsecarAddress(MemberUsecarAddress memberUsecarAddress) throws Exception;
+    
+    /** 
+     * @Description: 查询用户用车地址基础方法
+     * @param memberUsecarAddress
+     * @return MemberUsecarAddress
+     * @throws 
+     */
+    public MemberUsecarAddress getMemberUsecarAddress(MemberUsecarAddress memberUsecarAddress) throws Exception; 
+    
+    /** 
+     * @Description: 查询用户用车地址列表基础方法
+     * @param memberUsecarAddress
+     * @return List<MemberUsecarAddress>
+     * @throws 
+     */
+    public List<MemberUsecarAddress> getMemberUsecarAddressList(MemberUsecarAddress memberUsecarAddress) throws Exception;
+    
+    /** 
+     * @Description: 分页查询用户用车地址列表基础方法
+     * @param memberUsecarAddress
+     * @return PageResult<MemberUsecarAddress>
+     * @throws 
+     */
+    public PageResult<MemberUsecarAddress> getMemberUsecarAddressListByPage(MemberUsecarAddress memberUsecarAddress) throws Exception;
+
+    /** 
+     * @Description: 查询用户用车地址数量基础方法
+     * @param memberUsecarAddress
+     * @return Integer
+     * @throws 
+     */
+    public Integer getMemberUsecarAddressCount(MemberUsecarAddress memberUsecarAddress) throws Exception;
+
+
+}

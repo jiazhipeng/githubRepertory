@@ -1,0 +1,176 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.math.BigDecimal;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-03-06 15:56:34
+ */
+public class PreAuthorizedDebit implements Serializable {
+
+    private static final long serialVersionUID = 5701994170810113L;
+
+    private Long id;//主键ID
+
+    private Long memberId;//会员ID
+
+    private Long carId;//车辆ID
+
+    private String carPlateNum;//车牌号码
+
+    private Integer type;//冻结类型 0:用车押金；1:违章押金；
+
+    private Integer status;//状态: 0:冻结;1:解冻;默认0
+
+    private BigDecimal frozenAmount;//预授权金额(冻结金额)
+
+    private Date frozenTime;//冻结时间
+
+    private Date expectUnfreezeTime;//预计解冻时间
+
+    private BigDecimal unfreezeAmount;//解冻金额
+
+    private Date actualUnfreezeTime;//实际解冻时间
+
+    private Date created;//创建时间
+
+    private String remark;//备注
+
+    private Date lasttimeModify;//最后修改时间
+
+    private Long modifierId;//操作人id
+
+    private String modifier;//操作人姓名
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getMemberId() {
+        return this.memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public Long getCarId() {
+        return this.carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
+    }
+
+    public String getCarPlateNum() {
+        return this.carPlateNum;
+    }
+
+    public void setCarPlateNum(String carPlateNum) {
+        this.carPlateNum = carPlateNum;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public BigDecimal getFrozenAmount() {
+        return this.frozenAmount;
+    }
+
+    public void setFrozenAmount(BigDecimal frozenAmount) {
+        this.frozenAmount = frozenAmount;
+    }
+
+    public Date getFrozenTime() {
+        return this.frozenTime;
+    }
+
+    public void setFrozenTime(Date frozenTime) {
+        this.frozenTime = frozenTime;
+    }
+
+    public Date getExpectUnfreezeTime() {
+        return this.expectUnfreezeTime;
+    }
+
+    public void setExpectUnfreezeTime(Date expectUnfreezeTime) {
+        this.expectUnfreezeTime = expectUnfreezeTime;
+    }
+
+    public BigDecimal getUnfreezeAmount() {
+        return this.unfreezeAmount;
+    }
+
+    public void setUnfreezeAmount(BigDecimal unfreezeAmount) {
+        this.unfreezeAmount = unfreezeAmount;
+    }
+
+    public Date getActualUnfreezeTime() {
+        return this.actualUnfreezeTime;
+    }
+
+    public void setActualUnfreezeTime(Date actualUnfreezeTime) {
+        this.actualUnfreezeTime = actualUnfreezeTime;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getRemark() {
+        return this.remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getLasttimeModify() {
+        return this.lasttimeModify;
+    }
+
+    public void setLasttimeModify(Date lasttimeModify) {
+        this.lasttimeModify = lasttimeModify;
+    }
+
+    public Long getModifierId() {
+        return this.modifierId;
+    }
+
+    public void setModifierId(Long modifierId) {
+        this.modifierId = modifierId;
+    }
+
+    public String getModifier() {
+        return this.modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+}

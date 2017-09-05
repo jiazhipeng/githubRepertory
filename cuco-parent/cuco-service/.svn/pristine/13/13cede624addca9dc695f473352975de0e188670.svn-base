@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarOperatePlanMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.CarOperatePlan" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="car_id" property="carId" jdbcType="BIGINT" />
+    <result column="car_plate_num" property="carPlateNum" jdbcType="VARCHAR" />
+    <result column="car_type_id" property="carTypeId" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_mobile" property="memberMobile" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="td_member_usecar_id" property="tdMemberUsecarId" jdbcType="BIGINT" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.CarOperatePlan" >
+       select  count(1) 
+    from td_car_operate_plan  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carTypeId != null ">
+        and car_type_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "startTime != null ">
+        and start_time = #{startTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "endTime != null ">
+        and end_time = #{endTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "tdMemberUsecarId != null ">
+        and td_member_usecar_id = #{tdMemberUsecarId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarOperatePlan" >
+       select  <include refid="Base_Column_List" />
+    from td_car_operate_plan  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carTypeId != null ">
+        and car_type_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "startTime != null ">
+        and start_time = #{startTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "endTime != null ">
+        and end_time = #{endTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "tdMemberUsecarId != null ">
+        and td_member_usecar_id = #{tdMemberUsecarId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, car_id, car_plate_num, 
+      car_type_id, member_id, member_name, 
+      member_mobile, start_time, end_time, 
+      status, created, td_member_usecar_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarOperatePlan" >
+    select 
+      id, car_id, car_plate_num, 
+      car_type_id, member_id, member_name, 
+      member_mobile, start_time, end_time, 
+      status, created, td_member_usecar_id
+    from td_car_operate_plan where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.CarOperatePlan" >
+    delete from td_car_operate_plan where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_car_operate_plan where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.CarOperatePlan" >
+    insert into td_car_operate_plan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "carId != null ">
+         car_id,
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         car_plate_num,
+      </if>
+      <if test= "carTypeId != null ">
+         car_type_id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         member_mobile,
+      </if>
+      <if test= "startTime != null ">
+         start_time,
+      </if>
+      <if test= "endTime != null ">
+         end_time,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "tdMemberUsecarId != null ">
+         td_member_usecar_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carId != null ">
+         #{carId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "carTypeId != null ">
+         #{carTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "startTime != null ">
+         #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "endTime != null ">
+         #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "tdMemberUsecarId != null ">
+         #{tdMemberUsecarId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_car_operate_plan (
+         id,
+         car_id,
+         car_plate_num,
+         car_type_id,
+         member_id,
+         member_name,
+         member_mobile,
+         start_time,
+         end_time,
+         status,
+         created,
+         td_member_usecar_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.carId,jdbcType=BIGINT},
+         #{item.carPlateNum,jdbcType=VARCHAR},
+         #{item.carTypeId,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.memberMobile,jdbcType=VARCHAR},
+         #{item.startTime,jdbcType=TIMESTAMP},
+         #{item.endTime,jdbcType=TIMESTAMP},
+         #{item.status,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.tdMemberUsecarId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.CarOperatePlan" >
+    update td_car_operate_plan
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carId != null ">
+      car_id = #{carId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+      car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "carTypeId != null ">
+      car_type_id = #{carTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+      member_mobile = #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "startTime != null ">
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "endTime != null ">
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "tdMemberUsecarId != null ">
+      td_member_usecar_id = #{tdMemberUsecarId,jdbcType=BIGINT}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

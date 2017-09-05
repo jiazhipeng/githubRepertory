@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface SecurityIntervalMapper<T> extends BaseDao<T> {
+
+}

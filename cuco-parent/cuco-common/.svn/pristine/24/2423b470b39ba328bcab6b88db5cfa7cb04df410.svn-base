@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Implementation-Title: cuco-common
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: leic
+Implementation-Vendor-Id: cn.cuco
+Build-Jdk: 1.8.0_102
+Created-By: Maven Integration for Eclipse
+

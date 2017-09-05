@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>推荐好友</title>
+    <link href="../../css/user.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="sharePage">
+    <p class="title">
+        <em></em>
+        <span>邀请好友获得奖励！</span>
+    </p>
+    <div class="shareInfo">
+        <span>已邀请：<em>3</em>人</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>获得：<em>￥15,000</em></span>
+    </div>
+    <div class="codeBox" style="display: none"> <!--登录之后显示自己的二维码-->
+        <img src="../../images/code.png">
+        <p>您的专属邀请二维码</p>
+    </div>
+    <div class="codeBox"> <!--没有登录默认显示的二维码-->
+        <img src="../../images/code_vague.png">
+        <p>登录查看您的专属二维码</p>
+    </div>
+    <div class="info">
+        <p>• 邀请好友扫码关注公众号</p>
+        <p>• 长按保存图片，发给好友或群友关注</p>
+        <p>• 点击右上角，告诉更多朋友<br>&nbsp;&nbsp;具体文案待确认</p>
+    </div>
+</div>
+</body>
+</html>

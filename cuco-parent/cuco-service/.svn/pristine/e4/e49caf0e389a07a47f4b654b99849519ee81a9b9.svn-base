@@ -1,0 +1,63 @@
+package cn.cuco.service.basic.carport.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.BasicCarTypeMapper;
+import cn.cuco.entity.BasicCarType;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.carport.CarTypeService;
+
+@Service(value = "basicCarTypeService")
+public class CarTypeServiceImpl implements CarTypeService {
+
+    @Autowired
+    private BasicCarTypeMapper<BasicCarType> basicCarTypeMapper;
+
+	@Override
+	public BasicCarType createBasicCarType(BasicCarType basicCarType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BasicCarType updateBasicCarType(BasicCarType basicCarType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BasicCarType getBasicCarTypeById(BasicCarType basicCarType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<BasicCarType> getBasicCarTypeByCondition(BasicCarType basicCarType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BasicCarType> getBasicCarTypeList(BasicCarType basicCarType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BasicCarType updateBasicCarTypeShelves(BasicCarType basicCarType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BasicCarType updateBasicCarTypeTheShelves(BasicCarType basicCarType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+  
+
+}

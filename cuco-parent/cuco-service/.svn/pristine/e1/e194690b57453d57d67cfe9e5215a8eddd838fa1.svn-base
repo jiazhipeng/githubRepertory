@@ -1,0 +1,104 @@
+package cn.cuco.dao;
+
+import java.util.List;
+
+import cn.cuco.entity.ButlerTask;
+
+public interface ButlerTaskMapper<T> extends BaseDao<T> {
+
+	/**
+	* @Title: selectByPage 
+	* @Description: 分页
+	* @author huanghua
+	* @param btlerTask
+	* @return
+	* @return List<ButlerTask>
+	 */
+	public List<ButlerTask> selectByPage(ButlerTask btlerTask);
+	
+	/**
+	* @Title: selectCountByPage 
+	* @Description: 所有数量
+	* @author huanghua
+	* @param btlerTask
+	* @return
+	* @return Integer
+	 */
+	public Integer selectCountByPage(ButlerTask btlerTask);
+	
+	
+	/**
+	* @Title: selectForWaitDealWithByPage 
+	* @Description: 待处理分页
+	* @author huanghua
+	* @param btlerTask
+	* @return List<ButlerTask>
+	 */
+	public List<ButlerTask> selectForWaitDealWithByPage(ButlerTask btlerTask);
+	
+	/**
+	* @Title: selectCountForWaitDealWithByPage 
+	* @Description: 待处理数量
+	* @author huanghua
+	* @param btlerTask
+	* @return Integer
+	 */
+	public Integer selectCountForWaitDealWithByPage(ButlerTask btlerTask);
+	
+	/**
+	* @Title: selectForProcessingByPage 
+	* @Description: 处理中分页
+	* @author huanghua
+	* @param btlerTask
+	* @return List<ButlerTask>
+	 */
+	public List<ButlerTask> selectForProcessingByPage(ButlerTask btlerTask);
+	
+	/**
+	* @Title: selectCountForProcessingByPage 
+	* @Description: 处理中数量
+	* @author huanghua
+	* @param btlerTask
+	* @return Integer
+	 */
+	public Integer selectCountForProcessingByPage(ButlerTask btlerTask);
+	
+	/**
+	* @Title: selectForCompleteByPage 
+	* @Description: 已结束分页
+	* @author huanghua
+	* @param btlerTask
+	* @return
+	* @return List<ButlerTask>
+	 */
+	public List<ButlerTask> selectForCompleteByPage(ButlerTask btlerTask);
+	
+	/**
+	* @Title: selectCountForCompleteByPage 
+	* @Description:  已结束数量
+	* @author huanghua
+	* @param btlerTask
+	* @return Integer
+	 */
+	public Integer selectCountForCompleteByPage(ButlerTask btlerTask);
+	
+	/**
+	* @Title: selectForNotComplete 
+	* @Description: 未完成任务
+	* @author huanghua
+	* @param btlerTask
+	* @return
+	* @return List<ButlerTask>
+	 */
+	public List<ButlerTask> selectForNotComplete(ButlerTask btlerTask);
+	
+	/**
+	* @Title: getTaskNumByDate 
+	* @Description: 按时间统计执行任务
+	* @author huanghua
+	* @param btlerTask
+	* @return
+	* @return Integer
+	 */
+	public Integer getTaskNumByDate(ButlerTask btlerTask);
+}

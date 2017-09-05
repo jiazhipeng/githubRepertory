@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<title>登录</title>
+	<link href="../css/login.css" rel="stylesheet" type="text/css" />
+</head>
+	<body>
+		<img src="../images/loglogo.png" class="logo">
+		<div class="section">
+			<ul class="logBox">
+				<li>
+					<input type="tel" placeholder="手机号码" >
+					<a href="javascript:;" class="codeBtn unableCode">验证</a><!--可点击状态去掉class=unableCode-->
+				</li>
+				<li>
+					 <input type="tel" placeholder="验证码">
+				</li>
+			</ul>
+			<a href="service/service.html" class="button greyBtn">登录</a><!--可点击状态去掉greyBtn-->
+			<span class="info">登录-即表示您同意<em>《极车公社会员协议》</em></span>
+		</div>
+	</body>
+</html>

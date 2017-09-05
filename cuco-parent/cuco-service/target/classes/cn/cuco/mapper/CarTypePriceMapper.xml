@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarTypePriceMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.CarTypePrice" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="car_type_id" property="carTypeId" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="km_one" property="kmOne" jdbcType="DECIMAL" />
+    <result column="km_two" property="kmTwo" jdbcType="DECIMAL" />
+    <result column="km_three" property="kmThree" jdbcType="DECIMAL" />
+    <result column="km_four" property="kmFour" jdbcType="DECIMAL" />
+    <result column="km_five" property="kmFive" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.CarTypePrice" >
+       select  count(1) 
+    from tc_car_type_price  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carTypeId != null ">
+        and car_type_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cityId != null ">
+        and city_id = #{cityId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+        and city_code = #{cityCode,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+        and city_name = #{cityName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "kmOne != null ">
+        and km_one = #{kmOne,jdbcType=DECIMAL}      
+      </if>
+      <if test= "kmTwo != null ">
+        and km_two = #{kmTwo,jdbcType=DECIMAL}      
+      </if>
+      <if test= "kmThree != null ">
+        and km_three = #{kmThree,jdbcType=DECIMAL}      
+      </if>
+      <if test= "kmFour != null ">
+        and km_four = #{kmFour,jdbcType=DECIMAL}      
+      </if>
+      <if test= "kmFive != null ">
+        and km_five = #{kmFive,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarTypePrice" >
+       select  <include refid="Base_Column_List" />
+    from tc_car_type_price  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carTypeId != null ">
+        and car_type_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cityId != null ">
+        and city_id = #{cityId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+        and city_code = #{cityCode,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+        and city_name = #{cityName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "kmOne != null ">
+        and km_one = #{kmOne,jdbcType=DECIMAL}      
+      </if>
+      <if test= "kmTwo != null ">
+        and km_two = #{kmTwo,jdbcType=DECIMAL}      
+      </if>
+      <if test= "kmThree != null ">
+        and km_three = #{kmThree,jdbcType=DECIMAL}      
+      </if>
+      <if test= "kmFour != null ">
+        and km_four = #{kmFour,jdbcType=DECIMAL}      
+      </if>
+      <if test= "kmFive != null ">
+        and km_five = #{kmFive,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, car_type_id, city_id, 
+      city_code, city_name, km_one, 
+      km_two, km_three, km_four, 
+      km_five, created
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarTypePrice" >
+    select 
+      id, car_type_id, city_id, 
+      city_code, city_name, km_one, 
+      km_two, km_three, km_four, 
+      km_five, created
+    from tc_car_type_price where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.CarTypePrice" >
+    delete from tc_car_type_price where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tc_car_type_price where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.CarTypePrice" >
+    insert into tc_car_type_price
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "carTypeId != null ">
+         car_type_id,
+      </if>
+      <if test= "cityId != null ">
+         city_id,
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         city_code,
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         city_name,
+      </if>
+      <if test= "kmOne != null ">
+         km_one,
+      </if>
+      <if test= "kmTwo != null ">
+         km_two,
+      </if>
+      <if test= "kmThree != null ">
+         km_three,
+      </if>
+      <if test= "kmFour != null ">
+         km_four,
+      </if>
+      <if test= "kmFive != null ">
+         km_five,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carTypeId != null ">
+         #{carTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "cityId != null ">
+         #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "kmOne != null ">
+         #{kmOne,jdbcType=DECIMAL},
+      </if>
+      <if test= "kmTwo != null ">
+         #{kmTwo,jdbcType=DECIMAL},
+      </if>
+      <if test= "kmThree != null ">
+         #{kmThree,jdbcType=DECIMAL},
+      </if>
+      <if test= "kmFour != null ">
+         #{kmFour,jdbcType=DECIMAL},
+      </if>
+      <if test= "kmFive != null ">
+         #{kmFive,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tc_car_type_price (
+         id,
+         car_type_id,
+         city_id,
+         city_code,
+         city_name,
+         km_one,
+         km_two,
+         km_three,
+         km_four,
+         km_five,
+         created)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.carTypeId,jdbcType=BIGINT},
+         #{item.cityId,jdbcType=BIGINT},
+         #{item.cityCode,jdbcType=VARCHAR},
+         #{item.cityName,jdbcType=VARCHAR},
+         #{item.kmOne,jdbcType=DECIMAL},
+         #{item.kmTwo,jdbcType=DECIMAL},
+         #{item.kmThree,jdbcType=DECIMAL},
+         #{item.kmFour,jdbcType=DECIMAL},
+         #{item.kmFive,jdbcType=DECIMAL},
+         #{item.created,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.CarTypePrice" >
+    update tc_car_type_price
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carTypeId != null ">
+      car_type_id = #{carTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "cityId != null ">
+      city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+      city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "kmOne != null ">
+      km_one = #{kmOne,jdbcType=DECIMAL},
+      </if>
+      <if test= "kmTwo != null ">
+      km_two = #{kmTwo,jdbcType=DECIMAL},
+      </if>
+      <if test= "kmThree != null ">
+      km_three = #{kmThree,jdbcType=DECIMAL},
+      </if>
+      <if test= "kmFour != null ">
+      km_four = #{kmFour,jdbcType=DECIMAL},
+      </if>
+      <if test= "kmFive != null ">
+      km_five = #{kmFive,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarTypeMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.CarType" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="car_type" property="carType" jdbcType="VARCHAR" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="tank_volume" property="tankVolume" jdbcType="DECIMAL" />
+    <result column="basic_cost" property="basicCost" jdbcType="DECIMAL" />
+    <result column="deposit" property="deposit" jdbcType="DECIMAL" />
+    <result column="insurance_unlock" property="insuranceUnlock" jdbcType="DECIMAL" />
+    <result column="insurance_not_unlock" property="insuranceNotUnlock" jdbcType="DECIMAL" />
+    <result column="is_restriction" property="isRestriction" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.CarType" >
+       select  count(1) 
+    from tc_car_type  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "brand != null and brand != '' ">
+        and brand = #{brand,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carType != null and carType != '' ">
+        and car_type = #{carType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+        and image_url = #{imageUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "tankVolume != null ">
+        and tank_volume = #{tankVolume,jdbcType=DECIMAL}      
+      </if>
+      <if test= "basicCost != null ">
+        and basic_cost = #{basicCost,jdbcType=DECIMAL}      
+      </if>
+      <if test= "deposit != null ">
+        and deposit = #{deposit,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insuranceUnlock != null ">
+        and insurance_unlock = #{insuranceUnlock,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insuranceNotUnlock != null ">
+        and insurance_not_unlock = #{insuranceNotUnlock,jdbcType=DECIMAL}      
+      </if>
+      <if test= "isRestriction != null ">
+        and is_restriction = #{isRestriction,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarType" >
+       select  <include refid="Base_Column_List" />
+    from tc_car_type  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "brand != null and brand != '' ">
+        and brand = #{brand,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carType != null and carType != '' ">
+        and car_type = #{carType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+        and image_url = #{imageUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "tankVolume != null ">
+        and tank_volume = #{tankVolume,jdbcType=DECIMAL}      
+      </if>
+      <if test= "basicCost != null ">
+        and basic_cost = #{basicCost,jdbcType=DECIMAL}      
+      </if>
+       <if test= "deposit != null ">
+        and deposit = #{deposit,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insuranceUnlock != null ">
+        and insurance_unlock = #{insuranceUnlock,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insuranceNotUnlock != null ">
+        and insurance_not_unlock = #{insuranceNotUnlock,jdbcType=DECIMAL}      
+      </if>
+      <if test= "isRestriction != null ">
+        and is_restriction = #{isRestriction,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, brand, car_type, 
+      image_url, tank_volume, basic_cost, deposit,
+      insurance_unlock, insurance_not_unlock, is_restriction, 
+      created, lasttime_modify, modifier, 
+      modifier_id, valid
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarType" >
+    select 
+      id, brand, car_type, 
+      image_url, tank_volume, basic_cost, deposit,
+      insurance_unlock, insurance_not_unlock, is_restriction, 
+      created, lasttime_modify, modifier, 
+      modifier_id, valid
+    from tc_car_type where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.CarType" >
+    delete from tc_car_type where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tc_car_type where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.CarType" >
+    insert into tc_car_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "brand != null and brand != '' ">
+         brand,
+      </if>
+      <if test= "carType != null and carType != '' ">
+         car_type,
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+         image_url,
+      </if>
+      <if test= "tankVolume != null ">
+         tank_volume,
+      </if>
+      <if test= "basicCost != null ">
+         basic_cost,
+      </if>
+        <if test= "deposit != null ">
+         deposit,
+      </if>
+      <if test= "insuranceUnlock != null ">
+         insurance_unlock,
+      </if>
+      <if test= "insuranceNotUnlock != null ">
+         insurance_not_unlock,
+      </if>
+      <if test= "isRestriction != null ">
+         is_restriction,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+      <if test= "valid != null ">
+         valid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "brand != null and brand != '' ">
+         #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test= "carType != null and carType != '' ">
+         #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+         #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "tankVolume != null ">
+         #{tankVolume,jdbcType=DECIMAL},
+      </if>
+      <if test= "basicCost != null ">
+         #{basicCost,jdbcType=DECIMAL},
+      </if>
+      <if test= "deposit != null ">
+         #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test= "insuranceUnlock != null ">
+         #{insuranceUnlock,jdbcType=DECIMAL},
+      </if>
+      <if test= "insuranceNotUnlock != null ">
+         #{insuranceNotUnlock,jdbcType=DECIMAL},
+      </if>
+      <if test= "isRestriction != null ">
+         #{isRestriction,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "valid != null ">
+         #{valid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tc_car_type (
+         id,
+         brand,
+         car_type,
+         image_url,
+         tank_volume,
+         basic_cost,
+         deposit,
+         insurance_unlock,
+         insurance_not_unlock,
+         is_restriction,
+         created,
+         lasttime_modify,
+         modifier,
+         modifier_id,
+         valid)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.brand,jdbcType=VARCHAR},
+         #{item.carType,jdbcType=VARCHAR},
+         #{item.imageUrl,jdbcType=VARCHAR},
+         #{item.tankVolume,jdbcType=DECIMAL},
+         #{item.basicCost,jdbcType=DECIMAL},
+         #{item.deposit,jdbcType=DECIMAL},
+         #{item.insuranceUnlock,jdbcType=DECIMAL},
+         #{item.insuranceNotUnlock,jdbcType=DECIMAL},
+         #{item.isRestriction,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.modifierId,jdbcType=BIGINT},
+         #{item.valid,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.CarType" >
+    update tc_car_type
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "brand != null and brand != '' ">
+      brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test= "carType != null and carType != '' ">
+      car_type = #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "tankVolume != null ">
+      tank_volume = #{tankVolume,jdbcType=DECIMAL},
+      </if>
+      <if test= "basicCost != null ">
+      basic_cost = #{basicCost,jdbcType=DECIMAL},
+      </if>
+      <if test= "deposit != null ">
+      deposit = #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test= "insuranceUnlock != null ">
+      insurance_unlock = #{insuranceUnlock,jdbcType=DECIMAL},
+      </if>
+      <if test= "insuranceNotUnlock != null ">
+      insurance_not_unlock = #{insuranceNotUnlock,jdbcType=DECIMAL},
+      </if>
+      <if test= "isRestriction != null ">
+      is_restriction = #{isRestriction,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "valid != null ">
+      valid = #{valid,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

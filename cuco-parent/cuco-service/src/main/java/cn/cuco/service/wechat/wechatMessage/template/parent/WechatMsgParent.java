@@ -1,0 +1,15 @@
+package cn.cuco.service.wechat.wechatMessage.template.parent;
+
+/**
+ * 仔细考虑这边实体 如何能兼容 所有的业务 构造wechat消息模板
+ * 传入那些？ 订单id,车辆id,任务id,用车id,用户openId可反查用户,需考虑
+* @ClassName: WechatMsgParent 
+* @Description: wechat推送消息内容的业务实体
+* @author jiaxiaoxian
+* @date 2017年2月21日 上午11:14:15
+ */
+public class WechatMsgParent {
+
+	
+	
+}

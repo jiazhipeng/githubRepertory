@@ -1,0 +1,63 @@
+package cn.cuco.service.basic.business;
+
+
+import cn.cuco.entity.BasicSupplier;
+import cn.cuco.page.PageResult;
+
+import java.util.List;
+
+/**
+* @ClassName: BasicSupplierService 
+* @Description: 供应商接口
+* @author huanghua
+* @date 2017年2月21日 下午2:32:06
+ */
+public interface SupplierService {
+   
+	/**
+	* @Title: createBasicSupplier 
+	* @Description: 创建供应商
+	* @param basicSupplier
+	* @return BasicSupplier
+	* @throws
+	 */
+    public BasicSupplier createBasicSupplier(BasicSupplier basicSupplier);
+
+    /**
+    * @Title: updateBasicSupplier 
+    * @Description: 修改供应商信息
+    * @param basicSupplier
+    * @return BasicSupplier
+    * @throws
+     */
+    public BasicSupplier updateBasicSupplier(BasicSupplier basicSupplier);
+
+    /**
+    * @Title: getBasicSupplierById 
+    * @Description: 取供应商详情
+    * @param basicSupplier
+    * @return BasicSupplier
+    * @throws
+     */
+    public BasicSupplier getBasicSupplierById(BasicSupplier basicSupplier);
+
+    /**
+    * @Title: getBasicSupplierByCondition 
+    * @Description: 分页取供应商
+    * @param basicSupplier
+    * @return List<BasicSupplier>
+    * @throws
+     */
+    public PageResult<BasicSupplier> getBasicSupplierByCondition(BasicSupplier basicSupplier);
+
+    /**
+    * @Title: getBasicSupplierList 
+    * @Description: 取供应商集合
+    * @param basicSupplier
+    * @return List<BasicSupplier>
+    * @throws
+     */
+    public List<BasicSupplier> getBasicSupplierList(BasicSupplier basicSupplier);
+
+
+}

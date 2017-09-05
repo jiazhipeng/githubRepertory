@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.CouponInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.CouponInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="coupon_num" property="couponNum" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="marketing_id" property="marketingId" jdbcType="BIGINT" />
+    <result column="marketing_name" property="marketingName" jdbcType="VARCHAR" />
+    <result column="get_time" property="getTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="out_time" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="coupon_id" property="couponId" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="coupon_from" property="couponFrom" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="coupon_type" property="couponType" jdbcType="INTEGER" />
+    <result column="used_time" property="usedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+ <!-- 根据用户ID获取可使用优惠券列表(状态为待使用，审核中的券) -->
+ <select id="getCouponInfoListByEnable" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CouponInfo" >
+ select 
+    <include refid="Base_Column_List" />
+    from td_coupon_info a where a.valid = 1 
+	<if test="memberId!=null">
+		  and a.member_id  =#{memberId,jdbcType=VARCHAR}
+	</if>
+	order by a.get_time desc
+ </select>
+ 
+  <select id="getCouponInfoByMemberIdAndItemId" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CouponInfo" >
+ select 
+    <include refid="Base_Column_List" />
+    from td_coupon_info t WHERE t.coupon_id in(
+		SELECT DISTINCT r.coupon_id from td_coupon_detail r WHERE coupon_id in(
+	SELECT
+	c.coupon_id
+	FROM
+	td_coupon_info c
+	)AND r.item_id = #{itemId,jdbcType=BIGINT}
+	) 
+    and status = #{status,jdbcType=INTEGER}      
+    and member_id = #{memberId,jdbcType=BIGINT}      
+    and valid = #{valid,jdbcType=INTEGER}      
+    and coupon_type = #{couponType,jdbcType=INTEGER}      
+ </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.CouponInfo" >
+       select  count(1) 
+    from td_coupon_info  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "couponNum != null and couponNum != '' ">
+        and coupon_num = #{couponNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "marketingId != null ">
+        and marketing_id = #{marketingId,jdbcType=BIGINT}      
+      </if>
+      <if test= "marketingName != null and marketingName != '' ">
+        and marketing_name = #{marketingName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "getTime != null ">
+        and get_time = #{getTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "outTime != null ">
+        and out_time = #{outTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "couponId != null ">
+        and coupon_id = #{couponId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "couponFrom != null ">
+        and coupon_from = #{couponFrom,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+      <if test= "couponName != null and couponName != '' ">
+        and coupon_name = #{couponName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "price != null ">
+        and price = #{price,jdbcType=DECIMAL}      
+      </if>
+      <if test= "couponType != null ">
+        and coupon_type = #{couponType,jdbcType=INTEGER}      
+      </if>
+      <if test= "usedTime != null ">
+        and used_time = #{usedTime,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CouponInfo" >
+       select  <include refid="Base_Column_List" />
+    from td_coupon_info  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "couponNum != null and couponNum != '' ">
+        and coupon_num = #{couponNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "marketingId != null ">
+        and marketing_id = #{marketingId,jdbcType=BIGINT}      
+      </if>
+      <if test= "marketingName != null and marketingName != '' ">
+        and marketing_name = #{marketingName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "getTime != null ">
+        and get_time = #{getTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "outTime != null ">
+        and out_time = #{outTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "couponId != null ">
+        and coupon_id = #{couponId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "couponFrom != null ">
+        and coupon_from = #{couponFrom,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+      <if test= "couponName != null and couponName != '' ">
+        and coupon_name = #{couponName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "price != null ">
+        and price = #{price,jdbcType=DECIMAL}      
+      </if>
+      <if test= "couponType != null ">
+        and coupon_type = #{couponType,jdbcType=INTEGER}      
+      </if>
+      <if test= "usedTime != null ">
+        and used_time = #{usedTime,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  		<if test="orderByOutTime== 'desc' ">
+  			order by out_time desc
+  		</if>
+  		<if test="orderByOutTime== 'asc' ">
+  			order by out_time asc
+  		</if>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, coupon_num, status, 
+      marketing_id, marketing_name, get_time, 
+      remark, out_time, coupon_id, 
+      member_id, member_name, modifier_id, 
+      modifier, lasttime_modify, coupon_from, 
+      created, valid, coupon_name, 
+      price, coupon_type, used_time
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CouponInfo" >
+    select 
+      id, coupon_num, status, 
+      marketing_id, marketing_name, get_time, 
+      remark, out_time, coupon_id, 
+      member_id, member_name, modifier_id, 
+      modifier, lasttime_modify, coupon_from, 
+      created, valid, coupon_name, 
+      price, coupon_type, used_time
+    from td_coupon_info where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.CouponInfo" >
+    delete from td_coupon_info where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_coupon_info where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.CouponInfo" >
+    insert into td_coupon_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "couponNum != null and couponNum != '' ">
+         coupon_num,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "marketingId != null ">
+         marketing_id,
+      </if>
+      <if test= "marketingName != null and marketingName != '' ">
+         marketing_name,
+      </if>
+      <if test= "getTime != null ">
+         get_time,
+      </if>
+      <if test= "remark != null and remark != '' ">
+         remark,
+      </if>
+      <if test= "outTime != null ">
+         out_time,
+      </if>
+      <if test= "couponId != null ">
+         coupon_id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "couponFrom != null ">
+         coupon_from,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "valid != null ">
+         valid,
+      </if>
+      <if test= "couponName != null and couponName != '' ">
+         coupon_name,
+      </if>
+      <if test= "price != null ">
+         price,
+      </if>
+      <if test= "couponType != null ">
+         coupon_type,
+      </if>
+      <if test= "usedTime != null ">
+         used_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "couponNum != null and couponNum != '' ">
+         #{couponNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "marketingId != null ">
+         #{marketingId,jdbcType=BIGINT},
+      </if>
+      <if test= "marketingName != null and marketingName != '' ">
+         #{marketingName,jdbcType=VARCHAR},
+      </if>
+      <if test= "getTime != null ">
+         #{getTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remark != null and remark != '' ">
+         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "outTime != null ">
+         #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "couponId != null ">
+         #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "couponFrom != null ">
+         #{couponFrom,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "valid != null ">
+         #{valid,jdbcType=INTEGER},
+      </if>
+      <if test= "couponName != null and couponName != '' ">
+         #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test= "price != null ">
+         #{price,jdbcType=DECIMAL},
+      </if>
+      <if test= "couponType != null ">
+         #{couponType,jdbcType=INTEGER},
+      </if>
+      <if test= "usedTime != null ">
+         #{usedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_coupon_info (
+         id,
+         coupon_num,
+         status,
+         marketing_id,
+         marketing_name,
+         get_time,
+         remark,
+         out_time,
+         coupon_id,
+         member_id,
+         member_name,
+         modifier_id,
+         modifier,
+         lasttime_modify,
+         coupon_from,
+         created,
+         valid,
+         coupon_name,
+         price,
+         coupon_type,
+         used_time)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.couponNum,jdbcType=VARCHAR},
+         #{item.status,jdbcType=INTEGER},
+         #{item.marketingId,jdbcType=BIGINT},
+         #{item.marketingName,jdbcType=VARCHAR},
+         #{item.getTime,jdbcType=TIMESTAMP},
+         #{item.remark,jdbcType=VARCHAR},
+         #{item.outTime,jdbcType=TIMESTAMP},
+         #{item.couponId,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.modifierId,jdbcType=VARCHAR},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.couponFrom,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.valid,jdbcType=INTEGER},
+         #{item.couponName,jdbcType=VARCHAR},
+         #{item.price,jdbcType=DECIMAL},
+         #{item.couponType,jdbcType=INTEGER},
+         #{item.usedTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.CouponInfo" >
+    update td_coupon_info
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "couponNum != null and couponNum != '' ">
+      coupon_num = #{couponNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "marketingId != null ">
+      marketing_id = #{marketingId,jdbcType=BIGINT},
+      </if>
+      <if test= "marketingName != null and marketingName != '' ">
+      marketing_name = #{marketingName,jdbcType=VARCHAR},
+      </if>
+      <if test= "getTime != null ">
+      get_time = #{getTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remark != null and remark != '' ">
+      remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "outTime != null ">
+      out_time = #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "couponId != null ">
+      coupon_id = #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "couponFrom != null ">
+      coupon_from = #{couponFrom,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "valid != null ">
+      valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test= "couponName != null and couponName != '' ">
+      coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test= "price != null ">
+      price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test= "couponType != null ">
+      coupon_type = #{couponType,jdbcType=INTEGER},
+      </if>
+      <if test= "usedTime != null ">
+      used_time = #{usedTime,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

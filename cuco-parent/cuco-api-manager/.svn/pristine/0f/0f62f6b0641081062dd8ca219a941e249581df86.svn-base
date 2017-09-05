@@ -1,0 +1,396 @@
+package cn.cuco.controller.manager.task;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.cuco.annotation.API;
+import cn.cuco.entity.ButlerTask;
+import cn.cuco.service.task.ButlerTaskService;
+
+/**
+ * 
+ * @ClassName: ButlerTaskController 
+ * @Description: 任务
+ * @author: wangchuntao 
+ * @date: 2017年2月22日 下午2:05:27
+ */
+@RestController
+public class ButlerTaskController {
+	protected Logger logger = Logger.getLogger(this.getClass());
+    @Autowired
+    private ButlerTaskService butlerTaskService;
+    
+    /**
+     * 
+     * @Title: findButlerTaskListByPage 
+     * @Description: 查询任务集合(根据待处理、处理中、已结束进行查询)
+     * @author: wangchuntao 
+     * @param butlerTask
+     * @return Object
+     * @date: 2017年2月22日 下午2:28:24
+     */
+    @API(value="任务列表")
+    @RequestMapping(value = "/butlerTask/getButlerTaskListByPage",method = RequestMethod.POST)
+    public Object getButlerTaskListByPage(@RequestBody ButlerTask butlerTask){
+//        return butlerTaskService.getButlerTaskListByPageForWaitDealWith(butlerTask);
+        return null;
+    }
+    
+    
+    
+ 	/** 
+ 	 * @Title: getCustomerAndOperaterList 
+ 	 * @Description: 负责人列表
+ 	 * @author: wangchuntao 
+ 	 * @return 
+ 	 * @return Object
+ 	 * @date: 2017年2月22日 下午4:47:29
+ 	 */
+ 	 @API("负责人列表")
+     @RequestMapping(value = "/butlerTask/getCustomerAndOperaterList",method = RequestMethod.GET)
+     public Object getCustomerAndOperaterList(){
+ 		return null;
+ 	 }
+    /**
+     * 
+     * @Title: findButlerTaskDetail 
+     * @Description: 任务详细
+     * @author: wangchuntao 
+     * @param butlerTask
+     * @return Object
+     * @date: 2017年2月22日 下午2:39:48
+     */
+    @API(value="任务详情")
+    @RequestMapping(value = "/butlerTask/getButlerTaskDetail",method = RequestMethod.POST)
+    public Object getButlerTaskDetail(@RequestBody ButlerTask butlerTask){
+//        return butlerTaskService.getButlerTaskListByPageForWaitDealWith(butlerTask);
+    	return null;
+    }
+    
+    
+    
+    
+    
+   /**
+    * @Title: getCustomerList 
+    * @Description: 客服列表
+    * @author: wangchuntao 
+    * @param id 任务id
+    * @return Object
+    * @date: 2017年2月22日 下午2:53:07
+    */
+	@API("转派客服列表")
+    @RequestMapping(value = "/butlerTask/getCustomerList",method = RequestMethod.GET)
+    public Object getCustomerList(Long id){
+		return null;
+		/*ParamVerifyUtil.paramNotNull(id, "转派管家，任务ID不能为空");
+		ButlerTask butlerTask = new ButlerTask();
+		butlerTask.setId(id);
+		butlerTask = butlerTaskService.getTaskByID(butlerTask);
+		List<Member> customerList = memberService.getMembersByRole(MemberRole.customer);
+		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+		if(customerList.size()>0){
+			for(Member status : customerList){
+				if(StringUtils.isNoneBlank(butlerTask.getCustomerId()) && butlerTask.getCustomerId().equals(status.getSysuserId())){
+					continue;
+				}
+				Map<String,Object> map = new HashMap<String,Object>();
+				map.put("index",status.getId());
+				map.put("name",status.getSysuserName());
+				list.add(map);
+			}
+		}
+		return list;*/
+    }
+	
+	
+	/**
+	 * 
+	 * @Title: getOperaterList 
+	 * @Description: 管家列表
+	 * @author: wangchuntao 
+	 * @return Object
+	 * @date: 2017年2月22日 下午2:57:51
+	 */
+	@API("管家列表")
+    @RequestMapping(value = "/butlerTask/getOperaterList",method = RequestMethod.GET)
+    public Object getOperaterList(){
+		return null;
+	/*	List<Member> list = memberService.getMembersByRole(MemberRole.butler);
+		List<Map<String,Object>> listMap = new ArrayList<Map<String,Object>>();
+		if(!Collections3.isEmpty(list)){
+			for (Member member : list) {
+				Map<String,Object> map = new HashMap<String,Object>();
+				map.put("index",member.getId());
+				map.put("name",member.getSysuserName());
+				map.put("system_id",member.getSysuserId());
+				listMap.add(map);
+			}
+		}
+		return listMap;*/
+    }
+	
+	/**
+	 * 
+	 * @Title: updateCustomer 
+	 * @Description: 转派客服
+	 * @author: wangchuntao 
+	 * @param butlerTask
+	 * @return Object
+	 * @date: 2017年2月22日 下午2:58:45
+	 */
+	@API("转派客服")
+    @RequestMapping(value = "/butlerTask/updateCustomer",method = RequestMethod.POST)
+    public Object updateCustomer(@RequestBody ButlerTask butlerTask){
+		return null;
+		/*ParamVerifyUtil.paramNotNull(butlerTask);
+		ParamVerifyUtil.paramNotNull(butlerTask.getId(), "转派客服，任务ID不能为空");
+		ParamVerifyUtil.paramNotNull(butlerTask.getCustomerId(), "转派客服，客服ID不能为空");
+		butlerTask = this.setModify(butlerTask);
+		ButlerTask oldTask = butlerTaskService.getTaskByID(butlerTask);
+		if(oldTask.getType().intValue() == ButlerTaskType.CAROPERATESTATUS_SENDCAR.getIndex().intValue()){
+			return butlerTaskService.editSendCarTaskCustomer(butlerTask);
+		}else if(oldTask.getType().intValue() == ButlerTaskType.CAROPERATESTATUS_TASKCAR.getIndex().intValue()){
+			return butlerTaskService.updateGetCarButlerTaskByChangeCustomer(butlerTask);
+		}
+		return null;*/
+
+    }
+	
+	/**
+	 * 
+	 * @Title: updateButler 
+	 * @Description: 转派管家
+	 * @author: wangchuntao 
+	 * @param butlerTask
+	 * @return Object
+	 * @date: 2017年2月22日 下午2:59:00
+	 */
+	@API("转派管家")
+    @RequestMapping(value = "/butlerTask/updateButler",method = RequestMethod.POST)
+    public Object updateButler(@RequestBody ButlerTask butlerTask) {
+		return null;
+		/*ParamVerifyUtil.paramNotNull(butlerTask);
+		ParamVerifyUtil.paramNotNull(butlerTask.getId(), "转派管家，任务ID不能为空");
+		ParamVerifyUtil.paramNotNull(butlerTask.getOperaterId(), "转派管家，管家ID不能为空");
+		butlerTask = this.setModify(butlerTask);
+		ButlerTask oldTask = butlerTaskService.getTaskByID(butlerTask);
+		if(oldTask.getType().intValue() == ButlerTaskType.CAROPERATESTATUS_SENDCAR.getIndex().intValue()){
+			return butlerTaskService.updateSendCarHousekeeper(butlerTask);
+		}else if(oldTask.getType().intValue() == ButlerTaskType.CAROPERATESTATUS_TASKCAR.getIndex().intValue()){
+			return butlerTaskService.updateGetCarButlerTaskByChangeOperater(butlerTask);
+		}
+		return null;*/
+    }
+	
+
+	/**
+	 * @Title: changeButlerTaskstatus 
+	 * @Description: 客服操作送车任务
+	 * @author: wangchuntao 
+	 * @param butlerTask
+	 * @return Object
+	 * @date: 2017年2月22日 下午3:05:32
+	 */
+	@API("客服操作送车任务")
+    @RequestMapping(value = "/butlerTask/updateSendcarStatus",method = RequestMethod.POST)
+    public Object updateSendcarStatus(@RequestBody ButlerTask butlerTask){
+		return null;
+		/*
+		ParamVerifyUtil.paramNotNull(butlerTask);
+		ParamVerifyUtil.paramNotNull(butlerTask.getId(), "客服操作，任务ID不能为空");
+		ParamVerifyUtil.paramNotNull(butlerTask.getStatus(), "客服操作，任务状态不能为空");
+		ParamVerifyUtil.paramNotNull(butlerTask.getCarTypeId(), "客服操作，车型不能为空");
+		ButlerTask old = new ButlerTask();
+		old.setId(butlerTask.getId());
+		old = butlerTaskService.getTaskByID(old);
+		if(old.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_CANCEL.getIndex().intValue()){
+			throw new RuntimeExceptionWarn("该任务已被取消");
+		}
+		butlerTask = this.setModify(butlerTask);
+		//跟进中
+		if(butlerTask.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_PROCESSED.getIndex().intValue()){
+			checkPlanTime(butlerTask, old);
+//			return butlerTaskService.updateSendCarTaskByFollowUp(butlerTask);
+			return butlerTaskService.editButerTaskStatusFollowSendCar(butlerTask);
+		//确认用车
+		}else if(butlerTask.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_WAITACCEPT.getIndex().intValue()){
+			checkPlanTime(butlerTask, old);
+			return butlerTaskService.updateButerTaskStatusWaitBySendCar(butlerTask);
+		//取消
+		}else if(butlerTask.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_CANCEL.getIndex().intValue()){
+			butlerTask.setModifierType(1);
+			return butlerTaskService.updateSendCarButlerTaskByCancel(butlerTask,false);
+		}else{
+			throw new RuntimeExceptionWarn("状态不正确，请重新操作");
+		}
+    */}
+	
+	/**
+	 * 
+	 * @Title: updateButlerTaskgetstatus 
+	 * @Description: 客服操作取车任务
+	 * @author: wangchuntao 
+	 * @param butlerTask
+	 * @return 
+	 * @return Object
+	 * @date: 2017年2月22日 下午3:06:39
+	 */
+	@API("客服操作取车任务")
+    @RequestMapping(value = "/butlerTask/updateGetcarStatus",method = RequestMethod.POST)
+    public Object updateGetcarStatus(@RequestBody ButlerTask butlerTask){
+		return null;
+		/*
+		ParamVerifyUtil.paramNotNull(butlerTask);
+		ParamVerifyUtil.paramNotNull(butlerTask.getId(), "客服操作，任务ID不能为空");
+		ParamVerifyUtil.paramNotNull(butlerTask.getStatus(), "客服操作，任务状态不能为空");
+		ParamVerifyUtil.paramNotNull(butlerTask.getCarTypeId(), "客服操作，车型不能为空");
+		ButlerTask old = butlerTaskService.getTaskByID(butlerTask);
+		if(old.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_CANCEL.getIndex().intValue()){
+			throw new RuntimeExceptionWarn("该任务已被取消");
+		}
+		//跟进中
+		if(butlerTask.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_PROCESSED.getIndex().intValue()){
+			checkPlanGetTime(butlerTask, old);
+			butlerTask = this.setModify(butlerTask);
+			return butlerTaskService.updateGetCarButlerTaskByNoStatus(butlerTask);
+		//确认用车
+		}else if(butlerTask.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_WAITACCEPT.getIndex().intValue()){
+			checkPlanGetTime(butlerTask, old);
+			butlerTask = this.setModify(butlerTask);
+			return butlerTaskService.updateGetCarButlerTaskByWaitAccept(butlerTask);
+		}else{
+			throw new RuntimeExceptionWarn("状态不正确，请重新操作");
+		}
+    */}
+	
+	/**
+	 * 
+	 * @Title: sendButlerTaskstatus 
+	 * @Description: 客服操作送车任务待接单
+	 * @author: wangchuntao 
+	 * @param butlerTask
+	 * @return Object
+	 * @date: 2017年2月22日 下午3:22:42
+	 */
+	@API("客服操作送车任务待接单")
+    @RequestMapping(value = "/butlerTask/updateSendcarWaitStatus",method = RequestMethod.POST)
+    public Object updateSendcarWaitStatus(@RequestBody ButlerTask butlerTask){
+		return null;
+		/*
+		ParamVerifyUtil.paramNotNull(butlerTask);
+		ParamVerifyUtil.paramNotNull(butlerTask.getId(), "客服操作，任务ID不能为空");
+		ParamVerifyUtil.paramNotNull(butlerTask.getStatus(), "客服操作，任务状态不能为空");
+		ParamVerifyUtil.paramNotNull(butlerTask.getCarTypeId(), "客服操作，车型不能为空");
+		ButlerTask old = new ButlerTask();
+		old.setId(butlerTask.getId());
+		old = butlerTaskService.getTaskByID(old);
+		if(old.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_CANCEL.getIndex().intValue()){
+			throw new RuntimeExceptionWarn("该任务已被取消");
+		}
+		if(old.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_COMPLETE.getIndex().intValue()){
+			throw new RuntimeExceptionWarn("该任务已完成");
+		}
+		butlerTask = this.setModify(butlerTask);
+		//跟进中
+		if(butlerTask.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_WAITACCEPT.getIndex().intValue() || butlerTask.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_WAITSENDCAR.getIndex().intValue()){
+			checkPlanTime(butlerTask, old);
+			return butlerTaskService.editButerTaskStatusFollowSendCar(butlerTask);
+		//取消
+		}else if(butlerTask.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_CANCEL.getIndex().intValue()){
+			return butlerTaskService.updateSendCarButlerTaskByCancel(butlerTask,false);
+		}else{
+			throw new RuntimeExceptionWarn("状态不正确，请重新操作");
+		}
+    */}
+	
+	/**
+	 * 
+	 * @Title: updateGetcarWaitStatus 
+	 * @Description: 操作取车任务待接单
+	 * @author: wangchuntao 
+	 * @param butlerTask
+	 * @return Object
+	 * @date: 2017年2月22日 下午3:23:52
+	 */
+	@API("操作取车任务待接单")
+    @RequestMapping(value = "/butlerTask/updateGetcarWaitStatus",method = RequestMethod.POST)
+    public Object updateGetcarWaitStatus(@RequestBody ButlerTask butlerTask){
+		return null;
+		/*ParamVerifyUtil.paramNotNull(butlerTask);
+		ParamVerifyUtil.paramNotNull(butlerTask.getId(), "客服操作，任务ID不能为空");
+		ParamVerifyUtil.paramNotNull(butlerTask.getStatus(), "客服操作，任务状态不能为空");
+		ParamVerifyUtil.paramNotNull(butlerTask.getCarTypeId(), "客服操作，车型不能为空");
+		ButlerTask old = butlerTaskService.getTaskByID(butlerTask);
+		if(old.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_CANCEL.getIndex().intValue()){
+			throw new RuntimeExceptionWarn("该任务已被取消");
+		}
+		if(old.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_COMPLETE.getIndex().intValue()){
+			throw new RuntimeExceptionWarn("该任务已完成");
+		}
+		//跟进中
+		if(butlerTask.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_WAITACCEPT.getIndex().intValue() || butlerTask.getStatus() == ButlerTaskStatus.BUTLERTASKSTATUS_WAITTASKCAR.getIndex().intValue()){
+			checkPlanGetTime(butlerTask, old);
+			butlerTask = this.setModify(butlerTask);
+			return butlerTaskService.updateGetCarButlerTaskByNoStatus(butlerTask);
+		}else{
+			throw new RuntimeExceptionWarn("状态不正确，请重新操作");
+		}*/
+    }
+	
+	
+	/** 
+	 * @Title: createButerTaskLog 
+	 * @Description: 创建任务日志
+	 * @author: wangchuntao 
+	 * @param butlerTask
+	 * @return Object
+	 * @date: 2017年2月22日 下午3:41:52
+	 */
+	@RequestMapping(value = "/butlerTask/createButerTaskLog",method = RequestMethod.POST)
+    public Object createButerTaskLog(@RequestBody ButlerTask butlerTask){
+		/*ParamVerifyUtil.paramNotNull(butlerTask);
+    	ParamVerifyUtil.paramNotNull(butlerTask.getId(), "创建管家任务日志，管家任务id不能为空");
+    	ParamVerifyUtil.paramNotNull(butlerTask.getRemark(), "创建管家任务日志，任务备注不能为空");
+    	butlerTask = this.setModify(butlerTask);
+    	return butlerTaskStatusLogService.createButerTaskLog(butlerTask);*/
+		return null;
+    }
+	
+	/** 
+	 * @Title: createButerTaskAttachment 
+	 * @Description: 添加附件
+	 * @author: wangchuntao 
+	 * @return Object
+	 * @date: 2017年2月22日 下午3:42:08
+	 */
+	@RequestMapping(value = "/butlerTask/createButerTaskAttachment",method = RequestMethod.POST)
+    public Object createButerTaskAttachment(/*@RequestBody TransferList transferList*/){
+		/*ParamVerifyUtil.paramNotNull(transferList);
+    	ParamVerifyUtil.paramNotNull(transferList.getTaskId(), "新增管家任务附件，管家任务id不能为空");
+    	ParamVerifyUtil.paramNotNull(transferList.getType(), "新增管家任务附件，附件类型不能为空");
+    	ParamVerifyUtil.paramNotNull(transferList.getImageUrl(), "新增管家任务附件，附件路径不能为空");
+    	ParamVerifyUtil.paramNotNull(transferList.getPowerUsedId(), "新增管家任务附件，用车记录id不能为空");
+    	return transferListService.createButerTaskTransfer(transferList);*/
+		return null;
+    }
+	
+	/** 
+	 * @Title: deleteButerTaskAttachment 
+	 * @Description: 删除附件
+	 * @author: wangchuntao 
+	 * @return Object
+	 * @date: 2017年2月22日 下午3:42:29
+	 */
+	@RequestMapping(value = "/butlerTask/deleteButerTaskAttachment",method = RequestMethod.POST)
+    public Object deleteButerTaskAttachment(/*@RequestBody TransferList transferList*/){
+		/*ParamVerifyUtil.paramNotNull(transferList);
+    	ParamVerifyUtil.paramNotNull(transferList.getId(), "删除管家任务附件，id不能为空");
+    	return transferListService.deleteButerTaskTransfer(transferList.getId());*/
+		return null;
+    }
+}

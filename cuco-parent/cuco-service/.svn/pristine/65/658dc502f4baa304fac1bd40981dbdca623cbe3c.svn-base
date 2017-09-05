@@ -1,0 +1,208 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
+import cn.cuco.page.PageQuery;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-27 14:14:20
+ */
+public class OrderCarport extends PageQuery<OrderCarport> implements Serializable {
+
+    private static final long serialVersionUID = 6439976758909955L;
+
+    private Long id;//主键
+
+    private String orderNum;//订单编号(JS开头)
+
+    private Integer source;//订单来源 1:微信；2:App-Android；3:App-iOS;4:线下;5:渠道;6:名片;7:官网
+
+    private Long sourceId;//订单来源ID(渠道ID、名片ID)
+
+    private Long memberId;//用户ID
+
+    private Long carportId;//车库ID
+
+    private Integer status;//订单状态: 0:待付款;1:支付中(第一次付款未确认时);2:部分付款;3:已付款;4:已取消 默认0
+
+    private BigDecimal total;//订单金额
+
+    private BigDecimal payment;//已付金额
+
+    private Date paymentTime;//完成支付时间
+
+    private Integer isTimeout;//超时状态 0:未超时；1:已超时;
+
+    private String remark;//备注
+
+    private Date created;//创建时间
+
+    private String modifer;//修改人
+
+    private Long modifierId;//修改人ID
+
+    private Integer valid;//数据状态: 0:无效;1:有效;默认1
+    
+    private String payType;//支付渠道
+    
+    private Date start;
+    
+    private Date end;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getOrderNum() {
+        return this.orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public Integer getSource() {
+        return this.source;
+    }
+
+    public void setSource(Integer source) {
+        this.source = source;
+    }
+
+    public Long getSourceId() {
+        return this.sourceId;
+    }
+
+    public void setSourceId(Long sourceId) {
+        this.sourceId = sourceId;
+    }
+
+    public Long getMemberId() {
+        return this.memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public Long getCarportId() {
+        return this.carportId;
+    }
+
+    public void setCarportId(Long carportId) {
+        this.carportId = carportId;
+    }
+
+    public Integer getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public BigDecimal getTotal() {
+        return this.total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public BigDecimal getPayment() {
+        return this.payment;
+    }
+
+    public void setPayment(BigDecimal payment) {
+        this.payment = payment;
+    }
+
+    public Date getPaymentTime() {
+        return this.paymentTime;
+    }
+
+    public void setPaymentTime(Date paymentTime) {
+        this.paymentTime = paymentTime;
+    }
+
+    public Integer getIsTimeout() {
+        return this.isTimeout;
+    }
+
+    public void setIsTimeout(Integer isTimeout) {
+        this.isTimeout = isTimeout;
+    }
+
+    public String getRemark() {
+        return this.remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getModifer() {
+        return this.modifer;
+    }
+
+    public void setModifer(String modifer) {
+        this.modifer = modifer;
+    }
+
+    public Long getModifierId() {
+        return this.modifierId;
+    }
+
+    public void setModifierId(Long modifierId) {
+        this.modifierId = modifierId;
+    }
+
+    public Integer getValid() {
+        return this.valid;
+    }
+
+    public void setValid(Integer valid) {
+        this.valid = valid;
+    }
+
+	public String getPayType() {
+		return payType;
+	}
+
+	public void setPayType(String payType) {
+		this.payType = payType;
+	}
+
+	public Date getStart() {
+		return start;
+	}
+
+	public void setStart(Date start) {
+		this.start = start;
+	}
+
+	public Date getEnd() {
+		return end;
+	}
+
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+
+}

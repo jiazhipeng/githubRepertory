@@ -1,0 +1,193 @@
+package cn.cuco.controller.manager.statistics;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.controller.entity.CarStatisticsVO;
+import cn.cuco.controller.entity.MemberStatisticsVO;
+import cn.cuco.controller.enums.StatisticsCycleEnum;
+import cn.cuco.service.basic.carport.CarportService;
+import cn.cuco.service.order.OrderRenewalService;
+import cn.cuco.service.statistics.CarStatisticsService;
+import cn.cuco.service.statistics.CarportStatisticsService;
+import cn.cuco.service.statistics.MemberStatisticsService;
+import cn.cuco.service.statistics.OperationStatisticsService;
+import cn.cuco.service.statistics.OrderRenewalStatisticsService;
+
+import com.hy.exception.RuntimeExceptionWarn;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import cn.cuco.annotation.API;
+import cn.cuco.entity.ButlerTask;
+import cn.cuco.entity.Carport;
+import cn.cuco.enums.Valid;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.statistics.TaskStatisticsService;
+
+
+/** 
+ * @ClassName: StatisticsController 
+ * @Description: 统计管理
+ * @author: wangchuntao 
+ * @date: 2017年2月23日 下午5:08:18  
+ */
+@RestController
+public class StatisticsController {
+	
+	protected Logger logger = Logger.getLogger(this.getClass());
+	@Autowired
+	TaskStatisticsService taskStatisticsService;
+
+	@Autowired
+	private CarStatisticsService carStatisticsService;
+	@Autowired
+	private OperationStatisticsService operationStatisticsService;
+	
+	@Autowired
+	private MemberStatisticsService memberStatisticsService;
+	
+	@Autowired
+	private CarportStatisticsService carportStatisticsService;
+	
+	@Autowired
+	private CarportService carportService;
+	
+	@Autowired
+	private OrderRenewalStatisticsService orderRenewalStatisticsService;
+	
+	/**
+	 * @Title: carportUnlock 
+	 * @Description: 车辆解锁统计
+	 * @author: wangchuntao 
+	 * @return Object
+	 * @date: 2017年2月23日 下午5:09:57
+	 */
+	@API(value="车库解锁统计")
+	@RequestMapping("/statistics/carportUnlock")
+	public Object carportUnlock(MemberStatisticsVO memberStatisticsVO){
+		
+		ParamVerifyUtils.paramNotNull(memberStatisticsVO,"统计参数不可为空");
+		ParamVerifyUtils.paramNotNull(memberStatisticsVO.getDate(),"统计周期不可为空");
+		List<Object> result = new ArrayList<>();
+		List<Map<String, Object>> carStatisList = carportStatisticsService.getUnlockCarportStatistics(memberStatisticsVO.getDate(), memberStatisticsVO.getBegin(), memberStatisticsVO.getEnd(), memberStatisticsVO.getType());
+		Carport getCarport = new Carport();
+		getCarport.setValid(Valid.UP.getValue());
+		PageResult<Carport> CarportResult = carportService.getCarportByPage(getCarport);
+		List<Object> carportName = new ArrayList<>();
+		for(Carport carport : CarportResult.getItems()){
+			carportName.add(carport.getCarportName());
+		}
+		result.add(carportName);
+		if(carStatisList != null){
+			List<Object> date = new ArrayList<>();
+			for(Map<String, Object> carName : carStatisList){
+				date.add(carName.get("date"));
+			}
+			result.add(carStatisList);
+			result.add(date);
+		}
+		return result;
+	}
+	/**
+	 * @Title: orderCarused 
+	 * @Description: 用车统计
+	 * @author: wangchuntao 
+	 * @return Object
+	 * @date: 2017年3月1日 上午11:31:22
+	 */
+	@API(value="用车统计")
+	@RequestMapping("/statistics/orderCarused")
+	public Object orderCarused(){
+		return null;
+	}
+	/**
+	 * @Title: ButlerTask 
+	 * @Description: 任务统计
+	 * @author: wangchuntao 
+	 * @return Object
+	 * @date: 2017年2月23日 下午5:12:53
+	 */
+	@API(value="任务统计")
+	@RequestMapping("/statistics/ButlerTask")
+	public Object ButlerTask(@RequestBody ButlerTask butlerTask){
+		return taskStatisticsService.getExexuteTaskStatistics(butlerTask);
+	}
+	
+	/**
+	 * 
+	* @Title: addMember 
+	* @Description: 新增用户统计
+	* @author jiaxiaoxian
+	* @return
+	* @return Object
+	 */
+	@API(value="新增用户统计")
+	@RequestMapping("/statistics/addMember")
+	public Object addMember(MemberStatisticsVO memberStatisticsVO){
+		ParamVerifyUtils.paramNotNull(memberStatisticsVO,"统计参数不可为空");
+		ParamVerifyUtils.paramNotNull(memberStatisticsVO.getDate(),"统计周期不可为空");
+		return memberStatisticsService.getAddMemberStatistics(memberStatisticsVO.getDate(), memberStatisticsVO.getBegin(), memberStatisticsVO.getEnd());
+	}
+	
+	@API(value="新增入会统计")
+	@RequestMapping("/statistics/membership")
+	public Object membership(MemberStatisticsVO memberStatisticsVO){
+		ParamVerifyUtils.paramNotNull(memberStatisticsVO,"统计参数不可为空");
+		ParamVerifyUtils.paramNotNull(memberStatisticsVO.getDate(),"统计周期不可为空");
+		return memberStatisticsService.getMemberShipStatistics(memberStatisticsVO.getDate(), memberStatisticsVO.getBegin(), memberStatisticsVO.getEnd());
+	}
+	
+	@API(value="储值统计")
+	@RequestMapping("/statistics/renewal")
+	public Object renewal(MemberStatisticsVO memberStatisticsVO){
+		ParamVerifyUtils.paramNotNull(memberStatisticsVO,"统计参数不可为空");
+		ParamVerifyUtils.paramNotNull(memberStatisticsVO.getDate(),"统计周期不可为空");
+		return orderRenewalStatisticsService.orderRenewalStatisticsService(memberStatisticsVO.getDate(), memberStatisticsVO.getBegin(), memberStatisticsVO.getEnd());
+	}
+
+	@API(value = "资产统计")
+	@RequestMapping(value = "/statistics/car",method = RequestMethod.POST)
+	private Object getCarStatistics(@RequestBody CarStatisticsVO carStatisticsVO){
+		StatisticsCycleEnum cycle = carStatisticsVO.getCycle();
+		ParamVerifyUtils.paramNotNull(cycle,"统计周期不可为空");
+
+		if(StatisticsCycleEnum.DAY == cycle){
+			return carStatisticsService.getOperationStatisticsByDay(carStatisticsVO.getStartTime(),carStatisticsVO.getEndTime(),carStatisticsVO.getCarTypeId(),carStatisticsVO.getCarSupplierId());
+		}
+
+		if(StatisticsCycleEnum.WEEK == cycle){
+			return carStatisticsService.getOperationStatisticsByWeek(carStatisticsVO.getStartTime(),carStatisticsVO.getEndTime(),carStatisticsVO.getCarTypeId(),carStatisticsVO.getCarSupplierId());
+		}
+
+		if(StatisticsCycleEnum.MONTH == cycle){
+			return carStatisticsService.getOperationStatisticsByMonth(carStatisticsVO.getStartTime(),carStatisticsVO.getEndTime(),carStatisticsVO.getCarTypeId(),carStatisticsVO.getCarSupplierId());
+		}
+	    throw new RuntimeExceptionWarn("资产统计失败");
+	}
+
+	@API(value = "运营率统计")
+	@RequestMapping(value = "/statistics/operation",method = RequestMethod.POST)
+	private Object getOperationStatistics(@RequestBody CarStatisticsVO carStatisticsVO){
+		StatisticsCycleEnum cycle = carStatisticsVO.getCycle();
+		ParamVerifyUtils.paramNotNull(cycle,"统计周期不可为空");
+
+		if(StatisticsCycleEnum.DAY == cycle){
+			return operationStatisticsService.getOperationStatisticsByDay(carStatisticsVO.getStartTime(),carStatisticsVO.getEndTime(),carStatisticsVO.getCarportId(),carStatisticsVO.getCarTypeId());
+		}
+
+		if(StatisticsCycleEnum.WEEK == cycle){
+			return operationStatisticsService.getOperationStatisticsByWeek(carStatisticsVO.getStartTime(),carStatisticsVO.getEndTime(),carStatisticsVO.getCarportId(),carStatisticsVO.getCarTypeId());
+		}
+
+		if(StatisticsCycleEnum.MONTH == cycle){
+			return operationStatisticsService.getOperationStatisticsByMonth(carStatisticsVO.getStartTime(),carStatisticsVO.getEndTime(),carStatisticsVO.getCarportId(),carStatisticsVO.getCarTypeId());
+		}
+		throw new RuntimeExceptionWarn("运营率统计失败");
+	}
+
+}

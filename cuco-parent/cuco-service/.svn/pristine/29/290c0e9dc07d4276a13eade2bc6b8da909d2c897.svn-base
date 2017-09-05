@@ -1,0 +1,103 @@
+package cn.cuco.service.car.carInfo;
+
+
+import java.util.List;
+import cn.cuco.entity.Car;
+import cn.cuco.page.PageResult;
+
+/** 
+* @ClassName: CarService 
+* @Description: 车辆主表service
+* @author gongbw
+* @date 2017年2月21日 下午1:35:02  
+*/
+public interface CarService {
+    
+    /**   
+     * @Title: createCar   
+     * @Description: 创建车辆的基础方法   
+     * @param: Car
+     * @return: Car      
+     */
+    public Car createCar(Car car);
+
+    /**   
+     * @Title: updateCar   
+     * @Description: 修改车辆信息的基础方法   
+     * @param: Car
+     * @return: Car      
+     */
+    public Car updateCar(Car car);
+
+    /**   
+     * @Title: getCarByID   
+     * @Description: 通过车辆ID查询车辆信息的基础方法   
+     * @param: Car
+     * @return: Car      
+     */
+    public Car getCarByID(Car car);
+    
+    /**   
+     * @Title: getCarList   
+     * @Description: 通过条件查询车辆列表的基础方法   
+     * @param: Car
+     * @return: List<Car>      
+     */
+    public List<Car> getCarList(Car car);
+    
+    /**   
+     * @Title: getCarListByPage   
+     * @Description: 分页查询车辆列表信息的方法
+     * @param: Car
+     * @return: List<Car>      
+     */
+    public PageResult<Car> getCarListByPage(Car car);
+    
+    /**   
+     * @Title: updateCarByWaitDistribute   
+     * @Description: 修改车辆状态为待分配的业务方法   
+     * @param: Car
+     * @return: Car      
+     */
+    public Car updateCarByWaitDistribute(Car car);
+    
+    /**   
+     * @Title: updateCarByMemberUsing   
+     * @Description: 修改车辆状态为会员使用中的业务方法   
+     * @param: Car
+     * @return: Car      
+     */
+    public Car updateCarByMemberUsing(Car car);
+    
+    /**   
+     * @Title: updateCarByNotMemberUsing   
+     * @Description: 修改车辆状态为非会员使用中的业务方法   
+     * @param: Car
+     * @return: Car      
+     */
+    public Car updateCarByNotMemberUsing(Car car);
+    
+    /**   
+     * @Title: updateCarByRepairing   
+     * @Description: 修改车辆状态为维修中的业务方法   
+     * @param: Car
+     * @return: Car      
+     */
+    public Car updateCarByRepairing(Car car);
+    
+    /**   
+     * @Title: updateCarBySleepping   
+     * @Description: 修改车辆状态为整备中的业务方法   
+     * @param: Car
+     * @return: Car      
+     */
+    public Car updateCarBySleepping(Car car);
+    
+    /**   
+     * @Title: updateCarByLosed   
+     * @Description: 修改车辆状态为失联的业务方法   
+     * @param: Car
+     * @return: Car      
+     */
+    public Car updateCarByLosed(Car car);
+}

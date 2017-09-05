@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.PowerUsedCostLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.PowerUsedCostLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="td_power_used_cost_id" property="tdPowerUsedCostId" jdbcType="BIGINT" />
+    <result column="deduction_time" property="deductionTime" jdbcType="TIMESTAMP" />
+    <result column="deduction_price" property="deductionPrice" jdbcType="DECIMAL" />
+    <result column="memberId" property="memberId" jdbcType="BIGINT" />
+    <result column="memberName" property="memberName" jdbcType="VARCHAR" />
+    <result column="caroperateId" property="caroperateId" jdbcType="BIGINT" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.PowerUsedCostLog" >
+       select  count(1) 
+    from td_power_used_cost_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "tdPowerUsedCostId != null ">
+        and td_power_used_cost_id = #{tdPowerUsedCostId,jdbcType=BIGINT}      
+      </if>
+      <if test= "deductionTime != null ">
+        and deduction_time = #{deductionTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "deductionPrice != null ">
+        and deduction_price = #{deductionPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "memberId != null ">
+        and memberId = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and memberName = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "caroperateId != null ">
+        and caroperateId = #{caroperateId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.PowerUsedCostLog" >
+       select  <include refid="Base_Column_List" />
+    from td_power_used_cost_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "tdPowerUsedCostId != null ">
+        and td_power_used_cost_id = #{tdPowerUsedCostId,jdbcType=BIGINT}      
+      </if>
+      <if test= "deductionTime != null ">
+        and deduction_time = #{deductionTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "deductionPrice != null ">
+        and deduction_price = #{deductionPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "memberId != null ">
+        and memberId = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and memberName = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "caroperateId != null ">
+        and caroperateId = #{caroperateId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, td_power_used_cost_id, deduction_time,
+      deduction_price, memberId, memberName, 
+      caroperateId
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.PowerUsedCostLog" >
+    select 
+      id, td_power_used_cost_id, deduction_time,
+      deduction_price, memberId, memberName, 
+      caroperateId
+    from td_power_used_cost_log where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.PowerUsedCostLog" >
+    delete from td_power_used_cost_log where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_power_used_cost_log where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.PowerUsedCostLog" >
+    insert into td_power_used_cost_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "tdPowerUsedCostId != null ">
+         td_power_used_cost_id,
+      </if>
+      <if test= "deductionTime != null ">
+         deduction_time,
+      </if>
+      <if test= "deductionPrice != null ">
+         deduction_price,
+      </if>
+      <if test= "memberId != null ">
+         memberId,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         memberName,
+      </if>
+      <if test= "caroperateId != null ">
+         caroperateId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "tdPowerUsedCostId != null ">
+         #{tdPowerUsedCostId,jdbcType=BIGINT},
+      </if>
+      <if test= "deductionTime != null ">
+         #{deductionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "deductionPrice != null ">
+         #{deductionPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "caroperateId != null ">
+         #{caroperateId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_power_used_cost_log (
+         id,
+         td_power_used_cost_id,
+         deduction_time,
+         deduction_price,
+         memberId,
+         memberName,
+         caroperateId)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.tdPowerUsedCostId,jdbcType=BIGINT},
+         #{item.deductionTime,jdbcType=TIMESTAMP},
+         #{item.deductionPrice,jdbcType=DECIMAL},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.caroperateId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.PowerUsedCostLog" >
+    update td_power_used_cost_log
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "tdPowerUsedCostId != null ">
+      td_power_used_cost_id = #{tdPowerUsedCostId,jdbcType=BIGINT},
+      </if>
+      <if test= "deductionTime != null ">
+      deduction_time = #{deductionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "deductionPrice != null ">
+      deduction_price = #{deductionPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "memberId != null ">
+      memberId = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      memberName = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "caroperateId != null ">
+      caroperateId = #{caroperateId,jdbcType=BIGINT}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,47 @@
+package cn.cuco.service.order.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import cn.cuco.entity.OrderCarUsed;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.order.OrderCarUsedService;
+
+/** 
+* @ClassName: OrderCarUsedServiceImpl 
+* @Description: 用车明细相关接口的实现
+* @author zc.du
+* @date 2017年2月23日 上午10:52:08  
+*/
+@Service(value = "orderCarUsedService")
+public class OrderCarUsedServiceImpl implements OrderCarUsedService {
+
+	@Override
+	public PageResult<OrderCarUsed> getOrderCarUsedListByPage(
+			OrderCarUsed orderCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarUsed createOrderCarUsedForButtler(
+			OrderCarUsed orderCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarUsed createOrderCarUsedForSystem(OrderCarUsed orderCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarUsed createOrderCarUsedForAdditionalDeduction(
+			OrderCarUsed orderCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

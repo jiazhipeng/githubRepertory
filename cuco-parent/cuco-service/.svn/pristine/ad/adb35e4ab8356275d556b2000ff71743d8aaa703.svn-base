@@ -1,0 +1,50 @@
+package cn.cuco.service.order;
+
+import cn.cuco.entity.OrderCarUsed;
+import cn.cuco.page.PageResult;
+
+/** 
+* @ClassName: OrderCarUsedService 
+* @Description: 用户用车结算明细相关接口
+* @author zc.du
+* @date 2017年2月23日 上午10:47:07  
+*/
+public interface OrderCarUsedService {
+    
+    /** 
+    * @Title: getOrderCarUsedListByPage 
+    * @Description: 分页查询用户用车明细列表
+    * @author zc.du
+    * @param orderCarUsed
+    * @return PageResult<OrderCarUsed>
+    */
+    public PageResult<OrderCarUsed> getOrderCarUsedListByPage(OrderCarUsed orderCarUsed);
+
+    /** 
+    * @Title: createSettlementForButtler 
+    * @Description: 管家结算
+    * @author zc.du
+    * @param orderCarUsed
+    * @return OrderCarUsed
+    */
+    public OrderCarUsed createOrderCarUsedForButtler(OrderCarUsed orderCarUsed);
+    
+    /** 
+    * @Title: createSettlementForSystem 
+    * @Description: 系统结算
+    * @author zc.du
+    * @param orderCarUsed
+    * @return OrderCarUsed
+    */
+    public OrderCarUsed createOrderCarUsedForSystem(OrderCarUsed orderCarUsed);
+    
+    /** 
+    * @Title: createOrderCarUsedForAdditionalDeduction 
+    * @Description: 补扣结算
+    * @author zc.du
+    * @param orderCarUsed
+    * @return OrderCarUsed
+    */
+    public OrderCarUsed createOrderCarUsedForAdditionalDeduction(OrderCarUsed orderCarUsed);
+    
+}

@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface MemberMapper<T> extends BaseDao<T> {
+
+}

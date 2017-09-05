@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  	xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+	  	xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- 自动扫描且只扫描@Controller -->
+	<context:component-scan base-package="cn.cuco" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- IO-json处理 start -->
+	<bean id="messageDateFormat" class="cn.cuco.runtime.HttpServiceDateFormat"/>
+	<bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+		<property name="dateFormat" ref="messageDateFormat"/>
+	</bean>
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" ref="jacksonObjectMapper"/>
+		<property name="targetMethod" value="configure"/>
+		<property name="arguments">
+			<list>
+				<value type="com.fasterxml.jackson.databind.DeserializationFeature">FAIL_ON_UNKNOWN_PROPERTIES</value>
+				<value>false</value>
+			</list>
+		</property>
+	</bean>
+	<!-- IO-json处理 end -->
+
+	<bean id="exceptionHandler" class="cn.cuco.exception.DefaultExceptionHandler"/>
+	<bean id="contentManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="false"/>
+		<property name="defaultContentType" value="application/json"/>
+	</bean>
+	<mvc:annotation-driven content-negotiation-manager="contentManager">
+		<mvc:message-converters register-defaults="true">
+			<!-- 指定 charset为UTF-8，解止中文乱码
+ 			<bean class = "org.springframework.http.converter.StringHttpMessageConverter">   
+                <property name = "supportedMediaTypes">
+                      <list>
+						  <value>application/json;charset=UTF-8</value>
+					  </list>
+                </property>   
+             </bean>
+
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="prettyPrint" value="false"/>
+				<property name="objectMapper" ref="jacksonObjectMapper"/>
+			</bean>
+			-->
+			<bean class="cn.cuco.httpservice.DefaultMessageConverter">
+				<property name="prettyPrint" value="false"/>
+				<property name="objectMapper" ref="jacksonObjectMapper"/>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!-- 将无法mapping到Controller的path交给default servlet handler处理 -->
+	<mvc:default-servlet-handler />
+
+	<!-- 让springmvc支持文件上传 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="maxInMemorySize" value="2048"></property>
+		<property name="maxUploadSize" value="1048576000" />
+		<property name="uploadTempDir" value="tmp"></property>
+	</bean>
+
+</beans>

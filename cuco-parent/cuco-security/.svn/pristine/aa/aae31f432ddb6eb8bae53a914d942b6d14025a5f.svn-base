@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.security.dao.UserCityMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.security.entity.UserCity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+  </resultMap>
+
+  <!-- 按用户ID删除城市 -->
+  <delete id="deleteCityByUser" parameterType="com.hy.security.entity.UserCity" >
+    delete from td_user_city where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.security.entity.UserCity" >
+       select  <include refid="Base_Column_List" />
+    from td_user_city  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test= "userId != null ">
+        and user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test= "cityId != null ">
+        and city_id = #{cityId,jdbcType=BIGINT}
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, user_id, city_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.security.entity.UserCity" >
+    select 
+      id, user_id, city_id
+    from td_user_city where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.security.entity.UserCity" >
+    delete from td_user_city where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_user_city where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.security.entity.UserCity" >
+    insert into td_user_city
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "userId != null ">
+         user_id,
+      </if>
+      <if test= "cityId != null ">
+         city_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "userId != null ">
+         #{userId,jdbcType=BIGINT},
+      </if>
+      <if test= "cityId != null ">
+         #{cityId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_user_city (
+         id,
+         user_id,
+         city_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.userId,jdbcType=BIGINT},
+         #{item.cityId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.security.entity.UserCity" >
+    update td_user_city
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "userId != null ">
+      user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test= "cityId != null ">
+      city_id = #{cityId,jdbcType=BIGINT}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,93 @@
+package cn.cuco.dao;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import cn.cuco.entity.OrderMemberCarUsed;
+
+public interface OrderMemberCarUsedMapper<T> extends BaseDao<T> {
+	/**
+	 * @Title: getOrderMemberCarUsedCountByMemberId
+	 * @Description: 根据用户ID查询用户用车次数
+	 * @author zc.du
+	 * @param memberId
+	 * @return Integer
+	 */
+	public Integer getOrderMemberCarUsedCountByMemberId(@Param("memberId") Long memberId);
+
+	/**
+	 * @Title: getOrderMemberCarUsedMileagesByMemberId
+	 * @Description: 根据用户ID查询用户行驶公里数
+	 * @author zc.du
+	 * @param memberId
+	 * @return BigDecimal
+	 */
+	public BigDecimal getOrderMemberCarUsedMileagesByMemberId(@Param("memberId") Long memberId);
+
+	/**
+	 * @Title: getLastMemberCarUsed
+	 * @Description: 查询用户最后一次用车记录
+	 * @author zc.du
+	 * @param orderMemberCarUsed
+	 * @return OrderMemberCarUsed
+	 */
+	public OrderMemberCarUsed getLastOrderMemberCarUsed(OrderMemberCarUsed orderMemberCarUsed);
+
+	/**
+	 * @Title: getMemberCarUsedListWithSort
+	 * @Description: 获取用车记录列表
+	 * @author zc.du
+	 * @param orderMemberCarUsed
+	 * @return List<OrderMemberCarUsed>
+	 */
+	public List<OrderMemberCarUsed> getOrderMemberCarUsedListWithSort(OrderMemberCarUsed orderMemberCarUsed);
+
+	/**
+	 * @Title: getMemberCarTypeUsedStatisticsByMemberId
+	 * @Description: 根据用户ID统计用户用车车型
+	 * @author zc.du
+	 * @param memberId
+	 * @return HashMap<Long,Integer>
+	 */
+	public HashMap<Long, Integer> getMemberCarTypeUsedStatisticsByMemberId(@Param("memberId") Long memberId);
+
+	/**
+	 * @Title: getOrderMemberCarUsedListByCarIdAndDate
+	 * @Description: 根据车辆ID、时间查询用车记录(违章专用)
+	 * @author zc.du
+	 * @param orderMemberCarUsed(caroperateId:车辆ID;startDate:日期)
+	 * @return List<OrderMemberCarUsed>
+	 */
+	public List<OrderMemberCarUsed> getOrderMemberCarUsedListByCarIdAndDate(OrderMemberCarUsed orderMemberCarUsed);
+	
+	/**   
+	 * @Title: getOrderMemberCarUsedNotComplete   
+	 * @Description: 查询用户待支付或者进行中的用车订单  
+	 * @param: @param orderMemberCarUsed
+	 * @param: @return      
+	 * @return: OrderMemberCarUsed       
+	 */
+	public List<OrderMemberCarUsed> selectOrderMemberCarUsedNotComplete(OrderMemberCarUsed orderMemberCarUsed);
+
+	/**
+	 * @Title: getCarUsedCountByDate
+	 * @Description: 查询指定时间段内指定车型确认支付用车次数(统计用)
+	 * @author zc.du
+	 * @param orderMemberCarUsed
+	 * @return Integer
+	 */
+	public Integer getCarUsedCountByDate(OrderMemberCarUsed orderMemberCarUsed);
+	
+	/** 
+	* @Title: getCarUsedCostMoneyByDate 
+	* @Description: 查询指定时间段内指定车型确认支付的用车金额
+	* @author zc.du
+	* @param orderMemberCarUsed
+	* @return BigDecimal
+	*/
+	public BigDecimal getCarUsedCostMoneyByDate(OrderMemberCarUsed orderMemberCarUsed);
+}

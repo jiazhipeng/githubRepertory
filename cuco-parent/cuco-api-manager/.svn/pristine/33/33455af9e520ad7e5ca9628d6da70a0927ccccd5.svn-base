@@ -1,0 +1,122 @@
+package cn.cuco.controller.manager.car.accident;
+
+import cn.cuco.common.httpservice.HttpServiceContext;
+import cn.cuco.common.utils.PrePersistUtils;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.controller.entity.CarAccidentStatusVO;
+import cn.cuco.controller.entity.CarAccidentVO;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarAccident;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.Supplier;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.exception.RuntimeExceptionWarn;
+import cn.cuco.service.basic.business.SupplierService;
+import cn.cuco.service.car.carInfo.CarService;
+import cn.cuco.service.car.carOperate.CarAccidentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import cn.cuco.annotation.API;
+
+import java.util.Arrays;
+
+/**
+ * @ClassName:
+ * @Description：
+ * @author：WangShuai
+ * @date：2017年02月24 18:42:00
+ */
+@RestController
+public class CarAccidentController {
+
+    @Autowired
+    private CarAccidentService carAccidentService;
+    @Autowired
+    private SupplierService supplierService;
+    @Autowired
+    private CarService carService;
+
+    @API(value = "出险-分页")
+    @RequestMapping(value = "/carAccident/getCarAccidentListByPage",method = RequestMethod.POST)
+    private Object getCarAccidentListByPage(@RequestBody CarAccident carAccident){
+
+        return carAccidentService.getCarAccidentByPage(carAccident);
+    }
+
+    @API(value = "出险-详情")
+    @RequestMapping(value = "/carAccident/getCarAccidentById",method = RequestMethod.GET)
+    private Object getCarAccidentById(@RequestParam Long id){
+
+        return this.getCarAccidentVO(id);
+    }
+
+    @API(value = "出险-创建")
+    @RequestMapping(value = "/carAccident/createCarAccident",method = RequestMethod.POST)
+    private Object createCarAccident(@RequestBody CarAccident carAccident){
+        PrePersistUtils.onCreate(carAccident, HttpServiceContext.getCurrentUserId(),HttpServiceContext.getCurrentUserName());
+
+        Car car = carService.getCarByCarPlateNum(carAccident.getCarPlateNum());
+        ParamVerifyUtils.paramNotNull(car,"车辆不存在");
+        carAccident.setCarId(car.getId());
+
+        return carAccidentService.createCarAccident(carAccident);
+    }
+
+    @API(value = "出险-状态修改")
+    @RequestMapping(value = "/carAccident/updateStatus",method = RequestMethod.POST)
+    private Object updateStatus(@RequestBody CarAccidentStatusVO carAccidentStatusVO){
+        Integer status = carAccidentStatusVO.getStatus();
+        if(status!=null && !Arrays.asList(1,2,3).contains(status)){
+            ExceptionUtil.throwWarn("状态无效");
+        }
+
+        /*bean convert*/
+        CarAccident carAccident = carAccidentStatusVO.toCarAccident();
+
+        PrePersistUtils.onModify(carAccident,HttpServiceContext.getCurrentUserId(),HttpServiceContext.getCurrentUserName());
+
+        /*handle by status*/
+        switch (status){
+            case 1 : return carAccidentService.updateCarAccidentByFollowUp(carAccident);
+            case 2 : return carAccidentService.updateCarAccidentByRepairCompleted(carAccident);
+            case 3 : return carAccidentService.updateCarAccidentByCompleted(carAccident);
+        }
+
+        if(status==null){
+            return carAccidentService.createCarAccidentRemark(carAccident);
+        }
+
+        throw new RuntimeExceptionWarn("出险状态修改失败");
+    }
+
+    @API(value = "出险-操作日志-分页")
+    @RequestMapping(value = "/carAccident/getCarAccidentLogListByPage",method = RequestMethod.POST)
+    private Object getCarAccidentLogListByPage(@RequestBody OperateLog operateLog){
+
+        return carAccidentService.getCarAccidentLogByPage(operateLog);
+    }
+
+    /**
+     * 根据出险ID获取含供应商信息的车辆出险详情
+     * @param id
+     * @return
+     */
+    private CarAccidentVO getCarAccidentVO(Long id){
+        CarAccident carAccident = carAccidentService.getCarAccidentById(id);
+        ParamVerifyUtils.paramNotNull(carAccident,"获取车辆出险详情失败：车辆出险信息不存在");
+        CarAccidentVO carAccidentVO = new CarAccidentVO(carAccident);
+
+        /*get car*/
+        Car car = carService.getCarById(carAccidentVO.getCarId());
+        ParamVerifyUtils.paramNotNull(car,"获取车辆出险详情失败：车辆不存在");
+
+
+        /*get supplier*/
+        Long supplierId = car.getCarSupplierId();
+        Supplier supplier = supplierService.getSupplierById(supplierId);
+
+        carAccidentVO.setSupplier(supplier);
+
+        return carAccidentVO;
+    }
+}

@@ -1,0 +1,17 @@
+package cn.cuco.dao;
+
+import java.util.List;
+
+import cn.cuco.entity.OrderCarport;
+
+public interface OrderCarportMapper<T> extends BaseDao<T> {
+	
+	/** 
+	* @Title: getOrderListForCancelTask 
+	* @Description: 获取需要自动取消的任务
+	* @author zc.du
+	* @return List<OrderCarport>
+	*/
+//	public List<OrderCarport> getOrderListForCancelTask();
+
+}

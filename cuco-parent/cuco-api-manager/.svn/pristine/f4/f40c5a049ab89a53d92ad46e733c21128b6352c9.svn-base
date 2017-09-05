@@ -1,0 +1,35 @@
+/**   
+
+ * @Title: Json.java 
+ * @Prject: cuco-api-manager
+ * @Package: cn.cuco.controller.manager 
+ * @Description: TODO
+ * @author: wangchuntao 
+ * @date: 2017年2月22日 下午3:58:34 
+ * @version: V1.0   
+ */
+package cn.cuco.controller.manager;
+
+import cn.cuco.common.utils.JsonUtils;
+import cn.cuco.entity.Parking;
+
+/** 
+ * @ClassName: Json 
+ * @Description: TODO
+ * @author: wangchuntao 
+ * @date: 2017年2月22日 下午3:58:34  
+ */
+public class Json {
+	public static void main(String[] args) {
+		
+		Parking bu = new Parking();
+		String json = "";
+		try {
+			json = JsonUtils.extractJson(bu);
+			System.out.println(json);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

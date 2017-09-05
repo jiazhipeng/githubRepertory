@@ -1,0 +1,56 @@
+package cn.cuco.service.basic.business.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.ParkingMapper;
+import cn.cuco.entity.Parking;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.business.ParkingService;
+
+@Service(value = "parkingService")
+public class ParkingServiceImpl implements ParkingService {
+
+    @Autowired
+    private ParkingMapper<Parking> parkingMapper;
+
+	@Override
+	public Parking createParking(Parking parking) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Parking updateParking(Parking parking) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Parking getParkingById(Parking parking) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteParkingById(Parking parking) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public PageResult<Parking> getParkingByCondition(Parking parking) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Parking> getParkingList(Parking parking) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

@@ -1,0 +1,98 @@
+package cn.cuco.service.basic.carport.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarTypeMapper;
+import cn.cuco.entity.CarBrand;
+import cn.cuco.entity.CarType;
+import cn.cuco.entity.CarTypePrice;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.carport.CarTypeService;
+
+@Service(value = "carTypeService")
+public class CarTypeServiceImpl implements CarTypeService {
+
+    @Autowired
+    private CarTypeMapper<CarType> carTypeMapper;
+
+	@Override
+	public CarType createCarType(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarType updateCarType(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarType getCarTypeById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<CarType> getCarTypeByPage(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarType> getCarTypeList(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarType updateCarTypeShelves(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarType updateCarTypeTheShelves(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarTypePrice> getCarTypePriceList(CarTypePrice carTypePrice) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarTypePrice> getAllCarTypeCityAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getCarBrandForAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarBrand> getCartypeByBrand(CarBrand carBrand) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	* @Title: createCarTypePrice 
+	* @Description: 创建车型公里定价
+	* @param @param carTypePrice
+	* @return CarTypePrice
+	 */
+	private CarTypePrice createCarTypePrice(CarTypePrice carTypePrice) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}

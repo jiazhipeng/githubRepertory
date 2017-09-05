@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.BasicCostMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.BasicCost" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gasoline_price" property="gasolinePrice" jdbcType="DECIMAL" />
+    <result column="hurry_price" property="hurryPrice" jdbcType="DECIMAL" />
+    <result column="accidentcar_price" property="accidentcarPrice" jdbcType="DECIMAL" />
+    <result column="delaycancel_price" property="delaycancelPrice" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.BasicCost" >
+       select  count(1) 
+    from tc_basic_cost  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "gasolinePrice != null ">
+        and gasoline_price = #{gasolinePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "hurryPrice != null ">
+        and hurry_price = #{hurryPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "accidentcarPrice != null ">
+        and accidentcar_price = #{accidentcarPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "delaycancelPrice != null ">
+        and delaycancel_price = #{delaycancelPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.BasicCost" >
+       select  <include refid="Base_Column_List" />
+    from tc_basic_cost  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "gasolinePrice != null ">
+        and gasoline_price = #{gasolinePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "hurryPrice != null ">
+        and hurry_price = #{hurryPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "accidentcarPrice != null ">
+        and accidentcar_price = #{accidentcarPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "delaycancelPrice != null ">
+        and delaycancel_price = #{delaycancelPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, gasoline_price, hurry_price, 
+      accidentcar_price, delaycancel_price, created, 
+      lasttime_modify, modifier, modifier_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.BasicCost" >
+    select 
+      id, gasoline_price, hurry_price, 
+      accidentcar_price, delaycancel_price, created, 
+      lasttime_modify, modifier, modifier_id
+    from tc_basic_cost where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.BasicCost" >
+    delete from tc_basic_cost where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tc_basic_cost where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.BasicCost" >
+    insert into tc_basic_cost
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "gasolinePrice != null ">
+         gasoline_price,
+      </if>
+      <if test= "hurryPrice != null ">
+         hurry_price,
+      </if>
+      <if test= "accidentcarPrice != null ">
+         accidentcar_price,
+      </if>
+      <if test= "delaycancelPrice != null ">
+         delaycancel_price,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "gasolinePrice != null ">
+         #{gasolinePrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "hurryPrice != null ">
+         #{hurryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "accidentcarPrice != null ">
+         #{accidentcarPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "delaycancelPrice != null ">
+         #{delaycancelPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tc_basic_cost (
+         id,
+         gasoline_price,
+         hurry_price,
+         accidentcar_price,
+         delaycancel_price,
+         created,
+         lasttime_modify,
+         modifier,
+         modifier_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.gasolinePrice,jdbcType=DECIMAL},
+         #{item.hurryPrice,jdbcType=DECIMAL},
+         #{item.accidentcarPrice,jdbcType=DECIMAL},
+         #{item.delaycancelPrice,jdbcType=DECIMAL},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.modifierId,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.BasicCost" >
+    update tc_basic_cost
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "gasolinePrice != null ">
+      gasoline_price = #{gasolinePrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "hurryPrice != null ">
+      hurry_price = #{hurryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "accidentcarPrice != null ">
+      accidentcar_price = #{accidentcarPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "delaycancelPrice != null ">
+      delaycancel_price = #{delaycancelPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+<select id="selectBasicCost" resultMap="BaseResultMap"  >
+       select  <include refid="Base_Column_List" />
+    from tc_basic_cost  
+  
+  </select>
+</mapper>

@@ -1,0 +1,329 @@
+@charset "utf-8";
+@import url("css.css");
+@import url("usedcar.css");
+.header{height: 40px; z-index: 5; position: relative;}
+.header .heFlex{width: 25%;}
+
+.bulterPage{background: #fff;}
+.bulterPage .tab{height: 40px; border-bottom: 1px solid #ccc; background:#1e1e1e;font-weight:bold; line-height:2.7rem; color: #fff; font-size: 1.4rem; z-index: 5; position: relative; display: -webkit-box; -webkit-box-align: center; padding-right: 6px;}
+.bulterPage .list a{ display: -webkit-box; -webkit-box-align: center;font-size: 1.3rem; background: url("../images/arrow_right_grey.png") no-repeat 98% center; background-size: 6px;}
+.bulterPage .flex{-webkit-box-flex: 1; padding-left: 10px; -webkit-box-align: center;max-width: 23%; min-width: 23%;}
+.bulterPage .flex:first-child,.bulterPage .flex:last-child{max-width: 29%; min-width: 29%}
+.bulterPage .flex:last-child{max-width: 25%; min-width: 25%}
+.bulterPage .list .flex:last-child{padding-right: 12px; padding-left: 4px;}
+.bulterPage .list li{border-bottom: 1px solid #e6e6e6; padding: 15px 0;}
+.bulterPage .stadus{padding-right: 15px; background: url("../images/arrow_down.png") no-repeat right center; background-size: 12px;}
+.bulterPage .staUp{background-image: url("../images/arrow_up.png")}
+.poper{width: 100%;height: 100%;position: fixed;top: 0;left: 0;background: rgba(0, 0, 0, .6);}
+.poper .search{width: 100%;background: #fff;position: absolute;bottom: 0;left: 0;}
+.poper .input{margin: 6rem 1.2rem;line-height: 4rem;background: #f7f7f7;border-radius: 5px; position:relative;}
+.poper .input .in-box{height: 4rem;width: 100%; padding-left:3.4rem; box-sizing:border-box;}
+.poper .input i{background: url(/static/gcar_html/images/search.png) 0 0 no-repeat;width: 1.4rem;height: 1.4rem;background-size: cover;display:block;vertical-align: middle;position:absolute; top:1.4rem; left:1.4rem;}
+.poper .input input{height: 100%;background: #f7f7f7;width: 100%;}
+.poper .form .row{line-height: 4rem;border-bottom: 1px solid #e2e2e2;padding:0 4%;}
+.poper .form .row:last-child{border-bottom:none;}
+.poper .form .row span{margin-left: 1.5rem;text-align: justify;text-align-last: justify;display: inline-block;height:4rem;overflow:hidden;width: 6rem;float:left;}
+.poper .form .row span:after{width:100%;content:'';display:inline-block;}
+.poper .form .row input{margin-left: 1rem;font-size:1.4rem;display: inline-block;line-height: 4rem}
+.btns{width: 100%;display: flex;border-top: 1px solid #e2e2e2;background: #fff;}
+.btn{flex: 1;text-align: center;align-self: center;line-height: 4.5rem;border-right: 1px solid #e2e2e2;}
+.btn:last-child{border-right: none;}
+.cancel{color: #a8a8a8;}
+.sure{color: #1a1a1a;}
+
+.poper-body{width:80%;position:absolute;background:#fff;left:50%;transform: translateX(-50%);top:50%;text-align:center;margin-top:-25%;}
+.poper-body .form-group{margin-top:2rem;}
+.poper-body .form-group label{padding:1.5rem 0;display:inline-block;}
+.poper-body .form-group input{border-bottom:1px solid #ccc;margin:1.5rem;}
+.poper-body button{width:8rem;margin-bottom:2rem;margin-top:1.5rem;}
+
+.bulterDetail{border: 1px solid #ccc; background: #fff; margin-top: 4%;}
+.bulterDetail ul{margin: 0 15px; font-size: 1.4rem; color: #666;}
+.bulterDetail li{border-bottom: 1px solid #e2e2e2; padding: 13px 0;}
+.bulterDetail li:last-child{border-bottom: 0;}
+.bulterDetail .name{display: inline-block; width: 70px;}
+.bulterDetail input[type="datetime-local"]{color:#666; background-size: 12px; height: 25px;}
+.bulterDetail select{padding-right: 20px; font-size: 1.4rem; color: #666; -webkit-appearance: none; background: url("../images/arrow_down.png") no-repeat right center; background-size: 12px;}
+.bulterDetail .cencel{border-bottom: 1px solid #838383; min-width: 70%; font-size: 1.6rem; color: #666; border-radius: 0;}
+.bulterDetail .button{position: fixed; left: 4%; bottom: 4%; width: 92%;}
+
+.info{color: #898686; font-size: 1.2rem; line-height: 30px;}
+
+
+
+
+
+.nodeList .nodeCon .flex:last-child{white-space: nowrap; text-overflow: ellipsis;}
+
+
+/*选择车辆*/
+.choseCar{background: #fff; overflow: hidden; padding: 14px 4%; font-size: 1.5rem;}
+.choseDl{font-size: 1.4rem; margin-bottom: 100px;}
+.choseDl dt{padding: 5%; text-align: center; font-size: 1.6rem; color: #666;}
+.choseDl dd{color: #ccc; padding: 8px 4%; margin-bottom: 3%; background: #fff; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc;}
+.choseDl dd p{overflow: hidden; padding: 1% 0;}
+.choseDl .on{border-color: #666; color: #666}
+
+.fixBtn{width: 100%;z-index: 2; text-align:center; left:0;}
+.fixBtn .button{width:92%;}
+/*切换任务*/
+.changeTask,.stadusDia{width: 100%; height: 100%; background: rgba(0,0,0,0.65); position: fixed; top: 0; left: 0; z-index: 201; font-size: 1.5rem;}
+.changeTask .taskCon{background: #fff; width: 100%; position: absolute; bottom: 0; left: 0; padding-bottom: 60px;}
+.changeTask li{padding: 12px; border-bottom: 1px solid #e9e9e9; text-align: center;}
+.changeTask li.on{color: red;}
+.taskList{margin-bottom: 60px;}
+.stadusDia{top:80px;}
+.sellDia{top:40px;}
+.stadusDia .taskCon{top: 0; bottom: auto;padding-bottom:0;}
+.stadusDia li{border-top: 1px solid #e9e9e9; border-bottom: 0;}
+
+/*无限滚动*/
+.page-group{padding: 80px 0 50px; background: none; z-index: 0;}
+.page{height: auto; top: 80px; bottom: 50px; background: none;}
+
+/*new*/
+.state{width: 92%; margin: auto; padding: 8px 0; font-size: 1.5rem;}
+.bulterInfo{background: #fff; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; font-size: 1.5rem; margin-bottom: 2%;}
+.bulterInfo li{border-bottom: 1px solid #ccc; margin: auto; padding:12px 4%; position: relative; overflow: hidden;}
+.bulterInfo li:last-child{border-bottom: 0;}
+.bulterInfo li p{display: inline-block; float: left;}
+.bulterInfo li:last-child p{max-width: 230px;}
+.bulterInfo li .name{min-width: 70px;}
+.bulterInfo li .absName{position: absolute; top: 0; left: 4%; width: 70px; padding: 12px 0;}
+.bulterInfo li .maxWidth{width: 100%; padding-left: 76px; box-sizing: border-box; overflow: hidden}
+.bulterInfo li .maxWidth em{display: inline-block; margin-bottom: 4px;}
+.bulterInfo li .maxWidth input[type="radio"]:first-child{margin-left: 10px !important;}
+.bulterInfo .date{padding: 0 6px;}
+.bulterInfo .date p{line-height: 45px;}
+.bulterInfo input[type="datetime-local"]{position: absolute; top: 0; left: 100px; border-bottom: 0; height: 40px; background: url("../images/arrow_down.png") no-repeat right center; background-size: 14px;}
+.bulterInfo input.longDate{left: 130px;}
+.li{height: 5rem; line-height: 5rem; border-bottom: 1px solid #ccc; background: #fff; position: relative;} 
+.li label.title{width: 6rem; display: inline-block; text-align: justify; text-align-last: justify; margin-left: 3rem; overflow: hidden;} 
+.li label.title:after{content: ''; height: 5rem; display: inline-block; width: 100%;} 
+.li span{position: absolute; right: 4.2rem; top: 0;} 
+.li i{background: url('../images/arrow_right_grey.png') 0 0 no-repeat; height: 5rem; width: .5rem; background-size: contain; background-position: center center; display: inline-block; float: right; margin-right: 1.3rem;} 
+.self, .packages, .review{margin-top: 1rem; border-top: 1px solid #ccc; background: #fff;} 
+.review .title{float: left; height: 5rem;} .upload{background: #fff;} 
+.upload .title{margin-left: 3rem; color: #cfcfcf; line-height: 3rem;} 
+.upload .wrapper{display: flex; height: 9rem; overflow:hidden;} 
+.upload .wrapper img{flex: 1; margin: 0 2rem; overflow:hidden;} 
+.upload .wrapper_one img{max-width:46%; min-width:46%;}
+.id-z{background: url(../images/id-z.png) 0 0 no-repeat; background-size: 100% 100%;} 
+.id-b{background: url(../images/id-b.png) 0 0 no-repeat; background-size: 100% 100%;} 
+.driver-z{background: url(../images/driver-z.png) 0 0 no-repeat; background-size: 100% 100%;} 
+.driver-b{background: url(../images/driver-b.png) 0 0 no-repeat; background-size: 100% 100%;} 
+.license{background: url(../images/license.png) 0 0 no-repeat; background-size: 100% 100%;} 
+.taxreg{background: url(../images/taxreg.png) 0 0 no-repeat; background-size: 100% 100%;}
+        
+.arrowRight a,.choseBulter a{background: url("../images/arrow_right_3.png") no-repeat right center; background-size: 9px; padding-right: 16px; display: block;}
+.remarksLi{position: relative}
+.remarksLi .remarks{position: absolute; left: 0; top: 0; height: 100%; width: 100%; padding: 12px 7% 12px 4%; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.remarksLi .remarks span{opacity: 0;}
+
+/*任务记录*/
+.taskLog{background: #fff; border-top: 1px solid #ccc; font-size: 1.5rem;}
+.taskLog li{overflow: hidden; border-bottom: 1px solid #ccc; padding: 12px 4%;}
+.taskLog .taskState{width: 25%; float: left;}
+.taskLog .taskStateVal{width: 75%; float: right; border-bottom: 1px solid #ccc; color: #999; overflow: hidden; padding: 12px 0;}
+.taskLog .taskStateVal:nth-child(2){padding-top: 0;}
+.taskLog .taskStateVal:last-child{border-bottom: 0;padding-bottom: 0}
+.taskLog .taskStateVal span{float: left; width: 45%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
+.taskLog .taskStateVal span:nth-child(2){width: 55%; float: right; text-align: right; }
+.taskLog .taskStateVal em{font-size: 1.3rem;}
+
+/*选择管家*/
+.choseBulter{background: #fff; font-size: 1.5rem; border-bottom: 1px solid #ccc; margin-bottom: 100px;}
+.choseBulter li{padding: 12px 0; margin: 0 4%; border-bottom: 1px solid #ccc;}
+.choseBulter li:last-child{border-bottom: 0;}
+.choseBulter li.on{background: url("../images/right.png") no-repeat 98% center; background-size: 18px;}
+
+.useDate{position: relative;}
+.bulterInfo input[type="datetime-local"]{left: 130px; background: none; height: 45px; color: #999;}
+
+
+/*订单选择产品*/
+.selPro{background: #fff; color: #666; min-height: 100%;}
+.selPro .title{font-size: 1.6rem; color: #333; background: #eee; padding-bottom: 3%; }
+.selPro .title span{padding: 14px 4%; background: #fff; border-bottom: 1px solid #ccc;display: block;}
+.selTab{font-size: 1.5rem; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: hidden; background: #fff;}
+.selTab li{padding: 14px 0; text-align: center; box-sizing: border-box; float: left; width: 50%; position: relative;}
+.selTab li:first-child{border-right: 1px solid #ccc;}
+.selTab li span{background: url("../images/arrow_down.png") no-repeat right center; background-size: 15px; padding-right: 20px;}
+.selTab .up span{background-image: url("../images/arrow_up.png")}
+.selTab select{width: 100%; height: 100%; opacity: 0; position: absolute; left: 0; top: 0;}
+.selUl{margin-bottom: 90px;}
+.selUl li{border-bottom: 1px solid #ccc; padding: 14px 4%; margin:0;}
+.selUl li.on{ background-position: 95% center;}
+
+        
+.package{
+            border-bottom:1px solid #e2e2e2;
+            line-height:4rem;
+            font-size:1.4rem;
+            padding-left:1.5rem;
+        }
+        .package i.choose{
+            background:url(../images/right.png) 0  0  no-repeat;
+            width:25px;
+            height:4rem;
+            background-size:contain;
+            background-position:center center;
+            float:right;
+            margin-right:2rem;    
+        }  
+       .package p.model label{
+       		margin-left:2rem;
+       }
+       .package p.model span.chkitem{
+       	margin-left:3rem;
+       	display:block;
+       }
+       .package p.model input[type=checkbox]{
+       		margin-left:2rem;
+       		padding:.5rem;
+       		border:1px solid #abc;
+       		margin-right:1rem;
+       }          
+       .selPro .btns{
+            position:fixed;
+            width:100%;
+            bottom:0;
+            left:0;
+            display:flex;
+            border-top:1px solid #e2e2e2;
+        }
+       .selPro .btn{
+           flex:1;
+           text-align:center;
+           align-self:center;
+           line-height:4.5rem;
+           border-right:1px solid #e2e2e2;
+        }
+       .selPro .btn:last-child{
+            border-right:none;
+        }
+       .selPro .cancel{
+            color:#a8a8a8;
+        }
+       .selPro .sure{
+            color:#1a1a1a;
+        }
+.packages .money{
+	font-size:1.2rem;
+}      
+.packages .ipt_money{
+	width:100%;
+	box-sizing:border-box;
+	left:0;
+	position:absolute;
+	top:0;
+	height:5rem;
+	padding-left:10rem;
+	background:none;
+	padding-right:14rem;
+}
+.packages .sel_state{
+	box-sizing:border-box;
+	left:0;
+	position:absolute;
+	top:0;
+	height:5rem;
+	margin-left:12rem;
+	background:none;
+	margin-right:14rem;
+	min-width:8rem;
+}
+
+
+/*订单增配项*/
+.selAddPage{min-height: 100%; background: #fff;}
+.selAdd:first-child{background: #eee; padding-bottom: 3%;}
+.selAdd dt{color: #333; font-size: 1.6rem; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 12px 4%; background: #fff;}
+.selAdd dd{font-size: 1.5rem; color: #666; overflow: hidden; padding: 0 4%; border-bottom: 1px solid #ccc; background: #fff;}
+.selAdd dd input[type="checkbox"]{border: 1px solid #111; width: 16px; height: 16px; margin-top: 14px; float: left; -webkit-appearance: none;}
+.selAdd dd input[type="checkbox"]:checked,.selAdd dd input[type="checkbox"].checkOn{background: url("../images/right_sel.png") no-repeat center center; background-size: 12px;}
+.selAdd dd .selName{overflow: hidden;}
+.selAdd .name{min-width:60px; margin-left: 6px; text-align:justify;text-justify:distribute-all-lines; float: left; height: 44px; line-height: 44px;}
+.selAdd .name:after{display:inline-block;content:'';width:100%;height:0; line-height: 0;}
+.selAdd dd ul{width: 100%;}
+.selAdd dd li{padding: 5px 0 5px 22px; }
+.selAdd dd li:last-child{margin-bottom: 6px;}
+.selAdd dd li:first-child{padding-top: 0;}
+.selAdd dd li input[type="radio"]{margin-left: 0;}
+/*订单增配项第二种*/
+.selAddPage{min-height: 100%; background: #fff;}
+.selAdd_2:first-child{background: #eee; padding-bottom: 3%;}
+.selAdd_2 dt{color: #333; font-size: 1.6rem; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 12px 4%; background: #fff;}
+.selAdd_2 dd{font-size: 1.5rem; color: #666; overflow: hidden; padding: 0 4%; border-bottom: 1px solid #ccc; background: #fff; min-height: 44px; position: relative;}
+.selAdd_2 dd input[type="checkbox"]{border: 1px solid #111; width: 16px; height: 16px; margin-top: 14px; float: left; -webkit-appearance: none;}
+.selAdd_2 dd input[type="checkbox"]:checked{background: url("../images/right_sel.png") no-repeat center center; background-size: 12px;}
+.selAdd_2 dd .selName{overflow: hidden;}
+.selAdd_2 .name{min-width:60px; margin-left: 6px; text-align:justify;text-justify:distribute-all-lines; float: left; height: 44px; line-height: 44px;}
+.selAdd_2 .name:after{display:inline-block;content:'';width:100%;height:0; line-height: 0;}
+.selAdd_2 .selName{position: absolute; left: 4%;  top: 0;}
+.selAdd_2 dd ul{width: 100%; padding-left: 88px; box-sizing: border-box; overflow: hidden;}
+.selAdd_2 dd li{padding:12px 0; border-bottom: 1px solid #ccc; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
+.selAdd_2 dd li:last-child{border-bottom: 0;}
+.selAdd_2 dd .short li{width: 50%; float: left; border-bottom: 0}
+
+
+.searchBox {
+            width: 101%;
+            background: #fff;
+            margin: 0;
+            overflow: hidden;
+            padding: 10px 4%;
+            box-sizing:border-box;
+            margin:-1px;
+        }
+        
+        .searchSec {
+            background: #f7f7f7;
+            border: 1px solid #e8e8e8;
+            border-radius: 4px;
+            overflow:hidden;
+        }
+        
+        .searchBox input {
+            width: 87%;
+            height: 34px;
+            float: left;
+            box-sizing: border-box;
+            background: none;
+        }
+        
+        .searchBtn {
+            width: 12%;
+            height: 34px;
+            display: block;
+            float: left;
+            box-sizing: border-box;
+            background: url("../images/search.png") no-repeat center center;
+            background-size: 20px;
+        }
+
+
+
+.overflow-text{width:100%; padding-left:10.4rem; padding-right:4.2rem; overflow:hidden; text-overflow: ellipsis;white-space: nowrap;right:0 !important; text-align:right; box-sizing:border-box;}
+@media screen and (max-width:330px){
+    .bulterInfo li:last-child p{max-width: 200px;}
+    .bulterPage .flex{max-width: 25%; min-width: 25%;}
+    .bulterPage .flex:first-child{max-width: 28%; min-width: 28%}
+    .bulterPage .flex:nth-child(2){max-width: 27%; min-width: 27%;}
+    .bulterPage .flex:last-child{max-width: 22%; min-width: 22%}
+}
+@media  screen and (min-width:375px ) and (max-width:413px) {
+    .bulterInfo li:last-child p{max-width: 200px;}
+}
+
+@media screen and (min-width:414px) and (max-width:579px){
+    .bulterInfo li:last-child p{max-width: 250px;}
+
+}
+
+@media screen and (min-width:578px){
+    .bulterInfo li:last-child p{max-width: 470px;}
+}
+
+
+

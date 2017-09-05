@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface BasicSupplierMapper<T> extends BaseDao<T> {
+
+}

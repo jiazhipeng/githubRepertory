@@ -1,0 +1,141 @@
+package cn.cuco.service.statistics.impl;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.common.utils.date.DateUtils;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.MemberMapper;
+import cn.cuco.entity.Member;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.service.statistics.MemberStatisticsService;
+
+@Service
+public class MemberStatisticsServiceImpl implements MemberStatisticsService {
+
+	@Autowired
+	private MemberMapper<Member> memberMapper;
+
+	@Override
+	public Map<String, Integer> getAddMemberStatistics(int type, Date startTime, Date endTime) {
+		ParamVerifyUtils.paramNotNull(startTime, "新增用户统计时，开始时间不能为空");
+		ParamVerifyUtils.paramNotNull(endTime, "新增用户统计时，结束时间不能为空");
+		if (startTime.after(endTime)) {
+			ExceptionUtil.throwWarn("新增用户统计时，开始是时间不能大于结束时间");
+		}
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		try {
+			long count = 0;
+			if (0 == type) {
+				// 按天查询
+				count = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60 * 24) + 1;
+				for (int i = 0; i < count; i++) {
+					startTime = DateUtils.getDayMiniDate(startTime);
+					endTime = DateUtils.getDayMaxDate(startTime);
+					Integer total = this.memberMapper.getRegisterMemberCountByDate(startTime, endTime);
+					result.put(DateUtils.formatDate(startTime, "yyyy-MM-dd"), total);
+					startTime = DateUtils.addDays(startTime, 1);
+				}
+			} else if (1 == type) {
+				// 按周查询
+				count = DateUtils.getCountTwoDayWeek(startTime, endTime);
+				for (int i = 0; i < count; i++) {
+					Date monday = DateUtils.getMondayByDate(DateUtils.addWeeks(startTime, i));
+					if (monday.before(startTime)) {
+						monday = startTime;
+					}
+					monday = DateUtils.getDayMiniDate(monday);
+					Date sunday = DateUtils.getDayMaxDate(DateUtils.getSundayByDate(monday));
+					if (sunday.after(endTime)) {
+						sunday = endTime;
+					}
+					Integer total = this.memberMapper.getRegisterMemberCountByDate(monday, sunday);
+					result.put(DateUtils.formatDate(startTime, "yyyy-MM-dd"), total);
+				}
+			} else {
+				// 按月查询
+				count = DateUtils.getCountTwoDayMonth(startTime, endTime);
+				for (int i = 0; i < count; i++) {
+					Date first = DateUtils.getFirstOfMonth(DateUtils.addMonths(startTime, i));
+					if (first.before(startTime)) {
+						first = startTime;
+					}
+					first = DateUtils.getDayMiniDate(first);
+					Date end = DateUtils.getDayMaxDate(DateUtils.getLastOfMonth(first));
+					if (end.after(endTime)) {
+						end = endTime;
+					}
+					Integer total = this.memberMapper.getRegisterMemberCountByDate(first, end);
+					result.put(DateUtils.formatDate(startTime, "yyyy-MM-dd"), total);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Integer> getMemberShipStatistics(int type, Date startTime, Date endTime) {
+		ParamVerifyUtils.paramNotNull(startTime, "新增入会统计时，开始时间不能为空");
+		ParamVerifyUtils.paramNotNull(endTime, "新增入会统计时，结束时间不能为空");
+		if (startTime.after(endTime)) {
+			ExceptionUtil.throwWarn("新增入会统计时，开始是时间不能大于结束时间");
+		}
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		try {
+			long count = 0;
+			if (0 == type) {
+				// 按天查询
+				count = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60 * 24) + 1;
+				for (int i = 0; i < count; i++) {
+					startTime = DateUtils.getDayMiniDate(startTime);
+					endTime = DateUtils.getDayMaxDate(startTime);
+					Integer total = this.memberMapper.getMemberCountByDate(startTime, endTime);
+					result.put(DateUtils.formatDate(startTime, "yyyy-MM-dd"), total);
+					startTime = DateUtils.addDays(startTime, 1);
+				}
+			} else if (1 == type) {
+				// 按周查询
+				count = DateUtils.getCountTwoDayWeek(startTime, endTime);
+				for (int i = 0; i < count; i++) {
+					Date monday = DateUtils.getMondayByDate(DateUtils.addWeeks(startTime, i));
+					if (monday.before(startTime)) {
+						monday = startTime;
+					}
+					monday = DateUtils.getDayMiniDate(monday);
+					Date sunday = DateUtils.getDayMaxDate(DateUtils.getSundayByDate(monday));
+					if (sunday.after(endTime)) {
+						sunday = endTime;
+					}
+					Integer total = this.memberMapper.getMemberCountByDate(monday, sunday);
+					result.put(DateUtils.formatDate(startTime, "yyyy-MM-dd"), total);
+				}
+			} else {
+				// 按月查询
+				count = DateUtils.getCountTwoDayMonth(startTime, endTime);
+				for (int i = 0; i < count; i++) {
+					Date first = DateUtils.getFirstOfMonth(DateUtils.addMonths(startTime, i));
+					if (first.before(startTime)) {
+						first = startTime;
+					}
+					first = DateUtils.getDayMiniDate(first);
+					Date end = DateUtils.getDayMaxDate(DateUtils.getLastOfMonth(first));
+					if (end.after(endTime)) {
+						end = endTime;
+					}
+					Integer total = this.memberMapper.getMemberCountByDate(first, end);
+					result.put(DateUtils.formatDate(startTime, "yyyy-MM-dd"), total);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+}

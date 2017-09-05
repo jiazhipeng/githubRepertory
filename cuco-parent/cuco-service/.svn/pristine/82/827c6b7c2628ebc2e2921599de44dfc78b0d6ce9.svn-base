@@ -1,0 +1,43 @@
+package cn.cuco.enums;
+
+/**
+* @ClassName: Validate 
+* @Description: 是否有效枚举
+* @author huanghua
+* @date 2017年2月21日 下午4:18:44
+ */
+public enum Validate {
+	THE_SHELVES(0,"下架"),
+	SHELVES(1,"上架")
+    ;
+
+    private Integer value;
+    private String display;
+
+    Validate(Integer value, String display) {
+        this.value = value;
+        this.display = display;
+    }
+
+    public static Validate[] getAll(){
+        return Validate.values();
+    }
+
+    public static Validate fromValue(Integer value){
+        Validate[] all = getAll();
+        for(Validate temp : all){
+            if(temp.getValue().equals(value)){
+                return temp;
+            }
+        }
+        return null;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+}

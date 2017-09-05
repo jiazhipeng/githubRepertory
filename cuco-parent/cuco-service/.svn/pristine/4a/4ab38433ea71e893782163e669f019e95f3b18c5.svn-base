@@ -1,0 +1,167 @@
+package cn.cuco.service.member.carUsed;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+
+import cn.cuco.entity.MemberCarUsed;
+import cn.cuco.entity.MemberCarUsedAddress;
+import cn.cuco.page.PageResult;
+
+/** 
+* @ClassName: MemberCarUsedService 
+* @Description: 用户用车相关接口
+* @author zc.du
+* @date 2017年2月23日 上午10:40:12  
+*/
+public interface MemberCarUsedService {
+    /** 
+    * @Title: createMemberCarUsedForApp 
+    * @Description: app端发起用户用车
+    * @author zc.du
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed createMemberCarUsedForApp(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Title: updateMemberCarUsedForChangeCar 
+    * @Description: 用户换车
+    * @author zc.du
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed updateMemberCarUsedForChangeCar(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Title: updateMemberCarUsedForLimitChangeCar 
+    * @Description: 限号换车
+    * @author zc.du
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed updateMemberCarUsedForLimitChangeCar(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Title: updateMemberCarUsed 
+    * @Description: 后台修改用户用车信息
+    * @author zc.du
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed updateMemberCarUsedForBackstage(MemberCarUsed memberCarUsed);
+    
+    /** 
+     * @Title: updateMemberCarUsed 
+     * @Description: 用户修改用户用车信息
+     * @author zc.du
+     * @param memberCarUsed
+     * @return MemberCarUsed
+     */
+     public MemberCarUsed updateMemberCarUsedForMember(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Title: getMemberCarUsed 
+    * @Description: 查询用户用车记录
+    * @author zc.du
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed getMemberCarUsed(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Title: getMemberCarUsedListByPage 
+    * @Description: 分页查询指定用户用车列表
+    * @author zc.du
+    * @param memberCarUsed
+    * @return PageResult<MemberCarUsed>
+    */
+    public PageResult<MemberCarUsed> getMemberCarUsedListByPage(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Title: getMemberCarUsedCountByMemberId 
+    * @Description: 根据用户ID查询用户用车次数
+    * @author zc.du
+    * @param memberId
+    * @return Integer
+    */
+    public Integer getMemberCarUsedCountByMemberId(Long memberId);
+    
+    /**
+    * @Title: getMemberCarUsedMileagesByMemberId 
+    * @Description: 根据用户ID查询用户行驶里程
+    * @author zc.du
+    * @param memberId
+    * @return BigDecimal
+    */
+    public BigDecimal getMemberCarUsedMileagesByMemberId(Long memberId);
+    
+    /** 
+    * @Title: getMemberCarUsedHabit 
+    * @Description: 根据用户ID获取用户用车里程统计
+    * @author zc.du
+    * @param memberId
+    * @return Map<String,Integer>
+    */
+    public Map<String,Integer> getMemberDriveMileageStatistics(Long memberId);
+    
+    /** 
+    * @Title: getMemberCarTypeUsedStatistics 
+    * @Description: 根据用户ID获取用户使用车型统计
+    * @author zc.du
+    * @param memberId
+    * @return Map<String,Integer>
+    */
+    public Map<String,Integer> getMemberCarTypeUsedStatistics(Long memberId); 
+    /** 
+    * @Title: updateMemberCarUsedStatusByCancelForApp 
+    * @Description: app端用户取消用车
+    * @author zc.du
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed updateMemberCarUsedStatusByCancelForApp(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Title: deleteMemberCarUsedAddress 
+    * @Description: 删除用户用车地址
+    * @author zc.du
+    * @param memberCarUsedAddress
+    * @return Integer
+    */
+    public Integer deleteMemberCarUsedAddress(MemberCarUsedAddress memberCarUsedAddress);
+     
+    /** 
+    * @Title: getMemberCarUsedAddressListByPage 
+    * @Description: 分页查询用户用车地址列表
+    * @author zc.du
+    * @param memberCarUsedAddress
+    * @return PageResult<MemberCarUsedAddress>
+    */
+    public PageResult<MemberCarUsedAddress> getMemberCarUsedAddressListByPage(MemberCarUsedAddress memberCarUsedAddress);
+    
+    /** 
+    * @Title: getLastMemberCarUsedByMemberId 
+    * @Description: 查询用户最后一次用车记录
+    * @author zc.du
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed getLastMemberCarUsedByMemberId(MemberCarUsed memberCarUsed);
+    
+    /** 
+     * @Title: getVehicleRestrictions 
+     * @Description: 车辆限号通知
+     * @author huanghua
+     */
+    public void getVehicleRestrictions();
+    
+    /** 
+    * @Title: getMemberCarusedListByCarIdAndDate 
+    * @Description: 根据车辆ID、时间查询用车记录(违章专用)
+    * @author zc.du
+    * @param memberCarUsed(caroperateId:车辆ID;startDate:日期)
+    * @return List<MemberCarUsed>
+    */
+    public List<MemberCarUsed> getMemberCarusedListByCarIdAndDate(MemberCarUsed memberCarUsed);
+}

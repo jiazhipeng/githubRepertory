@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarViolationMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.CarViolation" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="car_id" property="carId" jdbcType="BIGINT" />
+    <result column="car_plate_num" property="carPlateNum" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_mobile" property="memberMobile" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="violation_time" property="violationTime" jdbcType="TIMESTAMP" />
+    <result column="violation_address" property="violationAddress" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="deal_type" property="dealType" jdbcType="INTEGER" />
+    <result column="fine" property="fine" jdbcType="DECIMAL" />
+    <result column="point_penalty" property="pointPenalty" jdbcType="INTEGER" />
+    <result column="car_used_id" property="carUsedId" jdbcType="BIGINT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.CarViolation" >
+       select  count(1) 
+    from td_car_violation  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "violationTime != null ">
+        and violation_time = #{violationTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "violationAddress != null and violationAddress != '' ">
+        and violation_address = #{violationAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "dealType != null ">
+        and deal_type = #{dealType,jdbcType=INTEGER}      
+      </if>
+      <if test= "fine != null ">
+        and fine = #{fine,jdbcType=DECIMAL}      
+      </if>
+      <if test= "pointPenalty != null ">
+        and point_penalty = #{pointPenalty,jdbcType=INTEGER}      
+      </if>
+      <if test= "carUsedId != null ">
+        and car_used_id = #{carUsedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "description != null and description != '' ">
+        and description = #{description,jdbcType=VARCHAR}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarViolation" >
+       select  <include refid="Base_Column_List" />
+    from td_car_violation  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "violationTime != null ">
+        and violation_time = #{violationTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "violationAddress != null and violationAddress != '' ">
+        and violation_address = #{violationAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "dealType != null ">
+        and deal_type = #{dealType,jdbcType=INTEGER}      
+      </if>
+      <if test= "fine != null ">
+        and fine = #{fine,jdbcType=DECIMAL}      
+      </if>
+      <if test= "pointPenalty != null ">
+        and point_penalty = #{pointPenalty,jdbcType=INTEGER}      
+      </if>
+      <if test= "carUsedId != null ">
+        and car_used_id = #{carUsedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "description != null and description != '' ">
+        and description = #{description,jdbcType=VARCHAR}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, car_id, car_plate_num, 
+      member_id, member_name, member_mobile, 
+      status, violation_time, violation_address, 
+      type, deal_type, fine, 
+      point_penalty, car_used_id, description, 
+      remark, modifier, modifier_id, 
+      created, lasttime_modify
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarViolation" >
+    select 
+      id, car_id, car_plate_num, 
+      member_id, member_name, member_mobile, 
+      status, violation_time, violation_address, 
+      type, deal_type, fine, 
+      point_penalty, car_used_id, description, 
+      remark, modifier, modifier_id, 
+      created, lasttime_modify
+    from td_car_violation where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.CarViolation" >
+    delete from td_car_violation where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_car_violation where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="cn.cuco.entity.CarViolation" >
+    insert into td_car_violation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "carId != null ">
+         car_id,
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         car_plate_num,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         member_mobile,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "violationTime != null ">
+         violation_time,
+      </if>
+      <if test= "violationAddress != null and violationAddress != '' ">
+         violation_address,
+      </if>
+      <if test= "type != null ">
+         type,
+      </if>
+      <if test= "dealType != null ">
+         deal_type,
+      </if>
+      <if test= "fine != null ">
+         fine,
+      </if>
+      <if test= "pointPenalty != null ">
+         point_penalty,
+      </if>
+      <if test= "carUsedId != null ">
+         car_used_id,
+      </if>
+      <if test= "description != null and description != '' ">
+         description,
+      </if>
+      <if test= "remark != null and remark != '' ">
+         remark,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carId != null ">
+         #{carId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "violationTime != null ">
+         #{violationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "violationAddress != null and violationAddress != '' ">
+         #{violationAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "type != null ">
+         #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "dealType != null ">
+         #{dealType,jdbcType=INTEGER},
+      </if>
+      <if test= "fine != null ">
+         #{fine,jdbcType=DECIMAL},
+      </if>
+      <if test= "pointPenalty != null ">
+         #{pointPenalty,jdbcType=INTEGER},
+      </if>
+      <if test= "carUsedId != null ">
+         #{carUsedId,jdbcType=BIGINT},
+      </if>
+      <if test= "description != null and description != '' ">
+         #{description,jdbcType=VARCHAR},
+      </if>
+      <if test= "remark != null and remark != '' ">
+         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_car_violation (
+         id,
+         car_id,
+         car_plate_num,
+         member_id,
+         member_name,
+         member_mobile,
+         status,
+         violation_time,
+         violation_address,
+         type,
+         deal_type,
+         fine,
+         point_penalty,
+         car_used_id,
+         description,
+         remark,
+         modifier,
+         modifier_id,
+         created,
+         lasttime_modify)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.carId,jdbcType=BIGINT},
+         #{item.carPlateNum,jdbcType=VARCHAR},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.memberMobile,jdbcType=VARCHAR},
+         #{item.status,jdbcType=INTEGER},
+         #{item.violationTime,jdbcType=TIMESTAMP},
+         #{item.violationAddress,jdbcType=VARCHAR},
+         #{item.type,jdbcType=INTEGER},
+         #{item.dealType,jdbcType=INTEGER},
+         #{item.fine,jdbcType=DECIMAL},
+         #{item.pointPenalty,jdbcType=INTEGER},
+         #{item.carUsedId,jdbcType=BIGINT},
+         #{item.description,jdbcType=VARCHAR},
+         #{item.remark,jdbcType=VARCHAR},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.modifierId,jdbcType=BIGINT},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.CarViolation" >
+    update td_car_violation
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carId != null ">
+      car_id = #{carId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+      car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+      member_mobile = #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "violationTime != null ">
+      violation_time = #{violationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "violationAddress != null and violationAddress != '' ">
+      violation_address = #{violationAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "type != null ">
+      type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "dealType != null ">
+      deal_type = #{dealType,jdbcType=INTEGER},
+      </if>
+      <if test= "fine != null ">
+      fine = #{fine,jdbcType=DECIMAL},
+      </if>
+      <if test= "pointPenalty != null ">
+      point_penalty = #{pointPenalty,jdbcType=INTEGER},
+      </if>
+      <if test= "carUsedId != null ">
+      car_used_id = #{carUsedId,jdbcType=BIGINT},
+      </if>
+      <if test= "description != null and description != '' ">
+      description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test= "remark != null and remark != '' ">
+      remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

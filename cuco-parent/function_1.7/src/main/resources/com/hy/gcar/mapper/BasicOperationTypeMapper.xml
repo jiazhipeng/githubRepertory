@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.BasicOperationTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.BasicOperationType" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.BasicOperationType" >
+       select  count(1) 
+    from tc_basic_operation_type  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "name != null and name != '' ">
+        and name = #{name,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.BasicOperationType" >
+       select  <include refid="Base_Column_List" />
+    from tc_basic_operation_type  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "name != null and name != '' ">
+        and name = #{name,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, name, status, 
+      created, lasttime_modify, modifier, 
+      modifier_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.BasicOperationType" >
+    select 
+      id, name, status, 
+      created, lasttime_modify, modifier, 
+      modifier_id
+    from tc_basic_operation_type where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.BasicOperationType" >
+    delete from tc_basic_operation_type where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tc_basic_operation_type where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.BasicOperationType" >
+    insert into tc_basic_operation_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "name != null and name != '' ">
+         name,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tc_basic_operation_type (
+         id,
+         name,
+         status,
+         created,
+         lasttime_modify,
+         modifier,
+         modifier_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.name,jdbcType=VARCHAR},
+         #{item.status,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.modifierId,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.BasicOperationType" >
+    update tc_basic_operation_type
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+      name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

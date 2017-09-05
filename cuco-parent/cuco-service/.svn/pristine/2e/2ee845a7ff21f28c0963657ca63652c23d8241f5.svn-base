@@ -1,0 +1,123 @@
+package cn.cuco.service.wechatMessage.impl;
+
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import cn.cuco.wechat.push.template.TaskMessage;
+import cn.cuco.wechat.push.template.TestMessage;
+import cn.cuco.wechat.push.template.messageManager.WechatTemplateIDManager;
+
+/**
+ * 
+* @ClassName: WechatMessageFactory 
+* @Description: wechatMessage的工厂制造者   
+* @author jiaxiaoxian
+* @date 2017年2月21日 上午11:48:11
+ */
+@Service
+public class WechatMessageFactory extends FactoryEngine{
+
+	@Override
+	public Map<String, Object> createTestMessage(){
+		//this.wechatMsgParent.getRemark();
+		TestMessage testMessage = new TestMessage();
+		testMessage.setMessage("恭喜您以神勇的表现力压群雄,成功拍得宝贝");
+		testMessage.setPrice("2000000.00");
+		testMessage.setProductName("蒙娜丽莎的微笑");
+		testMessage.setTemplateId(WechatTemplateIDManager.TEST_MSG_ID);
+		testMessage.setUrl("www.baidu.com");
+		testMessage.setOpenId(openId);
+		return testMessage.getSendMessage();
+	}
+
+	/**
+	 * 送车任务变更为送车中
+	 */
+	@Override
+	public Map<String, Object> createSendInCarMessage() {
+		TaskMessage taskMessage = new TaskMessage();
+		taskMessage.setMessage("管家已出发送车");
+		taskMessage.setTemplateId(WechatTemplateIDManager.TASK_NOTICE);
+		taskMessage.setType("送车中");
+		taskMessage.setInfo("送车任务");
+		taskMessage.setUrl("www.baidu.com");
+		taskMessage.setOpenId(openId);
+		return taskMessage.getSendMessage();
+	}
+
+	/**
+	 * 送车任务变更为已到达
+	 */
+	@Override
+	public Map<String, Object> createSendArrivedMessage() {
+		TaskMessage taskMessage = new TaskMessage();
+		taskMessage.setMessage("管家已经到达您指定的地点，最晚将于HH:mm开始计费。请及时取车");
+		taskMessage.setTemplateId(WechatTemplateIDManager.TASK_NOTICE);
+		taskMessage.setType("已到达");
+		taskMessage.setInfo("送车任务");
+		taskMessage.setUrl("www.baidu.com");
+		taskMessage.setOpenId(openId);
+		return taskMessage.getSendMessage();
+	}
+
+	/**
+	 * 送车任务变更为已完成
+	 */
+	@Override
+	public Map<String, Object> createSendCompletedMessage() {
+		TaskMessage taskMessage = new TaskMessage();
+		taskMessage.setMessage("祝您用车愉快，如用车过程中遇紧急情况，务必请先致电我们（XXXXXXX）");
+		taskMessage.setTemplateId(WechatTemplateIDManager.TASK_NOTICE);
+		taskMessage.setType("已完成");
+		taskMessage.setInfo("送车任务");
+		taskMessage.setUrl("www.baidu.com");
+		taskMessage.setOpenId(openId);
+		return taskMessage.getSendMessage();
+	}
+
+	/**
+	 * 取车任务变更为取车中
+	 */
+	@Override
+	public Map<String, Object> createGetTakeCarMessage() {
+		TaskMessage taskMessage = new TaskMessage();
+		taskMessage.setMessage("管家已出发取车");
+		taskMessage.setTemplateId(WechatTemplateIDManager.TASK_NOTICE);
+		taskMessage.setType("取车中");
+		taskMessage.setInfo("取车任务");
+		taskMessage.setUrl("www.baidu.com");
+		taskMessage.setOpenId(openId);
+		return taskMessage.getSendMessage();
+	}
+
+	/**
+	 * 取车任务变更为已到达
+	 */
+	@Override
+	public Map<String, Object> createGetArrivedMessage() {
+		TaskMessage taskMessage = new TaskMessage();
+		taskMessage.setMessage("管家已经到达您指定的地点");
+		taskMessage.setTemplateId(WechatTemplateIDManager.TASK_NOTICE);
+		taskMessage.setType("已到达");
+		taskMessage.setInfo("取车任务");
+		taskMessage.setUrl("www.baidu.com");
+		taskMessage.setOpenId(openId);
+		return taskMessage.getSendMessage();
+	}
+
+	/**
+	 * 取车任务变更为待入库
+	 */
+	@Override
+	public Map<String, Object> createGetPendingStorageMessage() {
+		TaskMessage taskMessage = new TaskMessage();
+		taskMessage.setMessage("感谢您使用CUCO，点击可查看本次用车详情");
+		taskMessage.setTemplateId(WechatTemplateIDManager.TASK_NOTICE);
+		taskMessage.setType("已完成");
+		taskMessage.setInfo("取车任务");
+		taskMessage.setUrl("www.baidu.com");
+		taskMessage.setOpenId(openId);
+		return taskMessage.getSendMessage();
+	}
+}

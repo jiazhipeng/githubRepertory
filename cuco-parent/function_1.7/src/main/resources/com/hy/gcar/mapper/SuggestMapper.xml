@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.SuggestMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.Suggest" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Suggest" >
+       select  <include refid="Base_Column_List" />
+    from td_suggest  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "content != null and content != '' ">
+        and content = #{content,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+        and mobile = #{mobile,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, member_id, member_name, 
+      content, created, mobile
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Suggest" >
+    select 
+      id, member_id, member_name, 
+      content, created, mobile
+    from td_suggest where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.Suggest" >
+    delete from td_suggest where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_suggest where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.gcar.entity.Suggest" useGeneratedKeys="true" keyProperty="id">
+    insert into td_suggest
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "content != null and content != '' ">
+         content,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+         mobile,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "content != null and content != '' ">
+         #{content,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+         #{mobile,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_suggest (
+         id,
+         member_id,
+         member_name,
+         content,
+         created,
+         mobile)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.content,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.mobile,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.Suggest" >
+    update td_suggest
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "content != null and content != '' ">
+      content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+      mobile = #{mobile,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

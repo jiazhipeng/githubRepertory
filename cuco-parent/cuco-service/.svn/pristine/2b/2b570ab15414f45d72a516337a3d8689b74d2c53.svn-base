@@ -1,0 +1,103 @@
+package cn.cuco.service.order;
+
+import java.util.List;
+import cn.cuco.entity.OrderCarport;
+import cn.cuco.page.PageResult;
+
+/**
+ * 解锁订单相关接口
+ * @author dz.du
+ */
+public interface OrderCarportService {
+	/** 
+    * @Description: 创建解锁订单基础方法
+    * @param orderCarport
+    * @return OrderCarport
+    */
+    public OrderCarport createOrderCarport(OrderCarport orderCarport);
+    
+    /** 
+    * @Description: 修改解锁订单基础方法
+    * @param orderCarport
+    * @return OrderCarport
+    */
+    public OrderCarport updateOrderCarport(OrderCarport orderCarport);
+    
+    /** 
+    * @Description: 删除解锁订单基础方法
+    * @param orderCarport
+    * @return Integer
+    */
+    public Integer deleteOrderCarport(OrderCarport orderCarport);
+    
+    /** 
+     * @Description: 查询解锁订单基础方法
+     * @param orderCarport
+     * @return OrderCarport
+     */
+    public OrderCarport getOrderCarport(OrderCarport orderCarport); 
+    
+    /** 
+     * @Description: 查询解锁订单列表基础方法
+     * @param orderCarport
+     * @return List<OrderCarport>
+     */
+    public List<OrderCarport> getOrderCarportList(OrderCarport orderCarport);
+    
+    /** 
+     * @Description: 分页查询解锁订单列表基础方法
+     * @param orderCarport
+     * @return PageResult<OrderCarport>
+     */
+    public PageResult<OrderCarport> getOrderCarportListByPage(OrderCarport orderCarport);
+
+    /** 
+     * @Description: 查询解锁订单数量基础方法
+     * @param orderCarport
+     * @return Integer
+     */
+    public Integer getOrderCarportCount(OrderCarport orderCarport);
+
+    /** 
+     * @Description: app端发起解锁订单
+     * @param orderCarport
+     * @return OrderCarport
+     */
+    public OrderCarport createOrderCarportForApp(OrderCarport orderCarport);
+    
+    /** 
+     * @Description: app端修改解锁订单状态为"已取消"
+     * @param orderCarport
+     * @return OrderCarport
+     */
+    public OrderCarport updateOrderCarportStatusByCancelForApp(OrderCarport orderCarport);
+    
+    /** 
+     * @Description: 修改解锁订单状态为"已取消"
+     * @param orderCarport
+     * @return OrderCarport
+     */
+    public OrderCarport updateOrderCarportStatusByCancel(OrderCarport orderCarport);
+    
+    /** 
+     * @Description: 修改解锁订单状态为"支付中"
+     * @param orderCarport
+     * @return OrderCarport
+     */
+    public OrderCarport updateOrderCarportStatusByPaying(OrderCarport orderCarport);
+    
+    /** 
+     * @Description: 修改解锁订单状态为"部分付款"
+     * @param orderCarport
+     * @return OrderCarport
+     */
+    public OrderCarport updateOrderCarportStatusByPartPay(OrderCarport orderCarport);
+    
+    /** 
+     * @Description: 修改解锁订单状态为"已付款"
+     * @param orderCarport
+     * @return OrderCarport
+     */
+    public OrderCarport updateOrderCarportStatusByCompletePay(OrderCarport orderCarport);
+
+}

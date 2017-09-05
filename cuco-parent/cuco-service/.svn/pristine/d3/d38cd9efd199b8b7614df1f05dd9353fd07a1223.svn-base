@@ -1,0 +1,43 @@
+package cn.cuco.service.security.impl;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.enums.security.RoleEnum;
+import cn.cuco.service.security.SecurityService;
+import com.hy.authorization.entity.User;
+import com.hy.authorization.service.ParentServiceImpl;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * @ClassName:
+ * @Description：
+ * @author：WangShuai
+ * @date：2017年03月01 17:57:00
+ */
+@Service
+public class SecurityServiceImpl implements SecurityService {
+
+    @Override
+    public List<User> getUsersByRole(RoleEnum roleEnum) {
+        ParamVerifyUtils.paramNotNull(roleEnum,"根据角色获取用户失败：角色标识不可为空");
+
+        List<User> users = ParentServiceImpl.getUsersByRoleUniqueCode(roleEnum.name());
+
+        return users;
+    }
+
+    @Override
+    public User getUserByMobileAndEmail(String mobile, String email) {
+        User user = new User();
+
+        user.getId();//用户ID
+        user.getName();//用户名称
+
+        boolean tf = user.hasRole("role_code"); // 判断用户是否拥有够角色
+
+        return user;
+    }
+
+
+}

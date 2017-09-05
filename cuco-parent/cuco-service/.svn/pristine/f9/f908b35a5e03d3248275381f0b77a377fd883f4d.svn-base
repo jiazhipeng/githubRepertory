@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface OperationLogMapper<T> extends BaseDao<T> {
+
+}

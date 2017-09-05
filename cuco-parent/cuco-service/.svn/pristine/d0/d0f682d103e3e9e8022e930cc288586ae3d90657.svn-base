@@ -1,0 +1,126 @@
+package cn.cuco.service.member.info;
+
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberInfo;
+import cn.cuco.entity.MemberLoginLog;
+import cn.cuco.page.PageResult;
+
+/**
+ * @ClassName: MemberService
+ * @Description: 用户模块接口
+ * @author zc.du
+ * @date 2017年2月23日 上午9:19:49
+ */
+public interface MemberService {
+
+	/**
+	 * @Title: updateMember
+	 * @Description: 修改用户(不包括证件信息)
+	 * @author zc.du
+	 * @param member
+	 * @return Member
+	 */
+	public Member updateMember(Member member);
+
+	/**
+	 * @Title: updateMemberInfo
+	 * @Description: 更新用户证件信息
+	 * @author zc.du
+	 * @param memberInfo
+	 * @return Member
+	 */
+	public Member updateMemberInfo(MemberInfo memberInfo);
+
+	/**
+	 * @Title: getMember
+	 * @Description: 根据用户ID查询用户信息(不包括证件信息)
+	 * @author zc.du
+	 * @param memberId
+	 * @return Member
+	 */
+	public Member getMemberById(Long memberId);
+	
+	/**
+	 * @Title: getMember
+	 * @Description: 根据用户ID查询用户信息(包括证件信息)
+	 * @author zc.du
+	 * @param memberId
+	 * @return Member
+	 */
+	public Member getMemberInfoById(Long memberId);
+
+	/**
+	 * @Title: getMemberByMobile
+	 * @Description: 根据用户手机号码查询用户
+	 * @author zc.du
+	 * @param mobile
+	 * @return Member
+	 */
+	public Member getMemberByMobile(String mobile);
+
+	/**
+	 * @Title: getMemberByOpenId
+	 * @Description: 根据openId查询用户
+	 * @author zc.du
+	 * @param openId
+	 * @return Member
+	 */
+	public Member getMemberByOpenId(String openId);
+
+	/**
+	 * @Title: getMemberListByPage
+	 * @Description: 分页查询用户列表
+	 * @author zc.du
+	 * @param member
+	 * @return PageResult<Member>
+	 */
+	public PageResult<Member> getMemberListByPage(Member member);
+	
+	/**
+	 * @Title: getMemberListByPageForBackstage
+	 * @Description: 后台分页查询用户列表
+	 * @author zc.du
+	 * @param member
+	 * @return PageResult<Member>
+	 */
+	public PageResult<Member> getMemberListByPageForBackstage(Member member);
+
+	/**
+	 * @Title: updateMemberByFreeze
+	 * @Description: 通过用户ID冻结用户
+	 * @author zc.du
+	 * @param member
+	 * @return Member
+	 */
+	public Member updateMemberByFreeze(Member member);
+
+	/**
+	 * @Title: updateMemberByUnfreeze
+	 * @Description: 通过用户ID解冻用户
+	 * @author zc.du
+	 * @param member
+	 * @return Member
+	 */
+	public Member updateMemberByUnfreeze(Member member);
+
+	/**
+	 * @Title: updateMemberLoginForWechat
+	 * @Description: 用户微信登陆
+	 * @author zc.du
+	 * @param member
+	 * @param memberLoginLog
+	 * @return Member
+	 */
+	public Member updateMemberLoginForWechat(Member member, MemberLoginLog memberLoginLog);
+
+	/**
+	 * @Title: updateMemberLoginForApp
+	 * @Description: 用户app登陆
+	 * @author zc.du
+	 * @param member
+	 * @param memberLoginLog
+	 * @return Member
+	 */
+	public Member updateMemberLoginForApp(Member member, MemberLoginLog memberLoginLog);
+
+}

@@ -1,0 +1,44 @@
+package cn.cuco.service.basic.business.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.RestrictionMapper;
+import cn.cuco.entity.Restriction;
+import cn.cuco.service.basic.business.RestrictionService;
+
+@Service(value = "restrictionService")
+public class RestrictionServiceImpl implements RestrictionService {
+
+    @Autowired
+    private RestrictionMapper<Restriction> restrictionMapper;
+
+	@Override
+	public Restriction createRestriction(Restriction restriction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Restriction> getMouthRestriction(Restriction restriction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Restriction> getRestriction(Restriction restriction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Restriction> getRestrictionByDate(Restriction restriction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+}

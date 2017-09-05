@@ -1,0 +1,74 @@
+package cn.cuco.controller.manager.basic.city;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.cuco.annotation.API;
+import cn.cuco.entity.Restriction;
+import cn.cuco.service.basic.business.RestrictionService;
+import cn.cuco.service.basic.carport.CarTypeService;
+
+
+/** 
+ * @ClassName: CityServeController 
+ * @Description: 城市服务
+ * @author: wangchuntao 
+ * @date: 2017年2月23日 上午10:31:52  
+ */
+@RestController
+public class CityServeController {
+	protected Logger logger = Logger.getLogger(this.getClass());
+    
+	@Autowired
+	CarTypeService carTypeService;
+	@Autowired
+	RestrictionService restrictionService;
+    /**
+     * @Title: getOperateSettingListByPage 
+     * @Description: 参数列表
+     * @author: wangchuntao 
+     * @param operateSetting
+     * @return 
+     * @return Object
+     * @date: 2017年2月23日 上午10:24:10
+     */
+	@API(value="城市服务列表")
+    @RequestMapping(value = "/cityServe/getCityServeList",method = RequestMethod.GET)
+    public Object getCityServeList(){
+        return carTypeService.getAllCarTypeCityAll();
+    }
+   /**
+    * 
+    * @Title: getOperateSettingLogs 
+    * @Description: 查看该城市的限号规则
+    * @author: wangchuntao 
+    * @param id
+    * @return Object
+    * @date: 2017年2月23日 上午10:47:30
+    */
+	@API(value="查看城市的限号规则")
+    @RequestMapping(value = "/cityServe/getRestrictions",method = RequestMethod.GET)
+    public Object getRestrictions(Long id){
+    	Restriction restriction = new Restriction();
+    	restriction.setCityId(id);
+		return restrictionService.getMouthRestriction(restriction );
+    }
+    
+    /**
+     * @Title: updateRestriction 
+     * @Description: 修改限号规则
+     * @author: wangchuntao 
+     * @param restriction
+     * @return Object
+     * @date: 2017年2月23日 上午10:48:18
+     */
+	@API(value="修改限号规则")
+    @RequestMapping(value = "/cityServe/updateRestriction",method = RequestMethod.POST)
+    public Object updateRestriction(Restriction restriction){
+    	return restrictionService.createRestriction(restriction);
+    }
+    
+}

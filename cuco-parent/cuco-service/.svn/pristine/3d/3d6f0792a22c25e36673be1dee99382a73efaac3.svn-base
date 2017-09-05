@@ -1,0 +1,71 @@
+package cn.cuco.service.member;
+
+
+import java.util.List;
+
+import cn.cuco.entity.MemberAttachment;
+import cn.cuco.page.PageResult;
+
+/**
+ * 
+ * @author zc.du
+ */
+public interface MemberAttachmentService {
+	/** 
+    * @Description: 创建用户附件基础方法
+    * @param memberAttachment
+    * @return MemberAttachment
+    * @throws 
+    */
+    public MemberAttachment createMemberAttachment(MemberAttachment memberAttachment) throws Exception;
+    
+    /** 
+    * @Description: 修改用户附件基础方法
+    * @param memberAttachment
+    * @return MemberAttachment
+    * @throws 
+    */
+    public MemberAttachment updateMemberAttachment(MemberAttachment memberAttachment) throws Exception;
+    
+    /** 
+    * @Description: 删除用户附件基础方法
+    * @param memberAttachment
+    * @return Integer
+    * @throws 
+    */
+    public Integer deleteMemberAttachment(MemberAttachment memberAttachment) throws Exception;
+    
+    /** 
+     * @Description: 查询用户附件基础方法
+     * @param memberAttachment
+     * @return MemberAttachment
+     * @throws 
+     */
+    public MemberAttachment getMemberAttachment(MemberAttachment memberAttachment) throws Exception; 
+    
+    /** 
+     * @Description: 查询用户附件列表基础方法
+     * @param memberAttachment
+     * @return List<MemberAttachment>
+     * @throws 
+     */
+    public List<MemberAttachment> getMemberAttachmentList(MemberAttachment memberAttachment) throws Exception;
+    
+    /** 
+     * @Description: 分页查询用户附件列表基础方法
+     * @param memberAttachment
+     * @return PageResult<MemberAttachment>
+     * @throws 
+     */
+    public PageResult<MemberAttachment> getMemberAttachmentListByPage(MemberAttachment memberAttachment) throws Exception;
+
+    /** 
+     * @Description: 查询用户附件数量基础方法
+     * @param memberAttachment
+     * @return Integer
+     * @throws 
+     */
+    public Integer getMemberAttachmentCount(MemberAttachment memberAttachment) throws Exception;
+
+
+}

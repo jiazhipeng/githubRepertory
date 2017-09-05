@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>消息中心</title>
+    <link href="../../css/user.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="greyBg">
+<div class="section">
+    <ul class="messageList">
+        <li>
+            <p> <em>【活动】</em>全球大型家电第一品牌，目前已从传统制造家电产品的企业转型为面向全社会孵化创客的平台。在互联网时代，海尔致力于成为互联，目前已从传统制造家电产品的企。</p>
+            <span>2016-08-16</span>
+        </li>
+        <li>
+            <p> <em>【活动】</em>全球大型家电第一品牌，目前已从传统制造家电产品的企业转型为面向全社会孵化创客的平台。在互联网时代，海尔致力于成为互联，目前已从传统制造家电产品的企。</p>
+            <span>2016-08-16</span>
+        </li>
+        <li>
+            <p> <em>【活动】</em>全球大型家电第一品牌，目前已从传统制造家电产品的企业转型为面向全社会孵化创客的平台。在互联网时代，海尔致力于成为互联，目前已从传统制造家电产品的企。</p>
+            <span>2016-08-16</span>
+        </li>
+        <li>
+            <p> <em>【活动】</em>全球大型家电第一品牌，目前已从传统制造家电产品的企业转型为面向全社会孵化创客的平台。在互联网时代，海尔致力于成为互联，目前已从传统制造家电产品的企。</p>
+            <span>2016-08-16</span>
+        </li>
+        <li>
+            <p> <em>【活动】</em>全球大型家电第一品牌，目前已从传统制造家电产品的企业转型为面向全社会孵化创客的平台。在互联网时代，海尔致力于成为互联，目前已从传统制造家电产品的企。</p>
+            <span>2016-08-16</span>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

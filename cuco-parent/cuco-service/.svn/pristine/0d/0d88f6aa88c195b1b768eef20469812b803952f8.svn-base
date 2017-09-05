@@ -1,0 +1,40 @@
+package cn.cuco.service.car.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.common.utils.ParamVerifyUtils;
+import cn.cuco.dao.CarInsuranceDetailUrlMapper;
+import cn.cuco.entity.CarInsuranceDetailUrl;
+import cn.cuco.service.car.CarInsuranceDetailUrlService;
+
+@Service
+public class CarInsuranceDetailUrlServiceImpl implements CarInsuranceDetailUrlService{
+
+	@Autowired
+    private CarInsuranceDetailUrlMapper<CarInsuranceDetailUrl> carInsuranceDetailUrlMapper;
+    
+	@Override
+	public CarInsuranceDetailUrl createCarInsuranceDetailUrl(CarInsuranceDetailUrl carInsuranceDetailUrl) {
+		ParamVerifyUtils.paramNotNull(carInsuranceDetailUrl,"为车辆创建保险详情，车辆保险图片地址对象不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetailUrl.getCarInsuranceDetailId(),"为车辆创建保险详情，车辆保险详细ID不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetailUrl.getUrl(),"为车辆创建保险详情，保险图片不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetailUrl.getType(),"为车辆创建保险详情，图片类型不能为空");
+		this.carInsuranceDetailUrlMapper.insertSelective(carInsuranceDetailUrl);
+		return this.carInsuranceDetailUrlMapper.selectByPrimaryKey(carInsuranceDetailUrl.getId());
+	}
+
+	@Override
+	public List<CarInsuranceDetailUrl> getCarInsuranceDetailUrlList(CarInsuranceDetailUrl carInsuranceDetailUrl) {
+		ParamVerifyUtils.paramNotNull(carInsuranceDetailUrl,"查询车辆保险图片信息，车辆保险图片地址对象不能为空");
+		return this.carInsuranceDetailUrlMapper.selectByCondition(carInsuranceDetailUrl);
+	}
+
+	@Override
+	public void createCarInsuranceDetailUrlBatch(List<CarInsuranceDetailUrl> carInsuranceDetailUrlList) {
+		this.carInsuranceDetailUrlMapper.insertBatch(carInsuranceDetailUrlList);
+	}
+
+}

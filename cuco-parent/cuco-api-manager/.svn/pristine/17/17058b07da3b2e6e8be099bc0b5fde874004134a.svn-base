@@ -1,0 +1,46 @@
+package cn.cuco.controller.manager.wechat;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.cuco.constant.Constant;
+import cn.cuco.wechat.util.OpenIdUtils;
+import cn.cuco.wechat.util.WechatUrl;
+
+@RestController
+public class CallBackController {
+
+	/**
+	 * 
+	* @Title: setOpenId 
+	* @Description: wechat重定向地址,返回用户code和 state
+	* @author jiaxiaoxian
+	* @param code 
+	* @param state  穿参数为 memberId， 用来绑定openId
+	* @return void
+	 */
+	@RequestMapping("setOpenId")  
+	public void setOpenId(String code,String state){
+		OpenIdUtils.getOpenId(code, Long.decode(state));
+	}
+	
+	/**
+	 * 
+	* @Title: authorization 
+	* @Description: 用户静默授权， 获取code,从而换取 openId
+	* @author jiaxiaoxian
+	* @param memberId
+	* @return void
+	 */
+	@RequestMapping("authorization")  
+	public String authorization(Long memberId){
+		String callUrl = Constant.domain + "setOpenId";
+		try {
+			String url = WechatUrl.getUrlBySnsapibase(callUrl,memberId.toString());
+			return "redirect:" + url;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+}

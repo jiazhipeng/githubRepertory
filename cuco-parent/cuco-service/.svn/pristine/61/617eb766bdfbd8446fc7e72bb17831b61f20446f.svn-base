@@ -1,0 +1,122 @@
+package cn.cuco.service.task.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.ButlerTaskMapper;
+import cn.cuco.entity.ButlerTask;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.task.ButlerTaskService;
+
+@Service(value = "butlerTaskService")
+public class ButlerTaskServiceImpl implements ButlerTaskService {
+
+    @Autowired
+    private ButlerTaskMapper<ButlerTask> butlerTaskMapper;
+
+	@Override
+	public ButlerTask createButlerTask(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask getButlerTaskById(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ButlerTask> selectButlerTaskList(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask updateButlerTask(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask updateButlerTaskByWaitingList(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask updateButlerTaskBySendCar(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask updateButlerTaskBySendIn(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask updateButlerTaskByTakeCar(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask updateButlerTaskByGetIn(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask updateButlerTaskByArrive(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask updateButlerTaskByCompleted(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask updateButlerTaskByCancelled(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<ButlerTask> getButlerTaskListByPageForWaitDealWith(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<ButlerTask> getButlerTaskListByPageForProcessing(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<ButlerTask> getButlerTaskListByPageForEnded(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask updateTaskHousekeeper(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ButlerTask updateTaskCustomer(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+
+}

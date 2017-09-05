@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.MemberItemCartypeMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.MemberItemCartype" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="carType_id" property="carTypeId" jdbcType="INTEGER" />
+    <result column="car_type" property="carType" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="member_item_id" property="memberItemId" jdbcType="BIGINT" />
+    <result column="car_operate_id" property="carOperateId" jdbcType="BIGINT" />
+    <result column="car_plate_num" property="carPlateNum" jdbcType="VARCHAR" />
+    <result column="using_car_brand" property="usingCarBrand" jdbcType="VARCHAR" />
+    <result column="using_car_type" property="usingCarType" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="carType_image_url" property="carTypeImageUrl" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.MemberItemCartype" >
+       select  count(1) 
+    from td_member_item_cartype  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carType != null and carType != '' ">
+        and car_type = #{carType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "brand != null and brand != '' ">
+        and brand = #{brand,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carTypeId != null ">
+        and carType_id = #{carTypeId,jdbcType=INTEGER}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carOperateId != null ">
+        and car_operate_id = #{carOperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "usingCarBrand != null and usingCarBrand != '' ">
+        and using_car_brand = #{usingCarBrand,jdbcType=VARCHAR}      
+      </if>
+      <if test= "usingCarType != null and usingCarType != '' ">
+        and using_car_type = #{usingCarType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "price != null ">
+        and price = #{price,jdbcType=DECIMAL}      
+      </if>
+      <if test= "carTypeImageUrl != null and carTypeImageUrl != '' ">
+        and carType_image_url = #{carTypeImageUrl,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberItemCartype" >
+       select  <include refid="Base_Column_List" />
+    from td_member_item_cartype  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carTypeId != null ">
+        and carType_id = #{carTypeId,jdbcType=INTEGER}      
+      </if>
+      <if test= "carType != null and carType != '' ">
+        and car_type = #{carType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "brand != null and brand != '' ">
+        and brand = #{brand,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carOperateId != null ">
+        and car_operate_id = #{carOperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "usingCarBrand != null and usingCarBrand != '' ">
+        and using_car_brand = #{usingCarBrand,jdbcType=VARCHAR}      
+      </if>
+      <if test= "usingCarType != null and usingCarType != '' ">
+        and using_car_type = #{usingCarType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "price != null ">
+        and price = #{price,jdbcType=DECIMAL}      
+      </if>
+      <if test= "carTypeImageUrl != null and carTypeImageUrl != '' ">
+        and carType_image_url = #{carTypeImageUrl,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, car_type, brand, 
+      status, member_item_id, car_operate_id, 
+      car_plate_num, using_car_brand, using_car_type, 
+      price, carType_image_url,carType_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberItemCartype" >
+    select 
+      id, car_type, brand, carType_id,
+      status, member_item_id, car_operate_id, 
+      car_plate_num, using_car_brand, using_car_type, 
+      price, carType_image_url
+    from td_member_item_cartype where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.MemberItemCartype" >
+    delete from td_member_item_cartype where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <!-- 按表权益主键删除数据 -->
+  <delete id="deleteByMemberItemId" parameterType="com.hy.gcar.entity.MemberItemCartype" >
+    delete from td_member_item_cartype where member_item_id = #{memberItemId,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_member_item_cartype where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.MemberItemCartype" >
+    insert into td_member_item_cartype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "carType != null and carType != '' ">
+         car_type,
+      </if>
+      <if test= "brand != null and brand != '' ">
+         brand,
+      </if>
+      <if test= "carTypeId != null ">
+         carType_id,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "memberItemId != null ">
+         member_item_id,
+      </if>
+      <if test= "carOperateId != null ">
+         car_operate_id,
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         car_plate_num,
+      </if>
+      <if test= "usingCarBrand != null and usingCarBrand != '' ">
+         using_car_brand,
+      </if>
+      <if test= "usingCarType != null and usingCarType != '' ">
+         using_car_type,
+      </if>
+      <if test= "price != null ">
+         price,
+      </if>
+      <if test= "carTypeImageUrl != null and carTypeImageUrl != '' ">
+         carType_image_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carType != null and carType != '' ">
+         #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test= "brand != null and brand != '' ">
+         #{brand,jdbcType=VARCHAR},
+      </if>
+       <if test= "carTypeId != null ">
+         #{carTypeId,jdbcType=INTEGER},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "memberItemId != null ">
+         #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "carOperateId != null ">
+         #{carOperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "usingCarBrand != null and usingCarBrand != '' ">
+         #{usingCarBrand,jdbcType=VARCHAR},
+      </if>
+      <if test= "usingCarType != null and usingCarType != '' ">
+         #{usingCarType,jdbcType=VARCHAR},
+      </if>
+      <if test= "price != null ">
+         #{price,jdbcType=DECIMAL},
+      </if>
+      <if test= "carTypeImageUrl != null and carTypeImageUrl != '' ">
+         #{carTypeImageUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_member_item_cartype (
+         id,
+         carTypeId,
+         car_type,
+         brand,
+         status,
+         member_item_id,
+         car_operate_id,
+         car_plate_num,
+         using_car_brand,
+         using_car_type,
+         price,
+         carType_image_url)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.carTypeId,jdbcType=INTEGER},
+         #{item.carType,jdbcType=VARCHAR},
+         #{item.brand,jdbcType=VARCHAR},
+         #{item.status,jdbcType=INTEGER},
+         #{item.memberItemId,jdbcType=BIGINT},
+         #{item.carOperateId,jdbcType=BIGINT},
+         #{item.carPlateNum,jdbcType=VARCHAR},
+         #{item.usingCarBrand,jdbcType=VARCHAR},
+         #{item.usingCarType,jdbcType=VARCHAR},
+         #{item.price,jdbcType=DECIMAL},
+         #{item.carTypeImageUrl,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.MemberItemCartype" >
+    update td_member_item_cartype
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      
+      <if test= "carType != null and carType != '' ">
+      car_type = #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test= "brand != null and brand != '' ">
+      brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test= "carTypeId != null ">
+      carType_id = #{carTypeId,jdbcType=INTEGER},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "memberItemId != null ">
+      member_item_id = #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "carOperateId != null ">
+      car_operate_id = #{carOperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+      car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "usingCarBrand != null and usingCarBrand != '' ">
+      using_car_brand = #{usingCarBrand,jdbcType=VARCHAR},
+      </if>
+      <if test= "usingCarType != null and usingCarType != '' ">
+      using_car_type = #{usingCarType,jdbcType=VARCHAR},
+      </if>
+      <if test= "price != null ">
+      price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test= "carTypeImageUrl != null and carTypeImageUrl != '' ">
+      carType_image_url = #{carTypeImageUrl,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!--取车完成将权益车位状态变为待使用，清空车位-->
+  <update id="updateMemberItemCartypeByGetCarComplete" parameterType="com.hy.gcar.entity.MemberItemCartype" >
+    update td_member_item_cartype
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      car_operate_id = null
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 修改我的启用车型-->
+  <update id="updateMemberItemCartype" parameterType="com.hy.gcar.entity.PowerUsed" >
+    UPDATE td_member_item_cartype SET carType_id =#{changeCarTypeId,jdbcType=BIGINT} ,  status = #{usedStatus,jdbcType=INTEGER},  car_type = #{carType,jdbcType=VARCHAR},  brand = #{brand,jdbcType=VARCHAR}
+    ,price =#{price,jdbcType=DECIMAL} WHERE member_item_id=#{memberItemId,jdbcType=BIGINT} AND carType_id=#{carTypeId,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 修改我的启用车型状态-->
+  <update id="updateMyCarTypeStatus" parameterType="com.hy.gcar.entity.PowerUsed" >
+    UPDATE td_member_item_cartype SET status = #{usedStatus,jdbcType=INTEGER}
+    WHERE member_item_id=#{memberItemId,jdbcType=BIGINT} AND carType_id=#{carTypeId,jdbcType=BIGINT}
+  </update>
+
+    <select id="findEnableAndNOnEnableCarType"  resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberItem">
+SELECT
+	e.brand,
+	e.car_type,
+	e.id as carType_id,
+	d.id
+FROM
+	td_item_cartype a -- 奥迪、宝马、特斯拉
+LEFT JOIN (SELECT b.id,b.cartype_id,b.brand,b.car_type
+            FROM td_member_item_cartype b,td_memeber_item c
+            WHERE b.member_item_id = c.id AND c.member_id = #{memberId,jdbcType=BIGINT}) d ON a.cartype_id = d.cartype_id
+LEFT JOIN tc_car_type e ON a.cartype_id = e.id
+WHERE a.item_id = #{itemId,jdbcType=BIGINT}
+ </select>
+
+ <select id="findEnableCarType"  resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberItem">
+        SELECT
+         b.id,b.cartype_id,b.brand,b.car_type
+        FROM td_member_item_cartype b,td_memeber_item c
+        WHERE b.member_item_id = c.id
+        AND c.member_id = #{memberId,jdbcType=BIGINT}
+        AND c.item_id = #{itemId,jdbcType=BIGINT}
+</select>
+
+</mapper>

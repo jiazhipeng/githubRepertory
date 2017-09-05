@@ -1,0 +1,36 @@
+package cn.cuco.common.utils.fileUpload;
+
+import java.io.File;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+public class FileUploadUtil {
+
+	/**
+	 * 
+	* @Title: fileUpload 
+	* @Description:   使用此方法需要注入 HttpServletRequest
+	* @author jiaxiaoxian
+	* @param file @RequestParam("file") MultipartFile file
+	* @param request
+	* @return   返回的是相对地址，需要自己拼接域名
+	* @return String
+	 */
+	 public static String fileUpload(@RequestParam("file") MultipartFile file,HttpServletRequest request) {  
+		 	String filePath = "";
+	        // 判断文件是否为空  
+	        if (!file.isEmpty()) {  
+	            try {  
+	                // 文件保存路径  
+	                filePath = request.getSession().getServletContext().getRealPath("/") + "/upload/"  
+	                        + file.getOriginalFilename();  
+	                // 转存文件  
+	                file.transferTo(new File(filePath));  
+	            } catch (Exception e) {  
+	                e.printStackTrace();  
+	            }  
+	        }  
+	        return "/upload/" + file.getOriginalFilename();  
+	    }  
+}

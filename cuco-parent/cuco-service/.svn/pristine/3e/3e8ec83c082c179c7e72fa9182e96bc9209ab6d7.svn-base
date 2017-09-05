@@ -1,0 +1,48 @@
+package cn.cuco.service.car.stock;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import cn.cuco.entity.CarType;
+
+/** 
+* @ClassName: StockService 
+* @Description: 库存service层 
+* @author gongbw
+* @date 2017年2月21日 下午1:30:52  
+*/
+public interface StockService {
+
+	/**   
+     * @Title: getRepertoryByDay   
+     * @Description: 获取一个月每天的库存分布情况  
+     * @param: carportId 车库ID
+     * @param: startDay 查询月份第一天
+     * @param: endDay 查询月份最后一天
+     * @return: List<Map<String, Object>>      
+     */
+	public List<Map<String, Object>> getRepertoryByDay(Long carportId, Date startDay, Date endDay);
+	
+	/**   
+     * @Title: getRepertoryByDay   
+     * @Description: 根据所选车库以及所选时间得到可用车型库存情况(针对非会员用车)
+     * @param: carportId 车库ID
+     * @param: memberId 用户ID
+     * @param: useCarStartTime 用车开始时间
+     * @param: useCarEndTime 用车结束时间
+     * @return: List<CarType>     
+     */
+	public List<CarType> getUsableCarTypeByUnMember(Long carportId, Long memberId, Date useCarStartTime, Date useCarEndTime);
+	
+	/**   
+     * @Title: getRepertoryByDay   
+     * @Description: 根据所选车库以及所选时间得到可用车型库存情况(针对会员用车)
+     * @param: carportId 车库ID
+     * @param: memberId 用户ID
+     * @param: useCarStartTime 用车开始时间
+     * @param: useCarEndTime 用车结束时间
+     * @return: List<CarType>     
+     */
+	public List<Map<Object, Object>> getUsableCarTypeByMember(Long carportId, Long memberId, Date useCarStartTime, Date useCarEndTime);
+}

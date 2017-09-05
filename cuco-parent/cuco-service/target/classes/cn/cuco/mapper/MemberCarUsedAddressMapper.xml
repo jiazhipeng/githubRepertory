@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.MemberCarUsedAddressMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.MemberCarUsedAddress" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="longitude_latitude" property="longitudeLatitude" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.MemberCarUsedAddress" >
+       select  count(1) 
+    from td_member_car_used_address  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "address != null and address != '' ">
+        and address = #{address,jdbcType=VARCHAR}      
+      </if>
+      <if test= "longitudeLatitude != null and longitudeLatitude != '' ">
+        and longitude_latitude = #{longitudeLatitude,jdbcType=VARCHAR}      
+      </if>
+      <if test= "count != null ">
+        and count = #{count,jdbcType=INTEGER}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.MemberCarUsedAddress" >
+       select  <include refid="Base_Column_List" />
+    from td_member_car_used_address  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "address != null and address != '' ">
+        and address = #{address,jdbcType=VARCHAR}      
+      </if>
+      <if test= "longitudeLatitude != null and longitudeLatitude != '' ">
+        and longitude_latitude = #{longitudeLatitude,jdbcType=VARCHAR}      
+      </if>
+      <if test= "count != null ">
+        and count = #{count,jdbcType=INTEGER}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, member_id, member_name, 
+      type, address, longitude_latitude, 
+      count, valid, created
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.MemberCarUsedAddress" >
+    select 
+      id, member_id, member_name, 
+      type, address, longitude_latitude, 
+      count, valid, created
+    from td_member_car_used_address where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.MemberCarUsedAddress" >
+    delete from td_member_car_used_address where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_member_car_used_address where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.MemberCarUsedAddress" >
+    insert into td_member_car_used_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "type != null ">
+         type,
+      </if>
+      <if test= "address != null and address != '' ">
+         address,
+      </if>
+      <if test= "longitudeLatitude != null and longitudeLatitude != '' ">
+         longitude_latitude,
+      </if>
+      <if test= "count != null ">
+         count,
+      </if>
+      <if test= "valid != null ">
+         valid,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "type != null ">
+         #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "address != null and address != '' ">
+         #{address,jdbcType=VARCHAR},
+      </if>
+      <if test= "longitudeLatitude != null and longitudeLatitude != '' ">
+         #{longitudeLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test= "count != null ">
+         #{count,jdbcType=INTEGER},
+      </if>
+      <if test= "valid != null ">
+         #{valid,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_member_car_used_address (
+         id,
+         member_id,
+         member_name,
+         type,
+         address,
+         longitude_latitude,
+         count,
+         valid,
+         created)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.type,jdbcType=INTEGER},
+         #{item.address,jdbcType=VARCHAR},
+         #{item.longitudeLatitude,jdbcType=VARCHAR},
+         #{item.count,jdbcType=INTEGER},
+         #{item.valid,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.MemberCarUsedAddress" >
+    update td_member_car_used_address
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "type != null ">
+      type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "address != null and address != '' ">
+      address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test= "longitudeLatitude != null and longitudeLatitude != '' ">
+      longitude_latitude = #{longitudeLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test= "count != null ">
+      count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test= "valid != null ">
+      valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

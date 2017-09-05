@@ -1,0 +1,50 @@
+package com.hy.security.common;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * Created by WangShuai on 2016/7/21.
+ */
+public class PageQuery<E> {
+
+    public static final Integer DEFAULT_PAGE = 1;
+    public static final Integer DEFAULT_PAGE_SIZE = 10;
+
+    /**
+     * 第几页
+     */
+    private Integer page;
+
+    /**
+     * 每页多少条
+     */
+    @JsonProperty("page_size")
+    private Integer pageSize;
+
+    private E e;
+
+    public Integer getPage() {
+
+        return page==null || page<DEFAULT_PAGE ? DEFAULT_PAGE:page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getPageSize() {
+        return pageSize==null || pageSize<1 ? DEFAULT_PAGE_SIZE : pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public E getE() {
+        return e;
+    }
+
+    public void setE(E e) {
+        this.e = e;
+    }
+}

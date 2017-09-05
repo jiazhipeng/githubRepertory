@@ -1,0 +1,52 @@
+package cn.cuco.enums;
+
+/**
+* @ClassName: Validate 
+* @Description: 是否有效枚举
+* @author huanghua
+* @date 2017年2月21日 下午4:18:44
+ */
+public enum OperateLog {
+	user(1,"用户"),
+	order(2,"订单"),
+	task(3,"任务"),
+	carport(4,"车库"),
+	car_accident(5,"出险"),
+	operation_parameters(6,"运营参数"),
+	car_type(7,"车型"),
+	parking(8,"停车场"),
+	city(9,"服务城市"),
+	security(10,"安全区间"),
+	repair(11,"维修")
+    ;
+	
+    private Integer value;
+    private String display;
+
+    OperateLog(Integer value, String display) {
+        this.value = value;
+        this.display = display;
+    }
+
+    public static OperateLog[] getAll(){
+        return OperateLog.values();
+    }
+
+    public static OperateLog fromValue(Integer value){
+        OperateLog[] all = getAll();
+        for(OperateLog temp : all){
+            if(temp.getValue().equals(value)){
+                return temp;
+            }
+        }
+        return null;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+}

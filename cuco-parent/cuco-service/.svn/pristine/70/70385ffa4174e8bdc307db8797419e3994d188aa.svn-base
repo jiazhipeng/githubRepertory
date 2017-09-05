@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface CarViolationMapper<T> extends BaseDao<T> {
+
+}

@@ -1,0 +1,63 @@
+package cn.cuco.service.member.info;
+
+import java.util.List;
+
+import cn.cuco.entity.MemberLoginLog;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户登陆日志相关接口
+ * @author zc.du
+ */
+public interface MemberLoginLogService {
+	
+	/** 
+    * @Description: 创建用户登陆日志基础方法
+    * @param memberLoginLog
+    * @return MemberLoginLog
+    */
+    public MemberLoginLog createMemberLoginLog(MemberLoginLog memberLoginLog);
+    
+    /** 
+    * @Description: 修改用户登陆日志基础方法
+    * @param memberLoginLog
+    * @return MemberLoginLog
+    */
+    public MemberLoginLog updateMemberLoginLog(MemberLoginLog memberLoginLog);
+    
+    /** 
+    * @Description: 删除用户登陆日志基础方法
+    * @param memberLoginLog
+    * @return Integer
+    */
+    public Integer deleteMemberLoginLog(MemberLoginLog memberLoginLog);
+    
+    /** 
+     * @Description: 查询用户登陆日志基础方法
+     * @param memberLoginLog
+     * @return MemberLoginLog
+     */
+    public MemberLoginLog getMemberLoginLog(MemberLoginLog memberLoginLog); 
+    
+    /** 
+     * @Description: 查询用户登陆日志列表基础方法
+     * @param memberLoginLog
+     * @return List<MemberLoginLog>
+     */
+    public List<MemberLoginLog> getMemberLoginLogList(MemberLoginLog memberLoginLog);
+    
+    /** 
+     * @Description: 分页查询用户登陆日志列表基础方法
+     * @param memberLoginLog
+     * @return PageResult<MemberLoginLog>
+     */
+    public PageResult<MemberLoginLog> getMemberLoginLogListByPage(MemberLoginLog memberLoginLog);
+
+    /** 
+     * @Description: 查询用户登陆日志数量基础方法
+     * @param memberLoginLog
+     * @return Integer
+     */
+    public Integer getMemberLoginLogCount(MemberLoginLog memberLoginLog);
+
+}

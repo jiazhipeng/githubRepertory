@@ -1,0 +1,173 @@
+package cn.cuco.service.order.impl;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.date.DateUtils;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.OrderRenewalMapper;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderCarport;
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.enums.MemberStatus;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.enums.OrderRenewalStatus;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.log.OperateLogService;
+import cn.cuco.service.member.info.MemberService;
+import cn.cuco.service.order.OrderRenewalService;
+
+/**
+ * @ClassName: OrderRenewalServiceImpl
+ * @Description: 续费订单相关接口实现
+ * @author zc.du
+ * @date 2017年2月23日 上午10:56:07
+ */
+@Service(value = "orderRenewalService")
+public class OrderRenewalServiceImpl implements OrderRenewalService {
+
+	@Autowired
+	private OrderRenewalMapper<OrderRenewal> orderRenewalMapper;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private OperateLogService operateLogService;
+
+	@Override
+	public OrderRenewal createOrderRenewal(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		BigDecimal min = new BigDecimal(1000);
+		BigDecimal total = orderRenewal.getTotal();
+		if (null == total || total.subtract(min).doubleValue() < 0 || total.divideAndRemainder(total)[1].floatValue() != 0) {
+			ExceptionUtil.throwWarn("续费金额不合法");
+		}
+		Long memberId = orderRenewal.getCreatedMemberId();
+		ParamVerifyUtils.paramNotNull(memberId, "续费时，用户ID不能为空");
+		Member member = this.memberService.getMemberById(memberId);
+		ParamVerifyUtils.paramNotNull(member, "续费时，用户不存在");
+		if (MemberStatus.FROZEN.getIndex().equals(member.getStatuts())) {
+			ExceptionUtil.throwWarn("用户已冻结，无法进行续费操作");
+		}
+		Date date = new Date();
+		OrderRenewal newOne = new OrderRenewal();
+		newOne.setCreatedMemberId(memberId);
+		newOne.setCreatedMemberMobile(member.getMobile());
+		newOne.setCreatedMemberName(member.getName());
+		newOne.setAccountType(orderRenewal.getAccountType());
+		newOne.setCreated(date);
+		newOne.setLasttimeModify(date);
+		newOne.setOrderNum(this.createOrderNum());
+		newOne.setModifier(member.getName());
+		newOne.setModifierId(memberId);
+		newOne.setTotal(total);
+		this.orderRenewalMapper.insertSelective(newOne);
+		// 创建续费日志
+		OperateLog log = new OperateLog(newOne.getId(), OperateLogEnum.ORDER_RENEWAL.getValue(), OrderRenewalStatus.WAIT_PAY.getIndex(), memberId, member.getName(), date, "创建续费订单");
+		this.operateLogService.createOperateLog(log);
+		return this.orderRenewalMapper.selectByPrimaryKey(newOne.getId());
+	}
+
+	@Override
+	public OrderRenewal getOrderRenewal(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		String orderNum = orderRenewal.getOrderNum();
+		Long id = orderRenewal.getId();
+		if (null == id && StringUtils.isEmpty(orderNum)) {
+			ParamVerifyUtils.paramNotNull("订单ID、订单编号不能同时为空");
+		}
+		List<OrderRenewal> list = this.orderRenewalMapper.selectByCondition(orderRenewal);
+		if (CollectionUtils.isNotEmpty(list)) {
+			return list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public PageResult<OrderRenewal> getOrderRenewalListByPage(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		Integer page = orderRenewal.getPage();
+		Integer pageSize = orderRenewal.getPageSize();
+		Integer totalSize = this.orderRenewalMapper.selectCountByCondition(orderRenewal);
+		PageHelper.startPage(page, pageSize);
+		List<OrderRenewal> list = this.orderRenewalMapper.getOrderRenewalListWithSort(orderRenewal);
+		PageResult<OrderRenewal> pageResult = new PageResult<OrderRenewal>(page, pageSize, totalSize, list);
+		return pageResult;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByCancelForApp(OrderRenewal orderRenewal) {
+		
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByCancelForSystem(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByPaying(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByPartPay(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByCompletePay(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OperateLog> getOrderRenewalLogListByPage(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		ParamVerifyUtils.paramNotNull(orderRenewal.getId(),"分页查询续费订单日志列表时，续费订单Id不能为空");
+		OperateLog log = new OperateLog();
+		log.setPage(orderRenewal.getPage());
+		log.setPageSize(orderRenewal.getPageSize());
+		log.setType(OperateLogEnum.ORDER_RENEWAL.getValue());
+		log.setOperationId(orderRenewal.getId());
+		return this.operateLogService.getOperateLogByPage(log);
+	}
+
+	private String createOrderNum() {
+		return "XF" + DateUtils.getDate("yyyyMMdd") + RandomUtils.nextInt(99999, 999999);
+	}
+
+	public static void main(String[] args) {
+		BigDecimal amt = new BigDecimal(10);
+		BigDecimal[] results = amt.divideAndRemainder(BigDecimal.valueOf(20));
+		System.out.println(results[0]);
+		System.out.println(results[1]);
+		String test = "XF" + DateUtils.getDate("yyyyMMdd") + RandomUtils.nextInt(99999, 999999);
+		System.out.println(test);
+	}
+
+	@Override
+	public Integer getOrderRenewalCount(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId,"根据用户ID查询充值次数时，用户ID不能为空");
+		OrderRenewal order = new OrderRenewal();
+		order.setAccountType(1);
+		order.setCreatedSource(1);
+		order.setStatus(OrderRenewalStatus.COMPLETE_PAY.getIndex());
+		order.setCreatedMemberId(memberId);
+		return this.orderRenewalMapper.selectCountByCondition(order);
+	}
+}

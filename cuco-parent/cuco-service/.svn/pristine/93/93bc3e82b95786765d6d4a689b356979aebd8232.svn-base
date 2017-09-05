@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.NationMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.Nation" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="parent" property="parent" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.Nation" >
+       select  count(1) 
+    from tc_nation  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "code != null and code != '' ">
+        and code = #{code,jdbcType=VARCHAR}      
+      </if>
+      <if test= "province != null and province != '' ">
+        and province = #{province,jdbcType=VARCHAR}      
+      </if>
+      <if test= "city != null and city != '' ">
+        and city = #{city,jdbcType=VARCHAR}      
+      </if>
+      <if test= "district != null and district != '' ">
+        and district = #{district,jdbcType=VARCHAR}      
+      </if>
+      <if test= "parent != null and parent != '' ">
+        and parent = #{parent,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Nation" >
+       select  <include refid="Base_Column_List" />
+    from tc_nation  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "code != null and code != '' ">
+        and code = #{code,jdbcType=VARCHAR}      
+      </if>
+      <if test= "province != null and province != '' ">
+        and province = #{province,jdbcType=VARCHAR}      
+      </if>
+      <if test= "city != null and city != '' ">
+        and city = #{city,jdbcType=VARCHAR}      
+      </if>
+      <if test= "district != null and district != '' ">
+        and district = #{district,jdbcType=VARCHAR}      
+      </if>
+      <if test= "parent != null and parent != '' ">
+        and parent = #{parent,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, code, province, 
+      city, district, parent
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Nation" >
+    select 
+      id, code, province, 
+      city, district, parent
+    from tc_nation where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.Nation" >
+    delete from tc_nation where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tc_nation where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.Nation" >
+    insert into tc_nation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "code != null and code != '' ">
+         code,
+      </if>
+      <if test= "province != null and province != '' ">
+         province,
+      </if>
+      <if test= "city != null and city != '' ">
+         city,
+      </if>
+      <if test= "district != null and district != '' ">
+         district,
+      </if>
+      <if test= "parent != null and parent != '' ">
+         parent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "code != null and code != '' ">
+         #{code,jdbcType=VARCHAR},
+      </if>
+      <if test= "province != null and province != '' ">
+         #{province,jdbcType=VARCHAR},
+      </if>
+      <if test= "city != null and city != '' ">
+         #{city,jdbcType=VARCHAR},
+      </if>
+      <if test= "district != null and district != '' ">
+         #{district,jdbcType=VARCHAR},
+      </if>
+      <if test= "parent != null and parent != '' ">
+         #{parent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tc_nation (
+         id,
+         code,
+         province,
+         city,
+         district,
+         parent)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.code,jdbcType=VARCHAR},
+         #{item.province,jdbcType=VARCHAR},
+         #{item.city,jdbcType=VARCHAR},
+         #{item.district,jdbcType=VARCHAR},
+         #{item.parent,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.Nation" >
+    update tc_nation
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "code != null and code != '' ">
+      code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test= "province != null and province != '' ">
+      province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test= "city != null and city != '' ">
+      city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test= "district != null and district != '' ">
+      district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test= "parent != null and parent != '' ">
+      parent = #{parent,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

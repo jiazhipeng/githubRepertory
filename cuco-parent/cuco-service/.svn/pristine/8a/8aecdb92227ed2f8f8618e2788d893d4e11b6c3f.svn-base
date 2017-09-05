@@ -1,0 +1,110 @@
+package cn.cuco.service.order.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.ChargeOrderMapper;
+import cn.cuco.entity.ChargeOrder;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.order.ChargeOrderService;
+
+@Service(value = "chargeOrderService")
+public class ChargeOrderServiceImpl implements ChargeOrderService {
+
+    @Autowired
+    private ChargeOrderMapper<ChargeOrder> chargeOrderMapper;
+
+	@Override
+	public ChargeOrder createChargeOrder(ChargeOrder chargeOrder)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ChargeOrder updateChargeOrder(ChargeOrder chargeOrder)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteChargeOrder(ChargeOrder chargeOrder) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ChargeOrder getChargeOrder(ChargeOrder chargeOrder)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ChargeOrder> getChargeOrderList(ChargeOrder chargeOrder)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<ChargeOrder> getChargeOrderListByPage(
+			ChargeOrder chargeOrder) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getChargeOrderCount(ChargeOrder chargeOrder)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ChargeOrder createOrderForApp(ChargeOrder chargeOrder)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ChargeOrder updateChargeOrderStatusByCancelForApp(
+			ChargeOrder chargeOrder) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ChargeOrder updateChargeOrderStatusByCancel(ChargeOrder chargeOrder)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ChargeOrder updateChargeOrderStatusByPaying(ChargeOrder chargeOrder)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ChargeOrder updateChargeOrderStatusByPartPay(ChargeOrder chargeOrder)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ChargeOrder updateChargeOrderStatusByCompletePay(
+			ChargeOrder chargeOrder) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+   
+}

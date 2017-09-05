@@ -1,0 +1,182 @@
+package cn.cuco.constant;
+
+
+import java.util.Arrays;
+import java.util.List;
+
+import cn.cuco.common.utils.PropertiesLoader;
+
+/**
+ * 常量类
+* description：    
+* author：1mobility    
+* time：2017年2月20日 上午11:32:21    
+* 修改时间：2017年2月20日 上午11:32:21    
+* 修改备注：
+ */
+public class Constant {
+	
+	public static PropertiesLoader emailLoad = new PropertiesLoader("mail.properties");
+
+	public static PropertiesLoader WEIXINCONFIG = new PropertiesLoader("weixinConfig.properties");
+
+	public static PropertiesLoader JDPAYCONFIG = new PropertiesLoader("JDPayConfig.properties");
+
+	public static PropertiesLoader load = new PropertiesLoader("weixin.properties");
+	
+	public static PropertiesLoader messageLoad = new PropertiesLoader("messageTemplate.properties");
+	
+	public static PropertiesLoader PUSH_UMENG_LOAD = new PropertiesLoader("pushUmeng.properties");
+
+	public static  PropertiesLoader APPLICATION_LOAD = new PropertiesLoader("application.properties");
+
+	public static final String APPID = Constant.WEIXINCONFIG.getProperty("appid");
+	
+	public static final String APPIDPAY = Constant.WEIXINCONFIG.getProperty("appidPay");
+	
+	public static final String MCHID = Constant.WEIXINCONFIG.getProperty("mchid");
+	
+	public static final String APPSECRET = Constant.WEIXINCONFIG.getProperty("appsecret");
+	
+	public static final String WECHAT_TOKEN = Constant.WEIXINCONFIG.getProperty("token");
+	
+	public static final String WECHAT_KEY = Constant.WEIXINCONFIG.getProperty("key");
+	
+	public static final String domain = Constant.WEIXINCONFIG.getProperty("domain");
+	
+	public static final String biz = Constant.WEIXINCONFIG.getProperty("biz");
+	
+	/**
+	 * 二维码图片存储位置
+	 */
+//	public static final String IMAGEQRCODE_DISK_PATH = Constant.load.getProperty("imageQrcode_disk_path");
+	
+	/**
+	 * 二维码图片访问前缀
+	 */
+//	public static final String IMAGEQRCODE_ACCESS_PATH_PREFIX = Constant.load.getProperty("imageQrcode_access_path_prefix");
+	
+	/**
+	 * 二维码有效时间(秒)
+	 */
+//	public static final int IMAGEQRCODE_TIMEOUT = Constant.load.getInteger("imageQrcode_timeout").intValue(); // 该代码报错，所以注了，有问题请联系。by wangshuai
+	
+	/**
+	 * 高德地图 的key
+	 */
+	public static final String GEOCODEREGEO_KEY = Constant.load.getProperty("geocodeRegeo_key");
+	
+	/**
+	 * 高德地图 逆地理编码 url
+	 */
+	public static final String GEOCODEREGEO_URL = Constant.load.getProperty("geocodeRegeo_url");
+	
+	/**
+	 * 高德地图 私钥
+	 */
+	public static final String GEOCODEREGEO_PRIVATE_KEY = Constant.load.getProperty("geocodeRegeo_private_Key");
+
+
+	/**
+	 * redis中token存活时间
+	 */
+	public static final Integer TOKEN_LIVETIME = 720*60;
+	
+	/**
+	 * 
+	 */
+	public static final Integer TOKEN_ENDTIME_MILLISECOND = 1000*60*30;
+	
+	/**
+	 * 数据库中token存活时间
+	 */
+	public static final Integer TOKEN_DATABASE_LIVETIME = 720*60;
+
+
+	/**
+	 * 推送安卓 appkey
+	 */
+	public static String YONGHAOCHE_ANDROID_KEY = Constant.PUSH_UMENG_LOAD.getProperty("YONGHAOCHE_ANDROID_KEY");
+
+	/**
+	 * 推送android  appMasterSecret
+	 */
+	public static String YONGHAOCHE_ANDROID_SECRET = Constant.PUSH_UMENG_LOAD.getProperty("YONGHAOCHE_ANDROID_SECRET");
+
+
+	/**
+	 * 推送ios appkey
+	 */
+	public static String YONGHAOCHE_IOS_KEY = Constant.PUSH_UMENG_LOAD.getProperty("YONGHAOCHE_IOS_KEY");
+
+	/**
+	 * 推送ios  appMasterSecret
+	 */
+	public static String YONGHAOCHE_IOS_SECRET = Constant.PUSH_UMENG_LOAD.getProperty("YONGHAOCHE_IOS_SECRET");
+
+	/**
+	 * 消息推送   测试为true 发布后   正式为false
+	 */
+	public static boolean PUSH_IS_TEST_MODE = Boolean.parseBoolean(Constant.PUSH_UMENG_LOAD.getProperty("PUSH_IS_TEST_MODE"));
+
+	/**
+	 * 有效
+	 */
+	public static final Integer IS_VALUE_ENABLE = 0;
+
+	/**
+	 * 无效
+	 */
+	public static final Integer IS_VALUE_UNABLE = 1;
+
+	public static final String isValue = "isValue";//数据有效
+	public static final String created = "created";//创建时间
+	public static final String modifierId = "modifierId";//最后修改人ID
+	public static final String modifier = "modifier";//最后修改人姓名
+	public static final String lasttimeModify = "lasttimeModify";//最后修改时间
+
+	/**
+	 * 权限系统（本系统）
+	 */
+	public static final String SYSTEM_CODE_AUTH = "auth";
+
+	public static final String SYSTEM_TYPE_MAIN = "main";
+	public static final String SYSTEM_TYPE_SUB = "sub";
+	
+	public static final String USER_TOKEN_PREFIX = "token_";
+	public static final String SYSTEM_NO_SECURITY_TOKEN_PREFIX = "system_nosecurity_";
+	public static final String CHILD_LOGIN_SECURITY_TOKEN = "child_login_";
+	public static final String USER_TOKEN_TIMEOUT_SUFFIX ="_time";
+	
+	public static final String QR_CODE_PREFIX = "qr_code_";
+
+	public static final List<String> SYSTEM_TYPES = Arrays.asList(SYSTEM_TYPE_MAIN,SYSTEM_TYPE_SUB);
+
+	public static String CHARSET_UTF8 = "UTF-8";
+
+	public static final Integer DISABLED_TRUE = 1;//禁用
+	public static final Integer DISABLED_FALSE = 0;//未禁用
+
+	public static final Integer INTEGER_YES = 1;
+	public static final Integer INTEGER_NO = 0;
+
+	/**
+	 * 上传文件配置相关
+	 */
+	public static final String UPLOAD_STATICS_INDEPENDENCE_PATH = "upload.statics.independence.path";
+	public static final String UPLOAD_STATICS_REQUEST_ROOT_PATH = "upload.statics.request.root.path";
+	
+	/**
+	 * 销售导出Excel
+	 */
+	public static final String EXPORT_SELL_PATH = "export.sell.path";
+	public static final String EXPORT_SELL_ROOT_PATH = "export.sell.root.path";
+
+	/**
+	 *市场活动二维码路径
+	 */
+	public static final String QRCODE_LOGO_PATH = "qrcode.logo.path";
+	public static final String QRCODE_SAVE_PATH = "qrcode.save.path";
+	public static final String QRCODE_IMAGE_PATH = "qrcode.image.path";
+	
+}

@@ -1,0 +1,54 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-22 14:30:41
+ */
+public class CarInsuranceDetailUrl implements Serializable {
+
+    private static final long serialVersionUID = 3876814778192435L;
+
+    private Long id;//ID
+
+    private Long carInsuranceDetailId;//车辆保险明细表ID
+
+    private Integer type;//图片类型（0：交强险；1：商业险）
+
+    private String url;//上传图片的URL
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getCarInsuranceDetailId() {
+        return this.carInsuranceDetailId;
+    }
+
+    public void setCarInsuranceDetailId(Long carInsuranceDetailId) {
+        this.carInsuranceDetailId = carInsuranceDetailId;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+}

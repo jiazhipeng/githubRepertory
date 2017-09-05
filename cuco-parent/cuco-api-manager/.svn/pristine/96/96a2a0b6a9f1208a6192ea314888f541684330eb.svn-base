@@ -1,0 +1,27 @@
+package cn.cuco.controller.manager.orderCarUsed;
+
+import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.cuco.annotation.API;
+import cn.cuco.entity.ButlerTask;
+
+
+/** 
+ * @ClassName: OrderCarUsedController 
+ * @Description: 用车日结算明细表
+ * @author: wangchuntao 
+ * @date: 2017年2月22日 下午5:47:38  
+ */
+@RestController
+public class OrderCarUsedController {
+	protected Logger logger = Logger.getLogger(this.getClass());
+    @API(value="用车日结算明细列表")
+    @RequestMapping(value = "/orderCarUsed/getOrderCarUsedListByPage",method = RequestMethod.POST)
+    public Object getOrderCarUsedListByPage(@RequestBody ButlerTask butlerTask){
+        return null;
+    }
+}

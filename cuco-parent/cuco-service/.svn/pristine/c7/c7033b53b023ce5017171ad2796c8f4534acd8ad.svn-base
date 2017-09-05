@@ -1,0 +1,117 @@
+package cn.cuco.service.basic.business.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.ParkingMapper;
+import cn.cuco.entity.Parking;
+import cn.cuco.enums.Valid;
+import cn.cuco.exception.RuntimeExceptionWarn;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.business.ParkingService;
+import cn.cuco.service.log.OperateLogService;
+
+@Service(value = "parkingService")
+public class ParkingServiceImpl implements ParkingService {
+
+    @Autowired
+    private ParkingMapper<Parking> parkingMapper;
+    @Autowired
+    private OperateLogService operateLogService;
+    /**
+     * 创建停车场
+     */
+	@Override
+	public Parking createParking(Parking parking) {
+		ParamVerifyUtils.paramNotNull(parking);
+		ParamVerifyUtils.paramNotNull(parking.getParkingName(), "创建停车场名称不能为空");
+		ParamVerifyUtils.paramNotNull(parking.getParkingAddress(), "创建停车场地址不能为空");
+		ParamVerifyUtils.paramNotNull(parking.getModifierId(), "创建停车场创建人ID不能为空");
+		ParamVerifyUtils.paramNotNull(parking.getModifier(), "创建停车场创建人不能为空");
+		//验证名称是否重复
+		Parking searchParking = new Parking();
+		searchParking.setParkingName(parking.getParkingName());
+		searchParking.setValid(Valid.UP.getValue());
+		List<Parking> list = this.parkingMapper.selectByCondition(searchParking);
+		if(!list.isEmpty()){
+			 throw new RuntimeExceptionWarn("停车场名称重复");
+		}
+		parking.setCreated(new Date());
+		parking.setLasttimeModify(new Date());
+		parking.setValid(Valid.UP.getValue());
+		this.parkingMapper.insertSelective(parking);
+		//创建停车场日志
+		operateLogService.createLogForParking(parking);
+		return parking;
+	}
+
+	/**
+	 * 修改停车场信息
+	 */
+	private void updateParking(Parking parking) {
+		ParamVerifyUtils.paramNotNull(parking);
+		ParamVerifyUtils.paramNotNull(parking.getId(), "修改停车场ID不能为空");
+		ParamVerifyUtils.paramNotNull(parking.getModifierId(), "修改停车场修改人ID不能为空");
+		ParamVerifyUtils.paramNotNull(parking.getModifier(), "修改停车场修改人不能为空");
+		parking.setLasttimeModify(new Date());
+		this.parkingMapper.updateByPrimaryKeySelective(parking);
+	}
+
+	/**
+	 *根据ID查询停车场信息
+	 */
+	@Override
+	public Parking getParkingById(Long id) {
+		ParamVerifyUtils.paramNotNull(id, "取停车场详情ID不能为空");
+		return this.parkingMapper.selectByPrimaryKey(id);
+	}
+
+	/**
+	 * 删除停车场
+	 */
+	@Override
+	public void deleteParkingById(Parking parking) {
+		ParamVerifyUtils.paramNotNull(parking);
+		ParamVerifyUtils.paramNotNull(parking.getId(), "修改停车场ID不能为空");
+		ParamVerifyUtils.paramNotNull(parking.getModifierId(), "修改停车场修改人ID不能为空");
+		ParamVerifyUtils.paramNotNull(parking.getModifier(), "修改停车场修改人不能为空");
+		parking.setValid(Valid.DOWN.getValue());
+		//变更为失效
+		this.updateParking(parking);
+		//创建停车场日志
+		operateLogService.createLogForParking(parking);
+	}
+
+	/**
+	 * 分页取停车场
+	 */
+	@Override
+	public PageResult<Parking> getParkingByPage(Parking parking) {
+
+		Integer page = parking.getPage();
+	    Integer pageSize = parking.getPageSize();
+	     /*搜索条件*/
+	    Parking parkingSearch = new Parking();
+	    parkingSearch.setValid(Valid.UP.getValue());
+        if(StringUtils.isNotBlank(parking.getParkingName())){
+        	parkingSearch.setParkingName(parking.getParkingName());
+        }
+	    List<Parking> parkings = null;
+	    /*总记录数*/
+	    Integer totalSize = this.parkingMapper.selectCountByConditionByPage(parkingSearch);
+	    /*分页信息*/
+	    PageHelper.startPage(page,pageSize);
+	    parkings = this.parkingMapper.selectByConditionByPage(parkingSearch);
+	    
+        PageResult<Parking> pageResult = new PageResult<Parking>(page,pageSize,totalSize,parkings);
+		return pageResult;
+	}
+	
+}

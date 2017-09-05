@@ -1,0 +1,32 @@
+package cn.cuco.service.basic.dictionary;
+
+
+import java.util.List;
+
+import cn.cuco.entity.InsuranceSubjects;
+
+/**
+* @ClassName: InsuranceSubjectsService 
+* @Description: 保险科目接口
+* @author huanghua
+* @date 2017年2月21日 下午3:01:48
+ */
+public interface InsuranceSubjectsService {
+
+    /**
+    * @Title: getInsuranceSubjectsById 
+    * @Description: 取保险科目详情
+    * @param insuranceSubjects
+    * @return InsuranceSubjects
+     */
+    public InsuranceSubjects getInsuranceSubjectsById(InsuranceSubjects insuranceSubjects);
+
+    /**
+    * @Title: getInsuranceSubjectsList 
+    * @Description: 取保险科目集合
+    * @param insuranceSubjects
+    * @return List<InsuranceSubjects>
+     */
+    public List<InsuranceSubjects> getInsuranceSubjectsList(InsuranceSubjects insuranceSubjects);
+
+}

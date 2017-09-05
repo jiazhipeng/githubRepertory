@@ -1,0 +1,29 @@
+package cn.cuco.dao;
+
+import java.util.List;
+
+import cn.cuco.entity.CarType;
+
+public interface CarTypeMapper<T> extends BaseDao<T> {
+
+	
+	/**
+	* @Title: selectByConditionByPage 
+	* @Description: 分页查询车型
+	* @author huanghua
+	* @param carType
+	* @return
+	* @return List<CarType>
+	 */
+	public List<CarType> selectByConditionByPage(CarType carType);
+	
+	/**
+	* @Title: selectCountByConditionByPage 
+	* @Description: 查询车型总条数
+	* @author huanghua
+	* @param carType
+	* @return
+	* @return Integer
+	 */
+	public Integer selectCountByConditionByPage(CarType carType);
+}

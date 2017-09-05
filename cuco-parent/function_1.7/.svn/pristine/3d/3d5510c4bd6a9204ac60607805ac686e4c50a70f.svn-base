@@ -1,0 +1,27 @@
+@import url("css.css");
+
+.driveSec{border: 1px solid #dcdcdc; margin: 4% auto; padding-bottom: 4%; background: #fff}
+.title{position: relative; color: #333; height: 50px; margin: 0 15px; margin-top: 5%; text-align: center}
+.title span{position: relative; background: #fff; font-size: 1.6rem; padding: 0 15px; line-height: 50px;}
+.title em{width: 100%; height: 1px; background: #c2c2c2; position: absolute; left: 0;  top: 50%;}
+.driveSec ul{width:75%; margin: 6px auto; font-size: 1.4rem; color: #666;}
+.driveSec ul li{margin-top: 10px;}
+.driveSec ul li:first-child{margin-top: 0;}
+.driveSec ul .small{font-size: 1.3rem; color: #999;}
+.driveSec ul li.small{margin-top: 5px;}
+.driveSec .button{width: 92%; margin: 10% 4%;}
+.driveSec input[type="datetime-local"]{color#666; background-size: 12px; height: 25px; font-size: 1.3rem; width:100%;}
+.dateBox{width: 65%;height:25px;}
+
+
+@media  screen and (min-width:375px ) and (max-width:414px) {
+    .dateBox{width: 85%;}
+}
+
+@media screen and (min-width:415px) and (max-width:579px){
+    .dateBox{width: 85%;}
+
+}
+
+
+

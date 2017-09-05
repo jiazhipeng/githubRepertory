@@ -1,0 +1,249 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import cn.cuco.page.PageQuery;
+
+import java.math.BigDecimal;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-27 17:11:23
+ */
+public class CarAccident extends PageQuery implements Serializable {
+
+    private static final long serialVersionUID = 9456721097912949L;
+
+    private Long id;//车辆出险ID
+
+    private Long carId;//出险车辆ID
+
+    private String carPlateNum;//出险车牌号
+
+    private String carBrand;//车辆品牌
+
+    private String carType;//车型
+
+    private Long memberId;//用户ID
+
+    private String memberName;//用户姓名
+
+    private String memberMobile;//用户手机号
+
+    private String accidentAddress;//出险地点
+
+    private Integer drivingDirection;//行驶方向（0：:东；1：南；2：西；3：北；4：东北；5：东南；6：西南；7：西北）
+
+    private String carDamageLevel;//车损程度
+
+    private String casualtiesLevel;//伤亡程度
+
+    private BigDecimal paymentAmount;//赔付金额
+
+    private Integer isNeedAssistance;//是否需要救援（0：不需要；1：需要）
+
+    private Integer isCalledPolice;//是否已报警（0：未报警；1：已报警）
+
+    private Integer isRepair;//是否维修（0：否；1：是）
+
+    private Integer taskProcessing;//任务处理（0：停止任务；1：继续使用）
+
+    private Integer status;//救援状态（0：待处理；1：跟进中；2：维修完成；3：已完成）
+
+    private Date created;//创建时间
+
+    private String creater;//创建人
+
+    private String remark;//备注
+
+    private String modifier;//操作人姓名
+
+    private Long modifierId;//操作人ID
+    
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getCarId() {
+        return this.carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
+    }
+
+    public String getCarPlateNum() {
+        return this.carPlateNum;
+    }
+
+    public void setCarPlateNum(String carPlateNum) {
+        this.carPlateNum = carPlateNum;
+    }
+
+    public String getCarBrand() {
+        return this.carBrand;
+    }
+
+    public void setCarBrand(String carBrand) {
+        this.carBrand = carBrand;
+    }
+
+    public String getCarType() {
+        return this.carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
+    }
+
+    public Long getMemberId() {
+        return this.memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getMemberName() {
+        return this.memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getMemberMobile() {
+        return this.memberMobile;
+    }
+
+    public void setMemberMobile(String memberMobile) {
+        this.memberMobile = memberMobile;
+    }
+
+    public String getAccidentAddress() {
+        return this.accidentAddress;
+    }
+
+    public void setAccidentAddress(String accidentAddress) {
+        this.accidentAddress = accidentAddress;
+    }
+
+    public Integer getDrivingDirection() {
+        return this.drivingDirection;
+    }
+
+    public void setDrivingDirection(Integer drivingDirection) {
+        this.drivingDirection = drivingDirection;
+    }
+
+    public String getCarDamageLevel() {
+        return this.carDamageLevel;
+    }
+
+    public void setCarDamageLevel(String carDamageLevel) {
+        this.carDamageLevel = carDamageLevel;
+    }
+
+    public String getCasualtiesLevel() {
+        return this.casualtiesLevel;
+    }
+
+    public void setCasualtiesLevel(String casualtiesLevel) {
+        this.casualtiesLevel = casualtiesLevel;
+    }
+
+    public BigDecimal getPaymentAmount() {
+        return this.paymentAmount;
+    }
+
+    public void setPaymentAmount(BigDecimal paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
+    public Integer getIsNeedAssistance() {
+        return this.isNeedAssistance;
+    }
+
+    public void setIsNeedAssistance(Integer isNeedAssistance) {
+        this.isNeedAssistance = isNeedAssistance;
+    }
+
+    public Integer getIsCalledPolice() {
+        return this.isCalledPolice;
+    }
+
+    public void setIsCalledPolice(Integer isCalledPolice) {
+        this.isCalledPolice = isCalledPolice;
+    }
+
+    public Integer getIsRepair() {
+        return this.isRepair;
+    }
+
+    public void setIsRepair(Integer isRepair) {
+        this.isRepair = isRepair;
+    }
+
+    public Integer getTaskProcessing() {
+        return this.taskProcessing;
+    }
+
+    public void setTaskProcessing(Integer taskProcessing) {
+        this.taskProcessing = taskProcessing;
+    }
+
+    public Integer getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getCreater() {
+        return this.creater;
+    }
+
+    public void setCreater(String creater) {
+        this.creater = creater;
+    }
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getModifier() {
+		return modifier;
+	}
+
+	public void setModifier(String modifier) {
+		this.modifier = modifier;
+	}
+
+	public Long getModifierId() {
+		return modifierId;
+	}
+
+	public void setModifierId(Long modifierId) {
+		this.modifierId = modifierId;
+	}
+
+}

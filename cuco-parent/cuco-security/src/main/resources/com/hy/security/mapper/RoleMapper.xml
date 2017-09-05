@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.security.dao.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.security.entity.Role" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="organization_id" property="organizationId" jdbcType="BIGINT" />
+    <result column="system_id" property="systemId" jdbcType="BIGINT" />
+    <result column="is_value" property="isValue" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="unique_code" property="uniqueCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 按code查询所有角色 -->
+  <select id="selectRolesByCode" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Role" >
+   		SELECT r.id, r.name, r.code, 
+      r.organization_id, r.system_id, r.is_value, 
+      r.created, r.modifier_id, r.modifier, 
+      r.lasttime_modify,r.unique_code FROM td_role r where r.code like CONCAT(#{code,jdbcType=VARCHAR},'%')
+  </select>
+  
+  <!-- 给角色分配菜单、操作 -->
+  <insert id="insertMenuForRole"  parameterType="com.hy.security.entity.Role" >
+    insert into tr_role__menu_operation(menu_operation_id,role_id,menu_id,operation_id)
+    values
+    <foreach collection="roleList" item="role" index="index" separator=",">
+		( #{role.menuOperationId,jdbcType=BIGINT}, #{role.id,jdbcType=BIGINT}, #{role.menuId,jdbcType=BIGINT}, #{role.operationId,jdbcType=BIGINT})
+	</foreach>
+  </insert>
+    <!-- 删除角色 菜单、操作 -->
+  <delete id="deleteMenuForRole" parameterType="com.hy.security.entity.Role" >
+    delete from tr_role__menu_operation where menu_id = #{menuId,jdbcType=BIGINT} and operation_id = #{operationId,jdbcType=BIGINT} and role_id = #{id,jdbcType=BIGINT} 
+  </delete>
+     <!-- 批量删除角色 菜单、操作 -->
+  <delete id="deleteOperationForRole" parameterType="com.hy.security.entity.Role" >
+    delete from tr_role__menu_operation where menu_id = #{menuId,jdbcType=BIGINT}  and role_id = #{id,jdbcType=BIGINT} 
+  </delete>
+  <!-- 按用户id、系统ID为查询条件 查找组织机构(包括子菜单)下所有角色 -->
+  <select id="selectRolesByUserIdAndSystemId" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Role" >
+   	SELECT c.id, c.name, c.code, 
+      c.organization_id, c.system_id, c.is_value, 
+      c.created, c.modifier_id, c.modifier, 
+      c.lasttime_modify,c.unique_code
+   		FROM td_role c WHERE c.organization_id in (
+			SELECT
+				a.id
+			FROM	td_organization a join (
+				SELECT
+				 DISTINCT	
+							o.code
+				FROM
+					td_organization o
+				JOIN td_role r ON r.organization_id = o.id
+				JOIN tr_user_role ur ON ur.role_id = r.id
+				<where>
+		 	 <if test= "userId != null ">
+		        and ur.user_id =#{userId,jdbcType=BIGINT}
+		      </if>
+		      <if test= "systemId != null ">
+				AND r.system_id = #{systemId,jdbcType=BIGINT}
+			 </if>
+			 AND  r.organization_id = o.id
+		  </where>
+				) b
+				  on a.code = b.code OR a.code LIKE CONCAT(b.code,'%')
+		) 
+  </select>
+
+ <!-- 分页查询-->
+  <select id="selectRolesByUserIdAndSystemIdForPage" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Role" >
+   	SELECT c.id, c.name, c.code, 
+      c.organization_id, c.system_id, c.is_value, 
+      c.created, c.modifier_id, c.modifier, 
+      c.lasttime_modify,c.unique_code
+   		FROM td_role c WHERE c.organization_id in (
+			SELECT
+				a.id
+			FROM	td_organization a join (
+				SELECT
+				 DISTINCT	
+							o.code
+				FROM
+					td_organization o
+				JOIN td_role r ON r.organization_id = o.id
+				JOIN tr_user_role ur ON ur.role_id = r.id
+			<where>
+		 	 <if test= "userId != null ">
+		        and ur.user_id =#{userId,jdbcType=BIGINT}
+		      </if>
+		      <if test= "systemId != null ">
+				AND r.system_id = #{systemId,jdbcType=BIGINT}
+			 </if>
+			 AND  r.organization_id = o.id
+		  </where>
+				) b
+				  on a.code = b.code OR a.code LIKE CONCAT(b.code,'%')
+		) 
+		 	 <if test= "name != null and name != '' ">
+				 and c.name like CONCAT('%',CONCAT(#{name,jdbcType=VARCHAR},'%')) 
+		      </if>
+		      order by c.created desc
+  </select>
+
+  <!-- 按用户id查询角色 -->
+  <select id="selectRolesByUserId" resultType="com.hy.security.entity.Role" parameterType="com.hy.security.entity.Role" >
+   	SELECT r.id, r.name, r.code, 
+      r.organization_id organizationId, r.system_id systemId, r.is_value isValue, 
+      r.created, r.modifier_id modifierId, r.modifier, 
+      r.lasttime_modify lasttimeModify,r.unique_code uniqueCode,ts.name systemName,tdo.name organizationName
+   from td_role r join tr_user_role ur on ur.role_id = r.id 
+        LEFT JOIN td_system ts on r.system_id = ts.id
+        LEFT JOIN td_organization tdo on r.organization_id = tdo.id
+   where ur.user_id=#{userId,jdbcType=BIGINT}
+  </select>
+
+	<!-- 按用户id、组织机构查询角色 -->
+  <select id="selectRolesByUserIdAndOrganizationId" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Role" >
+   	SELECT r.id, r.name, r.code, 
+      r.organization_id, r.system_id, r.is_value, 
+      r.created, r.modifier_id, r.modifier, 
+      r.lasttime_modify,r.unique_code from td_role r
+      join tr_user_role ur on ur.role_id = r.id 
+      where ur.user_id=#{userId,jdbcType=BIGINT} and r.organization_id=#{organizationId,jdbcType=BIGINT}
+  </select>
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Role" >
+       select  <include refid="Base_Column_List" />
+    from td_role  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test= "name != null and name != '' ">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test= "code != null and code != '' ">
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test= "organizationId != null ">
+        and organization_id = #{organizationId,jdbcType=BIGINT}
+      </if>
+      <if test= "systemId != null ">
+        and system_id = #{systemId,jdbcType=BIGINT}
+      </if>
+      <if test= "isValue != null ">
+        and is_value = #{isValue,jdbcType=INTEGER}
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "uniqueCode != null and uniqueCode != '' ">
+          and unique_code = #{uniqueCode,jdbcType=VARCHAR}
+      </if>
+
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, name, code, 
+      organization_id, system_id, is_value, 
+      created, modifier_id, modifier, 
+      lasttime_modify,unique_code
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Role" >
+    select 
+      id, name, code, 
+      organization_id, system_id, is_value, 
+      created, modifier_id, modifier, 
+      lasttime_modify,unique_code
+    from td_role where id = #{id,jdbcType=BIGINT}
+  </select>
+	<!-- 查询子级部门下的操作(不包括子子级部门，仅仅是下一级部门)；指定菜单和操作条件；是为了判断子级部门是否选择了该菜单下的操作，已便于判断父级部门是否可以删除该操作 
+	union all select #{organizationId,jdbcType=BIGINT} from dual) and r.code is null   同级非root权限角色-->
+ 	<select id="countChildOrgOpersByMenuOperId" resultType="java.lang.Integer" parameterType="com.hy.security.entity.Role" >
+	   <!-- 删除父级root权限操作需要判断 -->
+	   select count(t2.id) 
+	     from (select t1.id id <!-- 子级root角色 -->
+				  from tr_role__menu_operation t1
+				 where t1.role_id in ((select r.id role_id from td_role r where r.organization_id in (select a.id from td_organization a where a.parent_id=#{organizationId,jdbcType=BIGINT}) and r.code is not null))
+				   and t1.menu_id = #{menuId,jdbcType=BIGINT}
+				   and t1.operation_id = #{operationId,jdbcType=BIGINT}
+				union ALL
+				select t1.id id  <!-- 同级非root角色 -->
+				  from tr_role__menu_operation t1
+				 where t1.role_id in ((select r1.id role_id from td_role r1 where r1.organization_id = #{organizationId,jdbcType=BIGINT} and r1.code is null))
+				   and t1.menu_id = #{menuId,jdbcType=BIGINT}
+				   and t1.operation_id = #{operationId,jdbcType=BIGINT}
+				) t2
+  </select>
+ 
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.security.entity.Role" >
+    delete from td_role where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_role where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.security.entity.Role" useGeneratedKeys="true" keyProperty="id">
+    insert into td_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "name != null and name != '' ">
+         name,
+      </if>
+      <if test= "code != null and code != '' ">
+         code,
+      </if>
+      <if test= "organizationId != null ">
+         organization_id,
+      </if>
+      <if test= "systemId != null ">
+         system_id,
+      </if>
+      <if test= "isValue != null ">
+         is_value,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+        <if test= "uniqueCode != null and uniqueCode != '' ">
+            unique_code,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "code != null and code != '' ">
+         #{code,jdbcType=VARCHAR},
+      </if>
+      <if test= "organizationId != null ">
+         #{organizationId,jdbcType=BIGINT},
+      </if>
+      <if test= "systemId != null ">
+         #{systemId,jdbcType=BIGINT},
+      </if>
+      <if test= "isValue != null ">
+         #{isValue,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+        <if test= "uniqueCode != null and uniqueCode != '' ">
+            #{uniqueCode,jdbcType=VARCHAR},
+        </if>
+
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_role (
+         id,
+         name,
+         code,
+         organization_id,
+         system_id,
+         is_value,
+         created,
+         modifier_id,
+         modifier,
+         lasttime_modify,
+        unique_code)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.name,jdbcType=VARCHAR},
+         #{item.code,jdbcType=VARCHAR},
+         #{item.organizationId,jdbcType=BIGINT},
+         #{item.systemId,jdbcType=BIGINT},
+         #{item.isValue,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=BIGINT},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP}
+         #{item.uniqueCode,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.security.entity.Role" >
+    update td_role
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+      name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "code != null and code != '' ">
+      code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test= "organizationId != null ">
+      organization_id = #{organizationId,jdbcType=BIGINT},
+      </if>
+      <if test= "systemId != null ">
+      system_id = #{systemId,jdbcType=BIGINT},
+      </if>
+      <if test= "isValue != null ">
+      is_value = #{isValue,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+        <if test= "uniqueCode != null ">
+            unique_code = #{uniqueCode,jdbcType=TIMESTAMP}
+        </if>
+
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,28 @@
+package cn.cuco.service.car.carInfo;
+
+import cn.cuco.entity.CarInsuranceDetail;
+
+/** 
+* @ClassName: CarInsuranceDetailService 
+* @Description: 车辆保险详情service
+* @author gongbw
+* @date 2017年2月21日 下午3:13:47  
+*/
+public interface CarInsuranceDetailService {
+    
+	/**   
+     * @Title: createCarInsuranceDetail   
+     * @Description: 创建车辆保险详情的基础方法   
+     * @param: CarInsuranceDetail
+     * @return: CarInsuranceDetail      
+     */
+	public CarInsuranceDetail createCarInsuranceDetail(CarInsuranceDetail carInsuranceDetail);
+	
+	/**   
+     * @Title: getCarInsuranceDetailByCarId   
+     * @Description: 根据车辆ID获取该车辆的保险详情信息   
+     * @param: CarInsuranceDetail
+     * @return: CarInsuranceDetail      
+     */
+	public CarInsuranceDetail getCarInsuranceDetailByCarId(CarInsuranceDetail carInsuranceDetail);
+}

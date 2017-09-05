@@ -1,0 +1,243 @@
+package cn.cuco.service.statistics.impl;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.common.utils.date.DateUtils;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarType;
+import cn.cuco.entity.Carport;
+import cn.cuco.entity.OrderCarUsed;
+import cn.cuco.exception.RuntimeExceptionWarn;
+import cn.cuco.service.basic.carport.CarTypeService;
+import cn.cuco.service.basic.carport.CarportService;
+import cn.cuco.service.order.OrderCarUsedService;
+import cn.cuco.service.statistics.OperationStatisticsService;
+
+@Service
+public class OperationStatisticsServiceImpl implements OperationStatisticsService{
+
+	protected Logger logger = Logger.getLogger(this.getClass());
+	
+	@Autowired
+	private CarportService carportService;
+	@Autowired
+	private CarTypeService carTypeService;
+	@Autowired
+	private SqlSessionFactoryBean sqlSessionFactoryBean;
+	@Autowired
+	private OrderCarUsedService orderCarUsedService;
+
+	@Override
+	public List<Map<String, String>> getOperationStatisticsByDay(Date startTime, Date endTime, Long carportId, Long carTypeId) {
+		
+		this.logger.info("按天统计车辆运营率，开始时间为-"+DateUtils.formatDate(startTime, "yyyy-MM-dd HH:mm:ss"));
+		this.logger.info("按天统计车辆运营率，结束时间为-"+DateUtils.formatDate(endTime, "yyyy-MM-dd HH:mm:ss"));
+		this.logger.info("按天统计车辆运营率，车库ID为-"+carportId);
+		this.logger.info("按天统计车辆运营率，车型ID为-"+carTypeId);
+		this.validateBefore(startTime, endTime, carportId, carTypeId);
+		Car car = new Car();
+		SqlSession session=null;
+		List<Map<String, String>> returnList = new ArrayList<>();
+		try {
+			session=sqlSessionFactoryBean.getObject().openSession();
+			Map<String, String> returnMap= new HashMap<>();
+			long count =(endTime.getTime()-startTime.getTime()) / (1000 * 60 * 60 * 24) +1;
+			this.logger.info("需要循环的次数为--"+count);
+			for(int i=0;i<count;i++){
+				startTime = DateUtils.getDayMaxDate(startTime);
+				//按天查询的车辆总数
+				car.setCarPortId(carportId);
+				car.setCarTypeId(carTypeId);
+				car.setStartTime(startTime);
+				//车辆总数
+				Integer total = session.selectOne("cn.cuco.dao.CarMapper.getTotalByCarPortOrCarType", car);
+				this.logger.info("查询日期为--"+DateUtils.formatDate(startTime,"yyyy-MM-dd")+"的车辆总数为--"+total);
+				//当天的结算数
+				OrderCarUsed orderCarUsed = new OrderCarUsed();
+				Date timeStart = DateUtils.getDayMiniDate(startTime);
+				orderCarUsed.setTimeStart(timeStart);
+				orderCarUsed.setTimeEnd(startTime);
+				int orderCount = orderCarUsedService.getOrderCarUsedCount(orderCarUsed);
+				this.logger.info("查询日期为--"+DateUtils.formatDate(startTime,"yyyy-MM-dd")+"的结算总数为--"+total);
+				BigDecimal percentDecimal = new BigDecimal(0);
+				if(0!=total){
+					percentDecimal = new BigDecimal(orderCount).divide(new BigDecimal(total)).setScale(4,BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
+				}
+				returnMap.put(DateUtils.formatDate(startTime,"yyyy-MM-dd"), percentDecimal.toString());
+				returnList.add(returnMap);
+				startTime=DateUtils.addDays(startTime, 1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return returnList;
+	}
+
+	@Override
+	public List<Map<String, String>> getOperationStatisticsByWeek(Date startTime, Date endTime, Long carportId, Long carTypeId) {
+
+		this.logger.info("按周统计车辆运营率，开始时间为-"+DateUtils.formatDate(startTime, "yyyy-MM-dd HH:mm:ss"));
+		this.logger.info("按周统计车辆运营率，结束时间为-"+DateUtils.formatDate(endTime, "yyyy-MM-dd HH:mm:ss"));
+		this.logger.info("按周统计车辆运营率，车库ID为-"+carportId);
+		this.logger.info("按周统计车辆运营率，车型ID为-"+carTypeId);
+		this.validateBefore(startTime, endTime, carportId, carTypeId);
+		Car car = new Car();
+		SqlSession session=null;
+		List<Map<String, String>> returnList = new ArrayList<>();
+		try {
+			session=sqlSessionFactoryBean.getObject().openSession();
+			Map<String, String> returnMap= new HashMap<>();
+			int count =DateUtils.getCountTwoDayWeek(startTime, endTime);
+			this.logger.info("需要循环的次数为--"+count);
+			for(int i=0;i<count;i++){
+				startTime = DateUtils.getDayMaxDate(startTime);
+				Date sunday = DateUtils.addWeeks(DateUtils.getSundayByDate(startTime), i);
+				sunday = DateUtils.getDayMaxDate(sunday);
+				if(endTime.before(sunday)){
+					sunday = endTime;
+				}
+				long daycount =(sunday.getTime()-startTime.getTime()) / (1000 * 60 * 60 * 24) +1;
+				int total = 0;
+				for(int j=0 ;j<daycount; j++){
+					//按周查询的车辆总数
+					car.setCarPortId(carportId);
+					car.setCarTypeId(carTypeId);
+					car.setStartTime(startTime);
+					//车辆总数
+					total = session.selectOne("cn.cuco.dao.CarMapper.getTotalByCarPortOrCarType", car);
+					this.logger.info("查询日期为--"+DateUtils.formatDate(startTime,"yyyy-MM-dd")+"的车辆总数为--"+total);
+					total += total;
+					startTime=DateUtils.addDays(startTime, 1);
+				}
+				
+				//按周的结算数
+				OrderCarUsed orderCarUsed = new OrderCarUsed();
+				Date timeStart = DateUtils.getDayMiniDate(startTime);
+				orderCarUsed.setTimeStart(timeStart);
+				orderCarUsed.setTimeEnd(sunday);
+				int orderCount = orderCarUsedService.getOrderCarUsedCount(orderCarUsed);
+				this.logger.info("查询日期为--"+DateUtils.formatDate(startTime,"yyyy-MM-dd")+"至"+DateUtils.formatDate(sunday,"yyyy-MM-dd")+"的结算总数为--"+total);
+				BigDecimal percentDecimal = new BigDecimal(0);
+				if(0!=total){
+					percentDecimal = new BigDecimal(orderCount).divide(new BigDecimal(total)).setScale(4,BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
+				}
+				returnMap.put(DateUtils.formatDate(startTime,"yyyy-MM-dd"), percentDecimal.toString());
+				returnList.add(returnMap);
+				startTime=DateUtils.addWeeks(sunday, 1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return returnList;
+	
+	}
+
+	@Override
+	public List<Map<String, String>> getOperationStatisticsByMonth(Date startTime, Date endTime, Long carportId, Long carTypeId) {
+		
+		this.logger.info("按月统计车辆运营率，开始时间为-"+DateUtils.formatDate(startTime, "yyyy-MM-dd HH:mm:ss"));
+		this.logger.info("按月统计车辆运营率，结束时间为-"+DateUtils.formatDate(endTime, "yyyy-MM-dd HH:mm:ss"));
+		this.logger.info("按月统计车辆运营率，车库ID为-"+carportId);
+		this.logger.info("按月统计车辆运营率，车型ID为-"+carTypeId);
+		this.validateBefore(startTime, endTime, carportId, carTypeId);
+		
+		Car car = new Car();
+		SqlSession session=null;
+		List<Map<String, String>> returnList = new ArrayList<>();
+		try {
+			session=sqlSessionFactoryBean.getObject().openSession();
+			Map<String, String> returnMap= new HashMap<>();
+			int count =DateUtils.getCountTwoDayMonth(startTime, endTime);
+			this.logger.info("需要循环的次数为--"+count);
+			for(int i=0;i<count;i++){
+				startTime = DateUtils.getDayMaxDate(startTime);
+				Date monthLastDay = DateUtils.addMonths(DateUtils.getLastOfMonth(startTime), i);
+				monthLastDay = DateUtils.getDayMaxDate(monthLastDay);
+				if(endTime.before(monthLastDay)){
+					monthLastDay = endTime;
+				}
+				long daycount =(monthLastDay.getTime()-startTime.getTime()) / (1000 * 60 * 60 * 24) +1;
+				int total = 0;
+				for(int j=0 ;j<daycount; j++){
+					//按周查询的车辆总数
+					car.setCarPortId(carportId);
+					car.setCarTypeId(carTypeId);
+					car.setStartTime(startTime);
+					//车辆总数
+					total = session.selectOne("cn.cuco.dao.CarMapper.getTotalByCarPortOrCarType", car);
+					this.logger.info("查询日期为--"+DateUtils.formatDate(startTime,"yyyy-MM-dd")+"的车辆总数为--"+total);
+					total += total;
+					startTime=DateUtils.addDays(startTime, 1);
+				}
+				
+				//按周的结算数
+				OrderCarUsed orderCarUsed = new OrderCarUsed();
+				Date timeStart = DateUtils.getDayMiniDate(startTime);
+				orderCarUsed.setTimeStart(timeStart);
+				
+				orderCarUsed.setTimeEnd(monthLastDay);
+				int orderCount = orderCarUsedService.getOrderCarUsedCount(orderCarUsed);
+				this.logger.info("查询日期为--"+DateUtils.formatDate(startTime,"yyyy-MM-dd")+"至"+DateUtils.formatDate(monthLastDay,"yyyy-MM-dd")+"的结算总数为--"+total);
+				BigDecimal percentDecimal = new BigDecimal(0);
+				if(0!=total){
+					percentDecimal = new BigDecimal(orderCount).divide(new BigDecimal(total)).setScale(4,BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
+				}
+				returnMap.put(DateUtils.formatDate(startTime,"yyyy-MM-dd"), percentDecimal.toString());
+				returnList.add(returnMap);
+				startTime=DateUtils.addMonths(monthLastDay, 1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return returnList;
+	}
+	
+	/**   
+	 * @Title: validateBefore   
+	 * @Description: 统计之前的校验调用   
+	 * @param: @param startTime
+	 * @param: @param endTime
+	 * @param: @param carportId
+	 * @param: @param carTypeId      
+	 * @return: void      
+	 */
+	private void validateBefore(Date startTime, Date endTime, Long carportId, Long carTypeId){
+		
+		ParamVerifyUtils.paramNotNull(startTime,"开始日期不能为空");
+		ParamVerifyUtils.paramNotNull(endTime,"结束日期不能为空");
+		if(startTime.after(endTime)){
+			throw new RuntimeExceptionWarn("开始时间不能再结束时间之后");
+		}
+		if(null!=carportId){
+			Carport carport = this.carportService.getCarportById(carportId);
+			if(null == carport){
+				throw new RuntimeExceptionWarn("没有找到该车库信息");
+			}
+		}
+		if(null!=carTypeId){
+			CarType carType = this.carTypeService.getCarTypeById(carTypeId);
+			if(null == carType){
+				throw new RuntimeExceptionWarn("没有找到该车型信息");
+			}
+		}
+	}
+	
+}

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.OrderCarportMapper" >
+
+  <!-- 查询解锁订单列表(带排序) -->
+  <select id="getOrderCarportListWithSort" resultMap="BaseResultMap" parameterType="cn.cuco.entity.OrderCarport" >
+       select  <include refid="Base_Column_List" />
+    from td_order_carport  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "orderNum != null and orderNum != '' ">
+        and order_num = #{orderNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "source != null ">
+        and source = #{source,jdbcType=INTEGER}      
+      </if>
+      <if test= "sourceId != null ">
+        and source_id = #{sourceId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carportId != null ">
+        and carport_id = #{carportId,jdbcType=BIGINT}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "payment != null ">
+        and payment = #{payment,jdbcType=DECIMAL}      
+      </if>
+      <if test= "paymentTime != null ">
+        and payment_time = #{paymentTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "isTimeout != null ">
+        and is_timeout = #{isTimeout,jdbcType=INTEGER}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+  </where>
+  order by created desc
+  </select>
+  
+  <!-- 获取未完成的解锁订单列表 -->
+  <select id="getUnfinishOrderCarportList" resultMap="BaseResultMap" parameterType="cn.cuco.entity.OrderCarport" >
+       select  <include refid="Base_Column_List" />
+    from td_order_carport  
+  where
+ 		(status = 1 or status = 2)
+      <if test= "orderNum != null and orderNum != '' ">
+        and order_num = #{orderNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "source != null ">
+        and source = #{source,jdbcType=INTEGER}      
+      </if>
+      <if test= "sourceId != null ">
+        and source_id = #{sourceId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carportId != null ">
+        and carport_id = #{carportId,jdbcType=BIGINT}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "payment != null ">
+        and payment = #{payment,jdbcType=DECIMAL}      
+      </if>
+      <if test= "paymentTime != null ">
+        and payment_time = #{paymentTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "isTimeout != null ">
+        and is_timeout = #{isTimeout,jdbcType=INTEGER}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+	  order by created desc
+  </select>
+  
+  <select id="getUncancelOrderCarportList" resultMap="BaseResultMap" parameterType="cn.cuco.entity.OrderCarport" >
+       select  <include refid="Base_Column_List" />
+    from td_order_carport  
+  where status != 4
+      <if test= "source != null ">
+        and source = #{source,jdbcType=INTEGER}      
+      </if>
+      <if test= "sourceId != null ">
+        and source_id = #{sourceId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carportId != null ">
+        and carport_id = #{carportId,jdbcType=BIGINT}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "payment != null ">
+        and payment = #{payment,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+  order by created desc
+  </select>
+</mapper>

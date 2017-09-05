@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.ApproveMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.Approve" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_mobile" property="memberMobile" jdbcType="VARCHAR" />
+    <result column="member_item_id" property="memberItemId" jdbcType="BIGINT" />
+    <result column="member_item_name" property="memberItemName" jdbcType="VARCHAR" />
+    <result column="membership" property="membership" jdbcType="INTEGER" />
+    <result column="approve_type" property="approveType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="operater_id" property="operaterId" jdbcType="VARCHAR" />
+    <result column="operater_name" property="operaterName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="approve_time" property="approveTime" jdbcType="TIMESTAMP" />
+    <result column="idcard_front" property="idcardFront" jdbcType="VARCHAR" />
+    <result column="idcard_back" property="idcardBack" jdbcType="VARCHAR" />
+    <result column="drivercard_original" property="drivercardOriginal" jdbcType="VARCHAR" />
+    <result column="drivercard_copy" property="drivercardCopy" jdbcType="VARCHAR" />
+    <result column="license" property="license" jdbcType="VARCHAR" />
+    <result column="tax_reg" property="taxReg" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_log" property="isLog" jdbcType="INTEGER" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.Approve" >
+       select  count(1) 
+    from td_approve  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+        and member_item_name = #{memberItemName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "membership != null ">
+        and membership = #{membership,jdbcType=INTEGER}      
+      </if>
+      <if test= "approveType != null ">
+        and approve_type = #{approveType,jdbcType=INTEGER}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "operaterId != null and operaterId != '' ">
+        and operater_id = #{operaterId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operaterName != null and operaterName != '' ">
+        and operater_name = #{operaterName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "approveTime != null ">
+        and approve_time = #{approveTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "idcardFront != null and idcardFront != '' ">
+        and idcard_front = #{idcardFront,jdbcType=VARCHAR}      
+      </if>
+      <if test= "idcardBack != null and idcardBack != '' ">
+        and idcard_back = #{idcardBack,jdbcType=VARCHAR}      
+      </if>
+      <if test= "drivercardOriginal != null and drivercardOriginal != '' ">
+        and drivercard_original = #{drivercardOriginal,jdbcType=VARCHAR}      
+      </if>
+      <if test= "drivercardCopy != null and drivercardCopy != '' ">
+        and drivercard_copy = #{drivercardCopy,jdbcType=VARCHAR}      
+      </if>
+      <if test= "license != null and license != '' ">
+        and license = #{license,jdbcType=VARCHAR}      
+      </if>
+      <if test= "taxReg != null and taxReg != '' ">
+        and tax_reg = #{taxReg,jdbcType=VARCHAR}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "isLog != null ">
+        and is_log = #{isLog,jdbcType=INTEGER}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Approve" >
+       select  <include refid="Base_Column_List" />
+    from td_approve  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+        and member_item_name = #{memberItemName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "membership != null ">
+        and membership = #{membership,jdbcType=INTEGER}      
+      </if>
+      <if test= "approveType != null ">
+        and approve_type = #{approveType,jdbcType=INTEGER}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "operaterId != null and operaterId != '' ">
+        and operater_id = #{operaterId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operaterName != null and operaterName != '' ">
+        and operater_name = #{operaterName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "approveTime != null ">
+        and approve_time = #{approveTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "idcardFront != null and idcardFront != '' ">
+        and idcard_front = #{idcardFront,jdbcType=VARCHAR}      
+      </if>
+      <if test= "idcardBack != null and idcardBack != '' ">
+        and idcard_back = #{idcardBack,jdbcType=VARCHAR}      
+      </if>
+      <if test= "drivercardOriginal != null and drivercardOriginal != '' ">
+        and drivercard_original = #{drivercardOriginal,jdbcType=VARCHAR}      
+      </if>
+      <if test= "drivercardCopy != null and drivercardCopy != '' ">
+        and drivercard_copy = #{drivercardCopy,jdbcType=VARCHAR}      
+      </if>
+      <if test= "license != null and license != '' ">
+        and license = #{license,jdbcType=VARCHAR}      
+      </if>
+      <if test= "taxReg != null and taxReg != '' ">
+        and tax_reg = #{taxReg,jdbcType=VARCHAR}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "isLog != null ">
+        and is_log = #{isLog,jdbcType=INTEGER}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, member_name, member_id, 
+      member_mobile, member_item_id, member_item_name, 
+      membership, approve_type, status, 
+      operater_id, operater_name, created, 
+      approve_time, idcard_front, idcard_back, 
+      drivercard_original, drivercard_copy, license, 
+      tax_reg, remark, is_log
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Approve" >
+    select 
+      id, member_name, member_id, 
+      member_mobile, member_item_id, member_item_name, 
+      membership, approve_type, status, 
+      operater_id, operater_name, created, 
+      approve_time, idcard_front, idcard_back, 
+      drivercard_original, drivercard_copy, license, 
+      tax_reg, remark, is_log
+    from td_approve where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.Approve" >
+    delete from td_approve where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_approve where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.Approve" >
+    insert into td_approve
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         member_mobile,
+      </if>
+      <if test= "memberItemId != null ">
+         member_item_id,
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+         member_item_name,
+      </if>
+      <if test= "membership != null ">
+         membership,
+      </if>
+      <if test= "approveType != null ">
+         approve_type,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "operaterId != null and operaterId != '' ">
+         operater_id,
+      </if>
+      <if test= "operaterName != null and operaterName != '' ">
+         operater_name,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "approveTime != null ">
+         approve_time,
+      </if>
+      <if test= "idcardFront != null and idcardFront != '' ">
+         idcard_front,
+      </if>
+      <if test= "idcardBack != null and idcardBack != '' ">
+         idcard_back,
+      </if>
+      <if test= "drivercardOriginal != null and drivercardOriginal != '' ">
+         drivercard_original,
+      </if>
+      <if test= "drivercardCopy != null and drivercardCopy != '' ">
+         drivercard_copy,
+      </if>
+      <if test= "license != null and license != '' ">
+         license,
+      </if>
+      <if test= "taxReg != null and taxReg != '' ">
+         tax_reg,
+      </if>
+      <if test= "remark != null and remark != '' ">
+         remark,
+      </if>
+      <if test= "isLog != null ">
+         is_log,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberItemId != null ">
+         #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+         #{memberItemName,jdbcType=VARCHAR},
+      </if>
+      <if test= "membership != null ">
+         #{membership,jdbcType=INTEGER},
+      </if>
+      <if test= "approveType != null ">
+         #{approveType,jdbcType=INTEGER},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "operaterId != null and operaterId != '' ">
+         #{operaterId,jdbcType=VARCHAR},
+      </if>
+      <if test= "operaterName != null and operaterName != '' ">
+         #{operaterName,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "approveTime != null ">
+         #{approveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "idcardFront != null and idcardFront != '' ">
+         #{idcardFront,jdbcType=VARCHAR},
+      </if>
+      <if test= "idcardBack != null and idcardBack != '' ">
+         #{idcardBack,jdbcType=VARCHAR},
+      </if>
+      <if test= "drivercardOriginal != null and drivercardOriginal != '' ">
+         #{drivercardOriginal,jdbcType=VARCHAR},
+      </if>
+      <if test= "drivercardCopy != null and drivercardCopy != '' ">
+         #{drivercardCopy,jdbcType=VARCHAR},
+      </if>
+      <if test= "license != null and license != '' ">
+         #{license,jdbcType=VARCHAR},
+      </if>
+      <if test= "taxReg != null and taxReg != '' ">
+         #{taxReg,jdbcType=VARCHAR},
+      </if>
+      <if test= "remark != null and remark != '' ">
+         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "isLog != null ">
+         #{isLog,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_approve (
+         id,
+         member_name,
+         member_id,
+         member_mobile,
+         member_item_id,
+         member_item_name,
+         membership,
+         approve_type,
+         status,
+         operater_id,
+         operater_name,
+         created,
+         approve_time,
+         idcard_front,
+         idcard_back,
+         drivercard_original,
+         drivercard_copy,
+         license,
+         tax_reg,
+         remark,
+         is_log)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberMobile,jdbcType=VARCHAR},
+         #{item.memberItemId,jdbcType=BIGINT},
+         #{item.memberItemName,jdbcType=VARCHAR},
+         #{item.membership,jdbcType=INTEGER},
+         #{item.approveType,jdbcType=INTEGER},
+         #{item.status,jdbcType=INTEGER},
+         #{item.operaterId,jdbcType=VARCHAR},
+         #{item.operaterName,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.approveTime,jdbcType=TIMESTAMP},
+         #{item.idcardFront,jdbcType=VARCHAR},
+         #{item.idcardBack,jdbcType=VARCHAR},
+         #{item.drivercardOriginal,jdbcType=VARCHAR},
+         #{item.drivercardCopy,jdbcType=VARCHAR},
+         #{item.license,jdbcType=VARCHAR},
+         #{item.taxReg,jdbcType=VARCHAR},
+         #{item.remark,jdbcType=VARCHAR},
+         #{item.isLog,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.Approve" >
+    update td_approve
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+      member_mobile = #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberItemId != null ">
+      member_item_id = #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+      member_item_name = #{memberItemName,jdbcType=VARCHAR},
+      </if>
+      <if test= "membership != null ">
+      membership = #{membership,jdbcType=INTEGER},
+      </if>
+      <if test= "approveType != null ">
+      approve_type = #{approveType,jdbcType=INTEGER},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "operaterId != null and operaterId != '' ">
+      operater_id = #{operaterId,jdbcType=VARCHAR},
+      </if>
+      <if test= "operaterName != null and operaterName != '' ">
+      operater_name = #{operaterName,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "approveTime != null ">
+      approve_time = #{approveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "idcardFront != null and idcardFront != '' ">
+      idcard_front = #{idcardFront,jdbcType=VARCHAR},
+      </if>
+      <if test= "idcardBack != null and idcardBack != '' ">
+      idcard_back = #{idcardBack,jdbcType=VARCHAR},
+      </if>
+      <if test= "drivercardOriginal != null and drivercardOriginal != '' ">
+      drivercard_original = #{drivercardOriginal,jdbcType=VARCHAR},
+      </if>
+      <if test= "drivercardCopy != null and drivercardCopy != '' ">
+      drivercard_copy = #{drivercardCopy,jdbcType=VARCHAR},
+      </if>
+      <if test= "license != null and license != '' ">
+      license = #{license,jdbcType=VARCHAR},
+      </if>
+      <if test= "taxReg != null and taxReg != '' ">
+      tax_reg = #{taxReg,jdbcType=VARCHAR},
+      </if>
+      <if test= "remark != null and remark != '' ">
+      remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "isLog != null ">
+      is_log = #{isLog,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

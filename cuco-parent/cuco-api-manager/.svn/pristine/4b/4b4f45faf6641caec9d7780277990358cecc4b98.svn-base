@@ -1,0 +1,106 @@
+package cn.cuco.controller.manager.order;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import cn.cuco.annotation.API;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.controller.entity.OperateLogVO;
+import cn.cuco.controller.entity.OrderRenewalVO;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.order.OrderRenewalService;
+
+@RestController
+@RequestMapping(value = "/orderRenewal")
+public class OrderRenewalController {
+	
+	@Autowired
+	private OrderRenewalService orderRenewalService;
+
+	@API(value = "续费订单列表")
+	@RequestMapping(value = "getOrderListByPage", method = RequestMethod.POST)
+	public Object getOrderListByPage(@RequestBody OrderRenewalVO orderRenewalVO){
+		
+		ParamVerifyUtils.paramNotNull(orderRenewalVO,"参数不可为null");
+		Integer page = orderRenewalVO.getPage();
+		Integer pageSize = orderRenewalVO.getPageSize();
+		OrderRenewal orderRenewal = new OrderRenewal();
+		BeanUtils.copyProperties(orderRenewalVO, orderRenewal);
+		orderRenewal.setCreateStart(orderRenewalVO.getCreatedBegin());
+		orderRenewal.setPaymentStart(orderRenewalVO.getPayMentBegin());
+		PageResult<OrderRenewal> orderRenewalResult = orderRenewalService.getOrderRenewalListByPageForBackstage(orderRenewal);
+		Integer totalSize = orderRenewalResult.getTotalSize();
+		List<OrderRenewalVO> orderRenewalVOList = null;
+		if(CollectionUtils.isNotEmpty(orderRenewalResult.getItems())){
+			orderRenewalVOList = new ArrayList<OrderRenewalVO>();
+			for(OrderRenewal getOrderRenewal : orderRenewalResult.getItems()){
+				OrderRenewalVO vo = new OrderRenewalVO();
+				BeanUtils.copyProperties(getOrderRenewal, vo);
+				vo.setPaymentTime(getOrderRenewal.getCompletedTime());
+				vo.setMemberId(getOrderRenewal.getCreatedMemberId());
+				vo.setName(getOrderRenewal.getCreatedMemberName());
+				vo.setMobile(getOrderRenewal.getCreatedMemberMobile());
+				orderRenewalVOList.add(vo);
+			}
+		}
+		return new PageResult<OrderRenewalVO>(page, pageSize, totalSize, orderRenewalVOList);
+	}
+	
+	@API(value = "续费订单日志列表")
+	@RequestMapping(value = "getOrderLogById", method = RequestMethod.GET)
+	public Object getOrderLogById(@RequestBody OrderRenewalVO orderRenewalVO){
+		
+		ParamVerifyUtils.paramNotNull(orderRenewalVO,"参数不可为null");
+		ParamVerifyUtils.paramNotNull(orderRenewalVO.getId(),"参数id不可为null");
+		Integer page = orderRenewalVO.getPage();
+		Integer pageSize = orderRenewalVO.getPageSize();
+		OrderRenewal getOrderRenewal = new OrderRenewal();
+		BeanUtils.copyProperties(orderRenewalVO, getOrderRenewal);
+		PageResult<OperateLog> operateLogResult = orderRenewalService.getOrderRenewalLogListByPage(getOrderRenewal);
+		Integer totalSize = operateLogResult.getTotalSize();
+		List<OperateLogVO> operateLogVOList = null;
+		if(CollectionUtils.isNotEmpty(operateLogResult.getItems())){
+			operateLogVOList = new ArrayList<OperateLogVO>();
+			for(OperateLog getOperateLog : operateLogResult.getItems()){
+				OperateLogVO vo = new OperateLogVO();
+				BeanUtils.copyProperties(getOperateLog, vo);
+				OrderRenewal getTotal = new OrderRenewal();
+				getTotal.setId(getOperateLog.getOperationId());
+				OrderRenewal orderRenewalTotal = orderRenewalService.getOrderRenewal(getTotal);
+				if(orderRenewalTotal != null){
+					vo.setTotal(orderRenewalTotal.getTotal());
+				}
+				operateLogVOList.add(vo);
+			}
+		}
+		return new PageResult<OperateLogVO>(page, pageSize, totalSize, operateLogVOList);
+	}
+	
+	@API(value = "续费订单详情")
+	@RequestMapping(value = "getOrderById", method = RequestMethod.GET)
+	public Object getOrderById(@RequestBody OrderRenewalVO orderRenewalVO){
+		
+		ParamVerifyUtils.paramNotNull(orderRenewalVO,"参数不可为null");
+		ParamVerifyUtils.paramNotNull(orderRenewalVO.getId(),"参数id不可为null");
+		OrderRenewal getOrderRenewal = new OrderRenewal();
+		BeanUtils.copyProperties(orderRenewalVO, getOrderRenewal);
+		OrderRenewal orderRenewal = orderRenewalService.getOrderRenewal(getOrderRenewal);
+		orderRenewalVO = null;
+		if(orderRenewal != null){
+			orderRenewalVO = new OrderRenewalVO();
+			BeanUtils.copyProperties(orderRenewal, orderRenewalVO);
+			orderRenewalVO.setPaymentTime(orderRenewal.getCompletedTime());
+			orderRenewalVO.setName(orderRenewal.getCreatedMemberName());
+			orderRenewalVO.setMobile(orderRenewal.getCreatedMemberMobile());
+		}
+		return orderRenewalVO;
+	}
+}

@@ -1,0 +1,63 @@
+package cn.cuco.service.car.carService.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarRepairMapper;
+import cn.cuco.entity.CarRepair;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.car.carService.CarRepairService;
+
+@Service
+public class CarRepairServiceImpl implements CarRepairService {
+
+    @Autowired
+    private CarRepairMapper<CarRepair> carRepairMapper;
+
+	@Override
+	public CarRepair createCarRepair(CarRepair carRepair) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarRepair updateCarRepair(CarRepair carRepair) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarRepair updateCarRepairByMaintenance(CarRepair carRepair) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarRepair updateCarRepairBycompleted(CarRepair carRepair) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarRepair getCarRepairById(CarRepair carRepair) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<CarRepair> getCarRepairByCondition(CarRepair carRepair) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarRepair> getCarRepairByList(CarRepair carRepair) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+  
+
+}

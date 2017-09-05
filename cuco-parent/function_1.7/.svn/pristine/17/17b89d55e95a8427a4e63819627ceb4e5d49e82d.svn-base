@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>修改资料</title>
+    <link href="../../css/user.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+    <style>
+        .update-info {
+            font-size: 1.6rem;
+        }
+        .update-info li{
+            background: #fff;
+            height: 42px;
+            line-height: 42px;
+            padding: 0 3%;
+            font-size: 1.6rem;
+            position: relative;
+
+        }
+        .ipt-text {
+            width: 100%;
+            height: 100%;
+            padding: 0 6px;
+            background: none;
+            -webkit-appearance: none;
+            color: #666;
+        }
+        .close {
+            width: 20px;
+            height: 20px;
+            background: url("../../images/clear_search.png") no-repeat;
+            display: inline-block;
+            vertical-align: middle;
+            background-size: 100%;
+            position: absolute;
+            right: 10px;
+            top: 12px;
+        }
+        .update-info .city {
+            /*padding: 10px;*/
+            background: #fff;
+        }
+        .update-info .city li{
+            border-bottom: 1px #ccc solid;
+            margin: 0 3%;
+        }
+        .selected-icon {
+            width: 20px;
+            height: 18px;
+            background: url("../../images/right_sel.png") no-repeat;
+            display: inline-block;
+            vertical-align: middle;
+            background-size: 80%;
+            position: absolute;
+            right: 10px;
+            top: 15px;
+        }
+        .hide-i {
+            display: none;
+        }
+    </style>
+</head>
+<body class="greyBg user-info">
+    <div class="update-info">
+        <!--name修改-->
+
+        <!--<ul>-->
+            <!--<li>-->
+                <!--<input type="text" class="ipt-text" value="影子"/>-->
+                <!--<i class="close"></i>-->
+            <!--</li>-->
+        <!--</ul>-->
+
+        <!-- 选择城市 -->
+        <!--<ul class="city">-->
+            <!--<li>北京</li>-->
+            <!--<li>上海</li>-->
+        <!--</ul>-->
+
+        <!--选择男女-->
+        <ul class="city">
+            <li>男 <i class="selected-icon"></i></li>
+            <li>女 <i class="selected-icon hide-i"></i></li>
+        </ul>
+    </div>
+</body>
+</html>

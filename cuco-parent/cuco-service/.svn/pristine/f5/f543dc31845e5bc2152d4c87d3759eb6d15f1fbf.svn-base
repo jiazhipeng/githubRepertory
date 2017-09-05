@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface CarTypePriceMapper<T> extends BaseDao<T> {
+
+}

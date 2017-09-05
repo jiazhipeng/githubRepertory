@@ -1,0 +1,268 @@
+package cn.cuco.service.member.account.impl;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.MemberAccountLogMapper;
+import cn.cuco.dao.MemberAccountMapper;
+import cn.cuco.entity.CarType;
+import cn.cuco.entity.Carport;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberAccount;
+import cn.cuco.entity.MemberAccountLog;
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.entity.OrderCarUsed;
+import cn.cuco.entity.OrderCarport;
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.enums.AccountOperateType;
+import cn.cuco.enums.OrderCarportStatus;
+import cn.cuco.enums.OrderRenewalStatus;
+import cn.cuco.enums.PaymentType;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.carport.CarTypeService;
+import cn.cuco.service.basic.carport.CarportService;
+import cn.cuco.service.member.account.MemberAccountService;
+import cn.cuco.service.member.carUsed.MemberCarportService;
+import cn.cuco.service.member.info.MemberService;
+import cn.cuco.service.order.OrderCarUsedService;
+import cn.cuco.service.order.OrderCarportService;
+import cn.cuco.service.order.OrderRenewalService;
+
+/**
+ * @ClassName: MemberAccountServiceImpl
+ * @Description: 用户账户相关接口实现
+ * @author zc.du
+ * @date 2017年2月23日 上午10:37:13
+ */
+@Service(value = "memberAccountService")
+public class MemberAccountServiceImpl implements MemberAccountService {
+
+	@Autowired
+	private MemberAccountMapper<MemberAccount> memberAccountMapper;
+	@Autowired
+	private MemberAccountLogMapper<MemberAccountLog> memberAccountLogMapper;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private OrderCarportService orderCarportService;
+	@Autowired
+	private CarportService carportService;
+	@Autowired
+	private MemberCarportService memberCarportService;
+	@Autowired
+	private CarTypeService carTypeService;
+	@Autowired
+	private OrderRenewalService orderRenewalService;
+	@Autowired
+	private OrderCarUsedService orderCarUsedService;
+
+	@Override
+	public MemberAccount createMemberAccount(MemberAccount memberAccount) {
+		ParamVerifyUtils.paramNotNull(memberAccount);
+		ParamVerifyUtils.paramNotNull(memberAccount.getMemberId(), "创建账户时，用户ID不能为空");
+		Member member = memberService.getMemberById(memberAccount.getMemberId());
+		ParamVerifyUtils.paramNotNull(member, "创建用户时，用户不存在");
+		MemberAccount old = getMemberAccountByMemberId(memberAccount.getMemberId());
+		if (null != old) {
+			ExceptionUtil.throwWarn("该用户已经存在账户");
+		}
+		this.memberAccountMapper.insertSelective(memberAccount);
+		return getMemberAccountById(memberAccount.getId());
+	}
+
+	@Override
+	public MemberAccount updateBalanceForBackstage(MemberAccountLog memberAccountLog) {
+		ParamVerifyUtils.paramNotNull(memberAccountLog);
+		Integer transformType = memberAccountLog.getTransformType();
+		ParamVerifyUtils.paramNotNull(memberAccountLog.getModifierId(), "后台变动用户余额时，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(memberAccountLog.getModifer(), "后台变动用户余额时，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(memberAccountLog.getMemberId(), "后台变动用户余额时，用户ID不能为空");
+		ParamVerifyUtils.paramNotNull(transformType, "后台变动用户余额时，操作类型不能为空");
+		if(transformType.intValue() != 0 && transformType.intValue() != 1){
+			ExceptionUtil.throwWarn("变动类型不合法");
+		}
+		ParamVerifyUtils.paramNotNull(memberAccountLog.getRemark(), "后台变动用户余额时，变动原因不能为空");
+		BigDecimal total = memberAccountLog.getTotal();
+		if (null == total || total.doubleValue() < 0) {
+			ExceptionUtil.throwWarn("后台变动用户余额时，金额参数不合法");
+		}
+		MemberAccount account = this.getMemberAccountByMemberId(memberAccountLog.getMemberId());
+		ParamVerifyUtils.paramNotNull(account, "用户账户不存在");
+		if (account.getBalance().subtract(total).doubleValue() < 0) {
+			ExceptionUtil.throwWarn("后台变动用户余额时，金额不能大于用户账户余额");
+		}
+		MemberAccount target = new MemberAccount();
+		target.setId(account.getId());
+		target.setModifer(memberAccountLog.getModifer());
+		target.setModifierId(memberAccountLog.getMemberId());
+		if(transformType.intValue() == 0){
+			memberAccountLog.setOperateType(5);
+			target.setBalance(account.getBalance().add(total));
+		}else{
+			memberAccountLog.setOperateType(3);
+			target.setBalance(account.getBalance().subtract(total));
+		}
+		this.memberAccountMapper.updateByPrimaryKeySelective(target);
+		Date date = new Date();
+		memberAccountLog.setAccountId(account.getId());
+		memberAccountLog.setAccountType(1);
+		memberAccountLog.setCreated(date);
+		memberAccountLog.setRemark(memberAccountLog.getModifer() + ":" + memberAccountLog.getRemark());
+		this.memberAccountLogMapper.insertSelective(memberAccountLog);
+		return this.getMemberAccountByMemberId(memberAccountLog.getMemberId());
+	}
+
+	@Override
+	public MemberAccount updateMemberAccountForSettlement(OrderCarUsed orderCarUsed) {
+		ParamVerifyUtils.paramNotNull(orderCarUsed);
+		ParamVerifyUtils.paramNotNull(orderCarUsed.getId(), "结算订单变动用户余额时，结算订单ID不能为空");
+		ParamVerifyUtils.paramNotNull(orderCarUsed.getModifierId(), "结算订单变动用户余额时，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(orderCarUsed.getModifer(), "结算订单变动用户余额时，操作人不能为空");
+		
+		OrderCarUsed order = this.orderCarUsedService.getOrderCarUsedById(orderCarUsed.getId());
+		ParamVerifyUtils.paramNotNull(order,"结算订单不存在，无法同步账户金额");
+		
+		MemberAccount account = this.getMemberAccountByMemberId(order.getMemberId());
+		Date date = new Date();
+		String remark = "用车扣费:"+order.getTotal()+"元";
+		MemberAccount target = new MemberAccount();
+		target.setId(account.getId());
+		target.setModifer(order.getModifer());
+		target.setModifierId(order.getModifierId());
+		target.setBalance(account.getBalance().add(order.getTotal()));
+		this.memberAccountMapper.updateByPrimaryKeySelective(target);
+		MemberAccountLog log = new MemberAccountLog(account.getId(), order.getMemberId(), 1, AccountOperateType.SYSTEM_DEDUCTION.getIndex(), 1, order.getTotal(), remark, date, orderCarUsed.getModifer(), orderCarUsed.getModifierId());
+		this.memberAccountLogMapper.insertSelective(log);
+		return this.getMemberAccountByMemberId(account.getMemberId());
+	}
+
+	@Override
+	public MemberAccount updateMemberAccountForMemberRenewal(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		ParamVerifyUtils.paramNotNull(orderRenewal.getId(), "储值订单变动用户余额时，解锁订单ID不能为空");
+		ParamVerifyUtils.paramNotNull(orderRenewal.getModifierId(), "储值订单变动用户余额时，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(orderRenewal.getModifier(), "储值订单变动用户余额时，操作人不能为空");
+		
+		OrderRenewal order = new OrderRenewal();
+		order.setId(orderRenewal.getId());
+		order = this.orderRenewalService.getOrderRenewal(orderRenewal);
+		ParamVerifyUtils.paramNotNull(order,"储值订单不存在，无法同步账户金额");
+		
+		MemberAccount account = this.getMemberAccountByMemberId(order.getCreatedMemberId());
+		Date date = new Date();
+		String remark = "通过"+PaymentType.getName(order.getPaymentType())+"续费，充值金额"+order.getTotal()+"元";
+		MemberAccount target = new MemberAccount();
+		target.setId(account.getId());
+		target.setModifer(orderRenewal.getModifier());
+		target.setModifierId(orderRenewal.getModifierId());
+		target.setBalance(account.getBalance().add(order.getTotal()));
+		this.memberAccountMapper.updateByPrimaryKeySelective(target);
+		MemberAccountLog log = new MemberAccountLog(account.getId(), order.getCreatedMemberId(), 1, AccountOperateType.MANUAL_RENEWAL.getIndex(), 0, order.getTotal(), remark, date, orderRenewal.getModifier(), orderRenewal.getModifierId());
+		this.memberAccountLogMapper.insertSelective(log);
+		return this.getMemberAccountByMemberId(account.getMemberId());
+	}
+
+	@Override
+	public MemberAccount getMemberAccountByMemberId(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId, "查询账户信息时，用户ID不能为空");
+		MemberAccount account = new MemberAccount();
+		account.setMemberId(memberId);
+		List<MemberAccount> list = this.memberAccountMapper.selectByCondition(account);
+		if (CollectionUtils.isNotEmpty(list)) {
+			return list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberAccountLog> getMemberAccountLogListByPage(MemberAccountLog memberAccountLog) {
+		ParamVerifyUtils.paramNotNull(memberAccountLog);
+		ParamVerifyUtils.paramNotNull(memberAccountLog.getMemberId(), "查询账户明细时，用户ID不能为空");
+		Integer page = memberAccountLog.getPage();
+		Integer pageSize = memberAccountLog.getPageSize();
+		Integer totalSize = this.memberAccountLogMapper.selectCountByCondition(memberAccountLog);
+		PageHelper.startPage(page, pageSize);
+		List<MemberAccountLog> list = this.memberAccountLogMapper.selectByCondition(memberAccountLog);
+		PageResult<MemberAccountLog> pageResult = new PageResult<MemberAccountLog>(page, pageSize, totalSize, list);
+		return pageResult;
+	}
+
+	private MemberAccount getMemberAccountById(Long id) {
+		return this.memberAccountMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public BigDecimal getALlCostByMemberId(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId, "根据用户ID查询用户总消费时，用户ID不能为空");
+		return this.memberAccountLogMapper.getALlCostByMemberId(memberId);
+	}
+
+	@Override
+	public MemberAccount updateMemberAccountByUnlockCarPort(OrderCarport orderCarport) {
+		ParamVerifyUtils.paramNotNull(orderCarport);
+		ParamVerifyUtils.paramNotNull(orderCarport.getId(), "解锁订单变动用户余额时，解锁订单ID不能为空");
+		ParamVerifyUtils.paramNotNull(orderCarport.getModifierId(), "解锁订单变动用户余额时，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(orderCarport.getModifer(), "解锁订单变动用户余额时，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(orderCarport.getPayType(),"解锁订单变动用户余额时，支付渠道不能为空");
+	
+		OrderCarport newOne = new OrderCarport();
+		newOne.setId(orderCarport.getId());
+		newOne = this.orderCarportService.getOrderCarport(orderCarport);
+		ParamVerifyUtils.paramNotNull(newOne,"解锁订单不存在，无法同步账户数据");
+		if(!OrderCarportStatus.COMPLETE_PAY.getIndex().equals(newOne.getStatus())){
+			ExceptionUtil.throwWarn("订单未完成支付，无法同步账户数据");
+		}
+		MemberAccount old = this.getMemberAccountByMemberId(newOne.getMemberId());
+		MemberAccount target = new MemberAccount();
+		target.setBalance(old.getBalance().add(newOne.getTotal()));
+		target.setId(old.getId());
+		target.setModifer(orderCarport.getModifer());
+		target.setModifierId(orderCarport.getModifierId());
+		this.memberAccountMapper.updateByPrimaryKeySelective(target);
+		
+		Carport carport = this.carportService.getCarportById(newOne.getCarportId());
+		MemberCarport memberCarport = new MemberCarport();
+		memberCarport.setMemberId(newOne.getMemberId());
+		memberCarport.setCarportId(carport.getId());
+		memberCarport = this.memberCarportService.getMemberCarport(memberCarport); 
+		StringBuffer remark = new StringBuffer();
+		remark.append("解锁" + carport.getCarportName() +"车库,");
+		if(null != memberCarport.getCartypeId()){
+			CarType carType = this.carTypeService.getCarTypeById(memberCarport.getCartypeId());
+			remark.append( "启用车型"+carType.getBrand()+"-"+carType.getCarType()+",");
+		}
+		remark.append("解锁度100.00%，支付渠道"+orderCarport.getPayType());
+		MemberAccountLog memberAccountLog = new MemberAccountLog(old.getId(), old.getMemberId(), 1, 1, 0, newOne.getTotal(), remark.toString(), new Date(), orderCarport.getModifer(), orderCarport.getModifierId());
+		memberAccountLog.setRemark(memberAccountLog.getModifer() + ":" + memberAccountLog.getRemark());
+		return this.getMemberAccountByMemberId(memberAccountLog.getMemberId());
+	}
+
+	@Override
+	public MemberAccount getMemberAccountByMemberIdForBackstage(Long memberId) {
+		MemberAccount account = this.getMemberAccountByMemberId(memberId);
+		if(null != account){
+			//设置充值次数、最后充值时间
+			Integer count = this.orderRenewalService.getOrderRenewalCount(memberId);
+			account.setPayAccount(count);
+			OrderRenewal orderRenewal = new OrderRenewal();
+			orderRenewal.setCreatedMemberId(memberId);
+			orderRenewal.setStatus(OrderRenewalStatus.COMPLETE_PAY.getIndex());
+			orderRenewal.setPage(1);
+			orderRenewal.setPageSize(10);
+			PageResult<OrderRenewal> page = this.orderRenewalService.getOrderRenewalListByPage(orderRenewal);
+			if(CollectionUtils.isNotEmpty(page.getItems())){
+				account.setLastPayTime(page.getItems().get(0).getCompletedTime());
+			}
+		}
+		return account;
+	}
+}

@@ -1,0 +1,22 @@
+#\u5546\u6237\u53f7
+v_mid=1001
+#\u540c\u6b65\u56de\u8c03url
+v_url=http://www.gcarclub.com/jd/pay/synchronizationCallBack
+#\u5bc6\u94a5
+key=test
+#\u5f02\u6b65\u56de\u6389url
+remark2=http://www.gcarclub.com/jd/pay/asynchronousCallBack
+#\u4eac\u4e1c\u7f51\u5173\u5730\u5740
+submitUrl= https://tmapi.jdpay.com/PayGate
+#\u5927\u989d\u652f\u4ed8\u9875\u9762
+paymentUrl = http://192.168.1.247:9005/
+#\u62bc\u91d1\u989d\u5ea6
+DEPOSIT_THRESHOLD = 10000
+#\u5927\u989d\u652f\u4ed8\u9650\u5236\u989d\u5ea6
+LARGE_PAYMENT_MONEY = 20000
+#jd\u652f\u4ed8\u56de\u8c03\u6210\u529f\u9875\u9762
+jd_callBack_success_url = http://192.168.1.247:9005/success.html
+#jd\u652f\u4ed8\u56de\u8c03\u5931\u8d25\u9875\u9762
+jd_callBack_fail_url = http://192.168.1.247:9005/fail.html
+#\u662f\u5426\u8054\u7cfb\u5ba2\u670d 0\u8054\u7cfb 1\u4e0d\u8054\u7cfb
+IS_CONTACT_CUSTOMER = 0

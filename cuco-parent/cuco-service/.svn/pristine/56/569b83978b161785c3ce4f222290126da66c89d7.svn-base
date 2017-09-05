@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarTypeMapper" >
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByConditionByPage" resultType="INTEGER" parameterType="cn.cuco.entity.CarType" >
+       select  count(1) 
+    from tc_car_type  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "brand != null and brand != '' ">
+        and brand  like  CONCAT('%',CONCAT(#{brand,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "carType != null and carType != '' ">
+        and car_type like  CONCAT('%',CONCAT(#{carType,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+        and image_url = #{imageUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "tankVolume != null ">
+        and tank_volume = #{tankVolume,jdbcType=DECIMAL}      
+      </if>
+      <if test= "basicCost != null ">
+        and basic_cost = #{basicCost,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insuranceUnlock != null ">
+        and insurance_unlock = #{insuranceUnlock,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insuranceNotUnlock != null ">
+        and insurance_not_unlock = #{insuranceNotUnlock,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "validate != null ">
+        and validate = #{validate,jdbcType=INTEGER}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByConditionByPage" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarType" >
+       select  <include refid="Base_Column_List" />
+    from tc_car_type  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "brand != null and brand != '' ">
+        and brand  like  CONCAT('%',CONCAT(#{brand,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "carType != null and carType != '' ">
+        and car_type like  CONCAT('%',CONCAT(#{carType,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+        and image_url = #{imageUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "tankVolume != null ">
+        and tank_volume = #{tankVolume,jdbcType=DECIMAL}      
+      </if>
+      <if test= "basicCost != null ">
+        and basic_cost = #{basicCost,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insuranceUnlock != null ">
+        and insurance_unlock = #{insuranceUnlock,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insuranceNotUnlock != null ">
+        and insurance_not_unlock = #{insuranceNotUnlock,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "validate != null ">
+        and validate = #{validate,jdbcType=INTEGER}      
+      </if>
+  </where>
+  	order by created desc
+  </select>
+</mapper>

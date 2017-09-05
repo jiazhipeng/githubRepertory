@@ -1,0 +1,39 @@
+package cn.cuco.service.basic.business;
+
+
+import cn.cuco.entity.BasicOperatingParameters;
+import java.util.List;
+
+/**
+* @ClassName: BasicOperatingParametersService 
+* @Description: 运营参数接口
+* @author huanghua
+* @date 2017年2月21日 下午2:05:53
+ */
+public interface OperateSettingService {
+
+    /**
+    * @Title: updatebasicOperatingParameters 
+    * @Description: 修改运营参数
+    * @param  basicOperatingParameters
+    * @return BasicOperatingParameters
+     */
+    public BasicOperatingParameters updatebasicOperatingParameters(BasicOperatingParameters basicOperatingParameters);
+
+    /**
+    * @Title: getBasicOperatingParametersById 
+    * @Description: 取运营参数详情
+    * @param  basicOperatingParameters
+    * @return BasicOperatingParameters
+     */
+    public BasicOperatingParameters getBasicOperatingParametersById(BasicOperatingParameters basicOperatingParameters);
+
+    /**
+    * @Title: getBasicOperatingParametersList 
+    * @Description: 取运营参数集合
+    * @param basicOperatingParameters
+    * @return List<BasicOperatingParameters>
+     */
+    public List<BasicOperatingParameters> getBasicOperatingParametersList(BasicOperatingParameters basicOperatingParameters);
+
+}

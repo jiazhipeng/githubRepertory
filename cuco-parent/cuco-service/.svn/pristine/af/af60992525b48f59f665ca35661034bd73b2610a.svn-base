@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarLogMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.CarLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="car_id" property="carId" jdbcType="BIGINT" />
+    <result column="car_plate_num" property="carPlateNum" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="driving_mileage" property="drivingMileage" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.CarLog" >
+       select  count(1) 
+    from td_car_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "drivingMileage != null ">
+        and driving_mileage = #{drivingMileage,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarLog" >
+       select  <include refid="Base_Column_List" />
+    from td_car_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "drivingMileage != null ">
+        and driving_mileage = #{drivingMileage,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, car_id, car_plate_num, 
+      type, driving_mileage, created
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarLog" >
+    select 
+      id, car_id, car_plate_num, 
+      type, driving_mileage, created
+    from td_car_log where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.CarLog" >
+    delete from td_car_log where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_car_log where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.CarLog" >
+    insert into td_car_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "carId != null ">
+         car_id,
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         car_plate_num,
+      </if>
+      <if test= "type != null ">
+         type,
+      </if>
+      <if test= "drivingMileage != null ">
+         driving_mileage,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carId != null ">
+         #{carId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "type != null ">
+         #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "drivingMileage != null ">
+         #{drivingMileage,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_car_log (
+         id,
+         car_id,
+         car_plate_num,
+         type,
+         driving_mileage,
+         created)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.carId,jdbcType=BIGINT},
+         #{item.carPlateNum,jdbcType=VARCHAR},
+         #{item.type,jdbcType=INTEGER},
+         #{item.drivingMileage,jdbcType=DECIMAL},
+         #{item.created,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.CarLog" >
+    update td_car_log
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carId != null ">
+      car_id = #{carId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+      car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "type != null ">
+      type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "drivingMileage != null ">
+      driving_mileage = #{drivingMileage,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

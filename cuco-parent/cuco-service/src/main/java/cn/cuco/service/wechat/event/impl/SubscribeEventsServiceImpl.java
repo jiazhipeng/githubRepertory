@@ -1,0 +1,151 @@
+package cn.cuco.service.wechat.event.impl;
+
+import java.util.Date;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.thoughtworks.xstream.XStream;
+import cn.cuco.entity.Member;
+import cn.cuco.file.FilterStr;
+import cn.cuco.service.member.info.MemberService;
+import cn.cuco.service.wechat.event.EventsService;
+import cn.cuco.wechat.entity.AccessToken;
+import cn.cuco.wechat.entity.WeChatReceiveMsg;
+import cn.cuco.wechat.util.AccessTokenUtil;
+
+
+/**
+ * 关注事件
+ * @author 海易出行
+ *
+ */
+@Service
+public class SubscribeEventsServiceImpl implements EventsService{
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@Autowired
+	MemberService memberService;
+	
+	@Override
+	public String response(WeChatReceiveMsg msg) throws Exception {
+		// 如果是事件推送信息
+		String event = msg.getEvent();
+		Member member = memberService.getMemberByOpenId(msg.getFromUserName());
+		AccessToken token = null;
+		try{
+			token = AccessTokenUtil.getNickname(msg.getFromUserName());
+		}catch(Exception e){
+			token = new AccessToken();
+		}
+		if(null == token){
+			token = new AccessToken();
+		}
+		if(member == null){//添加	
+			logger.info("execute {} add {} begin .....",event,msg.getFromUserName());
+			member = add(msg, token);
+			logger.info("execute {} add {} begin .....",event,msg.getFromUserName());
+
+		}else{//修改
+			logger.info("execute {} update {} begin .....",event,msg.getFromUserName());
+			member = update(msg,member, token);
+			logger.info("execute {} update {} end .....",event,msg.getFromUserName());
+		}
+
+		String message = "";
+		return focusOnPush(msg,message);
+	}
+
+	/**
+	 * 关注的时候推送
+	 * @param msg
+	 * @return
+	 */
+	public String focusOnPush(WeChatReceiveMsg msg,String messageStr) throws Exception {
+		String xml = "ok";
+
+		this.logger.info("关注的时候发送链接消息。。。。。。。。。。。。。。");
+
+		String message = "终于等到你～ /:rose\n\n现在起，仅需8000元，即可加入极车公社，成为会员，享受极致管家服务，在每一个用车的场景都有一辆百万豪车在等你~\n\n"
+				+"点击<a href='http://www.gcarclub.com/h5/new/sale_300.html'>申请入会</a>，可立即领取300元代金券哦~\n\n"
+				+ "我在这里等你，不见不散。";
+		if(StringUtils.isNotEmpty(messageStr)){
+			message = messageStr;
+		}
+		WeChatReceiveMsg wxmsg = new WeChatReceiveMsg();
+		wxmsg.setToUserName(msg.getFromUserName());
+		wxmsg.setFromUserName(msg.getToUserName());
+		wxmsg.setCreateTime(System.currentTimeMillis()/1000/60/60+"");
+		wxmsg.setMsgType("text");
+		wxmsg.setContent(message);
+
+		//hwInfo.setDiskInfos(diskInfos);
+
+		XStream xStream = new XStream();
+		xStream.autodetectAnnotations(true);
+		xml = xStream.toXML(wxmsg);
+		this.logger.info("发送的报文为>>>>>>>：" + xml);
+		return xml;
+	}
+
+	/**
+	 * 修改用户
+	 * @param member
+	 * @param info
+	 * @throws Exception
+	 */
+	public Member update(WeChatReceiveMsg msg, Member member,AccessToken info) throws Exception {
+		Member member0 = this.setMember(msg, info);
+		member0.setId(member.getId());
+		return memberService.unsubscribe(member0);
+	}
+
+	
+	public Member add(WeChatReceiveMsg msg, AccessToken info) throws Exception{
+		Member member = this.setMember(msg, info);
+		member.setCreated(new Date());
+		return memberService.subscribe(member);
+
+	}
+	
+	/**
+	 * 新增用户
+	 * @param msg
+	 * @param info
+	 * @throws Exception
+	 */
+	public Member setMember(WeChatReceiveMsg msg, AccessToken info) throws Exception {
+		int from = 3;// 用户来源 0:线下;1:App-Android;2:App-IOS;3:自主关注(微信);4:市场活动;5:渠道;6:推荐
+		String eventKey = msg.getEventKey();
+		if (!StringUtils.isBlank(eventKey)) {
+			if (eventKey.startsWith("qrscene_member_")) {// 推荐
+				from = 6;
+			} else if (eventKey.startsWith("qrscene_marketing_")) {// 活动
+				from = 4;
+			}
+		}
+		Member m = new Member();
+		m.setOpenid(msg.getFromUserName());
+		m.setFocusStatus(1);//关注状态 0:取消关注；1:已关注；2:未关注
+		if(StringUtils.isNotBlank(info.getNicknamereturn())){
+			m.setName(FilterStr.filter(info.getNicknamereturn()));
+		}
+		if(StringUtils.isBlank(m.getName())){
+			m.setName("极车会员");
+		}
+		this.logger.info("会员名称......" + m.getName());
+		m.setImageUrl(info.getHeadimgurlreturn());
+		m.setStatuts(1);//会员状态 0:冻结；1:正常；
+		m.setSource(from);//用户来源 0:线下；1:活动；2:自主关注；3:推荐；4:安卓；5:iOS；6:极车产品
+		m.setLasttimeModify(new Date());
+		//m.setImageQrcode(request.getServletContext().getRealPath("/"));
+		m.setType(0);//会员类型 0:个人会员；1:企业员；
+		return m;
+	}
+
+
+
+
+}

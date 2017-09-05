@@ -1,0 +1,145 @@
+package cn.cuco.controller.manager.car;
+
+import cn.cuco.annotation.API;
+import cn.cuco.common.httpservice.HttpServiceContext;
+import cn.cuco.common.utils.PrePersistUtils;
+import cn.cuco.common.utils.date.DateUtils;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarUsedLog;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.car.carInfo.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.util.Date;
+
+/**
+ * @ClassName:CarController
+ * @Description：车辆相关
+ * @author：WangShuai
+ * @date：2017年02月24 17:37:00
+ */
+@RestController
+public class CarController {
+
+    @Autowired
+    private CarService carService;
+
+    /**
+    * @Title:
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午05:45:10
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-详情")
+    @RequestMapping(value = "/car/getCarById",method = RequestMethod.GET)
+    private Object getCarById(@RequestParam Long id){
+
+        return carService.getCarById(id);
+    }
+
+    /**
+    * @Title:
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午05:48:04
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-分页")
+    @RequestMapping(value = "/car/getCarListByPage",method = RequestMethod.POST)
+    private Object getCarListByPage(@RequestBody Car car){
+
+        return carService.getCarListByPage(car);
+    }
+
+    @API(value = "车辆-列表")
+    @RequestMapping(value = "/car/getCarListByCondition",method = RequestMethod.POST)
+    private Object getCarListByCondition(@RequestBody Car car){
+        PageResult<Car> pageResult = carService.getCarListByPage(car);
+        return pageResult.getItems();
+    }
+
+    /**
+    * @Title: 
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午05:48:48
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-创建")
+    @RequestMapping(value = "/car/createCar",method = RequestMethod.POST)
+    private Object createCar(@RequestBody Car car){
+        PrePersistUtils.onCreate(car, HttpServiceContext.getCurrentUserId(),HttpServiceContext.getCurrentUserName());
+        return carService.createCar(car);
+    }
+
+    /**
+    * @Title:
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午05:49:50
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-修改")
+    @RequestMapping(value = "/car/updateCar",method = RequestMethod.POST)
+    private Object updateCar(@RequestBody Car car){
+        PrePersistUtils.onModify(car, HttpServiceContext.getCurrentUserId(),HttpServiceContext.getCurrentUserName());
+        return carService.updateCar(car);
+    }
+
+    /**
+    * @Title:
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午05:53:09
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-运营日志")
+    @RequestMapping(value = "/car/getCarDaily",method = RequestMethod.POST)
+    private Object getCarDaily(@RequestBody CarUsedLog carUsedLog) throws Exception {
+        String queryDateStr = carUsedLog.getQueryDateStr();
+        ParamVerifyUtils.paramNotEmpty(queryDateStr,"查询月份不可为空");
+
+        Date date = DateUtils.parseDate(queryDateStr);
+        ParamVerifyUtils.paramNotNull(date,"查询月份不正确："+queryDateStr);
+
+        Date startTime = DateUtils.getFirstOfMonth(date);//开始时间
+        Date endTime = DateUtils.getLastOfMonth(date);//月末最后一天
+        endTime = DateUtils.getDayMaxDate(endTime);
+
+        carUsedLog.setStartTime(startTime);
+        carUsedLog.setEndTime(endTime);
+
+        return carService.getCarUsedLogListByMonth(carUsedLog);
+    }
+
+    /**
+    * @Title: 
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午06:00:59rr
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-运营日志-详情")
+    @RequestMapping(value = "/car/getCarDailyDetail",method = RequestMethod.POST)
+    private Object getCarDailyDetail(@RequestBody CarUsedLog carUsedLog){
+
+        return carService.getCarUsedLogListByDay(carUsedLog);
+    }
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>信息完善</title>
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+    <style>
+        .user-block .title {
+            font-size: 1.5rem;
+            padding: 2.5% 0;
+        }
+        
+        .img-section {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 3.3% 10%;
+            margin-bottom: 4%;
+            text-align: center;
+        }
+        
+        .img-section .card {
+            width: 100%;
+        }
+        
+        .photo {
+            margin: 8% auto;
+        }
+        
+        .photo p {
+            font-size: 1.4rem;
+            padding-top: 2%;
+        }
+        
+        .photograph {
+            display: inline-block;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .idcard_front,.idcard_back,.drive_front,.drive_back {
+            background: #afafaf url("../../images/drive_front.png") no-repeat center center;
+            background-size: 100%;
+        }
+        .idcard_front {
+            background-image: url("../../images/idcard_front.png");
+        }
+        .idcard_back {
+            background-image: url("../../images/idcard_back.png");
+        }
+        .drive_back {
+            background-image: url("../../images/drive_back.png");
+        }
+        
+        .photograph .mask {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.8);
+        }
+        
+        .camera {
+            width: 100%;
+            height: 100%;
+            background: url("../../images/camera.png") no-repeat center center;
+            background-size: 26px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .img-section .loaded {
+            position: relative;
+        }
+        
+        .auditing,.auditing_succ,.auditing_fail {
+            /*background: url("../../images/auditing.png") no-repeat center center;
+            background-size: 28%;*/
+            background-color: rgba(0, 0, 0, 0.8);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0
+        }
+        /*.auditing_succ{
+            background-image: url("../../images/auditing_succ.png")
+        }
+        .auditing_fail{
+            background-image: url("../../images/auditing_fail.png")
+        }*/
+        
+        .take-pic {
+            background: rgba(0, 0, 0, 0.8);
+            display: _block;
+        }
+        
+        .take-pic .bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        
+        .take-pic a {
+            border-bottom: 1px solid #ccc;
+            line-height: 3.5rem;
+            text-align: center;
+            display: block;
+            color: #333;
+            font-size: 1.5rem;
+            background: #fff;
+        }
+        
+        .take-pic .cencel {
+            margin-top: 3px;
+        }
+    </style>
+</head>
+
+<body class="greyBg">
+    <div class="user-info">
+        <div class="section">
+            <div class="user-block">
+                <p class="title">上传身份证照片</p>
+                <div class="img-section">
+                    <!--拍照-->
+                    <div class="photo" style="display:none;">
+                        <div class="photograph idcard_front"></div>
+                        <p>上传驾驶证正本</p>
+                    </div>
+
+                    <!--上传过了-->
+                    <div class="loaded">
+                        <img src="../../images/idcar_frount.jpg" class="card">
+                        <div class="auditing"></div>
+                    </div>
+                </div>
+
+                <p class="title">上传身份证照片</p>
+                <div class="img-section">
+                    <!--拍照-->
+                    <div class="photo" style="display:none;">
+                        <div class="photograph idcard_back"></div>
+                        <p>上传驾驶证正本</p>
+                    </div>
+
+                    <!--上传过了-->
+                    <div class="loaded">
+                        <img src="../../images/idcar_back.jpg" class="card">
+                    </div>
+                </div>
+
+                <p class="title">上传驾驶证照片</p>
+                <div class="img-section">
+                    <!--拍照-->
+                    <div class="photo">
+                        <div class="photograph drive_front"></div>
+                        <p>上传驾驶证正本</p>
+                    </div>
+                </div>
+
+                <p class="title">上传驾驶证照片</p>
+                <div class="img-section">
+                    <!--拍照-->
+                    <div class="photo">
+                        <div class="photograph drive_back"></div>
+                        <p>上传驾驶证副本</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="javascript:;" class="button">确定</a>
+    </div>
+    <div class="diaBox take-pic">
+        <div class="bottom">
+            <a href="javascript:;">拍照</a>
+            <a href="javascript:;">从手机相册选择</a>
+            <a href="javascript:;" class="cencel">取消</a>
+        </div>
+    </div>
+</body>
+
+</html>

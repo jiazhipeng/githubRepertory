@@ -1,0 +1,62 @@
+package cn.cuco.service.car.stock.impl;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarMapper;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarType;
+import cn.cuco.service.car.stock.StockService;
+
+/** 
+* @ClassName: RepertoryServiceImpl 
+* @Description: 库存service层 实现层
+* @author gongbw
+* @date 2017年2月21日 下午1:33:41  
+*/
+@Service
+public class StockServiceImpl implements StockService{
+	
+	@Autowired
+	private CarMapper<Car> carMapper;
+	
+	@Override
+	public List<Map<String, Object>> getRepertoryByDay(Long carTypeId, Date useCarStartDay, Date useCarEndDay) {
+		//首先根据车型获取得到车辆总数
+		Car car = new Car();
+		car.setId(carTypeId);
+		int total = this.carMapper.getCarTotalByCartype(car);
+		//查询不可用的车辆总数
+		
+		//根据车型查询会员使用中的车辆
+		
+		//根据车型查询非会员使用中的车辆
+		
+		//得到安全区间数量
+		
+		//计算闲置中的车辆数量
+		
+		return null;
+	}
+
+	@Override
+	public List<CarType> getUsableCarTypeByUnMember(Long carportId, Long MemberId, Date useCarStartTime,
+			Date useCarEndTime) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarType> getUsableCarTypeByMember(Long carportId, Long MemberId, Date useCarStartTime,
+			Date useCarEndTime) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+}

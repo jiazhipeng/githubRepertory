@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>体验试用</title>
+    <link href="../../css/usedcar.css" rel="stylesheet" type="text/css" />
+    <title>体验试用</title>
+</head>
+<body>
+<img src="../../images/ad.png">
+<ul class="nodeList coupNode">
+    <li class="on">
+        <div class="node">
+            <div class="line"></div>
+            <div class="crile"></div>
+        </div>
+        <div class="nodeCon">
+            <p class="flex">使用申请</p>
+            <p class="flex">
+                发起时间：  2012-06-17 20:00
+                <br>
+                体验产品：Model  S  70D
+
+            </p>
+        </div>
+    </li>
+    <li >
+        <div class="node">
+            <div class="line"></div>
+            <div class="crile"></div>
+        </div>
+        <div class="nodeCon">
+            <p class="flex">审核中</p>
+            <p class="flex"></p>
+        </div>
+    </li>
+</ul>
+
+<div class="fixHeight"></div>
+<div class="fixBottom coupInfo">感谢您的申请，极车管家将于24小时内致电您安排体验</div>
+
+</body>
+</html>

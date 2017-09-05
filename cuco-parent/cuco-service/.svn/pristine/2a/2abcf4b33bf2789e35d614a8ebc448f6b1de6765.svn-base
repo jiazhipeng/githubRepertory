@@ -1,0 +1,57 @@
+package cn.cuco.service.member.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberAttachmentMapper;
+import cn.cuco.entity.MemberAttachment;
+import cn.cuco.service.member.MemberAttachmentService;
+
+@Service(value = "memberAttachmentService")
+public class MemberAttachmentServiceImpl implements MemberAttachmentService {
+
+    @Autowired
+    private MemberAttachmentMapper<MemberAttachment> memberAttachmentMapper;
+    
+    @Override
+    public Integer insertSelective(MemberAttachment memberAttachment) throws Exception {
+           return this.memberAttachmentMapper.insertSelective(memberAttachment);
+        }
+
+    @Override
+    public Integer insertBatch(List<MemberAttachment> memberAttachment) throws Exception {
+           return this.memberAttachmentMapper.insertBatch(memberAttachment) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.memberAttachmentMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.memberAttachmentMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(MemberAttachment memberAttachment) {
+           return this.memberAttachmentMapper.updateByPrimaryKeySelective(memberAttachment);
+    }
+
+    @Override
+    public MemberAttachment findById(Object id) {
+           return (MemberAttachment) this.memberAttachmentMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<MemberAttachment> selectByCondition(MemberAttachment memberAttachment) {
+           return (List<MemberAttachment>) this.memberAttachmentMapper.selectByCondition(memberAttachment);
+    }
+
+    @Override
+    public Integer selectCountByCondition(MemberAttachment memberAttachment) {
+           return  this.memberAttachmentMapper.selectCountByCondition(memberAttachment);
+    }
+
+}

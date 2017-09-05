@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarOperatePlanMapper" >
+
+<!-- 根据车库查询会员占用的车辆总数 -->
+<select id="getCarPlanTotalByMember" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarOperatePlan" >
+    select  count(1) 
+    from td_car_operate_plan where carport_id = #{carportId,jdbcType=BIGINT} and type = #{type,jdbcType=INTEGER}
+    and start 
+     
+  </select>  
+
+</mapper>

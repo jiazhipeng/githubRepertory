@@ -1,0 +1,98 @@
+package cn.cuco.service.car.carOperate;
+
+
+import cn.cuco.entity.CarAccident;
+import cn.cuco.page.PageResult;
+
+import java.util.List;
+
+/**
+* @ClassName: CarAccidentService 
+* @Description: 车辆出险接口
+* @author huanghua
+* @date 2017年2月21日 下午3:13:12
+ */
+public interface CarAccidentService {
+	
+    /**
+    * @Title: createSelective 
+    * @Description: 创建出险
+    * @param @param carAccident
+    * @param @return
+    * @return CarAccident
+    * @throws
+     */
+    public CarAccident createSelective(CarAccident carAccident);
+
+    /**
+    * @Title: updateCarAccident 
+    * @Description: 修改出险信息
+    * @param @param carAccident
+    * @param @return
+    * @return CarAccident
+    * @throws
+     */
+    public CarAccident updateCarAccident(CarAccident carAccident);
+
+    
+    /**
+    * @Title: updateCarAccidentByFollowUp 
+    * @Description: 修改出险状态为-跟进中
+    * @param @param carAccident
+    * @param @return
+    * @return CarAccident
+    * @throws
+     */
+    public CarAccident updateCarAccidentByFollowUp(CarAccident carAccident);
+    
+    /**
+    * @Title: updateCarAccidentByToBePaid 
+    * @Description:修改出险状态为-待赔付
+    * @param @param carAccident
+    * @param @return
+    * @return CarAccident
+    * @throws
+     */
+    public CarAccident updateCarAccidentByToBePaid(CarAccident carAccident);
+    
+    /**
+    * @Title: updateCarAccidentBycompleted 
+    * @Description: 修改出险状态为-已完成
+    * @param @param carAccident
+    * @param @return
+    * @return CarAccident
+    * @throws
+     */
+    public CarAccident updateCarAccidentBycompleted(CarAccident carAccident);
+    
+    /**
+    * @Title: getCarAccidentById 
+    * @Description: 查询出险信息详情
+    * @param @param carAccident
+    * @param @return
+    * @return CarAccident
+    * @throws
+     */
+    public CarAccident getCarAccidentById(CarAccident carAccident);
+
+    /**
+    * @Title: getCarAccidentByCondition 
+    * @Description: 分页查询出险信息
+    * @param @param carAccident
+    * @param @return
+    * @return List<CarAccident>
+    * @throws
+     */
+    public PageResult<CarAccident> getCarAccidentByCondition(CarAccident carAccident);
+
+    /**
+    * @Title: getCarAccidentList 
+    * @Description: 查询出险信息集合
+    * @param @param carAccident
+    * @param @return
+    * @return List<CarAccident>
+    * @throws
+     */
+    public List<CarAccident> getCarAccidentList(CarAccident carAccident);
+
+}

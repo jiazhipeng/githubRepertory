@@ -1,0 +1,230 @@
+package cn.cuco.controller.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import cn.cuco.page.PageQuery;
+
+import java.math.BigDecimal;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-22 14:30:41
+ */
+public class OrderRenewalVO extends PageQuery<OrderRenewalVO> implements Serializable {
+
+    private static final long serialVersionUID = 4137814405378310L;
+
+    private Long id;//主键ID
+
+    private String orderNum;//续费订单编号
+
+    private BigDecimal total;//充值总金额
+
+    private BigDecimal payment;//已充值金额
+
+    private Date created;//创建时间
+
+    private Integer status;//状态: 0:待付款;1:支付中;2:部分付款;3:已付款;4:已取消 默认0
+
+    private Integer chargeSource;//支付渠道 0:京东；1:微信；2:后台人工；3:现金；4:刷卡；5:转账；6:支票；7:支付宝；
+
+    private Date paymentTime;//充值完成时间
+
+    private String remark;//备注
+
+    private Date lasttimeModify;//最后修改时间
+
+    private Long memberId;//充值人ID
+
+    private String name;//充值人姓名
+
+    private String mobile;//充值人手机号
+
+    private String bank;//支付银行
+
+    private BigDecimal giftAmount;//充返赠送金额
+
+    private String modifierId;//操作人id
+
+    private String modifier;//操作人姓名
+    
+    private Date createdBegin;//创建开始时间
+    
+    private Date createdEnd;//	创建结束时间
+    
+    private Date payMentBegin;//付款开始时间
+    
+    private Date payMentEnd;//付款结束时间
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public BigDecimal getTotal() {
+        return this.total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public BigDecimal getPayment() {
+        return this.payment;
+    }
+
+    public void setPayment(BigDecimal payment) {
+        this.payment = payment;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Integer getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getChargeSource() {
+        return this.chargeSource;
+    }
+
+    public void setChargeSource(Integer chargeSource) {
+        this.chargeSource = chargeSource;
+    }
+
+  
+    public Date getPaymentTime() {
+		return paymentTime;
+	}
+
+	public void setPaymentTime(Date paymentTime) {
+		this.paymentTime = paymentTime;
+	}
+
+	public String getRemark() {
+        return this.remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getLasttimeModify() {
+        return this.lasttimeModify;
+    }
+
+    public void setLasttimeModify(Date lasttimeModify) {
+        this.lasttimeModify = lasttimeModify;
+    }
+
+	public Long getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Long memberId) {
+		this.memberId = memberId;
+	}
+
+	public String getBank() {
+        return this.bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public BigDecimal getGiftAmount() {
+        return this.giftAmount;
+    }
+
+    public void setGiftAmount(BigDecimal giftAmount) {
+        this.giftAmount = giftAmount;
+    }
+
+    public String getModifierId() {
+        return this.modifierId;
+    }
+
+    public void setModifierId(String modifierId) {
+        this.modifierId = modifierId;
+    }
+
+    public String getModifier() {
+        return this.modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+	public String getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(String orderNum) {
+		this.orderNum = orderNum;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public Date getCreatedBegin() {
+		return createdBegin;
+	}
+
+	public void setCreatedBegin(Date createdBegin) {
+		this.createdBegin = createdBegin;
+	}
+
+	public Date getCreatedEnd() {
+		return createdEnd;
+	}
+
+	public void setCreatedEnd(Date createdEnd) {
+		this.createdEnd = createdEnd;
+	}
+
+	public Date getPayMentBegin() {
+		return payMentBegin;
+	}
+
+	public void setPayMentBegin(Date payMentBegin) {
+		this.payMentBegin = payMentBegin;
+	}
+
+	public Date getPayMentEnd() {
+		return payMentEnd;
+	}
+
+	public void setPayMentEnd(Date payMentEnd) {
+		this.payMentEnd = payMentEnd;
+	}
+
+}

@@ -1,0 +1,175 @@
+package cn.cuco.wechat.push.template.messageManager;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+/**
+ * 
+* description：wechat推送消息模板
+* author：jiaxiaoxian    
+* time：2017年2月20日 下午5:27:24    
+* 修改时间：2017年2月20日 下午5:27:24    
+* 修改备注：
+ */
+public abstract class WechatMsgTemplate {
+	
+	private String message;
+	
+	private String openId;
+	
+	private String templateId;
+	
+	private String url;
+	
+	private String remark;
+	
+	private String color;
+
+	/**
+	 * 最终的模板消息结果
+	* @Title: getSendMessage 
+	* @Description: TODO
+	* @param @return
+	* @return Map<String,Object>
+	* @throws
+	 */
+	public abstract Map<String, Object> getSendMessage();
+	
+	protected Map<String, Object> getRemarkJson(){
+		
+		Map<String, Object> json = new HashMap<String, Object>();
+		
+		json.put("value", this.remark);
+		
+		json.put("color", this.color);
+		
+		return json;
+	}
+	
+	protected Map<String, Object> getFirstJson(){
+		
+		Map<String, Object> json = new HashMap<String, Object>();
+		
+		json.put("value", this.message);
+		
+		json.put("color", this.color);
+		
+		return json;
+	}
+	
+	protected Map<String, Object> getResultJson(){
+		
+		Map<String, Object> json = new HashMap<String, Object>();
+		
+		json.put("touser", this.openId);
+		
+		json.put("template_id", this.templateId);
+		
+		json.put("url", this.url);
+		
+		return json;
+	}
+	
+	protected Map<String, Object> getDateJson(){
+		
+		Map<String, Object> json = new HashMap<String, Object>();
+		
+		json.put("first", getFirstJson());
+		
+		json.put("remark", getRemarkJson());
+		
+		return json;
+	}
+
+	/**
+	 * @return the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * 
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	/**
+	 * @return the openId
+	 */
+	public String getOpenId() {
+		return openId;
+	}
+
+	/**
+	 * 
+	 */
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
+
+	/**
+	 * @return the templateId
+	 */
+	public String getTemplateId() {
+		return templateId;
+	}
+
+	/**
+	 * 
+	 */
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
+	}
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * 
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	/**
+	 * @return the remark
+	 */
+	public String getRemark() {
+		return remark;
+	}
+
+	/**
+	 * 
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	/**
+	 * @return the color
+	 */
+	public String getColor() {
+		if(StringUtils.isBlank(color)){
+			return "#173177";
+		}
+		return color;
+	}
+
+	/**
+	 * 
+	 */
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	
+}

@@ -1,0 +1,27 @@
+package cn.cuco.service.wechatMessage;
+
+import cn.cuco.service.wechatMessage.template.parent.WechatMsgParent;
+
+/**
+ * 
+* @ClassName: IWechatMessageFactory 
+* @Description: wechat消息工厂接口   wechatMessage制造者
+* @author jiaxiaoxian
+* @date 2017年2月21日 上午10:48:02
+ */
+public interface IWechatMessageFactory {
+	
+	/**
+	 * 启动工厂引擎
+	* @Title: startEngine 
+	* @Description: TODO
+	* @param @param openId
+	* @param @param wechatMsgParent
+	* @return void
+	* @throws
+	 */
+	public void startEngine(String openId,WechatMsgParent wechatMsgParent);
+	
+	//下面就是各个业务方法的消息模板内容的构造
+
+}

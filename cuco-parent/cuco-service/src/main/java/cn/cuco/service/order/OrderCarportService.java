@@ -1,0 +1,103 @@
+package cn.cuco.service.order;
+
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderCarport;
+import cn.cuco.page.PageResult;
+
+/**
+ * @ClassName: OrderCarportService
+ * @Description: 解锁订单相关接口
+ * @author zc.du
+ * @date 2017年2月23日 上午10:44:02
+ */
+public interface OrderCarportService {
+	/**
+	 * @Title: createOrderCarport
+	 * @Description: 创建解锁订单
+	 * @author zc.du
+	 * @param orderCarport
+	 * @return OrderCarport
+	 */
+	public OrderCarport createOrderCarport(OrderCarport orderCarport);
+	
+	/**
+	 * @Title: getOrderCarport
+	 * @Description: 查询解锁订单
+	 * @author zc.du
+	 * @param orderCarport
+	 * @return OrderCarport
+	 */
+	public OrderCarport getOrderCarport(OrderCarport orderCarport);
+
+	/**
+	 * @Title: getOrderCarportListByPage
+	 * @Description: 分页查询解锁订单列表
+	 * @author zc.du
+	 * @param orderCarport
+	 * @return PageResult<OrderCarport>
+	 */
+	public PageResult<OrderCarport> getOrderCarportListByPage(OrderCarport orderCarport);
+
+	/**
+	 * @Title: updateOrderCarportStatusByCancelForApp
+	 * @Description: app端修改解锁订单状态为"已取消"
+	 * @author zc.du
+	 * @param orderCarport
+	 * @return OrderCarport
+	 */
+	public OrderCarport updateOrderCarportStatusByCancelForApp(OrderCarport orderCarport);
+
+	/**
+	 * @Title: updateOrderCarportStatusByCancelForTask
+	 * @Description: 定时任务取消订单
+	 * @author zc.du
+	 * @return void
+	 */
+	public void updateOrderCarportStatusByCancelForTask();
+
+	/**
+	 * @Title: updateOrderCarportStatusByPaying
+	 * @Description: 修改解锁订单状态为"支付中"
+	 * @author zc.du
+	 * @param orderCarport
+	 * @return OrderCarport
+	 */
+	public OrderCarport updateOrderCarportStatusByPaying(OrderCarport orderCarport);
+
+	/**
+	 * @Title: updateOrderCarportStatusByPartPay
+	 * @Description: 修改解锁订单状态为"部分付款"
+	 * @author zc.du
+	 * @param orderCarport
+	 * @return OrderCarport
+	 */
+	public OrderCarport updateOrderCarportStatusByPartPay(OrderCarport orderCarport);
+
+	/**
+	 * @Title: updateOrderCarportStatusByCompletePay
+	 * @Description: 修改解锁订单状态为"已付款"
+	 * @author zc.du
+	 * @param orderCarport
+	 * @return OrderCarport
+	 */
+	public OrderCarport updateOrderCarportStatusByCompletePay(OrderCarport orderCarport);
+
+	/**
+	 * @Title: getOrderCarportLogListByPage
+	 * @Description: 分页查询解锁订单日志列表
+	 * @author zc.du
+	 * @param orderCarport
+	 * @return PageResult<OperateLog>
+	 */
+	public PageResult<OperateLog> getOrderCarportLogListByPage(OrderCarport orderCarport);
+	
+	/** 
+	* @Title: validateWhetherCanBuy 
+	* @Description: 判断能否购买车库
+	* @author zc.du
+	* @param memberCarport
+	* @return Boolean
+	*/
+	public Boolean validateWhetherCanBuy(MemberCarport memberCarport);
+}

@@ -1,0 +1,107 @@
+package cn.cuco.service.basic;
+
+
+import cn.cuco.entity.BasicCarport;
+import java.util.List;
+
+/**
+* @ClassName: BasicCarportService 
+* @Description: TODO(车库接口) 
+* @author huanghua
+* @date 2017年2月21日 上午11:46:15
+ */
+public interface BasicCarportService {
+    /**
+    * @Title: createBasicCarport 
+    * @Description: TODO(新建车库) 
+    * @param @param BasicCarport
+    * @param @return    设定文件 
+    * @return BasicCarport    返回类型 
+    * @throws
+     */
+    public BasicCarport createBasicCarport(BasicCarport BasicCarport);
+
+    /**
+    * @Title: updateBasicCarport 
+    * @Description: TODO(修改车库) 
+    * @param @param BasicCarport
+    * @param @return    设定文件 
+    * @return BasicCarport    返回类型 
+    * @throws
+     */
+    public BasicCarport updateBasicCarport(BasicCarport BasicCarport);
+
+    /**
+    * @Title: updateBasicCarportShelves 
+    * @Description: TODO(车库上架) 
+    * @param @param BasicCarport
+    * @param @return    设定文件 
+    * @return BasicCarport    返回类型 
+    * @throws
+     */
+    public BasicCarport updateBasicCarportShelves(BasicCarport BasicCarport);
+
+    /**
+    * @Title: updateBasicCarportTheShelves 
+    * @Description: TODO(下架) 
+    * @param @param BasicCarport
+    * @param @return    设定文件 
+    * @return BasicCarport    返回类型 
+    * @throws
+     */
+    public BasicCarport updateBasicCarportTheShelves(BasicCarport BasicCarport);
+
+    /**
+    *@方法名: updateByPrimaryKeySelective
+    *@方法描述: 根据主键选择更新单个对象
+    *@param tcBasicCarport
+    *@返回值 Integer 返回类型
+    *@作者：hycx
+    *@创建时间 2017年02月21日 11:08:14
+    *@修改时间 2017年02月21日 11:08:14
+    *@版本 V1.0
+    *@异常
+    **/
+    public Integer updateByPrimaryKeySelective(BasicCarport tcBasicCarport);
+
+    /**
+    *@方法名: findById
+    *@方法描述: 根据id 查询对象
+    *@param tcBasicCarport
+    *@返回值 对象 返回类型
+    *@作者：hycx
+    *@创建时间 2017年02月21日 11:08:14
+    *@修改时间 2017年02月21日 11:08:14
+    *@版本 V1.0
+    *@异常
+    **/
+    public BasicCarport findById(Object id);
+
+    /**
+    *@方法名: selectByCondition
+    *@方法描述: 分条件查询对象
+    *@param tcBasicCarport
+    *@返回值 List<BasicCarport> 返回类型
+    *@作者：hycx
+    *@创建时间 2017年02月21日 11:08:14
+    *@修改时间 2017年02月21日 11:08:14
+    *@版本 V1.0
+    *@异常
+    **/
+    public List<BasicCarport> selectByCondition(BasicCarport tcBasicCarport);
+
+    /**
+    *@方法名: selectCountByCondition
+    *@方法描述: 分条件查询对象总数
+    *@param tcBasicCarport
+    *@返回值 Integer 返回类型
+    *@作者：hycx
+    *@创建时间 2017年02月21日 11:08:14
+    *@修改时间 2017年02月21日 11:08:14
+    *@版本 V1.0
+    *@异常
+    **/
+    public Integer selectCountByCondition(BasicCarport tcBasicCarport);
+
+
+}

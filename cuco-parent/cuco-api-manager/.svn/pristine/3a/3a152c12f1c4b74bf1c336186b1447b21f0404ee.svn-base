@@ -1,0 +1,117 @@
+package cn.cuco.controller.manager.car;
+
+import cn.cuco.annotation.API;
+import cn.cuco.service.car.carInfo.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+/**
+ * @ClassName:CarController
+ * @Description：车辆相关
+ * @author：WangShuai
+ * @date：2017年02月24 17:37:00
+ */
+@RestController
+public class CarController {
+
+    @Autowired
+    private CarService carService;
+
+    /**
+    * @Title:
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午05:45:10
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-详情")
+    @RequestMapping(value = "/car/getCarById",method = RequestMethod.GET)
+    private Object getCarById(@RequestParam Long id){
+
+        return carService.getCarById(id);
+    }
+
+    /**
+    * @Title:
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午05:48:04
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-分页")
+    @RequestMapping(value = "/car/getCarListByPage",method = RequestMethod.POST)
+    private Object getCarListByPage(){
+
+        return null;
+    }
+
+    /**
+    * @Title: 
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午05:48:48
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-创建")
+    @RequestMapping(value = "/car/createCar",method = RequestMethod.POST)
+    private Object createCar(){
+
+        return null;
+    }
+
+    /**
+    * @Title:
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午05:49:50
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-修改")
+    @RequestMapping(value = "/car/updateCar",method = RequestMethod.POST)
+    private Object updateCar(){
+
+        return null;
+    }
+
+    /**
+    * @Title:
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午05:53:09
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-运营日志")
+    @RequestMapping(value = "/car/getCarDaily",method = RequestMethod.POST)
+    private Object getCarDaily(){
+
+        return null;
+    }
+
+    /**
+    * @Title: 
+    * @Description:
+    * @author：WangShuai
+    * @time：2017年02月24日 下午06:00:59
+    * @param:
+    * @return:
+    * @throws:
+    */
+    @API(value = "车辆-运营日志-详情")
+    @RequestMapping(value = "/car/getCarDailyDetail",method = RequestMethod.POST)
+    private Object getCarDailyDetail(){
+
+        return null;
+    }
+}

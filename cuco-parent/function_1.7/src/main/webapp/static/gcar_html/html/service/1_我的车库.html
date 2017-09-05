@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>极车服务</title>
+    <link href="../../css/service.css" rel="stylesheet" type="text/css" />
+    <style>
+        .package{padding-bottom:4%; background:#eee; margin-bottom:4%;border-bottom:1px solid #ccc;}
+        .package .box{background:#fff; padding:0 4%; line-height:4.5rem; border-bottom:1px solid #ccc; overflow:hidden;}
+        .package .right{color:#999; background:url("../../images/arrow_right_grey.png") no-repeat right center; background-size:7px; padding-right:16px; float:right;}
+    	.carShow ul li{position:relative; margin-top:4%;}
+    	.car-info-bar{position:absolute; bottom:0; left:0; width:100%; height:40px; line-height:40px; background:rgba(0,0,0,0.6); font-size:1.3rem; color:#fff;}
+    	.car-info-bar .name{float:left; padding-left:8px;}
+    	.car-info-bar .price{float:right; padding-right:8px;}
+    </style>
+</head>
+<body>
+    <!--头部-->
+    <header class="header">
+        <span class="userIcon"></span>
+        <ul class="tab">
+            <li class="flex active" id="mycar">
+                <span>我的极车</span>
+                <em class="line"></em>
+            </li>
+            <li class="flex" id="casshow">
+                <span>极车展厅</span>
+            </li>
+        </ul>
+    </header>
+
+    <!--我的极车 start-->
+    <div class="mycar serviSec" >
+
+        <!--车辆信息 start-->
+        <div class="carInfo">
+            <!--详情展示 start-->
+            <div class="myCars" style="display: none">
+                <img src="../../images/car_1.png">
+                <div class="carName">
+                    <span class="name">特斯拉 MODEL S 90D</span>
+                    <span class="state">未启用</span>
+                </div>
+
+                <ul class="list">
+                    <li>
+                        <img src="../../images/companyicon.png">
+                        企业名称
+                        <span class="listVal">海易出行</span>
+                    </li>
+                    <li>
+                        <a href="../usedcar/usedlist.html">
+                            <img src="../../images/clock_1.png">
+                            已使用时间
+                            <span class="listVal">0天</span>
+                        </a>
+                    </li>
+                    <li>
+                        <img src="../../images/clock_2.png">
+                        剩余使用天数
+                        <span class="listVal">265天</span>
+                    </li>
+                    <li>
+                        <img src="../../images/usericon_2.png">
+                        会员有效期
+                        <span class="listVal">2016-09-19</span>
+                    </li>
+                    <li>
+                        <a href="../usedcar/ownpage.html">
+                            <img src="../../images/ownser.png">
+                            我的专属订制
+                        </a>
+                    </li>
+                </ul>
+                <!--预约充电 道路救援-->
+                <div class="serviBox">
+                    <div class="charge"><!--充电置灰加class="serviceDis"-->
+                        <a href="charge.html">代充电服务</a>
+                    </div>
+                    <div class="rescue">
+                        <a href="tel:400-6091-510">断电紧急救援</a>
+                    </div>
+                </div>
+
+                <div class="bgWhite">
+                	<a href="../drive/drive.html" class="button">我要用车</a>
+                </div>
+            </div><!--详情展示 stop-->
+
+            <!--多辆车 start-->
+            <div style="display: block">
+                <div class="package">
+                    <div class="box">
+                        尊享套餐
+                        <span class="right">
+                            权益信息
+                        </span>
+                    </div>
+                </div>
+                <ul class="myCarList">
+                    <li>
+                        <img src="../../images/car_1.png">
+                        <div class="carName">
+                            <span class="name">特斯拉 MODEL S 90D</span>
+                            <span class="state">用车中</span>
+                        </div>
+                    </li>
+                    <li class="freeState"><!--空闲状态 li 加class="freeState"-->
+                        <img src="../../images/lock_car.jpg">
+                        <div class="carName">
+                            <span class="name">特斯拉 MODEL S 90D</span>
+                            <span class="state">未启用</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--多辆车 stop-->
+        </div>
+        <!--车辆信息 stop-->
+
+        <!--暂无车辆 start-->
+        <div class="section noown" style="display: none">
+            <img src="../../images/noown.png">
+            <a href="../drive/drive.html" class="button">预约试驾</a>
+        </div>
+        <!--暂无车辆 stop-->
+    </div>
+    <!--我的极车 stop-->
+
+
+
+
+    <!--用户菜单-->
+    <div class="userSlider" style="display: block">
+        <div class="sliderSec">
+            <div class="userInfo">
+                <a href="../user/edit.html" class="icon">
+                    <img src="../../images/usr.png">
+                    <em class="vip"></em>
+                </a>
+                <span class="name">影子</span>
+            </div>
+
+            <div class="usrList">
+                <a href="javascript:;" class="active">
+                    <img src="../../images/coup_icon.png">
+                    我的优惠券
+                </a>
+                <a href="javascript:;">
+                    <img src="../../images/integral_icon.png">
+                    我的积分
+                </a>
+                <a href="javascript:;">
+                    <img src="../../images/membericon.png">
+                    会员权益
+                </a>
+                <a href="javascript:;">
+                    <img src="../../images/abouticon.png">
+                    关于极车
+                </a>
+                <a href="javascript:;">
+                    <img src="../../images/logout_icon.png">
+                    退出登录
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/zepto.js"></script>
+
+<script>
+    $('.header .userIcon').on('click',function(){
+        $('.userSlider').show();
+    });
+    $('.userSlider').click(function(){
+        $(this).hide();
+    });
+    
+/*     $('#casshow').on('click',function(){
+    	$(this).append('<em class="line"></em>');
+    	$(this).addClass('active');
+    	$('#mycar').removeClass('active');
+        $('.mycar.serviSec').hide();
+        $('.carShow').show();
+    });
+    $('#mycar').on('click',function(){
+    	$(this).append('<em class="line"></em>');
+    	$(this).addClass('active');
+    	$('#casshow').removeClass('active');
+        $('.mycar.serviSec').show();
+        $('.carShow').hide();
+    }); */
+    
+    
+    
+</script>
+</body>
+</html>

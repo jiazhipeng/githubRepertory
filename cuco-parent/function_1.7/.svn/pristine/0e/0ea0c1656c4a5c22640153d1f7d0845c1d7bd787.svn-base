@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>权益金额</title>
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/2v.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="greyBg">
+    <div class="p-info-page">
+        <div class="p-info-sec">
+            余额：2560
+        </div>
+        <div class="title">押金明细</div>
+        <ul class="p-info-list">
+            <li>
+                <div class="p-row">
+                    <p class="l-site date">2016-7-8-2016-6-9</p>
+                    <a href="javscript:;" class="r-site">详情</a>
+                </div>
+                <div class="p-row">
+                    800元套餐
+                </div>
+                <div class="p-row">
+                    <p class="l-site">特斯拉Model X 90D使用费用</p>
+                    <p class="r-site red">-4500</p>
+                </div>
+            </li>
+            <li>
+                <div class="p-row">
+                    <p class="l-site date">2016-7-8-2016-6-9</p>
+                    <a href="javscript:;" class="r-site">详情</a>
+                </div>
+                <div class="p-row">
+                    800元套餐
+                </div>
+                <div class="p-row">
+                    <p class="l-site">特斯拉Model X 90D使用费用</p>
+                    <p class="r-site red">-4500</p>
+                </div>
+            </li>
+            <li>
+                <div class="p-row">
+                    <p class="l-site date">2016-7-8-2016-6-9</p>
+                    <a href="javscript:;" class="r-site">详情</a>
+                </div>
+                <div class="p-row">
+                    800元套餐
+                </div>
+                <div class="p-row">
+                    <p class="l-site">特斯拉Model X 90D使用费用</p>
+                    <p class="r-site red">-4500</p>
+                </div>
+            </li>
+            <li>
+                <div class="p-row">
+                    <p class="l-site date">2016-7-8-2016-6-9</p>
+                    <a href="javscript:;" class="r-site">详情</a>
+                </div>
+                <div class="p-row">
+                    800元套餐
+                </div>
+                <div class="p-row">
+                    <p class="l-site">特斯拉Model X 90D使用费用</p>
+                    <p class="r-site red">-4500</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

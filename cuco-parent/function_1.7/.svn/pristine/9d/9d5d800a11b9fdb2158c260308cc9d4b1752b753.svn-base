@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.MemberBankMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.MemberBank" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_mobile" property="memberMobile" jdbcType="VARCHAR" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="account_mobile" property="accountMobile" jdbcType="VARCHAR" />
+    <result column="bank_id" property="bankId" jdbcType="BIGINT" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="branch_name" property="branchName" jdbcType="VARCHAR" />
+    <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.MemberBank" >
+       select  count(1) 
+    from td_member_bank  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "accountName != null and accountName != '' ">
+        and account_name = #{accountName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "accountMobile != null and accountMobile != '' ">
+        and account_mobile = #{accountMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "bankId != null ">
+        and bank_id = #{bankId,jdbcType=BIGINT}      
+      </if>
+      <if test= "bankName != null and bankName != '' ">
+        and bank_name = #{bankName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "branchName != null and branchName != '' ">
+        and branch_name = #{branchName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "bankCard != null and bankCard != '' ">
+        and bank_card = #{bankCard,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberBank" >
+       select  <include refid="Base_Column_List" />
+    from td_member_bank  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "accountName != null and accountName != '' ">
+        and account_name = #{accountName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "accountMobile != null and accountMobile != '' ">
+        and account_mobile = #{accountMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "bankId != null ">
+        and bank_id = #{bankId,jdbcType=BIGINT}      
+      </if>
+      <if test= "bankName != null and bankName != '' ">
+        and bank_name = #{bankName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "branchName != null and branchName != '' ">
+        and branch_name = #{branchName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "bankCard != null and bankCard != '' ">
+        and bank_card = #{bankCard,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, member_id, member_name, 
+      member_mobile, account_name, account_mobile,bank_id, 
+      bank_name, branch_name, bank_card, 
+      created
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberBank" >
+    select 
+      id, member_id, member_name, 
+      member_mobile, account_name, account_mobile, bank_id, 
+      bank_name, branch_name, bank_card, 
+      created
+    from td_member_bank where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.MemberBank" >
+    delete from td_member_bank where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_member_bank where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.MemberBank" >
+    insert into td_member_bank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         member_mobile,
+      </if>
+      <if test= "accountName != null and accountName != '' ">
+         account_name,
+      </if>
+       <if test= "accountMobile != null and accountMobile != '' ">
+         account_mobile,
+      </if>
+      <if test= "bankId != null ">
+         bank_id,
+      </if>
+      <if test= "bankName != null and bankName != '' ">
+         bank_name,
+      </if>
+      <if test= "branchName != null and branchName != '' ">
+         branch_name,
+      </if>
+      <if test= "bankCard != null and bankCard != '' ">
+         bank_card,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "accountName != null and accountName != '' ">
+         #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test= "accountMobile != null and accountMobile != '' ">
+         #{accountMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "bankId != null ">
+         #{bankId,jdbcType=BIGINT},
+      </if>
+      <if test= "bankName != null and bankName != '' ">
+         #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test= "branchName != null and branchName != '' ">
+         #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test= "bankCard != null and bankCard != '' ">
+         #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_member_bank (
+         id,
+         member_id,
+         member_name,
+         member_mobile,
+         account_name,
+         account_mobile,
+         bank_id,
+         bank_name,
+         branch_name,
+         bank_card,
+         created)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.memberMobile,jdbcType=VARCHAR},
+         #{item.accountName,jdbcType=VARCHAR},
+         #{item.accountMobile,jdbcType=VARCHAR},
+         #{item.bankId,jdbcType=BIGINT},
+         #{item.bankName,jdbcType=VARCHAR},
+         #{item.branchName,jdbcType=VARCHAR},
+         #{item.bankCard,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.MemberBank" >
+    update td_member_bank
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+      member_mobile = #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "accountName != null and accountName != '' ">
+      account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test= "bankId != null ">
+      bank_id = #{bankId,jdbcType=BIGINT},
+      </if>
+      <if test= "bankName != null and bankName != '' ">
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test= "branchName != null and branchName != '' ">
+      branch_name = #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test= "bankCard != null and bankCard != '' ">
+      bank_card = #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

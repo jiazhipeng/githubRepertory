@@ -1,0 +1,31 @@
+package cn.cuco.service.car.carInfo;
+
+import java.util.List;
+
+import cn.cuco.entity.CarInsuranceSubject;
+
+/** 
+* @ClassName: CarInsuranceSubject 
+* @Description: 车辆保险科目详情表service
+* @author gongbw
+* @date 2017年2月22日 下午3:26:26  
+*/
+public interface CarInsuranceSubjectService {
+	
+	/**   
+     * @Title: createCarInsuranceSubject   
+     * @Description: 创建车辆保险科目的基础方法   
+     * @param: CarInsuranceSubject
+     * @return: CarInsuranceSubject      
+     */
+	public CarInsuranceSubject createCarInsuranceSubject(CarInsuranceSubject carInsuranceSubject);
+	
+	/**   
+     * @Title: getCarInsuranceSubjectList   
+     * @Description: 查询车辆保险科目列表的基础方法   
+     * @param: CarInsuranceSubject
+     * @return: CarInsuranceSubject      
+     */
+	public List<CarInsuranceSubject> getCarInsuranceSubjectList(CarInsuranceSubject carInsuranceSubject);
+
+}

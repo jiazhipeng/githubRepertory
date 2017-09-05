@@ -1,0 +1,75 @@
+@charset "utf-8";
+
+*{
+    /*-webkit-touch-callout: none;
+   -webkit-text-size-adjust: none;
+   -webkit-user-select: none;*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html,body{height: 100%; width: 100%;}
+html{font-size: 62.5%;}
+html,body,button,input,select,textarea,h1,h2,h3,h4,ul,li,dl,dt,dd,ol,p,div,span,img,a,em,i{margin:0; padding:0; list-style:none; text-decoration:none; outline: none; font-style: normal; font-family: "微软雅黑"; border: 0;}
+
+img {vertical-align: middle;}
+.clearfix:before,.clearfix:after {content: " "; display: table;}
+.clearfix:after {clear: both;}
+body{font-size: 1.5rem; font-family:"微软雅黑","Microsoft Yahei","黑体";color: #d4c9b9; overflow: hidden; -moz-user-select:none;-webkit-user-select:none; background: #0b0808 url(images/bg.jpg) no-repeat center center; background-size: cover;}
+.wrap{width: 100%; height: 0; overflow: hidden; -webkit-transition: .7s ease-in-out -webkit-transform;}
+.swiper-wrapper {-webkit-transition: .7s ease-in-out -webkit-transform; position: absolute;}
+.page{width: 100%; position: relative;background: no-repeat center center; background-size: cover; position: relative;}
+.page1{background-image: url(images/1.jpg);}
+.page2{background-image: url(images/2.jpg);}
+.page3{background-image: url(images/3.jpg);}
+.page4{background-image: url(images/4.jpg);}
+.page5{background-image: url(images/5.jpg);}
+.page6{background-image: url(images/6.jpg);}
+.pagenew7{background-image: url(images/end.jpg);}
+.page img{width: 100%;}
+
+.booking ul{width: 66%; margin: 0% auto 0; position: relative; z-index: 1000;}
+.booking li{margin: 6% auto;}
+.booking input,.button{width: 100%; height: 35px; box-sizing: border-box; padding: 0 8px; background: url(images/inputbg.png) repeat-x; background-size: auto 100%;  font-size: 1.7rem; border-radius: 50px;}
+.booking input{color: #d4c9b9;}
+.bookingTop{margin-top: 4%;}
+.button{background: url(images/10_03.jpg) no-repeat; background-size: 100% 100%;  line-height: 35px; text-align: center; color: #4d4d4d; font-size: 1.8rem; font-weight: bold; display: block;}
+.page .tel{width: 50.666%; display: block; margin: auto;}
+.page .code{width: 25.73%; display: block; margin: 10% auto 0;}
+
+.botInfo{width:100%; font-size: 1.3rem; line-height: 30px; text-align: center; color: #e8dbb7; position: absolute; bottom: 0px; left: 0;}
+
+.arrow{width: 40px; height: 40px; background: url(images/arrow.png) no-repeat center center; background-size: 100%; position: absolute; bottom: 0px; left: 50%; margin-left: -20px; -webkit-animation: arrow 1s ease-out 0s infinite; z-index: 99;}
+.arrowEnd{background-image: url(images/arrow_2.png);}
+.page6 .arrow{bottom: 25px;}
+.diaBox{width: 100%; height: 100%; background: rgba(255,255,255,0.4); position: fixed; top: 0; left: 0; display: none; z-index: 100;}
+.diaTable{width: 100%; height: 100%; display: table; text-align: center;}
+.diaRow{ display: table-row;}
+.diaCell{display: table-cell; vertical-align: middle;}
+.diaBox img{width: 80%;}
+
+
+@-webkit-keyframes arrow{
+	0%{-webkit-transform: translateY(-5px);}
+	50%{-webkit-transform: translateY(0px);}
+	100%{-webkit-transform: translateY(-5px);}
+}
+
+@media screen and (max-width:330px){
+	.bookingTop{margin-top: 0%;}
+}
+@media  screen and (min-width:375px ) and (max-width:414px) {
+	.booking input, .button{height: 40px;}
+	.button{line-height: 40px;}
+}
+
+@media screen and (min-width:415px) and (max-width:579px){
+	.bookingTop{margin-top: 6%;}
+	.booking input, .button{height: 42px;}
+	.button{line-height: 40px;}
+}
+
+@media screen and (min-width:578px){
+	.bookingTop{margin-top: 8%;}
+	.booking input, .button{height: 46px;}
+	.button{line-height: 40px;}
+}

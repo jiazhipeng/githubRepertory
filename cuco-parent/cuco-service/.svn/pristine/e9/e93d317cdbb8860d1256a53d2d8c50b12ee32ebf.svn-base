@@ -1,0 +1,92 @@
+package cn.cuco.service.member.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberAccountMapper;
+import cn.cuco.entity.MemberAccount;
+import cn.cuco.entity.MemberAccountLog;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.MemberAccountService;
+
+@Service(value = "memberAccountService")
+public class MemberAccountServiceImpl implements MemberAccountService {
+
+    @Autowired
+    private MemberAccountMapper<MemberAccount> memberAccountMapper;
+
+	@Override
+	public MemberAccount createMemberAccount(MemberAccount memberAccount)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberAccount updateMemberAccount(MemberAccount memberAccount)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteMemberAccount(MemberAccount memberAccount)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberAccount getMemberAccount(MemberAccount memberAccount)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemberAccount> getMemberAccountList(MemberAccount memberAccount)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberAccount> getMemberAccountListByPage(
+			MemberAccount memberAccount) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMemberAccountCount(MemberAccount memberAccount)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemberAccountLog> getMemberAccountLogList(
+			MemberAccountLog memberAccountLog) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberAccountLog> getMemberAccountLogListByPage(
+			MemberAccountLog memberAccountLog) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMemberAccountLogCount(MemberAccountLog memberAccountLog)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+    
+
+}

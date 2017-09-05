@@ -1,0 +1,426 @@
+package cn.cuco.service.order.impl;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.date.DateUtils;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.MemberCarUsedAddressMapper;
+import cn.cuco.dao.OrderMemberCarUsedMapper;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarOperatePlan;
+import cn.cuco.entity.CarType;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberCarUsedAddress;
+import cn.cuco.entity.OrderMemberCarUsed;
+import cn.cuco.entity.Restriction;
+import cn.cuco.enums.MemberCarUsedStatus;
+import cn.cuco.enums.WechatMsgType;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.business.RestrictionService;
+import cn.cuco.service.basic.carport.CarTypeService;
+import cn.cuco.service.car.carInfo.CarService;
+import cn.cuco.service.car.carOperate.CarOperatePlanService;
+import cn.cuco.service.car.stock.StockService;
+import cn.cuco.service.member.info.MemberService;
+import cn.cuco.service.order.OrderCarUsedService;
+import cn.cuco.service.order.OrderMemberCarUsedService;
+import cn.cuco.service.task.impl.ButlerTaskServiceImpl;
+import cn.cuco.service.wechat.wechatMessage.IWechatMessageSender;
+
+@Service
+public class OrderMemberCarUsedServiceImpl implements OrderMemberCarUsedService {
+
+	@Autowired
+	private OrderMemberCarUsedMapper<OrderMemberCarUsed> memberCarUsedMapper;
+	@Autowired
+	private MemberCarUsedAddressMapper<MemberCarUsedAddress> memberCarUsedAddressMapper;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private StockService stockService;
+	@Autowired
+	private OrderCarUsedService orderCarUsedService;
+	@Autowired
+	private CarTypeService carTypeService;
+	@Autowired
+	private CarService carService;
+	@Autowired
+	private RestrictionService restrictionService;
+	@Autowired
+    private IWechatMessageSender iWechatMessageSender;
+	@Autowired
+    private CarOperatePlanService carOperatePlanService;
+
+	protected Logger log = LoggerFactory.getLogger(ButlerTaskServiceImpl.class);
+	
+
+	@Override
+	public List<OrderMemberCarUsed> getOrderMemberCarUsedNotComplete(OrderMemberCarUsed memberCarUsed) {
+		ParamVerifyUtils.paramNotNull(memberCarUsed,"查询用户待支付或者正在进行中的用车订单，用车订单不能为空");
+		ParamVerifyUtils.paramNotNull(memberCarUsed.getMemberId(),"查询用户待支付或者正在进行中的用车订单，用户ID不能为空");
+		this.memberCarUsedMapper.selectOrderMemberCarUsedNotComplete(memberCarUsed);
+		return null;
+	}
+	
+	@Override
+	public OrderMemberCarUsed createOrderMemberCarUsedForApp(OrderMemberCarUsed memberCarUsed) {
+		ParamVerifyUtils.paramNotNull(memberCarUsed);
+		Long memberId = memberCarUsed.getMemberId();
+		Date start = memberCarUsed.getOrderCarUsedTime();
+		Date end = memberCarUsed.getOrderCarReturnTime();
+		Long carTypeId = memberCarUsed.getOrderCartypeId();
+		ParamVerifyUtils.paramNotNull(memberId,"用户发起用车时，用户ID不能为空");
+		ParamVerifyUtils.paramNotNull(carTypeId,"用户发起用车时，预约车型ID不能为空");
+		ParamVerifyUtils.paramNotNull(start,"用户发起用车时，预计用车开始时间不能为空");
+		ParamVerifyUtils.paramNotNull(end,"用户发起用车时，预计用车结束时间不能为空");
+		ParamVerifyUtils.paramNotNull(memberCarUsed.getOrderCarUsedDay(),"用户发起用车时，预约用车天数不能为空");
+		ParamVerifyUtils.paramNotEmpty(memberCarUsed.getOrderCarUsedAddress(),"用户发起用车时，预约用车地址不能为空");
+		ParamVerifyUtils.paramNotEmpty(memberCarUsed.getOrderCarReturnAddress(),"用户发起用车时，预约还车地点不能为空");
+		
+		if(start.after(end)){
+			ExceptionUtil.throwWarn("预计用车时间不能早于预计还车时间");
+		}
+		//判断用户是否存在
+		Member member = this.memberService.getMemberById(memberId);
+		ParamVerifyUtils.paramNotNull(member,"用户不存在，无法发起用车");
+		
+		//判断库存
+		boolean hasStock = false;
+		hasStock = this.stockService.isExitStock(carTypeId, start, end);
+		if(!hasStock){
+			ExceptionUtil.throwWarn("所选时间段内，所选车型无库存，发起用车失败");
+		}
+		//创建用车记录
+		memberCarUsed.setMemberName(member.getName());
+		memberCarUsed.setMemberMobile(member.getMobile());
+		memberCarUsed = this.createOrderMemberCarUsed(memberCarUsed);
+		//创建车辆运营计划
+		this.createCarOperatePlan(memberCarUsed);
+		//用车地址维护
+		memberCarUsed.setMemberName(member.getName());
+		this.updateUseCarAddredd(memberCarUsed);
+		return memberCarUsed;
+	}
+	
+	/**   
+	 * @Title: createOrderMemberCarUsed   
+	 * @Description: 创建用车订单底层方法
+	 * @param: @param memberCarUsed
+	 * @param: @return      
+	 * @return: OrderMemberCarUsed       
+	 */
+	private OrderMemberCarUsed createOrderMemberCarUsed(OrderMemberCarUsed memberCarUsed){
+		memberCarUsed.setCreated(new Date());
+		memberCarUsed.setLasttimeModify(memberCarUsed.getCreated());
+		//写死北京用车
+		memberCarUsed.setCityCode("110000");
+		this.memberCarUsedMapper.insertSelective(memberCarUsed);
+		return this.memberCarUsedMapper.selectByPrimaryKey(memberCarUsed.getId());
+	}
+	
+	private void createCarOperatePlan(OrderMemberCarUsed memberCarUsed){
+		CarOperatePlan plan = new CarOperatePlan();
+		plan.setCarTypeId(memberCarUsed.getOrderCartypeId());
+		plan.setMemberId(memberCarUsed.getMemberId());
+		plan.setStartTime(memberCarUsed.getOrderCarUsedTime());
+		plan.setEndTime(memberCarUsed.getOrderCarReturnTime());
+		plan.setMemberUsecarId(memberCarUsed.getId());
+		plan.setType(1);
+		this.carOperatePlanService.createCarOperatePlan(plan);
+	}
+
+	@Override
+	public OrderMemberCarUsed updateOrderMemberCarUsedForChangeCar(OrderMemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderMemberCarUsed getOrderMemberCarUsed(OrderMemberCarUsed memberCarUsed) {
+		List<OrderMemberCarUsed> list = this.memberCarUsedMapper.getOrderMemberCarUsedListWithSort(memberCarUsed);
+		if(CollectionUtils.isNotEmpty(list)){
+			list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public PageResult<OrderMemberCarUsed> getOrderMemberCarUsedListByPage(OrderMemberCarUsed memberCarUsed) {
+		ParamVerifyUtils.paramNotNull(memberCarUsed);
+		Integer page = memberCarUsed.getPage();
+		Integer pageSize = memberCarUsed.getPageSize();
+		Integer totalSize = this.memberCarUsedMapper.selectCountByCondition(memberCarUsed);
+		PageHelper.startPage(page, pageSize);
+		List<OrderMemberCarUsed> list = this.memberCarUsedMapper.getOrderMemberCarUsedListWithSort(memberCarUsed);
+//		setTotalCost(list);//计算总的消费金额
+		PageResult<OrderMemberCarUsed> pageResult = new PageResult<OrderMemberCarUsed>(page, pageSize, totalSize, list);
+		return pageResult;
+	}
+
+	@Override
+	public Integer getOrderMemberCarUsedCountByMemberId(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId, "根据用户ID获取用车次数时，用户ID不能为空");
+		return this.memberCarUsedMapper.getOrderMemberCarUsedCountByMemberId(memberId);
+	}
+
+	@Override
+	public BigDecimal getOrderMemberCarUsedMileagesByMemberId(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId, "根据用户ID获取用户行驶公里数时，用户ID不能为空");
+		return this.memberCarUsedMapper.getOrderMemberCarUsedMileagesByMemberId(memberId);
+	}
+
+	@Override
+	public Map<String, Integer> getMemberDriveMileageStatistics(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId, "根据用户ID获取用户用车里程统计，用户ID不能为空");
+		return this.orderCarUsedService.getMemberDriveMileageStatistics(memberId);
+	}
+
+	@Override
+	public Map<String, Integer> getMemberCarTypeUsedStatistics(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId, "根据用户ID获取用户使用车型统计，用户ID不能为空");
+		Map<String, Integer> result = new HashMap<String,Integer>();
+		Map<Long,Integer> map = this.memberCarUsedMapper.getMemberCarTypeUsedStatisticsByMemberId(memberId);
+		if(!MapUtils.isEmpty(map)){
+			for (Map.Entry<Long, Integer> entry : map.entrySet()) {
+				CarType car = this.carTypeService.getCarTypeById(entry.getKey());
+				result.put(car.getBrand()+" "+car.getCarType(), entry.getValue());
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public Integer deleteMemberCarUsedAddress(MemberCarUsedAddress memberCarUsedAddress) {
+		ParamVerifyUtils.paramNotNull(memberCarUsedAddress);
+		ParamVerifyUtils.paramNotNull(memberCarUsedAddress.getId(),"删除用户用车地址时，用车地址ID不能为空");
+		MemberCarUsedAddress target = new MemberCarUsedAddress();
+		target.setId(memberCarUsedAddress.getId());
+		target.setValid(0);
+		return this.memberCarUsedAddressMapper.updateByPrimaryKeySelective(target);
+	}
+
+	@Override
+	public PageResult<MemberCarUsedAddress> getMemberCarUsedAddressListByPage(MemberCarUsedAddress memberCarUsedAddress) {
+		ParamVerifyUtils.paramNotNull(memberCarUsedAddress);
+		ParamVerifyUtils.paramNotNull(memberCarUsedAddress.getMemberId(),"获取用户用车地址时，用户ID不能为空");
+		memberCarUsedAddress.setValid(1);
+		Integer page = memberCarUsedAddress.getPage();
+		Integer pageSize = memberCarUsedAddress.getPageSize();
+		Integer totalSize = this.memberCarUsedAddressMapper.selectCountByCondition(memberCarUsedAddress);
+		PageHelper.startPage(page, pageSize);
+		List<MemberCarUsedAddress> list = this.memberCarUsedAddressMapper.getMemberCarUsedAddressListWithSort(memberCarUsedAddress);
+		PageResult<MemberCarUsedAddress> pageResult = new PageResult<MemberCarUsedAddress>(page, pageSize, totalSize, list);
+		return pageResult;
+	}
+
+	@Override
+	public OrderMemberCarUsed getLastOrderMemberCarUsedByMemberId(OrderMemberCarUsed memberCarUsed) {
+		ParamVerifyUtils.paramNotNull(memberCarUsed.getMemberId(), "查询用户最后一次用车记录时，用户ID不能为空");
+		return this.memberCarUsedMapper.getLastOrderMemberCarUsed(memberCarUsed);
+	}
+
+	@Override
+	public OrderMemberCarUsed updateOrderMemberCarUsedForMember(OrderMemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	private void updateUseCarAddredd(OrderMemberCarUsed memberCarUsed){
+		//用车、还车地址都需要维护
+		Date date = new Date();
+		this.updateUseCarAddredd(new MemberCarUsedAddress(memberCarUsed.getMemberId(), memberCarUsed.getMemberName(), 0, memberCarUsed.getOrderCarUsedAddress(), memberCarUsed.getLongitudeLatitude_useCarAddress(), null, date));
+		this.updateUseCarAddredd(new MemberCarUsedAddress(memberCarUsed.getMemberId(), memberCarUsed.getMemberName(), 1, memberCarUsed.getOrderCarReturnAddress(), memberCarUsed.getLongitudeLatitude_returnCarAddress(), null, date));
+	}
+	
+	private void updateUseCarAddredd(MemberCarUsedAddress memberCarUsedAddress){
+		MemberCarUsedAddress search = new MemberCarUsedAddress();
+		search.setMemberId(memberCarUsedAddress.getMemberId());
+		search.setAddress(memberCarUsedAddress.getAddress());
+		search.setType(memberCarUsedAddress.getType());
+		List<MemberCarUsedAddress> list = this.memberCarUsedAddressMapper.selectByCondition(search);
+		if(CollectionUtils.isEmpty(list)){
+			//创建
+			memberCarUsedAddress.setCount(1);
+			memberCarUsedAddress.setCreated(new Date());
+			this.memberCarUsedAddressMapper.insertSelective(memberCarUsedAddress);
+		}else{
+			search = list.get(0);
+			if(search.getValid().equals(0)){
+				memberCarUsedAddress.setValid(1);
+			}
+			memberCarUsedAddress.setCount(search.getCount()+1);
+			this.memberCarUsedAddressMapper.updateByPrimaryKeySelective(memberCarUsedAddress);
+		}
+	}
+	
+	/**
+     * 车辆限行通知
+     */
+    public void getVehicleRestrictions(){
+    	//查询需要扣费用车用车任务
+    	OrderMemberCarUsed memberCarUsed = new OrderMemberCarUsed();
+    	memberCarUsed.setUsedStatus(MemberCarUsedStatus.MEMBERCARUSED_USEDR.getIndex());
+    	List<OrderMemberCarUsed> powerUseds =  memberCarUsedMapper.selectByCondition(memberCarUsed);
+    	this.log.info("定时任务：车辆限行通知扫描开始");
+    	if(powerUseds.size()>0){
+    		for (OrderMemberCarUsed powerUsed : powerUseds) {
+    			//查询车辆信息
+    			Car car = new Car();
+    			if(powerUsed.getCaroperateId()!=null && powerUsed.getCaroperateId()!=0){
+    				car = this.carService.getCarById(powerUsed.getCaroperateId());
+    			}
+    			//是否限号
+				boolean isRestriction = isRestrictionDayAdd(car);
+				if(isRestriction){
+					//发送微信通知
+					this.SendMessageToMember(powerUsed.getMemberId(),WechatMsgType.RESTRICTIONSUCCESS.getType());
+				}
+    		}
+    	}
+    	this.log.info("定时任务：车辆限行通知扫描结束");
+    }
+    
+    /**
+    * @Title: isRestrictionDayAdd 
+    * @Description: 当前车辆明天是否参与限号
+    * @author huanghua
+    * @param car
+    * @return boolean
+     */
+     private boolean isRestrictionDayAdd(Car car){
+     	boolean isRestriction = false;
+     	//是否参与限行
+     	CarType carType = carTypeService.getCarTypeById(car.getCarTypeId());
+     	if(carType.getIsRestriction()==0){
+     		return isRestriction;
+     	}
+     	Restriction basicRestriction = new Restriction();
+     	basicRestriction.setCityId(2L);
+     	basicRestriction.setRestrictionsDate(DateUtils.parseDate(DateUtils.formatDate(DateUtils.addDays(new Date(),1), "yyyy-MM-dd")));
+     	basicRestriction =  restrictionService.getRestrictionByDate(basicRestriction);
+     	if(basicRestriction!=null){
+     		//限号尾号
+     		String temp = basicRestriction.getRestrictions();
+     		//当前车辆尾号
+     		String plateNum = this.checkCode(car.getCarPlateNum());
+     		if(StringUtils.isNotBlank(temp)){
+     			String[] code = temp.split(",");
+     			for (int i = 0; i < code.length; i++) {
+ 					if(Integer.parseInt(plateNum) == Integer.parseInt(code[i])){
+ 						isRestriction = true;
+ 					}
+ 				}
+     		}
+     	}
+     	return isRestriction;
+     }
+	
+     /**
+      * @Title: checkCode 
+      * @Description: TODO(判断是否为数字) 
+      * @param @param code
+      * @param @return    设定文件 
+      * @return String    返回类型 
+      * @throws
+       */
+      private String checkCode(String code){
+      	String Lastcode = code.substring(code.length()-1);
+      	//判断是否为数字
+      	if(!Character.isDigit(Lastcode.charAt(0))){
+      		Lastcode = "0";
+      	}
+      	return Lastcode;
+      }
+      
+      /**
+  	* @Title: SendMessageToMember 
+  	* @Description: 给用户推送消息
+  	* @author huanghua
+  	* @param id
+  	* @return void
+  	 */
+  	private void SendMessageToMember(Long id,String wechatTemplateType){
+  		Member member = memberService.getMemberById(id);
+  		if(member==null){
+  			this.log.error("给会员发送消息推送，ID为{}的会员不存在，无法发送微信消息",id);
+  			return;
+  		}
+  		final String openId = member.getOpenid();
+  		if(StringUtils.isBlank(openId)){
+  			this.log.error("给会员发送消息推送，ID为{}的会员openid为空，无法发送微信消息",member.getId());
+  			return;
+  		}
+  		new Thread(new Runnable() {
+  			@Override
+  			public void run() {
+  				try {
+  					iWechatMessageSender.sendmessage(openId, wechatTemplateType, null);
+  				}catch (Exception e){
+  					log.error("推送失败",e);
+  				}
+  			}
+  		}).start();
+  	}
+
+	@Override
+	public List<OrderMemberCarUsed> getOrderMemberCarUsedListByCarIdAndDate(OrderMemberCarUsed memberCarUsed) {
+		ParamVerifyUtils.paramNotNull(memberCarUsed, "根据车辆ID、时间查询用车记录(违章专用)时，参数不能为空");
+		ParamVerifyUtils.paramNotNull(memberCarUsed.getCaroperateId(), "根据车辆ID、时间查询用车记录(违章专用)时，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(memberCarUsed.getStartDate(), "根据车辆ID、时间查询用车记录(违章专用)时，日期不能为空");
+		return this.memberCarUsedMapper.getOrderMemberCarUsedListByCarIdAndDate(memberCarUsed);
+	}
+
+	private void setTotalCost(List<OrderMemberCarUsed> list){
+		if(CollectionUtils.isNotEmpty(list)){
+			for(OrderMemberCarUsed order : list){
+				BigDecimal carUsedCost = order.getCarUsedCost();
+				BigDecimal extraCost = order.getExtraCarUsedCost();
+				BigDecimal limitBack = order.getLimitedBack();
+				BigDecimal gasoline = this.getGasolinePrice(order);
+//				order.setTotalCost(carUsedCost.add(extraCost).add(limitBack).add(gasoline));
+			}
+		}
+	}
+	
+	private BigDecimal getGasolinePrice(OrderMemberCarUsed order){
+		BigDecimal total = new BigDecimal(0);
+		BigDecimal gasV = order.getTankBefore().subtract(order.getTankAfter());
+		if(order.getUnit().equals(1)){
+			gasV = gasV.multiply(order.getTankVolume()).setScale(2,BigDecimal.ROUND_UP);
+		}
+		total = gasV.multiply(order.getPerGasolinePrice()).setScale(2,BigDecimal.ROUND_UP);
+		return total;
+	}
+
+	@Override
+	public OrderMemberCarUsed updateOrderMemberCarUsedForBackstage(OrderMemberCarUsed orderMemberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getCarUsedCountByDate(OrderMemberCarUsed orderMemberCarUsed) {
+		return this.memberCarUsedMapper.getCarUsedCountByDate(orderMemberCarUsed);
+	}
+
+	@Override
+	public BigDecimal getCarUsedCostMoneyByDate(OrderMemberCarUsed orderMemberCarUsed) {
+		return this.memberCarUsedMapper.getCarUsedCostMoneyByDate(orderMemberCarUsed);
+	}
+
+}

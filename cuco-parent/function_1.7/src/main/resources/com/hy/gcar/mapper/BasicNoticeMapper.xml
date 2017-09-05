@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.BasicNoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.BasicNotice" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="notice_type" property="noticeType" jdbcType="INTEGER" />
+    <result column="notice_user" property="noticeUser" jdbcType="VARCHAR" />
+    <result column="notice_user_id" property="noticeUserId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="create_operater" property="createOperater" jdbcType="VARCHAR" />
+    <result column="lasttime" property="lasttime" jdbcType="TIMESTAMP" />
+    <result column="basic_id" property="basicId" jdbcType="BIGINT" />
+    <result column="user_openid" property="userOpenid" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.BasicNotice" >
+       select  count(1) 
+    from tc_basic_notice  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "noticeType != null ">
+        and notice_type = #{noticeType,jdbcType=INTEGER}      
+      </if>
+      <if test= "noticeUser != null and noticeUser != '' ">
+        and notice_user = #{noticeUser,jdbcType=VARCHAR}      
+      </if>
+      <if test= "noticeUserId != null ">
+        and notice_user_id = #{noticeUserId,jdbcType=BIGINT}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "createOperater != null and createOperater != '' ">
+        and create_operater = #{createOperater,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttime != null ">
+        and lasttime = #{lasttime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "basicId != null ">
+        and basic_id = #{basicId,jdbcType=BIGINT}      
+      </if>
+      <if test= "userOpenid != null and userOpenid != '' ">
+        and user_openid = #{userOpenid,jdbcType=VARCHAR}      
+      </if>      
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.BasicNotice" >
+       select  <include refid="Base_Column_List" />
+    from tc_basic_notice  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "noticeType != null ">
+        and notice_type = #{noticeType,jdbcType=INTEGER}      
+      </if>
+      <if test= "noticeUser != null and noticeUser != '' ">
+        and notice_user = #{noticeUser,jdbcType=VARCHAR}      
+      </if>
+      <if test= "noticeUserId != null ">
+        and notice_user_id = #{noticeUserId,jdbcType=BIGINT}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "createOperater != null and createOperater != '' ">
+        and create_operater = #{createOperater,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttime != null ">
+        and lasttime = #{lasttime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "basicId != null ">
+        and basic_id = #{basicId,jdbcType=BIGINT}      
+      </if>
+      <if test= "userOpenid != null and userOpenid != '' ">
+        and user_openid = #{userOpenid,jdbcType=VARCHAR}      
+      </if>
+  </where>
+        order by created
+  
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, notice_type, notice_user, 
+      notice_user_id, status, created, 
+      create_operater, lasttime, basic_id, 
+      user_openid
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.BasicNotice" >
+    select 
+      id, notice_type, notice_user, 
+      notice_user_id, status, created, 
+      create_operater, lasttime, basic_id, 
+      user_openid
+    from tc_basic_notice where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.BasicNotice" >
+    delete from tc_basic_notice where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tc_basic_notice where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.BasicNotice" >
+    insert into tc_basic_notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "noticeType != null ">
+         notice_type,
+      </if>
+      <if test= "noticeUser != null and noticeUser != '' ">
+         notice_user,
+      </if>
+      <if test= "noticeUserId != null ">
+         notice_user_id,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "createOperater != null and createOperater != '' ">
+         create_operater,
+      </if>
+      <if test= "lasttime != null ">
+         lasttime,
+      </if>
+      <if test= "basicId != null ">
+         basic_id,
+      </if>
+      <if test= "userOpenid != null and userOpenid != '' ">
+         user_openid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "noticeType != null ">
+         #{noticeType,jdbcType=INTEGER},
+      </if>
+      <if test= "noticeUser != null and noticeUser != '' ">
+         #{noticeUser,jdbcType=VARCHAR},
+      </if>
+      <if test= "noticeUserId != null ">
+         #{noticeUserId,jdbcType=BIGINT},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "createOperater != null and createOperater != '' ">
+         #{createOperater,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttime != null ">
+         #{lasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "basicId != null ">
+         #{basicId,jdbcType=BIGINT},
+      </if>
+      <if test= "userOpenid != null and userOpenid != '' ">
+         #{userOpenid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tc_basic_notice (
+         id,
+         notice_type,
+         notice_user,
+         notice_user_id,
+         status,
+         created,
+         create_operater,
+         lasttime,
+         basic_id,
+         user_openid)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.noticeType,jdbcType=INTEGER},
+         #{item.noticeUser,jdbcType=VARCHAR},
+         #{item.noticeUserId,jdbcType=BIGINT},
+         #{item.status,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.createOperater,jdbcType=VARCHAR},
+         #{item.lasttime,jdbcType=TIMESTAMP},
+         #{item.basicId,jdbcType=BIGINT},
+         #{item.userOpenid,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.BasicNotice" >
+    update tc_basic_notice
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "noticeType != null ">
+      notice_type = #{noticeType,jdbcType=INTEGER},    
+      </if>
+      <if test= "noticeUser != null and noticeUser != '' ">
+      notice_user = #{noticeUser,jdbcType=VARCHAR},
+      </if>
+      <if test= "noticeUserId != null ">
+      notice_user_id = #{noticeUserId,jdbcType=BIGINT},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "createOperater != null and createOperater != '' ">
+      create_operater = #{createOperater,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttime != null ">
+      lasttime = #{lasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "basicId != null ">
+      basic_id = #{basicId,jdbcType=BIGINT},
+      </if>
+      <if test= "userOpenid != null and userOpenid != '' ">
+      user_openid = #{userOpenid,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,69 @@
+﻿@charset "utf-8";
+html,body{height: 100%; width: 100%;}
+html{font-size: 62.5%;}
+html,body,button,input,select,textarea,h1,h2,h3,h4,ul,li,dl,dt,dd,ol,p,div,span,img,a,em,i{margin:0; padding:0; list-style:none; text-decoration:none; outline: none; font-style: normal; font-family: "微软雅黑"; border: 0; border-radius: 0; -webkit-appearance:none;}
+
+img {vertical-align: middle; width: 100%;}
+.clearfix:before,.clearfix:after {content: " "; display: table;}
+.clearfix:after {clear: both;}
+.button{color: #fff; border: 1px solid #818181; padding: 0 15px; display: inline-block; margin: auto;}
+
+img{width: 100%;}
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+.wrap{width: 100%; height: 0; overflow: hidden; -webkit-transition: .7s ease-in-out -webkit-transform;}
+.swiper-wrapper {-webkit-transition: .7s ease-in-out -webkit-transform; position: absolute;}
+.swiper-slide{width: 100%; position: relative;background:#fff no-repeat center center; background-size: 100%; position: relative;}
+
+.mtop1{margin-top: 1% !important;}
+.mtop2{margin-top: 2% !important;}
+.mtop3{margin-top: 3% !important;}
+.mtop4{margin-top: 4% !important;}
+.mtop5{margin-top: 5% !important;}
+.mtop6{margin-top: 6% !important;}
+.mtop7{margin-top: 7% !important;}
+.mtop8{margin-top: 8% !important;}
+.mtop9{margin-top: 9% !important;}
+.mtop10{margin-top: 10%; !important;}
+.mtop15{margin-top: 15%; !important;}
+.mtop20{margin-top: 20%; !important;}
+.mtop25{margin-top: 25%; !important;}
+.mtop30{margin-top: 30%; !important;}
+
+
+.page1{background-image: url("../images/benefits/page1.jpg");}
+.page2{background-image: url("../images/benefits/page2.jpg");}
+.page3{background-image: url("../images/benefits/page3.jpg");}
+.page4{background-image: url("../images/benefits/page4.jpg");}
+.page5{background-image: url("../images/benefits/page5.jpg");}
+.page6{background-image: url("../images/benefits/page6.jpg"); background-size: 96%;}
+.page7{background-image: url("../images/benefits/page7.jpg");}
+.page8{background-image: url("../images/benefits/page8.jpg");}
+.page9{background-image: url("../images/benefits/page9.jpg");}
+@media screen and (max-width:330px){
+}
+@media  screen and (min-width:375px ) and (max-width:414px) {
+    .page1_top,.page2_top,.page4_top{margin-top: 4% !important;}
+    .page8_top{margin-top: 8% !important;}
+}
+
+@media screen and (min-width:415px) and (max-width:579px){
+    .page1_top,.page2_top,.page4_top{margin-top: 4% !important;}
+    .page8_top{margin-top: 8% !important;}
+
+}
+
+@media screen and (min-width:578px){
+
+}
+
+
+
+
+
+
+
+
+

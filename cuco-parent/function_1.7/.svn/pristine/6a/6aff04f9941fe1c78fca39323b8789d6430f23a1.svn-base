@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>订单详情</title>
+    <link href="../../css/bultertask.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="greyBg">
+<!--默认详情页-->
+<div style="display: none;">
+    <p class="state">订单信息（销售意向）</p>
+    <ul class="bulterInfo">
+        <li class="arrowRight">
+            <a href="javascript:;">
+                负责人员:
+                <span class="fRight">王小二</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="bulterInfo">
+        <li>
+            姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：
+            <span class="color999">谢瑶瑶</span>
+        </li>
+        <li>
+            性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：
+            <span class="radioRoup">
+                <input type="radio" name="sex">男
+                <input type="radio" name="sex">女
+            </span>
+        </li>
+        <li>
+            手机号码：
+            <a class="tel" href="tel:1384698015">1384698015</a>
+        </li>
+    </ul>
+    <ul class="bulterInfo">
+        <li class="rightArrow">
+            <a href="javascript:;">
+                使用城市：
+                <span class="color999">请选择使用产品的城市</span>
+            </a>
+        </li>
+        <li class="arrowRight">
+            <a href="javascript:;">
+                选择产品：
+                <span class="color999">请选择产品</span>
+            </a>
+        </li>
+    </ul>
+
+    <ul class="bulterInfo">
+        <li>
+            状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：
+                <span class="radioRoup">
+                    <input type="radio">跟进中
+                    <input type="radio">待签约
+                    <input type="radio">已取消
+                </span>
+        </li>
+        <li class="remarksLi arrowRight">
+            <a href="javascript:;">
+                任务备注：
+                <span class="remarks">
+                    <span>任务备注：</span><!--占位用不用管-->
+                    备注内容备注内容备注内容备注内容备注内容备注内容备注内容备注内容
+                </span>
+            </a>
+        </li>
+    </ul>
+
+    <p class="state">订单记录</p>
+    <ul class="taskLog marginBottom">
+        <li>
+            <p class="taskState">销售意向</p>
+            <p class="taskStateVal">
+                <span>徐凌飞（会员）</span>
+                <span>2016-06-23 9：00</span>
+            </p>
+        </li>
+        <li>
+            <p class="taskState">待签约</p>
+            <p class="taskStateVal">
+                <span>徐凌飞（会员）</span>
+                <span>2016-06-23 9：00</span>
+            </p>
+            <p class="taskStateVal">
+                <span>徐凌飞（会员）</span>
+                <span>2016-06-23 9：00</span>
+                <em>备注：将任务指派谢瑶瑶</em>
+            </p>
+        </li>
+    </ul>
+    <div class="fixBtn">
+        <a href="javascript:;" class="button">确定</a>
+    </div>
+</div>
+
+<!--销售选择-->
+<div style="display: none">
+    <ul class="choseBulter">
+        <li>当前负责销售：王亮</li>
+        <li>康楠</li>
+        <li class="on">康楠</li>
+        <li>康楠</li>
+        <li>康楠</li>
+        <li>康楠</li>
+    </ul>
+    <div class="fixBottom noBg">
+        <a href="javascript:;" class="button douBtn cancleBtn">取消任务</a>
+        <a href="javascript:;" class="button douBtn">接受任务</a>
+    </div>
+</div>
+
+<!--产品选择-->
+<div class="selPro" style="display: none;">
+    <p class="title"><span>购买产品：特斯拉  Model X 90D</span></p>
+    <ul class="selTab">
+        <li class="up">
+            <span>新V1</span>
+            <select>
+                <option>车型</option>
+                <option>车型</option>
+                <option>车型</option>
+            </select>
+        </li>
+        <li>
+            <span>选择类别</span>
+            <select>
+                <option>类别</option>
+                <option>类别</option>
+                <option>类别</option>
+            </select>
+        </li>
+    </ul>
+    <ul class="choseBulter selUl">
+        <li>特斯拉 Model S 90D</li>
+        <li class="on">特斯拉 Model S 90D</li>
+        <li>特斯拉 Model S 90D</li>
+        <li>特斯拉 Model S 90D</li>
+        <li>特斯拉 Model S 90D</li>
+    </ul>
+
+    <!--选择类型-->
+    <ul class="choseBulter selUl" style="display: none">
+        <li>特斯拉 Model S 90D</li>
+        <li class="on">特斯拉 Model S 90D</li>
+        <li>特斯拉 Model S 90D</li>
+        <li>特斯拉 Model S 90D</li>
+        <li>特斯拉 Model S 90D</li>
+    </ul>
+    <div class="fixBottom noBg">
+        <a href="javascript:;" class="button douBtn cancleBtn">取消</a>
+        <a href="javascript:;" class="button douBtn">确定</a>
+    </div>
+</div>
+
+<!--填写备注-->
+<div class="section" style="display: none;">
+    <textarea class="textarea"></textarea>
+    <div class="fixBottom noBg">
+        <a href="javascript:;" class="button douBtn cancleBtn">取消</a>
+        <a href="javascript:;" class="button douBtn">确定</a>
+    </div>
+</div>
+
+<!--增配项目-->
+<div class="selAddPage">
+    <dl class="selAdd_2">
+        <dt>
+            专属定制权益(费用: ￥50,000)
+        </dt>
+        <dd>
+            <div class="selName">
+                <input type="checkbox">
+                <p class="name">专车专用</p>
+            </div>
+        </dd>
+    </dl>
+    <dl class="selAdd_2">
+        <dt>
+            会员自选增配项（费用：￥64,100）
+        </dt>
+        <dd>
+            <div class="selName">
+                <input type="checkbox">
+                <p class="name">全景天窗</p>
+            </div>
+        </dd>
+        <dd>
+            <div class="selName">
+                <input type="checkbox">
+                <p class="name">车漆颜色</p>
+            </div>
+            <ul class="short">
+                <li>
+                    <input type="radio">红色(￥41,200)
+                </li>
+                <li>
+                    <input type="radio">红色(￥41,200)
+                </li>
+            </ul>
+        </dd>
+        </dd>
+        <dd>
+            <div class="selName">
+                <input type="checkbox">
+                <p class="name">轮      毂</p>
+            </div>
+            <ul>
+                <li>
+                    <input type="radio">21寸银色涡轮(￥41,200)
+                </li>
+                <li>
+                    <input type="radio">21寸银色涡轮(￥41,200)
+                </li>
+                <li>
+                    <input type="radio">21寸银色涡轮(￥41,200)
+                </li>
+            </ul>
+        </dd>
+        <dd>
+            <div class="selName">
+                <input type="checkbox">
+                <p class="name">座      椅</p>
+            </div>
+            <ul>
+                <li>
+                    <input type="radio">红色(￥9200)
+                </li>
+            </ul>
+        </dd>
+        <dd>
+            <div class="selName">
+                <input type="checkbox">
+                <p class="name">智能空气悬挂(￥22900)</p>
+            </div>
+        </dd>
+    </dl>
+</div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+package cn.cuco.service.basic.carport.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarportMapper;
+import cn.cuco.entity.Carport;
+import cn.cuco.entity.CarportCartype;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.carport.CarportService;
+
+@Service(value = "carportService")
+public class CarportServiceImpl implements CarportService {
+
+    @Autowired
+    private CarportMapper<Carport> carportMapper;
+
+	@Override
+	public Carport createCarport(Carport carport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Carport getCarportById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<Carport> getCarportByPage(Carport carport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Carport updateCarport(Carport carport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Carport updateCarportShelves(Carport carport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Carport updateCarportTheShelves(Carport carport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	* @Title: createCarportCartypeBatch 
+	* @Description: 创建车库车型关系
+	* @param carportCartype
+	* @return void
+	 */
+	private void createCarportCartypeBatch(List<CarportCartype> carportCartype) {
+		
+	}
+	
+	/**
+	* @Title: deleteCarportCartypeByCarprotId 
+	* @Description: 根据车库ID删除车型关系
+	* @param carportCartype
+	* @return void
+	 */
+	public void deleteCarportCartypeByCarprotId(CarportCartype carportCartype) {
+		
+	}
+	
+    /**
+    * @Title: getCarportCartypesByCarportId 
+    * @Description:  根据车库Id查询关系
+    * @param carportCartype
+    * @return List<CarportCartype>
+     */
+    public List<CarportCartype> getCarportCartypesByCarportId(CarportCartype carportCartype){
+    	return null;
+    }
+}

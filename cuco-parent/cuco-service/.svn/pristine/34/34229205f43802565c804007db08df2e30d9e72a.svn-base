@@ -1,0 +1,79 @@
+package cn.cuco.service.car.carService;
+
+
+import cn.cuco.entity.CarRepair;
+import cn.cuco.page.PageResult;
+
+import java.util.List;
+
+/**
+* @ClassName: CarRepairService 
+* @Description: 车辆维修接口
+* @author huanghua
+* @date 2017年2月21日 下午3:23:34
+ */
+public interface CarRepairService {
+    /**
+    * @Title: createCarRepair 
+    * @Description:创建车辆维修
+    * @param  carRepair
+    * @return CarRepair
+    * @throws
+     */
+    public CarRepair createCarRepair(CarRepair carRepair);
+
+    /**
+    * @Title: updateCarRepair 
+    * @Description: 修改车辆维修信息
+    * @param  carRepair
+    * @return CarRepair
+    * @throws
+     */
+    public CarRepair updateCarRepair(CarRepair carRepair);
+
+    /**
+    * @Title: updateCarRepairByMaintenance 
+    * @Description: 修改车辆维修状态-维修中
+    * @param  carRepair
+    * @return CarRepair
+    * @throws
+     */
+    public CarRepair updateCarRepairByMaintenance(CarRepair carRepair);
+    
+    /**
+    * @Title: updateCarRepairByMaintenance 
+    * @Description: 修改车辆维修状态-完成维修
+    * @param  carRepair
+    * @return Integer
+    * @throws
+     */
+    public CarRepair updateCarRepairBycompleted(CarRepair carRepair);
+    
+    /**
+    * @Title: getCarRepairById 
+    * @Description: 取车辆维修欣喜 
+    * @param  carRepair
+    * @param @return
+    * @return CarRepair
+    * @throws
+     */
+    public CarRepair getCarRepairById(CarRepair carRepair);
+
+    /**
+    * @Title: getCarRepairByCondition 
+    * @Description: 分页取车辆维修信息
+    * @param  tdCarRepair
+    * @return List<CarRepair>
+    * @throws
+     */
+    public PageResult<CarRepair> getCarRepairByCondition(CarRepair carRepair);
+
+    /**
+    * @Title: getCarRepairByList 
+    * @Description: 取车辆维修欣喜集合
+    * @param @param carRepair
+    * @return List<CarRepair>
+    * @throws
+     */
+    public List<CarRepair> getCarRepairByList(CarRepair carRepair);
+}

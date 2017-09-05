@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface CarInsuranceDetailUrlMapper<T> extends BaseDao<T> {
+
+}

@@ -1,0 +1,67 @@
+package cn.cuco.service.basic.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.BasicCarportMapper;
+import cn.cuco.entity.BasicCarport;
+import cn.cuco.service.basic.BasicCarportService;
+
+@Service(value = "basicCarportService")
+public class BasicCarportServiceImpl implements BasicCarportService {
+
+    @Autowired
+    private BasicCarportMapper<BasicCarport> basicCarportMapper;
+    
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.basicCarportMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(BasicCarport basicCarport) {
+           return this.basicCarportMapper.updateByPrimaryKeySelective(basicCarport);
+    }
+
+    @Override
+    public BasicCarport findById(Object id) {
+           return (BasicCarport) this.basicCarportMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<BasicCarport> selectByCondition(BasicCarport basicCarport) {
+           return (List<BasicCarport>) this.basicCarportMapper.selectByCondition(basicCarport);
+    }
+
+    @Override
+    public Integer selectCountByCondition(BasicCarport basicCarport) {
+           return  this.basicCarportMapper.selectCountByCondition(basicCarport);
+    }
+
+	@Override
+	public BasicCarport createBasicCarport(BasicCarport BasicCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BasicCarport updateBasicCarport(BasicCarport BasicCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BasicCarport updateBasicCarportShelves(BasicCarport BasicCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BasicCarport updateBasicCarportTheShelves(BasicCarport BasicCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

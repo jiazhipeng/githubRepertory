@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.MemberCarUsedAddressMapper" >
+
+<!-- 分条件查询sql 语句 -->
+  <select id="getMemberCarUsedAddressListWithSort" resultMap="BaseResultMap" parameterType="cn.cuco.entity.MemberCarUsedAddress" >
+       select  <include refid="Base_Column_List" />
+    from td_member_car_used_address  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "address != null and address != '' ">
+        and address = #{address,jdbcType=VARCHAR}      
+      </if>
+      <if test= "longitudeLatitude != null and longitudeLatitude != '' ">
+        and longitude_latitude = #{longitudeLatitude,jdbcType=VARCHAR}      
+      </if>
+      <if test= "count != null ">
+        and count = #{count,jdbcType=INTEGER}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  order by created desc
+  </select>
+</mapper>

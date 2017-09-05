@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>下载APP</title>
+    <style>
+        html,body{height: 100%;}
+        body{background:#000;}
+        .guid{height:100%; background:#000 url("../images/guaid.png") no-repeat center top; background-size: 84.8%; display: none;}
+    </style>
+   <!--  <script>
+        var _hmt = _hmt || [];
+        (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?b6bb1ddd23cb251756e8035e998f3edf";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+        })();
+    </script> -->
+</head>
+<body>
+<div class="guid" id="guid">
+
+</div>
+
+
+<script>
+        var ua = navigator.userAgent.toLowerCase();
+        if(ua.match(/MicroMessenger/i)=="micromessenger") {//微信浏览器
+            document.getElementById('guid').style.display="block";
+        } else {//非微信浏览器
+            var u = navigator.userAgent;
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+                window.location.href='http://www.gcarclub.com/android.apk';
+            } else if (u.indexOf('iPhone') > -1) {//苹果手机
+                window.location.href='https://itunes.apple.com/cn/app/ji-che-gong-she/id1087273809?mt=8';
+            } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
+            }
+        }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>修改资料</title>
+    <link href="../../css/user.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="aditPage">
+    <!--头像昵称-->
+    <div class="userInfo">
+        <div class="icon">
+            <img src="../../images/usr.png">
+            <em class="vip"></em>
+        </div>
+        <span class="name">影子</span>
+    </div>
+
+    <div class="section">
+        <ul class="aditBox">
+            <li>
+                <span class="name">姓&nbsp;&nbsp;&nbsp;名</span>
+                <input type="text" placeholder="影子">
+            </li>
+            <li>
+                <span class="name">性&nbsp;&nbsp;&nbsp;别</span>
+                <span class="radioRoup">
+                    <input type="radio" name="sex">男
+                    <input type="radio" name="sex">女
+                </span>
+
+            </li>
+            <li>
+                <span class="name">手机号</span>
+                <input type="tel" maxlength="11" placeholder="18645873692">
+            </li>
+        </ul>
+    </div>
+
+    <span class="button">保存</span>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.OrderRenewalMapper">
+
+<!-- 分条件查询sql 语句 -->
+  <select id="getOrderRenewalListWithSort" resultMap="BaseResultMap" parameterType="cn.cuco.entity.OrderRenewal" >
+       select  <include refid="Base_Column_List" />
+    from td_order_renewal  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "orderNum != null and orderNum != '' ">
+        and order_num = #{orderNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "payment != null ">
+        and payment = #{payment,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "paymentType != null ">
+        and payment_type = #{paymentType,jdbcType=INTEGER}      
+      </if>
+      <if test= "paymentNum != null and paymentNum != '' ">
+        and payment_num = #{paymentNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "completedTime != null ">
+        and completed_time = #{completedTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "createdSource != null ">
+        and created_source = #{createdSource,jdbcType=INTEGER}      
+      </if>
+      <if test= "accountType != null ">
+        and account_type = #{accountType,jdbcType=INTEGER}      
+      </if>
+      <if test= "createdMemberId != null ">
+        and created_member_id = #{createdMemberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "createdMemberName != null and createdMemberName != '' ">
+        and created_member_name = #{createdMemberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "createdMemberMobile != null and createdMemberMobile != '' ">
+        and created_member_mobile = #{createdMemberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "bank != null and bank != '' ">
+        and bank = #{bank,jdbcType=VARCHAR}      
+      </if>
+      <if test= "giftAmount != null ">
+        and gift_amount = #{giftAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  order by created desc
+  </select>
+  
+  <select id="getOrderRenewalListForCancelForTask" resultMap="BaseResultMap">
+       select  <include refid="Base_Column_List" />
+    from td_order_renewal  where payment = 0 and timestampdiff(hour,created,now()) > 24 and (status = 0 or status = 1)
+  </select>
+
+</mapper>

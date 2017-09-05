@@ -1,0 +1,99 @@
+package cn.cuco.service.member.info;
+
+
+import java.util.List;
+
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberInfo;
+import cn.cuco.page.PageResult;
+
+/** 
+* @ClassName: MemberService 
+* @Description: 用户模块接口
+* @author zc.du
+* @date 2017年2月23日 上午9:19:49  
+*/
+public interface MemberService {
+    /** 
+    * @Title: createMember 
+    * @Description: 创建用户
+    * @author zc.du
+    * @param member
+    * @return Member
+    */
+    public Member createMember(Member member);
+    
+    /** 
+    * @Title: updateMember 
+    * @Description: 修改用户(不包括证件信息)
+    * @author zc.du
+    * @param member
+    * @return Member
+    */
+    public Member updateMember(Member member);
+    
+    /**
+     * @Title: updateMemberInfo 
+     * @Description: 更新用户证件信息
+     * @author zc.du
+     * @param memberInfo
+     * @return Member
+      */
+    public Member updateMemberInfo(MemberInfo memberInfo);
+    
+    /** 
+    * @Title: getMember 
+    * @Description: 查询用户基础方法(包含证件信息)
+    * @author zc.du
+    * @param member
+    * @return Member
+    */
+    public Member getMember(Member member); 
+    
+    /** 
+    * @Title: getMemberList 
+    * @Description: 查询用户列表基础方法
+    * @author zc.du
+    * @param member
+    * @return
+    * @return List<Member>
+    */
+    public List<Member> getMemberList(Member member);
+    
+    /** 
+    * @Title: getMemberListByPage 
+    * @Description: 分页查询用户列表基础方法
+    * @author zc.du
+    * @param member
+    * @return PageResult<Member>
+    */
+    public PageResult<Member> getMemberListByPage(Member member);
+
+    /** 
+    * @Title: updateMember2FreezeById 
+    * @Description: 通过用户ID冻结用户
+    * @author zc.du
+    * @param member
+    * @return Member
+    */
+    public Member  updateMember2FreezeById(Member member);
+
+    /** 
+    * @Title: updateMember2UnfreezeById 
+    * @Description: 通过用户ID解冻用户
+    * @author zc.du
+    * @param member
+    * @return Member
+    */
+    public Member  updateMember2UnfreezeById(Member member);
+    
+    /** 
+    * @Title: login 
+    * @Description: 用户登陆
+    * @author zc.du
+    * @param member
+    * @return Member
+    */
+    public Member login(Member member);
+    
+}

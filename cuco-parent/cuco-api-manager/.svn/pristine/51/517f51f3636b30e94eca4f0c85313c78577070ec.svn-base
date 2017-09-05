@@ -1,0 +1,59 @@
+package cn.cuco.controller.manager.basic.parking;
+
+import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.cuco.entity.CarType;
+import cn.cuco.entity.Parking;
+
+
+/**
+ * @ClassName: ParkingController 
+ * @Description: 停车场
+ * @author: wangchuntao 
+ * @date: 2017年2月23日 上午10:49:52
+ */
+@RestController
+public class ParkingController {
+	protected Logger logger = Logger.getLogger(this.getClass());
+    /**
+     * @Title: getParkingListByPage 
+     * @Description: 停车场列表
+     * @author: wangchuntao 
+     * @param parking
+     * @return Object
+     * @date: 2017年2月23日 上午10:51:09
+     */
+	@RequestMapping(value = "/parking/getParkingList",method = RequestMethod.GET)
+    public Object getParkingListByPage(String parkingName){
+        return null;
+    }
+	/**
+	 * @Title: updateParking 
+	 * @Description: 修改停车场
+	 * @author: wangchuntao 
+	 * @param parking
+	 * @return 
+	 * @return Object
+	 * @date: 2017年2月23日 上午10:52:18
+	 */
+	@RequestMapping(value = "/parking/deleteParking",method = RequestMethod.GET)
+	public Object deleteParking(Long id){
+		return null;
+	}
+	/**
+	 * @Title: createParking 
+	 * @Description: 新建停车场
+	 * @author: wangchuntao 
+	 * @param parking
+	 * @return Object
+	 * @date: 2017年2月23日 上午10:52:43
+	 */
+	@RequestMapping(value = "/parking/createParking",method = RequestMethod.POST)
+	public Object createParking(Parking parking){
+		return null;
+	}
+
+}

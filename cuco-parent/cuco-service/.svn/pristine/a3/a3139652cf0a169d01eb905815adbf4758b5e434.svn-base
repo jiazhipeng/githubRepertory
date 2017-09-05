@@ -1,0 +1,154 @@
+package cn.cuco.service.member.carUsed.impl;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.MemberCarUsedMapper;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberCarUsed;
+import cn.cuco.entity.MemberCarUsedAddress;
+import cn.cuco.enums.MemberStatus;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.car.stock.StockService;
+import cn.cuco.service.member.carUsed.MemberCarUsedService;
+import cn.cuco.service.member.carUsed.MemberCarportService;
+import cn.cuco.service.member.info.MemberService;
+
+/**
+ * @ClassName: MemberCarUsedServiceImpl
+ * @Description: 用户用车相关接口实现
+ * @author zc.du
+ * @date 2017年2月23日 上午10:42:37
+ */
+@Service(value = "memberCarUsedService")
+public class MemberCarUsedServiceImpl implements MemberCarUsedService {
+
+	@Autowired
+	private MemberCarUsedMapper<MemberCarUsed> memberCarUsedMapper;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private MemberCarportService memberCarportService;
+	@Autowired
+	private StockService stockService;
+
+	@Override
+	public MemberCarUsed createMemberCarUsedForApp(MemberCarUsed memberCarUsed) {
+		ParamVerifyUtils.paramNotNull(memberCarUsed);
+		Long meberId = memberCarUsed.getMemberId();
+		Long carportId = memberCarUsed.getCarportId();
+		Date start = memberCarUsed.getOrderCarUsedTime();
+		Date end = memberCarUsed.getOrderCarReturnTime();
+		Long carTypeId = memberCarUsed.getOrderCartypeId();
+		ParamVerifyUtils.paramNotNull(meberId,"用户发起用车时，用户ID不能为空");
+		ParamVerifyUtils.paramNotNull(carportId,"用户发起用车时，车库ID不能为空");
+		ParamVerifyUtils.paramNotNull(carTypeId,"用户发起用车时，预约车型ID不能为空");
+		ParamVerifyUtils.paramNotNull(start,"用户发起用车时，预计用车开始时间不能为空");
+		ParamVerifyUtils.paramNotNull(end,"用户发起用车时，预计用车结束时间不能为空");
+		
+		if(start.after(end)){
+			ExceptionUtil.throwWarn("预计用车时间不能早于预计还车时间");
+		}
+		
+		ParamVerifyUtils.paramNotNull(memberCarUsed);
+		Long memberId = memberCarUsed.getMemberId();
+		Member member = this.memberService.getMemberById(memberId);
+		ParamVerifyUtils.paramNotNull(member,"用户不存在，无法发起用车");
+		if(MemberStatus.FROZEN.getIndex().equals(member.getStatuts())){
+			ExceptionUtil.throwWarn("用户被冻结，无法发起用车");
+		}
+		//判断库存
+		return null;
+	}
+
+	@Override
+	public MemberCarUsed updateMemberCarUsedForChangeCar(MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsed updateMemberCarUsedForLimitChangeCar(MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsed getMemberCarUsed(MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberCarUsed> getMemberCarUsedListByPage(MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMemberCarUsedCountByMemberId(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId, "根据用户ID获取用车次数时，用户ID不能为空");
+		return this.memberCarUsedMapper.getMemberCarUsedCountByMemberId(memberId);
+	}
+
+	@Override
+	public BigDecimal getMemberCarUsedMileagesByMemberId(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId, "根据用户ID获取用户行驶公里数时，用户ID不能为空");
+		return this.memberCarUsedMapper.getMemberCarUsedMileagesByMemberId(memberId);
+	}
+
+	@Override
+	public Map<String, Integer> getMemberDriveMileageStatistics(Long memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Integer> getMemberCarTypeUsedStatistics(Long memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsed updateMemberCarUsedStatusByCancelForApp(MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteMemberCarUsedAddress(MemberCarUsedAddress memberCarUsedAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberCarUsedAddress> getMemberCarUsedAddressListByPage(MemberCarUsedAddress memberCarUsedAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsed getLastMemberCarUsedByMemberId(MemberCarUsed memberCarUsed) {
+		ParamVerifyUtils.paramNotNull(memberCarUsed.getMemberId(), "查询用户最后一次用车记录时，用户ID不能为空");
+		return this.memberCarUsedMapper.getLastMemberCarUsed(memberCarUsed);
+	}
+
+	@Override
+	public MemberCarUsed updateMemberCarUsedForBackstage(MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsed updateMemberCarUsedForMember(MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}

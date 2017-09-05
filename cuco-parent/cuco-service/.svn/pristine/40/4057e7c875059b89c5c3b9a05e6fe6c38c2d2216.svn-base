@@ -1,0 +1,44 @@
+package cn.cuco.service.basic.carport;
+
+
+import java.util.List;
+
+import cn.cuco.entity.CarportCartype;
+
+/**
+* @ClassName: CarportCartypeService 
+* @Description: 车库车型关系接口
+* @author huanghua
+* @date 2017年2月21日 下午1:39:47
+ */
+public interface CarportCartypeService {
+	
+    /**
+    * @Title: createCarportCartypeBatch 
+    * @Description: 批量插入车库车型关系
+    * @param @param carportCartype
+    * @return void
+    * @throws
+     */
+    public void createCarportCartypeBatch(List<CarportCartype> carportCartype);
+
+    /**
+    * @Title: deleteCarportCartypeByCarprotId 
+    * @Description: 根据车库Id删除车型关系
+    * @param @param carportCartype
+    * @return void
+    * @throws
+     */
+    public void deleteCarportCartypeByCarprotId(CarportCartype carportCartype);
+   
+    /**
+    * @Title: getCarportCartypesByCarportId 
+    * @Description:  根据车库Id查询关系
+    * @param @param carportCartype
+    * @return List<CarportCartype>
+    * @throws
+     */
+    public List<CarportCartype> getCarportCartypesByCarportId(CarportCartype carportCartype);
+
+
+}

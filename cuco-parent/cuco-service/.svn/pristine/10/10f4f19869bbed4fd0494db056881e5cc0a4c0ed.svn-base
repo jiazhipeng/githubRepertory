@@ -1,0 +1,75 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-21 11:08:15
+ */
+public class MemberLoginLog implements Serializable {
+
+    private static final long serialVersionUID = 1949763902134855L;
+
+    private Long id;//主键
+
+    private Long memberId;//用户ID
+
+    private String address;//所在地址
+
+    private String longitudeLatitude;//经纬度
+
+    private String ip;//ip地址
+
+    private Date created;//创建时间
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getMemberId() {
+        return this.memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getLongitudeLatitude() {
+        return this.longitudeLatitude;
+    }
+
+    public void setLongitudeLatitude(String longitudeLatitude) {
+        this.longitudeLatitude = longitudeLatitude;
+    }
+
+    public String getIp() {
+        return this.ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+}

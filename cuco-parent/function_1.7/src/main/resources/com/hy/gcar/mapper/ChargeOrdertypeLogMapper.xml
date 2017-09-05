@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.ChargeOrdertypeLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.ChargeOrdertypeLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_price" property="orderPrice" jdbcType="DECIMAL" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="is_openpage" property="isOpenpage" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.ChargeOrdertypeLog" >
+       select  count(1) 
+    from td_charge_ordertype_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "orderId != null ">
+        and order_id = #{orderId,jdbcType=BIGINT}      
+      </if>
+      <if test= "orderNo != null and orderNo != '' ">
+        and order_no = #{orderNo,jdbcType=VARCHAR}      
+      </if>
+      <if test= "orderPrice != null ">
+        and order_price = #{orderPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "payType != null ">
+        and pay_type = #{payType,jdbcType=INTEGER}      
+      </if>
+      <if test= "isOpenpage != null ">
+        and is_openpage = #{isOpenpage,jdbcType=INTEGER}      
+      </if>
+      <if test= "updateTime != null ">
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ChargeOrdertypeLog" >
+       select  <include refid="Base_Column_List" />
+    from td_charge_ordertype_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "orderId != null ">
+        and order_id = #{orderId,jdbcType=BIGINT}      
+      </if>
+      <if test= "orderNo != null and orderNo != '' ">
+        and order_no = #{orderNo,jdbcType=VARCHAR}      
+      </if>
+      <if test= "orderPrice != null ">
+        and order_price = #{orderPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "payType != null ">
+        and pay_type = #{payType,jdbcType=INTEGER}      
+      </if>
+      <if test= "isOpenpage != null ">
+        and is_openpage = #{isOpenpage,jdbcType=INTEGER}      
+      </if>
+      <if test= "updateTime != null ">
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  	order by update_time desc
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, order_id, order_no, 
+      order_price, pay_type, is_openpage, 
+      update_time
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ChargeOrdertypeLog" >
+    select 
+      id, order_id, order_no, 
+      order_price, pay_type, is_openpage, 
+      update_time
+    from td_charge_ordertype_log where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.ChargeOrdertypeLog" >
+    delete from td_charge_ordertype_log where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_charge_ordertype_log where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.ChargeOrdertypeLog" >
+    insert into td_charge_ordertype_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "orderId != null ">
+         order_id,
+      </if>
+      <if test= "orderNo != null and orderNo != '' ">
+         order_no,
+      </if>
+      <if test= "orderPrice != null ">
+         order_price,
+      </if>
+      <if test= "payType != null ">
+         pay_type,
+      </if>
+      <if test= "isOpenpage != null ">
+         is_openpage,
+      </if>
+      <if test= "updateTime != null ">
+         update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "orderId != null ">
+         #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test= "orderNo != null and orderNo != '' ">
+         #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test= "orderPrice != null ">
+         #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "payType != null ">
+         #{payType,jdbcType=INTEGER},
+      </if>
+      <if test= "isOpenpage != null ">
+         #{isOpenpage,jdbcType=INTEGER},
+      </if>
+      <if test= "updateTime != null ">
+         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_charge_ordertype_log (
+         id,
+         order_id,
+         order_no,
+         order_price,
+         pay_type,
+         is_openpage,
+         update_time)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.orderId,jdbcType=BIGINT},
+         #{item.orderNo,jdbcType=VARCHAR},
+         #{item.orderPrice,jdbcType=DECIMAL},
+         #{item.payType,jdbcType=INTEGER},
+         #{item.isOpenpage,jdbcType=INTEGER},
+         #{item.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.ChargeOrdertypeLog" >
+    update td_charge_ordertype_log
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "orderId != null ">
+      order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test= "orderNo != null and orderNo != '' ">
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test= "orderPrice != null ">
+      order_price = #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "payType != null ">
+      pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test= "isOpenpage != null ">
+      is_openpage = #{isOpenpage,jdbcType=INTEGER},
+      </if>
+      <if test= "updateTime != null ">
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+      <where>
+          <if test= "id != null ">
+             AND id = #{id,jdbcType=BIGINT}
+          </if>
+          <if test= "orderId != null ">
+            AND order_id = #{orderId,jdbcType=BIGINT}
+          </if>
+          <if test= "orderNo != null and orderNo != '' ">
+            AND order_no = #{orderNo,jdbcType=VARCHAR}
+          </if>
+      </where>
+  </update>
+
+</mapper>

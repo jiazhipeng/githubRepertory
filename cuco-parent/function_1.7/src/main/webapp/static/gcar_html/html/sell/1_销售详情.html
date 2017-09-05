@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>销售详情</title>
+    <link rel="stylesheet" href="../../css/css.css">
+    <style>
+        body {
+            background: #eee;
+            font-size: 1.4rem;
+        }
+        
+        .li {
+            height: 5rem;
+            line-height: 5rem;
+            border-bottom: 1px solid #ccc;
+            background: #fff;
+            position: relative;
+        }
+        
+        .li label.title {
+            width: 6rem;
+            display: inline-block;
+            text-align: justify;
+            text-align-last: justify;
+            margin-left: 3rem;
+            overflow: hidden;
+        }
+        
+        .li label.title:after {
+            content: '';
+            height: 5rem;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .li span {
+            position: absolute;
+            right: 4.2rem;
+            top: 0;
+        }
+        
+        .li i {
+            background: url('../../images/arrow_right_grey.png') 0 0 no-repeat;
+            height: 5rem;
+            width: .5rem;
+            background-size: contain;
+            background-position: center center;
+            display: inline-block;
+            float: right;
+            margin-right: 1.3rem;
+        }
+        
+        .self,
+        .packages,
+        .review {
+            margin-top: 1rem;
+            border-top: 1px solid #ccc;
+            background: #fff;
+        }
+        
+        .review .title {
+            float: left;
+            height: 5rem;
+        }
+        
+        .upload {
+            background: #fff;
+        }
+        
+        .upload .title {
+            margin-left: 3rem;
+            color: #cfcfcf;
+            line-height: 3rem;
+        }
+        
+        .upload .wrapper {
+            display: flex;
+            height: 9rem;
+        }
+        
+        .upload .wrapper img {
+            flex: 1;
+            margin: 0 2rem;
+        }
+        
+        
+        .id-z {
+            background: url(../../images/id-z.png) 0 0 no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        .id-b {
+            background: url(../../images/id-b.png) 0 0 no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        .driver-z {
+            background: url(../../images/driver-z.png) 0 0 no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        .driver-b {
+            background: url(../../images/driver-b.png) 0 0 no-repeat;
+            background-size: 100% 100%;
+        }
+        
+        .btns {
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            border-top: 1px solid #e2e2e2;
+            background: #fff;
+        }
+        
+        .btn {
+            flex: 1;
+            text-align: center;
+            align-self: center;
+            line-height: 4.5rem;
+            border-right: 1px solid #e2e2e2;
+        }
+        
+        .btn:last-child {
+            border-right: none;
+        }
+        
+        .cancel {
+            color: #a8a8a8;
+        }
+        
+        .sure {
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="li saler"><label class="title">负责销售</label><span>王小二</span><i></i></section>
+
+    <section class="self">
+        <section class="li"><label class="title">姓名</label><span>用户姓名</span></section>
+        <section class="li"><label class="title">性别</label><span>男</span></section>
+        <section class="li"><label class="title">手机号码</label><span>153131191111</span></section>
+    </section>
+    <section class="packages">
+        <section class="li"><label class="title">使用城市</label><span>北京</span><i></i></section>
+        <section class="li"><label class="title">购买产品</label><span>尊享套餐</span><i></i></section>
+    </section>
+
+    <section class="review clearfix">
+        <section class="li state">
+            <label class="title ">状态</label>
+            <input type="radio" name="flow" id="go"><label for="go">跟进中</label>
+            <input type="radio" name="flow" id="pass"><label for="pass">审核通过</label>
+            <input type="radio" name="flow" id="cancel"><label for="cancel">已取消</label>
+        </section>
+    </section>
+    <section class="upload">
+        <div class="title">上传身份证照片</div>
+        <div class="wrapper">
+           <img class="id-z">
+            <img class="id-b">
+        </div>
+    </section>
+    <section class="upload">
+        <div class="title">上传驾驶证照片</div>
+        <div class="wrapper">
+           <img class="driver-z">
+            <img class="driver-b">
+        </div>
+    </section>
+    <section class="li"><label class="title">备注</label><i></i></section>
+
+    <!--<section class="review">
+        <section class="li state">
+            <label class="title">状态</label>：
+            <input type="radio" name="flow" id="go"><label for="go">跟进中</label>
+            <input type="radio" name="flow" id="pass"><label for="pass">审核通过</label>
+            <input type="radio" name="flow" id="cancel"><label for="cancel">已取消</label>
+        </section>
+        <section class="id clearfix">
+            <span class="title">上传身份证照片</span>
+            <img class="id-z">
+            <img class="id-b">
+        </section>
+        <section class="driver clearfix">
+            <span class="title">上传身份证照片</span>
+            <img class="driver-z">
+            <img class="driver-b">
+        </section>
+        <section class="li"><label class="title">备注</label>：<i></i></section>
+    </section>-->
+    <section class="btns">
+        <div class="btn cancel">取消</div>
+        <div class="btn sure">确定</div>
+    </section>
+    <script src="../../js/zepto.js"></script>
+</body>
+
+</html>

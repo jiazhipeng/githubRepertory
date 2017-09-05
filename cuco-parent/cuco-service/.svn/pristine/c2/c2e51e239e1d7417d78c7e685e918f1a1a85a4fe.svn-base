@@ -1,0 +1,86 @@
+package cn.cuco.service.member.account;
+
+
+import java.util.List;
+
+import cn.cuco.entity.MemberAccount;
+import cn.cuco.entity.MemberAccountLog;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户账户相关接口
+ * @author zc.du
+ */
+public interface MemberAccountService {
+	/** 
+    * @Description: 创建用户账户基础方法
+    * @param memberAccount
+    * @return MemberAccount
+    */
+    public MemberAccount createMemberAccount(MemberAccount memberAccount);
+    
+    /** 
+    * @Description: 修改用户账户基础方法
+    * @param memberAccount
+    * @return MemberAccount
+    */
+    public MemberAccount updateMemberAccount(MemberAccount memberAccount);
+    
+    /** 
+    * @Description: 删除用户账户基础方法
+    * @param memberAccount
+    * @return Integer
+    */
+    public Integer deleteMemberAccount(MemberAccount memberAccount);
+    
+    /** 
+     * @Description: 查询用户账户基础方法
+     * @param memberAccount
+     * @return MemberAccount
+     */
+    public MemberAccount getMemberAccount(MemberAccount memberAccount); 
+    
+    /** 
+     * @Description: 查询用户账户列表基础方法
+     * @param memberAccount
+     * @return List<MemberAccount>
+     */
+    public List<MemberAccount> getMemberAccountList(MemberAccount memberAccount);
+    
+    /** 
+     * @Description: 分页查询用户账户列表基础方法
+     * @param memberAccount
+     * @return PageResult<MemberAccount>
+     */
+    public PageResult<MemberAccount> getMemberAccountListByPage(MemberAccount memberAccount);
+
+    /** 
+     * @Description: 查询用户账户数量基础方法
+     * @param memberAccount
+     * @return Integer
+     */
+    public Integer getMemberAccountCount(MemberAccount memberAccount);
+    
+    /** 
+     * @Description: 查询用户账户明细列表基础方法
+     * @param memberAccountLog
+     * @return List<MemberAccountLog>
+     */
+    public List<MemberAccountLog> getMemberAccountLogList(MemberAccountLog memberAccountLog);
+    
+    /** 
+     * @Description: 分页查询用户账户明细列表基础方法
+     * @param memberAccountLog
+     * @return PageResult<MemberAccountLog>
+     */
+    public PageResult<MemberAccountLog> getMemberAccountLogListByPage(MemberAccountLog memberAccountLog);
+
+    /** 
+     * @Description: 查询用户账户明细数量基础方法
+     * @param memberAccountLog
+     * @return Integer
+     */
+    public Integer getMemberAccountLogCount(MemberAccountLog memberAccountLog);
+
+
+}

@@ -1,0 +1,20 @@
+@charset "utf-8";
+.nodeList{ font-size: 1.4rem; color: #ccc; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; background: #fff;}
+.nodeList li{width: 92%;box-sizing: border-box; margin: auto; height: 76px; padding-left: 30px; position: relative;}
+.nodeList li .node{height: 100%; width: 40px; position: absolute; left: -10px; top: 0}
+.nodeList .nodeCon{border-bottom: 1px solid #ccc; overflow: hidden; display:-webkit-box; -webkit-box-align: center; height: 76px; color: #999;}
+.nodeList li:last-child .nodeCon{border-bottom:0;}
+.nodeList .nodeCon p{float: left;}
+.nodeList .nodeCon .date{float: right;}
+.nodeList .line{height: 100%; width: 1px; background: #ddd; position: absolute;left: 20px; top:40px;}
+.nodeList li:last-child .line{display: none;}
+.nodeList .crile{ width: 12px; height: 12px; position: absolute; top: 50%; left: 50%; margin-top: -6px; margin-left: -6px;background: #ddd; border-radius: 50%;}
+.nodeList .on{color: #333;}
+.nodeList .on .date{color: #999;}
+.nodeList .on .crile{width: 18px; height: 18px;margin-top: -9px; margin-left: -9px; background: url("../images/node_on.jpg") no-repeat center center; background-size: 80%;}
+
+
+.nodeList .nodeCon .flex{-webkit-box-flex: 1; float: none; line-height: 20px;}
+.nodeList .nodeCon .flex:first-child{min-width: 75px; max-width: 75px; font-size: 1.5rem;}
+.nodeList .on .nodeCon .flex:first-child{color: #333}
+.nodeList .tel{color: #157dd6;}

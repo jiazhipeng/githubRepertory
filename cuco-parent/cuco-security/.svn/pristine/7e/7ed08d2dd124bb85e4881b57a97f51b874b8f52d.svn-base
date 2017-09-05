@@ -1,0 +1,45 @@
+#dataSource base config
+databasePlatform=org.hibernate.dialect.MySQL5InnoDBDialect
+jdbc.type=mysql
+jdbc.driver=com.mysql.jdbc.Driver
+
+#production config
+jdbc.url=jdbc:mysql://192.168.1.232:3306/zc-security?useUnicode=true&characterEncoding=utf-8
+jdbc.username=root
+jdbc.password=root
+
+#pool settings
+jdbc.pool.init=5
+jdbc.pool.minIdle=5
+jdbc.pool.maxIdle=20
+jdbc.pool.maxActive=20
+
+#jdbc.testSql=SELECT 'x'
+jdbc.testSql=SELECT 'x' FROM DUAL
+
+#product sttings
+productName=\u6d77\u6613\u51fa\u884c
+copyrightYear=2016
+
+#redis
+redis.keyPrefix=hycx-gcar-service
+redis.host=192.168.1.230
+redis.port=6379
+redis.password=df@367*&g877845ti
+redis.timeout=10000000
+
+#upload
+upload.statics.independence.path=/hycx/resources/manager
+#upload.statics.independence.path=E:\\
+upload.statics.request.root.path=http://192.168.1.224/resources/manager/
+
+#export/sell
+#export.sell.path
+export.sell.path=/hycx/image/resources/manager/excel/sell
+#export.sell.root.path=D:/
+export.sell.root.path=http://192.168.1.224/resources/manager/excel/sell/
+
+#qrcode
+qrcode.logo.path=/hycx/image/resources/manager/marketing/logo_marketing.png
+qrcode.save.path=/hycx/image/resources/manager/marketing
+qrcode.image.path=http://192.168.1.224/resources/manager/marketing/

@@ -1,0 +1,72 @@
+package cn.cuco.service.member;
+
+
+import java.util.List;
+
+import cn.cuco.entity.MemberCarused;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户用车相关接口
+ * @author zc.du
+ */
+public interface MemberCarusedService {
+	/** 
+    * @Description: 创建用户用车基础方法
+    * @param memberCarused
+    * @return MemberCarused
+    * @throws 
+    */
+    public MemberCarused createMemberCarused(MemberCarused memberCarused) throws Exception;
+    
+    /** 
+    * @Description: 修改用户用车基础方法
+    * @param memberCarused
+    * @return MemberCarused
+    * @throws 
+    */
+    public MemberCarused updateMemberCarused(MemberCarused memberCarused) throws Exception;
+    
+    /** 
+    * @Description: 删除用户用车基础方法
+    * @param memberCarused
+    * @return Integer
+    * @throws 
+    */
+    public Integer deleteMemberCarused(MemberCarused memberCarused) throws Exception;
+    
+    /** 
+     * @Description: 查询用户用车基础方法
+     * @param memberCarused
+     * @return MemberCarused
+     * @throws 
+     */
+    public MemberCarused getMemberCarused(MemberCarused memberCarused) throws Exception; 
+    
+    /** 
+     * @Description: 查询用户用车列表基础方法
+     * @param memberCarused
+     * @return List<MemberCarused>
+     * @throws 
+     */
+    public List<MemberCarused> getMemberCarusedList(MemberCarused memberCarused) throws Exception;
+    
+    /** 
+     * @Description: 分页查询用户用车列表基础方法
+     * @param memberCarused
+     * @return PageResult<MemberCarused>
+     * @throws 
+     */
+    public PageResult<MemberCarused> getMemberCarusedListByPage(MemberCarused memberCarused) throws Exception;
+
+    /** 
+     * @Description: 查询用户用车数量基础方法
+     * @param memberCarused
+     * @return Integer
+     * @throws 
+     */
+    public Integer getMemberCarusedCount(MemberCarused memberCarused) throws Exception;
+
+
+
+}

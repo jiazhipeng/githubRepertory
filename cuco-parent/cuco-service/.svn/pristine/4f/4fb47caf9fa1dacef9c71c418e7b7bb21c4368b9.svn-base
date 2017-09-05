@@ -1,0 +1,106 @@
+package cn.cuco.service.order.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.OrderRenewalMapper;
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.order.OrderRenewalService;
+
+@Service(value = "orderRenewalService")
+public class OrderRenewalServiceImpl implements OrderRenewalService {
+
+    @Autowired
+    private OrderRenewalMapper<OrderRenewal> chargeOrderMapper;
+
+	@Override
+	public OrderRenewal createOrderRenewal(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewal(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteOrderRenewal(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal getOrderRenewal(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderRenewal> getOrderRenewalList(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OrderRenewal> getOrderRenewalListByPage(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getOrderRenewalCount(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal createOrderForApp(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByCancelForApp(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByCancel(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByPaying(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByPartPay(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByCompletePay(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+    
+   
+}

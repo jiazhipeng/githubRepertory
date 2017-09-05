@@ -1,0 +1,100 @@
+.aditBox .name {
+            width: 65px;
+        }
+        .aditBox input[type="text"], .aditBox input[type="tel"] {
+            width: 60%;
+            text-align: right;
+            float: right;
+        }
+        .icons {
+            width: 11px;
+            height: 20px;
+            background: url("../../../images/arrow_right_3.png") no-repeat;
+            display: inline-block;
+            vertical-align: middle;
+            float: right;
+            background-size: 75%;
+            position: absolute;
+            right: 0;
+            top: 14px;
+        }
+        .name-right {
+            text-align: right;
+            display: inline-block;
+            width: 100%;
+            margin-left: -8px;
+        }
+        .per {
+            color: #ccc;
+        }
+        .section-info {
+            background: #fff;
+            margin-top: 10px;
+            border-top: 1px #ccc solid;
+            border-bottom: 1px #ccc solid;
+        }
+        .section-info .aditBox li:last-child {
+            border-bottom: 0;
+        }
+        .aditBox .info-head {
+            height: 100px;
+            line-height: 100px;
+        }
+        /*.info-img {*/
+            /*width: 70px;*/
+            /*height: 70px;*/
+        /*}*/
+        .user-info .userInfo {
+            background: #fff;
+            border-bottom: 1px #ccc solid;
+            border-top: 1px #ccc solid;
+            margin-top: 10px;
+            height: 100px;
+            line-height: 100px;
+        }
+        .user-info .userInfo .name {
+            line-height: 100px;
+            color: #666;
+        }
+        .user-info .userInfo .icons {
+            top: 70px;
+        }
+        .info-head {
+            width: 70px;
+            height: 70px;
+            float: right;
+            margin-right: 20px;
+        }
+
+        .fixed-head,.fixed-select {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.7);
+        }
+        .fixed-head img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .select-cen {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        .select-cen li {
+            background: #fff;
+            border-bottom: 1px #ccc solid;
+            text-align: center;
+            font-size: 1.4rem;
+            line-height: 40px;
+            height: 40px;
+        }
+        .select-cen li:last-child {
+            border-bottom: 0;
+            margin-top: 5px;
+        }

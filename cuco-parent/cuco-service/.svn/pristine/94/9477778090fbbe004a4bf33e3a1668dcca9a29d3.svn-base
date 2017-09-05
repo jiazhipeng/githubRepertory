@@ -1,0 +1,106 @@
+package cn.cuco.service.order.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.order.OrderRenewalService;
+
+/** 
+* @ClassName: OrderRenewalServiceImpl 
+* @Description: 续费订单相关接口实现
+* @author zc.du
+* @date 2017年2月23日 上午10:56:07  
+*/
+@Service(value = "orderRenewalService")
+public class OrderRenewalServiceImpl implements OrderRenewalService {
+
+	@Override
+	public OrderRenewal createOrderRenewal(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal getOrderRenewal(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderRenewal> getOrderRenewalList(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OrderRenewal> getOrderRenewalListByPage(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getOrderRenewalCount(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal createOrderForApp(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByCancelForApp(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByCancel(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByPaying(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByPartPay(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByCompletePay(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OperateLog> getOrderRenewalLogList(OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OperateLog> getOrderRenewalLogListByPage(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+   
+}

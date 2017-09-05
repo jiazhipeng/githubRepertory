@@ -1,0 +1,26 @@
+package cn.cuco.controller.manager.basic;
+
+import org.springframework.web.bind.annotation.RestController;
+
+
+/**
+ * @ClassName: ButlerTaskController 
+ * @Description: 任务
+ * @author: wangchuntao 
+ * @date: 2017年2月22日 下午2:05:27
+ */
+@RestController
+public class BasicController {
+	
+    
+    /**
+     * 查询任务集合(根据待处理、处理中、已结束进行查询)
+     * @param butlerTask
+     * @return
+     */
+//    @RequestMapping(value = "/v1/butler_task/page",method = RequestMethod.POST)
+//    public Object findButlerTaskListByPage(@RequestBody ButlerTask butlerTask){
+//        return butlerTaskService.getButlerTaskListByPage(butlerTask);
+//    }
+
+}

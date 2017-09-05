@@ -1,0 +1,31 @@
+package cn.cuco.service.basic.carport.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarBrandMapper;
+import cn.cuco.entity.CarBrand;
+import cn.cuco.service.basic.carport.CarBrandService;
+
+@Service(value = "carBrandService")
+public class CarBrandServiceImpl implements CarBrandService {
+
+    @Autowired
+    private CarBrandMapper<CarBrand> carBrandMapper;
+
+	@Override
+	public List<String> getCarBrandForAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarBrand> getCartypeByBrand(CarBrand carBrand) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+  
+}

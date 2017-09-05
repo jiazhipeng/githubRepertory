@@ -1,0 +1,50 @@
+package cn.cuco.service.basic.business.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.SupplierMapper;
+import cn.cuco.entity.Supplier;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.business.SupplierService;
+
+@Service(value = "supplierService")
+public class SupplierServiceImpl implements SupplierService {
+
+    @Autowired
+    private SupplierMapper<Supplier> supplierMapper;
+
+	@Override
+	public Supplier createSupplier(Supplier supplier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Supplier updateSupplier(Supplier supplier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Supplier getSupplierById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<Supplier> getSupplierByPage(Supplier supplier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Supplier> getSupplierList(Supplier supplier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.WechatMenuMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.WechatMenu" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="has_submenu" property="hasSubmenu" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="msg_key" property="msgKey" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="submenu" property="submenu" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.WechatMenu" >
+       select  count(1) 
+    from td_wechat_menu  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "name != null and name != '' ">
+        and name = #{name,jdbcType=VARCHAR}      
+      </if>
+      <if test= "hasSubmenu != null ">
+        and has_submenu = #{hasSubmenu,jdbcType=INTEGER}      
+      </if>
+      <if test= "type != null and type != '' ">
+        and type = #{type,jdbcType=VARCHAR}      
+      </if>
+      <if test= "msgKey != null and msgKey != '' ">
+        and msg_key = #{msgKey,jdbcType=VARCHAR}      
+      </if>
+      <if test= "message != null and message != '' ">
+        and message = #{message,jdbcType=VARCHAR}      
+      </if>
+      <if test= "url != null and url != '' ">
+        and url = #{url,jdbcType=VARCHAR}      
+      </if>
+      <if test= "submenu != null and submenu != '' ">
+        and submenu = #{submenu,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.WechatMenu" >
+       select  <include refid="Base_Column_List" />
+    from td_wechat_menu  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "name != null and name != '' ">
+        and name = #{name,jdbcType=VARCHAR}      
+      </if>
+      <if test= "hasSubmenu != null ">
+        and has_submenu = #{hasSubmenu,jdbcType=INTEGER}      
+      </if>
+      <if test= "type != null and type != '' ">
+        and type = #{type,jdbcType=VARCHAR}      
+      </if>
+      <if test= "msgKey != null and msgKey != '' ">
+        and msg_key = #{msgKey,jdbcType=VARCHAR}      
+      </if>
+      <if test= "message != null and message != '' ">
+        and message = #{message,jdbcType=VARCHAR}      
+      </if>
+      <if test= "url != null and url != '' ">
+        and url = #{url,jdbcType=VARCHAR}      
+      </if>
+      <if test= "submenu != null and submenu != '' ">
+        and submenu = #{submenu,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, name, has_submenu, 
+      type, msg_key, message, 
+      url, submenu, created, 
+      modifier_id, modifier
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.WechatMenu" >
+    select 
+      id, name, has_submenu, 
+      type, msg_key, message, 
+      url, submenu, created, 
+      modifier_id, modifier
+    from td_wechat_menu where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.WechatMenu" >
+    delete from td_wechat_menu where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+	<!-- 全部删除数据 -->
+  <delete id="deleteAll" parameterType="cn.cuco.entity.WechatMenu" >
+    delete from td_wechat_menu 
+  </delete>
+  
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_wechat_menu where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.WechatMenu" >
+    insert into td_wechat_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "name != null and name != '' ">
+         name,
+      </if>
+      <if test= "hasSubmenu != null ">
+         has_submenu,
+      </if>
+      <if test= "type != null and type != '' ">
+         type,
+      </if>
+      <if test= "msgKey != null and msgKey != '' ">
+         msg_key,
+      </if>
+      <if test= "message != null and message != '' ">
+         message,
+      </if>
+      <if test= "url != null and url != '' ">
+         url,
+      </if>
+      <if test= "submenu != null and submenu != '' ">
+         submenu,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "hasSubmenu != null ">
+         #{hasSubmenu,jdbcType=INTEGER},
+      </if>
+      <if test= "type != null and type != '' ">
+         #{type,jdbcType=VARCHAR},
+      </if>
+      <if test= "msgKey != null and msgKey != '' ">
+         #{msgKey,jdbcType=VARCHAR},
+      </if>
+      <if test= "message != null and message != '' ">
+         #{message,jdbcType=VARCHAR},
+      </if>
+      <if test= "url != null and url != '' ">
+         #{url,jdbcType=VARCHAR},
+      </if>
+      <if test= "submenu != null and submenu != '' ">
+         #{submenu,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_wechat_menu (
+         id,
+         name,
+         has_submenu,
+         type,
+         msg_key,
+         message,
+         url,
+         submenu,
+         created,
+         modifier_id,
+         modifier)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.name,jdbcType=VARCHAR},
+         #{item.hasSubmenu,jdbcType=INTEGER},
+         #{item.type,jdbcType=VARCHAR},
+         #{item.msgKey,jdbcType=VARCHAR},
+         #{item.message,jdbcType=VARCHAR},
+         #{item.url,jdbcType=VARCHAR},
+         #{item.submenu,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=VARCHAR},
+         #{item.modifier,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.WechatMenu">
+    update td_wechat_menu
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+      name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "hasSubmenu != null ">
+      has_submenu = #{hasSubmenu,jdbcType=INTEGER},
+      </if>
+      <if test= "type != null and type != '' ">
+      type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test= "msgKey != null and msgKey != '' ">
+      msg_key = #{msgKey,jdbcType=VARCHAR},
+      </if>
+      <if test= "message != null and message != '' ">
+      message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test= "url != null and url != '' ">
+      url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test= "submenu != null and submenu != '' ">
+      submenu = #{submenu,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

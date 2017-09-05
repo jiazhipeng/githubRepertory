@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CityMapper" >
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByConditionByPage" resultType="INTEGER" parameterType="cn.cuco.entity.City" >
+       select  count(1) 
+    from tc_city  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "code != null and code != '' ">
+        and code = #{code,jdbcType=VARCHAR}      
+      </if>
+      <if test= "province != null and province != '' ">
+        and province = #{province,jdbcType=VARCHAR}      
+      </if>
+      <if test= "city != null and city != '' ">
+        and city = #{city,jdbcType=VARCHAR}      
+      </if>
+      <if test= "district != null and district != '' ">
+        and district = #{district,jdbcType=VARCHAR}      
+      </if>
+      <if test= "parent != null and parent != '' ">
+        and parent = #{parent,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByConditionByPage" resultMap="BaseResultMap" parameterType="cn.cuco.entity.City" >
+       select  <include refid="Base_Column_List" />
+    from tc_city  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "code != null and code != '' ">
+        and code = #{code,jdbcType=VARCHAR}      
+      </if>
+      <if test= "province != null and province != '' ">
+        and province = #{province,jdbcType=VARCHAR}      
+      </if>
+      <if test= "city != null and city != '' ">
+        and city = #{city,jdbcType=VARCHAR}      
+      </if>
+      <if test= "district != null and district != '' ">
+        and district = #{district,jdbcType=VARCHAR}      
+      </if>
+      <if test= "parent != null and parent != '' ">
+        and parent = #{parent,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+</mapper>

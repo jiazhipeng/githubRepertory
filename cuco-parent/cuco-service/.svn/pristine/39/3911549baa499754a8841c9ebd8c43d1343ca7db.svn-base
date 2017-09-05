@@ -1,0 +1,46 @@
+package cn.cuco.service.member.carUsed.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.carUsed.MemberCarportService;
+
+/** 
+* @ClassName: MemberCarportServiceImpl 
+* @Description: 用户车库相关接口实现
+* @author zc.du
+* @date 2017年2月23日 上午10:39:43  
+*/
+@Service(value = "memberCarportService")
+public class MemberCarportServiceImpl implements MemberCarportService {
+
+	@Override
+	public MemberCarport createMemberCarport(MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarport updateMemberCarport(MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemberCarport> getMemberCarportByMemberId(Long memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberCarport> getMemberCarportListByPage(
+			MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

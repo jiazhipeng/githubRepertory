@@ -1,0 +1,64 @@
+package cn.cuco.service.member.carUsed;
+
+
+import java.util.List;
+
+import cn.cuco.entity.MemberCarUsedAddress;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户用车地址相关接口
+ * @author zc.du
+ */
+public interface MemberCarUsedAddressService {
+	/** 
+    * @Description: 创建用户用车地址基础方法
+    * @param memberCarUsedAddress
+    * @return MemberCarUsedAddress
+    */
+    public MemberCarUsedAddress createMemberCarUsedAddress(MemberCarUsedAddress memberCarUsedAddress);
+    
+    /** 
+    * @Description: 修改用户用车地址基础方法
+    * @param memberCarUsedAddress
+    * @return MemberCarUsedAddress
+    */
+    public MemberCarUsedAddress updateMemberCarUsedAddress(MemberCarUsedAddress memberCarUsedAddress);
+    
+    /** 
+    * @Description: 删除用户用车地址基础方法
+    * @param memberCarUsedAddress
+    * @return Integer
+    */
+    public Integer deleteMemberCarUsedAddress(MemberCarUsedAddress memberCarUsedAddress);
+    
+    /** 
+     * @Description: 查询用户用车地址基础方法
+     * @param memberCarUsedAddress
+     * @return MemberCarUsedAddress
+     */
+    public MemberCarUsedAddress getMemberCarUsedAddress(MemberCarUsedAddress memberCarUsedAddress); 
+    
+    /** 
+     * @Description: 查询用户用车地址列表基础方法
+     * @param memberCarUsedAddress
+     * @return List<MemberCarUsedAddress>
+     */
+    public List<MemberCarUsedAddress> getMemberCarUsedAddressList(MemberCarUsedAddress memberCarUsedAddress);
+    
+    /** 
+     * @Description: 分页查询用户用车地址列表基础方法
+     * @param memberCarUsedAddress
+     * @return PageResult<MemberCarUsedAddress>
+     */
+    public PageResult<MemberCarUsedAddress> getMemberCarUsedAddressListByPage(MemberCarUsedAddress memberCarUsedAddress);
+
+    /** 
+     * @Description: 查询用户用车地址数量基础方法
+     * @param memberCarUsedAddress
+     * @return Integer
+     */
+    public Integer getMemberCarUsedAddressCount(MemberCarUsedAddress memberCarUsedAddress);
+
+
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>创建订单</title>
+    <link href="../../css/bultertask.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="greyBg">
+<!--默认详情页-->
+<div style="display: block;">
+    <ul class="bulterInfo">
+        <li class="arrowRight">
+            <a href="javascript:;">
+                负责人员:
+                <span class="fRight">王小二</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="bulterInfo">
+        <li>
+            姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:
+            <input type="text" placeholder="谢瑶瑶">
+        </li>
+        <li class="arrowRight">
+            性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:
+            <span class="radioRoup">
+                <input type="radio" name="sex">男
+                <input type="radio" name="sex">女
+            </span>
+        </li>
+        <li>
+            手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机：
+            <a class="tel" href="tel:1384698015">1384698015</a>
+        </li>
+    </ul>
+
+    <ul class="bulterInfo">
+        <li class="arrowRight">
+            <a href="javascript:;">
+                使用城市：
+                <span class="color999">请选择使用产品的城市</span>
+            </a>
+        </li>
+        <li class="arrowRight">
+            <a href="javascript:;">
+                选择产品：
+                <span class="color999">请选择产品</span>
+            </a>
+        </li>
+    </ul>
+
+    <ul class="bulterInfo">
+        <li>
+            状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：
+            <span class="radioRoup">
+                <input type="radio" name="state">待签约
+                <input type="radio" name="state">已签约
+            </span>
+        </li>
+        <li class="remarksLi arrowRight">
+            <a href="javascript:;">
+                备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：
+                <span class="remarks">
+                    <span>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</span><!--占位用不用管-->
+                    备注内容备注内容备注内容备注内容备注内容备注内容备注内容备注内容
+                </span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!--填写备注-->
+<div class="section" style="display: none;">
+    <textarea class="textarea"></textarea>
+    <div class="fixBottom noBg">
+        <a href="javascript:;" class="button douBtn cancleBtn">取消</a>
+        <a href="javascript:;" class="button douBtn">确定</a>
+    </div>
+</div>
+
+
+</body>
+</html>

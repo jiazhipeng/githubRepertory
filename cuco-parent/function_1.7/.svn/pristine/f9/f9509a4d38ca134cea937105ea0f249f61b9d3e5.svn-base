@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.ItemLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.ItemLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="content_modify" property="contentModify" jdbcType="VARCHAR" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ItemLog" >
+       select  <include refid="Base_Column_List" />
+    from td_item_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "contentModify != null and contentModify != '' ">
+        and content_modify = #{contentModify,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, modifier, lasttime_modify, 
+      content_modify, modifier_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ItemLog" >
+    select 
+      id, modifier, lasttime_modify, 
+      content_modify, modifier_id
+    from td_item_log where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.ItemLog" >
+    delete from td_item_log where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_item_log where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.gcar.entity.ItemLog" useGeneratedKeys="true" keyProperty="id">
+    insert into td_item_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "contentModify != null and contentModify != '' ">
+         content_modify,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "contentModify != null and contentModify != '' ">
+         #{contentModify,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_item_log (
+         id,
+         modifier,
+         lasttime_modify,
+         content_modify,
+         modifier_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.contentModify,jdbcType=VARCHAR},
+         #{item.modifierId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.ItemLog" >
+    update td_item_log
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "contentModify != null and contentModify != '' ">
+      content_modify = #{contentModify,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

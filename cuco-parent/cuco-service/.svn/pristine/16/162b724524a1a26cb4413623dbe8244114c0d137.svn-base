@@ -1,0 +1,81 @@
+package cn.cuco.service.member.info.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberMapper;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberInfo;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.info.MemberService;
+
+/** 
+* @ClassName: MemberServiceImpl 
+* @Description: 用户模块接口
+* @author zc.du
+* @date 2017年2月23日 上午10:32:27  
+*/
+@Service(value = "memberService")
+public class MemberServiceImpl implements MemberService {
+
+    @Autowired
+    private MemberMapper<Member> memberMapper;
+
+	@Override
+	public Member createMember(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Member updateMember(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Member updateMemberInfo(MemberInfo memberInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Member getMember(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Member> getMemberList(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<Member> getMemberListByPage(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Member updateMember2FreezeById(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Member updateMember2UnfreezeById(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Member login(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

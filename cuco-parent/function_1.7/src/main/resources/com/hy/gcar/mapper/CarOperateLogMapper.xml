@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.CarOperateLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.CarOperateLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="operate_num" property="operateNum" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="takein" property="takein" jdbcType="DECIMAL" />
+    <result column="operate_id" property="operateId" jdbcType="VARCHAR" />
+    <result column="operate_name" property="operateName" jdbcType="VARCHAR" />
+    <result column="operate_type_id" property="operateTypeId" jdbcType="VARCHAR" />
+    <result column="operate_type_name" property="operateTypeName" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.CarOperateLog" >
+       select  count(1) 
+    from td_car_operate_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+        and operate_num = #{operateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "takein != null ">
+        and takein = #{takein,jdbcType=DECIMAL}      
+      </if>
+      <if test= "operateId != null and operateId != '' ">
+        and operate_id = #{operateId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operateName != null and operateName != '' ">
+        and operate_name = #{operateName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operateTypeId != null and operateTypeId != '' ">
+        and operate_type_id = #{operateTypeId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operateTypeName != null and operateTypeName != '' ">
+        and operate_type_name = #{operateTypeName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperateLog" >
+       select  <include refid="Base_Column_List" />
+    from td_car_operate_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+        and operate_num = #{operateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "takein != null ">
+        and takein = #{takein,jdbcType=DECIMAL}      
+      </if>
+      <if test= "operateId != null and operateId != '' ">
+        and operate_id = #{operateId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operateName != null and operateName != '' ">
+        and operate_name = #{operateName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operateTypeId != null and operateTypeId != '' ">
+        and operate_type_id = #{operateTypeId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operateTypeName != null and operateTypeName != '' ">
+        and operate_type_name = #{operateTypeName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, operate_num, created, 
+      member_id, member_name, type, 
+      takein, operate_id, operate_name, 
+      operate_type_id, operate_type_name, remark
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperateLog" >
+    select 
+      id, operate_num, created, 
+      member_id, member_name, type, 
+      takein, operate_id, operate_name, 
+      operate_type_id, operate_type_name, remark
+    from td_car_operate_log where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.CarOperateLog" >
+    delete from td_car_operate_log where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_car_operate_log where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.CarOperateLog" >
+    insert into td_car_operate_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+         operate_num,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "type != null ">
+         type,
+      </if>
+      <if test= "takein != null ">
+         takein,
+      </if>
+      <if test= "operateId != null and operateId != '' ">
+         operate_id,
+      </if>
+      <if test= "operateName != null and operateName != '' ">
+         operate_name,
+      </if>
+      <if test= "operateTypeId != null and operateTypeId != '' ">
+         operate_type_id,
+      </if>
+      <if test= "operateTypeName != null and operateTypeName != '' ">
+         operate_type_name,
+      </if>
+      <if test= "remark != null and remark != '' ">
+         remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+         #{operateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "type != null ">
+         #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "takein != null ">
+         #{takein,jdbcType=DECIMAL},
+      </if>
+      <if test= "operateId != null and operateId != '' ">
+         #{operateId,jdbcType=VARCHAR},
+      </if>
+      <if test= "operateName != null and operateName != '' ">
+         #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test= "operateTypeId != null and operateTypeId != '' ">
+         #{operateTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test= "operateTypeName != null and operateTypeName != '' ">
+         #{operateTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test= "remark != null and remark != '' ">
+         #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_car_operate_log (
+         id,
+         operate_num,
+         created,
+         member_id,
+         member_name,
+         type,
+         takein,
+         operate_id,
+         operate_name,
+         operate_type_id,
+         operate_type_name,
+         remark)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.operateNum,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.type,jdbcType=INTEGER},
+         #{item.takein,jdbcType=DECIMAL},
+         #{item.operateId,jdbcType=VARCHAR},
+         #{item.operateName,jdbcType=VARCHAR},
+         #{item.operateTypeId,jdbcType=VARCHAR},
+         #{item.operateTypeName,jdbcType=VARCHAR},
+         #{item.remark,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.CarOperateLog" >
+    update td_car_operate_log
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+      operate_num = #{operateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "type != null ">
+      type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "takein != null ">
+      takein = #{takein,jdbcType=DECIMAL},
+      </if>
+      <if test= "operateId != null and operateId != '' ">
+      operate_id = #{operateId,jdbcType=VARCHAR},
+      </if>
+      <if test= "operateName != null and operateName != '' ">
+      operate_name = #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test= "operateTypeId != null and operateTypeId != '' ">
+      operate_type_id = #{operateTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test= "operateTypeName != null and operateTypeName != '' ">
+      operate_type_name = #{operateTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test= "remark != null and remark != '' ">
+      remark = #{remark,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="selectByOperateNumCreate" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperateLog" >
+       select  *
+    from td_car_operate_log  
+  <where>
+      <if test= "operateNum != null and operateNum != '' ">
+        and operate_num = #{operateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and DATE_FORMAT(created,'%Y-%m-%d') = #{remark,jdbcType=VARCHAR}   
+        and remark like '%整天闲置%' limit 1;
+      </if>
+  </where>
+  </select>
+  
+
+</mapper>

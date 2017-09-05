@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.MemberAccountLogMapper" >
+<!-- 根据用户ID获取用户消费总额 -->
+  <select id="getALlCostByMemberId" resultType="BigDecimal">
+       select  sum(total) from td_member_account_log 
+       where member_id = #{memberId,jdbcType=BIGINT} and account_type!=3 and transform_type=1 and total <![CDATA[< ]]> 0  
+  </select>
+  
+  <select id="getMemberAccountLogListWithSort" resultMap="BaseResultMap" parameterType="cn.cuco.entity.MemberAccountLog" >
+       select  <include refid="Base_Column_List" />
+    from td_member_account_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "accountId != null ">
+        and account_id = #{accountId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "accountType != null ">
+        and account_type = #{accountType,jdbcType=INTEGER}      
+      </if>
+      <if test= "operateType != null ">
+        and operate_type = #{operateType,jdbcType=INTEGER}      
+      </if>
+      <if test= "transformType != null ">
+        and transform_type = #{transformType,jdbcType=INTEGER}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "startDate != null and  endDate != null">
+   		and created between #{startDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "startDate != null and  endDate == null">
+      	and created >= #{startDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "startDate == null and  endDate != null">
+      	and created <![CDATA[<= ]]> #{endDate,jdbcType=TIMESTAMP}
+      </if>
+  </where>
+  	order by created desc
+  </select>
+  
+  <select id="getMemberAccountLogCount" resultType="INTEGER" parameterType="cn.cuco.entity.MemberAccountLog" >
+       select  count(1)
+    from td_member_account_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "accountId != null ">
+        and account_id = #{accountId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "accountType != null ">
+        and account_type = #{accountType,jdbcType=INTEGER}      
+      </if>
+      <if test= "operateType != null ">
+        and operate_type = #{operateType,jdbcType=INTEGER}      
+      </if>
+      <if test= "transformType != null ">
+        and transform_type = #{transformType,jdbcType=INTEGER}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "startDate != null and  endDate != null">
+   		and created between #{startDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "startDate != null and  endDate == null">
+      	and created >= #{startDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "startDate == null and  endDate != null">
+      	and created <![CDATA[<= ]]> #{endDate,jdbcType=TIMESTAMP}
+      </if>
+  </where>
+  </select>
+</mapper>

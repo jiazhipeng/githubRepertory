@@ -1,0 +1,64 @@
+package cn.cuco.service.member.carUsed.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberCarportMapper;
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.carUsed.MemberCarportService;
+
+@Service(value = "memberCarportService")
+public class MemberCarportServiceImpl implements MemberCarportService {
+
+    @Autowired
+    private MemberCarportMapper<MemberCarport> memberCarportMapper;
+
+	@Override
+	public MemberCarport createMemberCarport(MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarport updateMemberCarport(MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteMemberCarport(MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarport getMemberCarport(MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemberCarport> getMemberCarportList(
+			MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberCarport> getMemberCarportListByPage(
+			MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMemberCarportCount(MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

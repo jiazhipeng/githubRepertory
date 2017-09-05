@@ -1,0 +1,117 @@
+package cn.cuco.service.order;
+
+import java.util.List;
+
+import cn.cuco.entity.Order;
+import cn.cuco.page.PageResult;
+
+/**
+ * 解锁订单相关接口
+ * @author dz.du
+ */
+public interface OrderService {
+	/** 
+    * @Description: 创建解锁订单基础方法
+    * @param order
+    * @return Order
+    * @throws 
+    */
+    public Order createOrder(Order order) throws Exception;
+    
+    /** 
+    * @Description: 修改解锁订单基础方法
+    * @param order
+    * @return Order
+    * @throws 
+    */
+    public Order updateOrder(Order order) throws Exception;
+    
+    /** 
+    * @Description: 删除解锁订单基础方法
+    * @param order
+    * @return Integer
+    * @throws 
+    */
+    public Integer deleteOrder(Order order) throws Exception;
+    
+    /** 
+     * @Description: 查询解锁订单基础方法
+     * @param order
+     * @return Order
+     * @throws 
+     */
+    public Order getOrder(Order order) throws Exception; 
+    
+    /** 
+     * @Description: 查询解锁订单列表基础方法
+     * @param order
+     * @return List<Order>
+     * @throws 
+     */
+    public List<Order> getOrderList(Order order) throws Exception;
+    
+    /** 
+     * @Description: 分页查询解锁订单列表基础方法
+     * @param order
+     * @return PageResult<Order>
+     * @throws 
+     */
+    public PageResult<Order> getOrderListByPage(Order order) throws Exception;
+
+    /** 
+     * @Description: 查询解锁订单数量基础方法
+     * @param order
+     * @return Integer
+     * @throws 
+     */
+    public Integer getOrderCount(Order order) throws Exception;
+
+    /** 
+     * @Description: app端发起解锁订单
+     * @param order
+     * @return Order
+     * @throws 
+     */
+    public Order createOrderForApp(Order order) throws Exception;
+    
+    /** 
+     * @Description: app端修改解锁订单状态为"已取消"
+     * @param order
+     * @return Order
+     * @throws 
+     */
+    public Order updateOrderStatusByCancelForApp(Order order) throws Exception;
+    
+    /** 
+     * @Description: 修改解锁订单状态为"已取消"
+     * @param order
+     * @return Order
+     * @throws 
+     */
+    public Order updateOrderStatusByCancel(Order order) throws Exception;
+    
+    /** 
+     * @Description: 修改解锁订单状态为"支付中"
+     * @param order
+     * @return Order
+     * @throws 
+     */
+    public Order updateOrderStatusByPaying(Order order) throws Exception;
+    
+    /** 
+     * @Description: 修改解锁订单状态为"部分付款"
+     * @param order
+     * @return Order
+     * @throws 
+     */
+    public Order updateOrderStatusByPartPay(Order order) throws Exception;
+    
+    /** 
+     * @Description: 修改解锁订单状态为"已付款"
+     * @param order
+     * @return Order
+     * @throws 
+     */
+    public Order updateOrderStatusByCompletePay(Order order) throws Exception;
+
+}

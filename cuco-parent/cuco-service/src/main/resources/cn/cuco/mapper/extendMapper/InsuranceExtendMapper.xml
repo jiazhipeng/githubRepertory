@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.InsuranceMapper" >
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByConditionByPage" resultType="INTEGER" parameterType="cn.cuco.entity.Insurance" >
+       select  count(1) 
+    from tc_insurance  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "insuranceNumber != null and insuranceNumber != '' ">
+        and insurance_number = #{insuranceNumber,jdbcType=VARCHAR}      
+      </if>
+      <if test= "insuranceName != null and insuranceName != '' ">
+        and insurance_name = #{insuranceName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "insuranceAddress != null and insuranceAddress != '' ">
+        and insurance_address = #{insuranceAddress,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByConditionByPage" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Insurance" >
+       select  <include refid="Base_Column_List" />
+    from tc_insurance  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "insuranceNumber != null and insuranceNumber != '' ">
+        and insurance_number = #{insuranceNumber,jdbcType=VARCHAR}      
+      </if>
+      <if test= "insuranceName != null and insuranceName != '' ">
+        and insurance_name = #{insuranceName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "insuranceAddress != null and insuranceAddress != '' ">
+        and insurance_address = #{insuranceAddress,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+</mapper>

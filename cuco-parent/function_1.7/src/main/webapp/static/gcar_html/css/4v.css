@@ -1,0 +1,336 @@
+@charset "utf-8";
+.fixBottom {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+
+
+
+/*故障维修*/
+.fault-page{
+    background: #fff;
+}
+.fault-page li{
+    background-size: 8px;
+	display: block;
+	overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+}
+.fault-page li a {
+    display: block;
+	background: url(../../images/arrow_right_grey.png) no-repeat right center;
+	padding-right: 14px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+.fault-page .info-name {
+    position: absolute;
+    left: 8px;
+    top: 0;
+    width: 80px;
+	color: #333;
+    line-height: 40px;
+}
+.fault-page .info-val {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 90px; 
+	color: #999;
+    padding: 0 10px 0 90px;
+    min-height: 40px;
+    line-height: 40px;
+}
+.fault-page .input{
+    width: 100%;
+    height: 100%;
+    background: none;
+}
+.textarea{
+    width: 100%; 
+    height: 150px; 
+    resize: none; 
+    box-shadow: none; 
+    -webkit-appearance: none; 
+    box-sizing: border-box; 
+    border: 1px solid #ccc; 
+    padding: 15px; 
+    margin: 0;
+    font-size: 1.6rem; 
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+.radio-block {
+	display: block;
+	overflow: hidden;
+}
+.radio-block em {
+	float: left;
+	white-space: nowrap;
+	overflow: hidden;
+	margin-right: 15px;
+}
+.fault-page li{
+ width: 100%;
+}
+.fault-type{
+    margin-top: 10px;
+}
+.info_type{
+    width:50% ;
+    position: absolute;
+    left: 8px;
+    top: 0;
+	color: #333;
+    line-height: 40px;
+}
+.info_time{
+    width:100%;
+    display: block;
+    box-sizing: border-box;
+    padding-left: 50%; 
+	color: #999;
+    min-height: 40px;
+    line-height: 40px;
+}
+.fault-page .info-name-time{
+    width: 118px;
+}
+.fault-page .info-name-val{
+    padding-left:120px;
+}
+/*button*/
+/*分配车辆*/
+.distribution{
+    position: relative;
+    font-size: 1.4rem;
+}
+.distribution .moudel-list{
+    width: 40%;
+    text-align: center;
+    background: #f6f6f4;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+.distribution .moudel-list ul{
+    position: relative;
+    border-right: 1px solid #ececec;
+    padding-bottom: 60px;
+}
+.distribution .moudel-list li{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+}
+.distribution .moudel-list .active{
+    background: #fff;
+    padding-right: 2px;
+}
+
+.distribution .car-list{
+    padding-left: 41%;
+    padding-bottom: 60px;
+}
+.distribution .car-list li{
+    overflow: hidden;
+    border-bottom: 1px solid #e8e8e8;
+    color: #666;
+    padding: 5% 3%;
+    display: -webkit-box;
+    -webkit-box-align: center;
+}
+.distribution .car-list .on{
+    background: url(../images/right.png) no-repeat 98% center;
+    background-size: 16px;
+}
+.distribution .car-list .state{
+    color: #333;
+}
+.distribution .flex{
+    -webkit-box-flex: 1;
+    -webkit-box-align: center;
+}
+.distribution .small{
+    font-size: 1.2rem;
+    padding: 5px 0;
+}
+.distribution .time{
+    font-size: 1.3rem;
+}
+
+
+.sign-page .info-name{
+    width: 120px;
+}
+.sign-page .info-val{
+    padding: 0 10px 0 130px
+}
+
+
+.fixBtn{
+	width: 100%;
+	left: 0;
+	bottom: 0;
+}
+.btns {
+	position: fixed;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	-overflow: hidden;
+}
+.btns .button {
+	width: 50%;
+	float: left;
+}
+.btns .cencle{
+	background: #fafafa;
+	color: #666;
+}
+.button_more{
+    width: 50%;
+    -height:160px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background:#fff; 
+}
+.diaBox{
+    background: rgba(0, 0, 0, .8);
+    color: #fff;
+}
+.diaCell .content{
+    width: 70%;
+    margin: auto;
+    text-align: left;
+}
+.diaCell .content .btns{
+    position: relative;
+    top: auto;
+    left: 0;
+    bottom: auto;
+    right: auto;
+    margin-top: 20px;
+}
+
+
+.more_h2,.more_check{
+    height: 50px;
+    line-height: 50px;
+    display: block;    
+    text-align: center;
+    font-size: 1.8rem;
+    margin: auto;
+    border-radius: 0;
+     background:#fff; 
+}
+.more_ul li{
+    border-bottom: 1px solid  #ccc;
+    border-left: 1px solid  #ccc;
+    border-right: 1px solid #ccc;
+    background:#fff; 
+}
+.more_ul li:first-of-type{
+   border-top: 1px solid  #ccc; 
+}
+.more_h2,.more{
+    background: #212121;
+    color: #fff;   
+    font-weight: normal;
+}
+.more_check{
+    background:#212121; 
+	color: #fff;
+}
+.hide{
+    display: none;
+}
+.show{
+    display: block;
+}
+
+/*代分配*/
+header {
+    height: 4rem;
+    background: #191919;
+    padding: 0 1.3rem;
+}
+
+header .date {
+    color: #fff;
+    line-height: 4rem;
+}
+.item-content {
+    height: 4rem;
+    padding: 0 1.3rem;
+    border-bottom: 1px solid #ccc;
+    background: #fff;
+}
+
+.item-content .item-inner {
+    position: relative;
+}
+
+.item-inner .item-title,
+.item-inner .item-after {
+    line-height: 4rem;
+    position: absolute;
+}
+
+.item-title {
+    left: 0rem;
+}
+
+.item-after {
+   right: 0;
+}
+
+
+.list-title {
+    height: 3rem;
+    line-height: 3rem;
+    padding: 0 1.3rem;
+}
+
+.list-title i {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    color: #c4c4c4;
+}
+
+.list .item {
+    width: 25%;
+    display: inline-block;
+    vertical-align: middle;
+    height: 4rem;
+    line-height: 4rem;
+    overflow: hidden;
+}
+
+.item:first-child {
+    width: 45%;
+}
+.item:nth-of-type(2){
+    text-align:center;
+}
+.item:last-child{
+    text-align:center;
+}
+.list .item_yuji{
+    width: 28%;
+}
+.list .item_time{
+    text-align: left;
+}
+.list .sec_state{
+    border-top: 1px solid #ccc;
+}

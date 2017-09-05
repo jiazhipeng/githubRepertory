@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.MemberMapper">
+
+	<!-- 分条件查询sql 语句 -->
+	<select id="selectCountByCondition" resultType="INTEGER"
+		parameterType="cn.cuco.entity.Member">
+		select count(1)
+		from td_member
+		<where>
+			<if test="id != null ">
+				and id = #{id,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != '' ">
+				and name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null and mobile != '' ">
+				and mobile = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="openid != null and openid != '' ">
+				and openid = #{openid,jdbcType=VARCHAR}
+			</if>
+			<if test="unionid != null and unionid != '' ">
+				and unionid = #{unionid,jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null ">
+				and sex = #{sex,jdbcType=INTEGER}
+			</if>
+			<if test="source != null ">
+				and source = #{source,jdbcType=INTEGER}
+			</if>
+			<if test="sourceId != null ">
+				and source_id = #{sourceId,jdbcType=BIGINT}
+			</if>
+			<if test="sourceName != null and sourceName != '' ">
+				and source_name = #{sourceName,jdbcType=VARCHAR}
+			</if>
+			<if test="statuts != null ">
+				and statuts = #{statuts,jdbcType=INTEGER}
+			</if>
+			<if test="type != null ">
+				and type = #{type,jdbcType=INTEGER}
+			</if>
+			<if test="focusStatus != null ">
+				and focus_status = #{focusStatus,jdbcType=INTEGER}
+			</if>
+			<if test="cityId != null ">
+				and city_id = #{cityId,jdbcType=BIGINT}
+			</if>
+			<if test="cityCode != null and cityCode != '' ">
+				and city_code = #{cityCode,jdbcType=VARCHAR}
+			</if>
+			<if test="cityName != null and cityName != '' ">
+				and city_name = #{cityName,jdbcType=VARCHAR}
+			</if>
+			<if test="imageUrl != null and imageUrl != '' ">
+				and image_url = #{imageUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="imageQrcode != null and imageQrcode != '' ">
+				and image_qrcode = #{imageQrcode,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditNum != null and riskAuditNum != '' ">
+				and risk_audit_num = #{riskAuditNum,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditStatus != null ">
+				and risk_audit_status = #{riskAuditStatus,jdbcType=INTEGER}
+			</if>
+			<if test="nationality != null and nationality != '' ">
+				and nationality = #{nationality,jdbcType=VARCHAR}
+			</if>
+			<if test="nationalityId != null ">
+				and nationality_id = #{nationalityId,jdbcType=BIGINT}
+			</if>
+			<if test="idcard != null and idcard != '' ">
+				and idcard = #{idcard,jdbcType=VARCHAR}
+			</if>
+			<if test="birthday != null ">
+				and birthday = #{birthday,jdbcType=TIMESTAMP}
+			</if>
+			<if test="created != null ">
+				and created = #{created,jdbcType=TIMESTAMP}
+			</if>
+			<if test="modifierId != null ">
+				and modifier_id = #{modifierId,jdbcType=BIGINT}
+			</if>
+			<if test="modifier != null and modifier != '' ">
+				and modifier = #{modifier,jdbcType=VARCHAR}
+			</if>
+			<if test="lasttimeModify != null ">
+				and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+			</if>
+		</where>
+	</select>
+
+	<!-- 分条件查询sql 语句 -->
+	<select id="selectByCondition" resultMap="BaseResultMap"
+		parameterType="cn.cuco.entity.Member">
+		select
+		<include refid="Base_Column_List" />
+		from td_member
+		<where>
+			<if test="id != null ">
+				and id = #{id,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != '' ">
+				and name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null and mobile != '' ">
+				and mobile = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="openid != null and openid != '' ">
+				and openid = #{openid,jdbcType=VARCHAR}
+			</if>
+			<if test="unionid != null and unionid != '' ">
+				and unionid = #{unionid,jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null ">
+				and sex = #{sex,jdbcType=INTEGER}
+			</if>
+			<if test="source != null ">
+				and source = #{source,jdbcType=INTEGER}
+			</if>
+			<if test="sourceId != null ">
+				and source_id = #{sourceId,jdbcType=BIGINT}
+			</if>
+			<if test="sourceName != null and sourceName != '' ">
+				and source_name = #{sourceName,jdbcType=VARCHAR}
+			</if>
+			<if test="statuts != null ">
+				and statuts = #{statuts,jdbcType=INTEGER}
+			</if>
+			<if test="type != null ">
+				and type = #{type,jdbcType=INTEGER}
+			</if>
+			<if test="focusStatus != null ">
+				and focus_status = #{focusStatus,jdbcType=INTEGER}
+			</if>
+			<if test="cityId != null ">
+				and city_id = #{cityId,jdbcType=BIGINT}
+			</if>
+			<if test="cityCode != null and cityCode != '' ">
+				and city_code = #{cityCode,jdbcType=VARCHAR}
+			</if>
+			<if test="cityName != null and cityName != '' ">
+				and city_name = #{cityName,jdbcType=VARCHAR}
+			</if>
+			<if test="imageUrl != null and imageUrl != '' ">
+				and image_url = #{imageUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="imageQrcode != null and imageQrcode != '' ">
+				and image_qrcode = #{imageQrcode,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditNum != null and riskAuditNum != '' ">
+				and risk_audit_num = #{riskAuditNum,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditStatus != null ">
+				and risk_audit_status = #{riskAuditStatus,jdbcType=INTEGER}
+			</if>
+			<if test="nationality != null and nationality != '' ">
+				and nationality = #{nationality,jdbcType=VARCHAR}
+			</if>
+			<if test="nationalityId != null ">
+				and nationality_id = #{nationalityId,jdbcType=BIGINT}
+			</if>
+			<if test="idcard != null and idcard != '' ">
+				and idcard = #{idcard,jdbcType=VARCHAR}
+			</if>
+			<if test="birthday != null ">
+				and birthday = #{birthday,jdbcType=TIMESTAMP}
+			</if>
+			<if test="created != null ">
+				and created = #{created,jdbcType=TIMESTAMP}
+			</if>
+			<if test="modifierId != null ">
+				and modifier_id = #{modifierId,jdbcType=BIGINT}
+			</if>
+			<if test="modifier != null and modifier != '' ">
+				and modifier = #{modifier,jdbcType=VARCHAR}
+			</if>
+			<if test="lasttimeModify != null ">
+				and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+			</if>
+		</where>
+	</select>
+
+</mapper>

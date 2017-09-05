@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="yes" name="apple-touch-fullscreen" />
+        <meta content="telephone=no" name="format-detection" />
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <title>权益信息</title>
+        <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+        <style>
+                .interests .topSec {
+                        border-bottom: 1px solid #ccc;
+                        background: #eee;
+                        font-size: 1.5rem;
+                }
+                
+                .interests .title {
+                        border: 1px solid #ccc;
+                        padding: 0 4%;
+                }
+                
+                .interests .title p {
+                        background: url("../../images/car_4.png") no-repeat left center;
+                        background-size: 22px;
+                        padding-left: 28px;
+                        height: 3.8rem;
+                        line-height: 3.8rem;
+                }
+                
+                .interests .models {
+                        padding-bottom: 4%;
+                }
+                
+                .interests .models li {
+                        background: #fff;
+                        padding: 0 4%;
+                }
+                
+                .interests .models li p {
+                        height: 3.8rem;
+                        line-height: 3.8rem;
+                        border-bottom: 1px solid #ccc;
+                }
+                
+                .interests .models li:last-child p {
+                        border: 0;
+                        margin: 0;
+                }
+                
+                .interests .models li:last-child {
+                        border-bottom: 1px solid #ccc;
+                }
+                
+                .interests-list {
+                        padding: 0 4%;
+                        font-size: 1.4rem;
+                }
+                
+                .interests-list li {
+                        height: 3.8rem;
+                        line-height: 3.8rem;
+                        border-bottom: 1px solid #ccc;
+                        overflow: hidden;
+                }
+                
+                .interests-list li a {
+                        height: 100%;
+                        display: block;
+                        overflow: hidden;
+                        background: url("../../images/arrow_right_3.png") no-repeat right center;
+                        background-size: 8px;
+                        padding-right: 16px;
+                }
+                
+                .interests-list .name {
+                        float: left;
+                }
+                
+                .interests-list .last {
+                        float: right;
+                        color: #dcdcdc;
+                }
+                
+                .quanyi,
+                .yajin,
+                .jilu,
+                .gongyong {
+                        background: url("../../images/quanyi.png") no-repeat left center;
+                        background-size: 23px;
+                        padding-left: 30px;
+                }
+                
+                .yajin {
+                        background-image: url("../../images/yajin.png");
+                }
+                
+                .jilu {
+                        background-image: url("../../images/lishi.png");
+                }
+                
+                .gongyong {
+                        background-image: url("../../images/gongyong.png");
+                }
+        </style>
+</head>
+
+<body>
+        <div class="interests">
+                <div class="topSec">
+                        <div class="title">
+                                <p>启用车型</p>
+                        </div>
+                        <ul class="models">
+                                <li>
+                                        <p>特斯拉 MODEL S 90 D</p>
+                                </li>
+                                <li>
+                                        <p>特斯拉 MODEL S 90 D</p>
+                                </li>
+                        </ul>
+                </div>
+                <ul class="interests-list">
+                        <li class="gongyong">
+                                <a href="1_共用人.html">
+                                        <p class="name">权益金额</p>
+                                        <p class="last">1人</p>
+                                </a>
+                        </li>
+                        <li class="quanyi">
+                                <a href="javascript:;">
+                                        <p class="name">权益金额</p>
+                                        <p class="last">2300元</p>
+                                </a>
+                        </li>
+                        <li class="yajin">
+                                <a href="javascript:;">
+                                        <p class="name">押金</p>
+                                        <p class="last">600元</p>
+                                </a>
+                        </li>
+                        <li class="jilu">
+                                <a href="javascript:;">
+                                        <p class="name">用车记录</p>
+                                </a>
+                        </li>
+                </ul>
+        </div>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+package cn.cuco.service.basic.business;
+
+
+import java.util.List;
+
+import cn.cuco.entity.SecurityInterval;
+
+/**
+* @ClassName: SecurityIntervalService 
+* @Description: 安全区间接口
+* @author huanghua
+* @date 2017年2月21日 下午3:08:27
+ */
+public interface SecurityIntervalService {
+
+    /**
+    * @Title: updateSecurityInterval 
+    * @Description: 修改安全区间信息
+    * @param securityInterval
+    * @return SecurityInterval
+    * @throws
+     */
+    public SecurityInterval updateSecurityInterval(SecurityInterval securityInterval);
+
+    /**
+    * @Title: getSecurityIntervalById 
+    * @Description: 取安全区间详情
+    * @param securityInterval
+    * @return SecurityInterval
+    * @throws
+     */
+    public SecurityInterval getSecurityIntervalById(SecurityInterval securityInterval);
+
+    /**
+    * @Title: getSecurityIntervalList 
+    * @Description: 取安全区间信息集合
+    * @param securityInterval
+    * @return List<SecurityInterval>
+    * @throws
+     */
+    public List<SecurityInterval> getSecurityIntervalList(SecurityInterval securityInterval);
+
+
+}

@@ -1,0 +1,360 @@
+package cn.cuco.wechat.util;
+
+import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Date;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import com.alibaba.fastjson.JSONObject;
+
+import cn.cuco.cache.JedisUtils;
+import cn.cuco.common.utils.DateUtils;
+import cn.cuco.constant.Constant;
+import cn.cuco.file.FilterStr;
+import cn.cuco.httpservice.HttpClientUtils;
+import cn.cuco.wechat.entity.AccessToken;
+import cn.cuco.wechat.entity.WeChatReceiveMsg;
+
+/**
+ * 
+* description： AccessToken工具类    
+* author：1mobility    
+* time：2017年2月20日 上午11:33:01    
+* 修改时间：2017年2月20日 上午11:33:01    
+* 修改备注：
+ */
+public class AccessTokenUtil {
+	
+	/**
+	 * logger工具
+	 */
+	private static Logger logger = Logger.getLogger(AccessTokenUtil.class);
+	
+	/**
+	 * 获取wechatToken 接口 （通过wechat回调回来的code换取oauth2的授权的access_token）
+	 */
+	public final static String ACC_TOKEN_URL = "https+://api.weixin.qq.com/sns/oauth2/access_token?appid={appid}&secret={secret}&code={code}&grant_type=authorization_code";
+
+	/**
+	 * 拉微信用户信息接口
+	 */
+	public final static String NICK_NAME_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={access_token}&openid={openid}&lang=zh_CN";;
+
+	/**
+	 * 获取token
+	 */
+	public final static String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={appid}&secret={secret}";
+
+	/**
+	 * 静默授权
+	 */
+	public final static String AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={appid}&redirect_uri={redirect_uri}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+	
+	/**
+	 * 获取ticket票据
+	 */
+	public final static String TICKET_URL = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token={ACCESS_TOKEN}&type=jsapi";
+
+	/**
+	 * 手动授权
+	 */
+	public final static String GETURL_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={appid}&redirect_uri={redirect_uri}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+
+	/**
+	 * 获取AccessToken
+	* @Description:TODO      
+	* @author:1mobility  
+	* @time:2017年2月20日 上午11:34:28   
+	* @return String
+	 */
+	public static synchronized String getAccessToken(){
+		String tokenKey = "accesstoken_hy_security";
+		String tokenKeyGenerator = tokenKey + "_" + "generator";
+		Object accesstoken = JedisUtils.getObject(tokenKey);
+		if(accesstoken != null){
+			logger.info("从 redis 获取 accesstoken>>>>>>>>>>>>>"+accesstoken.toString());
+			logger.info("从 redis 获取 accesstoken-generator>>>>>>>>>>>>>"+JedisUtils.getObject(tokenKeyGenerator));
+			return accesstoken.toString();
+		}
+		
+		logger.info("calculationprofit.....");
+		try {
+			AccessToken accessToken = getToken(Constant.APPID, Constant.APPSECRET);
+			String tokenInit  = accessToken.getAccess_token();
+			logger.info("accessToken.getToken()>>>>>>>>>>>>" + tokenInit);
+			JedisUtils.setObject(tokenKey, tokenInit, 7200);
+			
+			JedisUtils.setObject(tokenKeyGenerator, tokenInit+"["+Constant.APPID+" __ "+Constant.APPSECRET+" __ "+DateUtils.formatDateTime(new Date())+" __ "+"]", 7200);
+			accesstoken = JedisUtils.getObject(tokenKey);
+			logger.info("accesstoken 为空 重新获取 accesstoken保存到redis中值为 >>>>>>>>>>>>" + tokenInit);
+		} catch (Exception e) {
+			logger.error("获取accesstoken 异常.......",e);
+			return null;
+		}
+		return accesstoken.toString();
+		
+		
+	}
+	
+	/**
+	 * 获取weChat Ticket票据
+	* @Description:TODO      
+	* @author:1mobility  
+	* @time:2017年2月20日 上午11:34:41   
+	* @return String
+	 */
+	public static String getTicket() throws Exception{
+		/*>>>>>>>>>>>>>>>>>>>>>获取ticket开始>>>>>>>>>>>>>>>>>>>>>>>>>*/
+		String accessToken = AccessTokenUtil.getAccessToken();
+//		String accessTokenMD5 = MD5Util.MD5Encode(accessToken);
+		String ticketStr = JedisUtils.get(accessToken);
+		
+		logger.info("aaa---------------------------" + accessToken);
+		logger.info("根据accessToken从redis 获取 ticketObj >>>>>" +accessToken + ",,,,,"+ ticketStr);
+		if(ticketStr == null || "".equals(ticketStr)){
+			logger.info("ticketObj为空.....调用接口重新获取 ticket ...");
+			String ticket = getTicket(accessToken);
+			JedisUtils.set(accessToken, ticket, 7200);
+			ticketStr = JedisUtils.get(accessToken);
+
+		}
+		/*>>>>>>>>>>>>>>>>>>>>>获取ticket结束>>>>>>>>>>>>>>>>>>>>>>>>>*/
+		return ticketStr;
+	}
+
+	
+	/**
+	 * 
+	* @Description:根据weChat返回的code获取权限验证的token      
+	* @author:1mobility  
+	* @time:2017年2月20日 上午11:35:26   
+	* @return String
+	 */
+	public static AccessToken getAccToken(String code) throws Exception {
+		String tokenUrl = ACC_TOKEN_URL;
+		tokenUrl = tokenUrl.replace("{appid}", Constant.APPID);
+		tokenUrl = tokenUrl.replace("{secret}", Constant.APPSECRET);
+		tokenUrl = tokenUrl.replace("{code}", code);
+		
+		JSONObject json = HttpClientUtils.sendSSL(tokenUrl, "GET", null);
+		String access_token = json.getString("access_token");
+//		String expires_in = json.getString("expires_in");
+		String refresh_token = json.getString("refresh_token");
+		String openid = json.getString("openid");
+		// getNickname(access_token,openid);
+		AccessToken accesstoken = new AccessToken();
+		accesstoken.setAccess_token(access_token);
+		// accesstoken.setExpires_in(Integer.parseInt(expires_in));
+		accesstoken.setRefresh_token(refresh_token);
+		accesstoken.setOpenid(openid);
+		return accesstoken;
+	}
+
+	
+	/**
+	 * 
+	* @Description:通过openId和token 获取用户昵称和头像     
+	* @author:1mobility  
+	* @time:2017年2月20日 上午11:39:03   
+	* @return String
+	 */
+	public static AccessToken getNickname(String openid) throws Exception {
+		logger.info("WWWAccessToken getAccToken  into  ");
+		String tokenUrl = NICK_NAME_URL;
+		tokenUrl = tokenUrl.replace("{access_token}", AccessTokenUtil.getAccessToken());
+		tokenUrl = tokenUrl.replace("{openid}", openid);
+
+		logger.info("tokenUrl>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + tokenUrl);
+		JSONObject  json = HttpClientUtils.sendSSL(tokenUrl, "GET", null);
+		String headimgurlreturn = json.getString("headimgurl");
+		String nicknamereturn = json.getString("nickname");
+		String openidreturn = json.getString("openid");
+		logger.info("getAccToken===openid=试试===============================[" + openid + "]");
+		logger.info("getAccToken====headimgurlreturn==得到=headimgurl============================[" + headimgurlreturn + "]");
+		logger.info("getAccToken===nicknamereturn================================[" + nicknamereturn + "]");
+		logger.info("getAccToken====openidreturn================================[" + openidreturn + "]");
+
+		if(StringUtils.isNotEmpty(nicknamereturn)){
+			nicknamereturn = FilterStr.filter(nicknamereturn);
+		}
+
+		AccessToken accesstoken3w = new AccessToken();
+		accesstoken3w.setNicknamereturn(nicknamereturn);
+		accesstoken3w.setOpenid(openid);
+		accesstoken3w.setHeadimgurlreturn(headimgurlreturn);
+		return accesstoken3w;
+	}
+	
+	/**
+	 * 根据appid和appsecret获取授权token
+	* @Description:TODO      
+	* @author:1mobility  
+	* @time:2017年2月20日 下午12:55:04   
+	* @return String
+	 */
+	public static AccessToken getToken(String appid, String appsecret) throws Exception {
+//		String tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + appsecret;
+		String tokenUrl = TOKEN_URL;
+		tokenUrl = tokenUrl.replace("{appid}",appid);
+		tokenUrl = tokenUrl.replace("{secret}",appsecret);
+		JSONObject json = HttpClientUtils.sendSSL(tokenUrl, "GET", null);
+		String access_token = json.getString("access_token");
+		// String expires_in= json.getString("expires_in");
+		AccessToken accesstoken = new AccessToken();
+		// accesstoken.setExpiresIn(Integer.parseInt(expires_in));
+		accesstoken.setAccess_token(access_token);
+		return accesstoken;
+	}
+	
+	public static void main(String[] args) throws Exception {
+		getToken(Constant.APPID,Constant.APPSECRET);
+	}
+	
+	/**
+	 * 获取静默授权的url
+	* @Description:TODO      
+	* @author:1mobility  
+	* @time:2017年2月20日 下午12:56:29   
+	* @return String
+	 */
+	public static String getUrlBySnsapibase(String redirecturi) throws Exception {
+		String weixinurl = AUTHORIZE_URL;
+		weixinurl = weixinurl.replace("{appid}", Constant.APPID);
+		weixinurl = weixinurl.replace("{redirect_uri}", redirecturi);
+		logger.info("[weixin]:==================" + weixinurl);
+		return weixinurl;
+	}
+	
+	/**
+	 * 
+	* @Description:自定义分享和屏蔽的时候调用  获取Ticket票据 
+	* @author:1mobility  
+	* @time:2017年2月20日 上午11:45:40   
+	* @return String
+	 */
+	public static String getTicket(String ACCESS_TOKEN) throws Exception {
+		// 建立连接
+		logger.info("ACCESS_TOKEN + =====================  " + ACCESS_TOKEN);
+		String ticketUrl = TICKET_URL.replace("{ACCESS_TOKEN}", ACCESS_TOKEN);
+		JSONObject json = HttpClientUtils.sendSSL(ticketUrl, "GET", null);
+		String ticket = json.getString("ticket");
+		logger.info("ticket=====================================================" + ticket);
+		return ticket;
+	}
+	
+	/**
+	 * 
+	* @Description:手动授权  
+	* @author:1mobility  
+	* @time:2017年2月20日 上午11:44:54   
+	* @return String
+	 */
+	public static String getUrl(String redirecturi) throws Exception {
+		String weixinurl = GETURL_URL;
+		weixinurl = weixinurl.replace("{appid}", Constant.APPID);
+		weixinurl = weixinurl.replace("{redirect_uri}", redirecturi);
+		logger.info("[weixin]:==================" + weixinurl);
+		return weixinurl;
+	}
+	
+	/**
+	 * 用SHA1算法生成安全签名
+	 * 
+	 * @param token
+	 *            票据
+	 * @param timestamp
+	 *            时间戳
+	 * @param nonce
+	 *            随机字符串
+	 * @param encrypt
+	 *            密文
+	 * @return 安全签名
+	 * @throws NoSuchAlgorithmException
+	 * @throws AesException
+	 */
+	public static String getSHA1(String token, String timestamp, String nonce) throws NoSuchAlgorithmException {
+		String[] array = new String[] { token, timestamp, nonce };
+		StringBuffer sb = new StringBuffer();
+		// 字符串排序
+		Arrays.sort(array);
+		for (int i = 0; i < 3; i++) {
+			sb.append(array[i]);
+		}
+		String str = sb.toString();
+		// SHA1签名生成
+		MessageDigest md = MessageDigest.getInstance("SHA-1");
+		md.update(str.getBytes());
+		byte[] digest = md.digest();
+
+		StringBuffer hexstr = new StringBuffer();
+		String shaHex = "";
+		for (int i = 0; i < digest.length; i++) {
+			shaHex = Integer.toHexString(digest[i] & 0xFF);
+			if (shaHex.length() < 2) {
+				hexstr.append(0);
+			}
+			hexstr.append(shaHex);
+		}
+		return hexstr.toString();
+	}
+
+	/**
+	 * 
+	* @Description:获取weChat回调消息实体 xml格式     
+	* @author:1mobility  
+	* @time:2017年2月20日 上午11:49:12   
+	* @return String
+	 */
+	public static WeChatReceiveMsg getMsg(InputStream request) throws Exception {
+
+		WeChatReceiveMsg receiveMsg = new WeChatReceiveMsg();
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document doc = builder.parse(request);
+
+		Element root = doc.getDocumentElement();// 获得根节点
+		NodeList msgs = root.getChildNodes();
+		for (int i = 0; i < msgs.getLength(); i++) {// 遍历元素
+			Node msg = msgs.item(i);
+			if (msg.getNodeType() == Node.ELEMENT_NODE) {// 如果是元素节点
+
+				String nodeName = msg.getNodeName().trim();// 获得元素的名
+				String nodeValue = msg.getTextContent();
+				if (nodeName.equals("ToUserName")) {
+					receiveMsg.setToUserName(nodeValue);
+				} else if (nodeName.equals("FromUserName")) {
+					receiveMsg.setFromUserName(nodeValue);
+				} else if (nodeName.equals("CreateTime")) {
+					receiveMsg.setCreateTime(nodeValue);
+				} else if (nodeName.equals("MsgType")) {
+					receiveMsg.setMsgType(nodeValue);
+				} else if (nodeName.equals("Ticket")) {
+					receiveMsg.setTicket(nodeValue);
+				} else if (nodeName.equals("Event")) {
+					receiveMsg.setEvent(nodeValue);
+				} else if (nodeName.equals("EventKey")) {
+					receiveMsg.setEventKey(nodeValue);
+				} else if (nodeName.equals("Content")) {
+					receiveMsg.setContent(nodeValue);
+				}else if(nodeName.equals("Latitude")){//获取维度
+					receiveMsg.setLatitude(nodeValue);
+				}else if(nodeName.equals("Longitude")){//获取经度
+					receiveMsg.setLongitude(nodeValue);
+				}else if(nodeName.equals("Precision")){//获取精度
+					receiveMsg.setPrecision(nodeValue);
+				}
+			}
+		}
+		return receiveMsg;
+	}
+
+}

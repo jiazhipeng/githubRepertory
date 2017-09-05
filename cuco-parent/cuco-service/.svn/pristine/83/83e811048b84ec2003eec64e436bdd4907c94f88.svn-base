@@ -1,0 +1,176 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.math.BigDecimal;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-03-06 11:27:30
+ */
+public class CarViolation implements Serializable {
+
+    private static final long serialVersionUID = 7619538867691870L;
+
+    private Long id;//车辆违章ID
+
+    private Long carId;//违章车辆ID
+
+    private String carPlateNum;//违章车辆车牌号
+
+    private Long memberId;//违章用户ID
+
+    private String memberName;//用户ID
+
+    private String memberMobile;//用户手机号
+
+    private Integer status;//违章处理状态（）
+
+    private Date violationTime;//违章时间
+
+    private String violationAddress;//违章地点
+
+    private Integer type;//违章行为（）
+
+    private BigDecimal fine;//罚款
+
+    private Integer pointPenalty;//罚分
+
+    private Integer carUsedId;//用车记录ID
+
+    private String modifier;//操作人名称
+
+    private Integer modifierId;//操作人ID
+
+    private Date lasttimeModify;//最后修改时间
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getCarId() {
+        return this.carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
+    }
+
+    public String getCarPlateNum() {
+        return this.carPlateNum;
+    }
+
+    public void setCarPlateNum(String carPlateNum) {
+        this.carPlateNum = carPlateNum;
+    }
+
+    public Long getMemberId() {
+        return this.memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getMemberName() {
+        return this.memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getMemberMobile() {
+        return this.memberMobile;
+    }
+
+    public void setMemberMobile(String memberMobile) {
+        this.memberMobile = memberMobile;
+    }
+
+    public Integer getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getViolationTime() {
+        return this.violationTime;
+    }
+
+    public void setViolationTime(Date violationTime) {
+        this.violationTime = violationTime;
+    }
+
+    public String getViolationAddress() {
+        return this.violationAddress;
+    }
+
+    public void setViolationAddress(String violationAddress) {
+        this.violationAddress = violationAddress;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public BigDecimal getFine() {
+        return this.fine;
+    }
+
+    public void setFine(BigDecimal fine) {
+        this.fine = fine;
+    }
+
+    public Integer getPointPenalty() {
+        return this.pointPenalty;
+    }
+
+    public void setPointPenalty(Integer pointPenalty) {
+        this.pointPenalty = pointPenalty;
+    }
+
+    public Integer getCarUsedId() {
+        return this.carUsedId;
+    }
+
+    public void setCarUsedId(Integer carUsedId) {
+        this.carUsedId = carUsedId;
+    }
+
+    public String getModifier() {
+        return this.modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public Integer getModifierId() {
+        return this.modifierId;
+    }
+
+    public void setModifierId(Integer modifierId) {
+        this.modifierId = modifierId;
+    }
+
+    public Date getLasttimeModify() {
+        return this.lasttimeModify;
+    }
+
+    public void setLasttimeModify(Date lasttimeModify) {
+        this.lasttimeModify = lasttimeModify;
+    }
+
+}

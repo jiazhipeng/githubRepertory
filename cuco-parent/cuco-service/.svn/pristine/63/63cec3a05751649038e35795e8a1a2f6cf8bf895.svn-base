@@ -1,0 +1,57 @@
+package cn.cuco.service.car.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarOperatePlanMapper;
+import cn.cuco.entity.CarOperatePlan;
+import cn.cuco.service.car.CarOperatePlanService;
+
+@Service(value = "carOperatePlanService")
+public class CarOperatePlanServiceImpl implements CarOperatePlanService {
+
+    @Autowired
+    private CarOperatePlanMapper<CarOperatePlan> carOperatePlanMapper;
+    
+    @Override
+    public Integer insertSelective(CarOperatePlan carOperatePlan) throws Exception {
+           return this.carOperatePlanMapper.insertSelective(carOperatePlan);
+        }
+
+    @Override
+    public Integer insertBatch(List<CarOperatePlan> carOperatePlan) throws Exception {
+           return this.carOperatePlanMapper.insertBatch(carOperatePlan) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.carOperatePlanMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.carOperatePlanMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(CarOperatePlan carOperatePlan) {
+           return this.carOperatePlanMapper.updateByPrimaryKeySelective(carOperatePlan);
+    }
+
+    @Override
+    public CarOperatePlan findById(Object id) {
+           return (CarOperatePlan) this.carOperatePlanMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<CarOperatePlan> selectByCondition(CarOperatePlan carOperatePlan) {
+           return (List<CarOperatePlan>) this.carOperatePlanMapper.selectByCondition(carOperatePlan);
+    }
+
+    @Override
+    public Integer selectCountByCondition(CarOperatePlan carOperatePlan) {
+           return  this.carOperatePlanMapper.selectCountByCondition(carOperatePlan);
+    }
+
+}

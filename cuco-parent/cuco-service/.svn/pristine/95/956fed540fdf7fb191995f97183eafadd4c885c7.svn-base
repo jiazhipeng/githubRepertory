@@ -1,0 +1,57 @@
+package cn.cuco.service.basic.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarTypeMapper;
+import cn.cuco.entity.CarType;
+import cn.cuco.service.basic.CarTypeService;
+
+@Service(value = "carTypeService")
+public class CarTypeServiceImpl implements CarTypeService {
+
+    @Autowired
+    private CarTypeMapper<CarType> carTypeMapper;
+    
+    @Override
+    public Integer insertSelective(CarType carType) throws Exception {
+           return this.carTypeMapper.insertSelective(carType);
+        }
+
+    @Override
+    public Integer insertBatch(List<CarType> carType) throws Exception {
+           return this.carTypeMapper.insertBatch(carType) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.carTypeMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.carTypeMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(CarType carType) {
+           return this.carTypeMapper.updateByPrimaryKeySelective(carType);
+    }
+
+    @Override
+    public CarType findById(Object id) {
+           return (CarType) this.carTypeMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<CarType> selectByCondition(CarType carType) {
+           return (List<CarType>) this.carTypeMapper.selectByCondition(carType);
+    }
+
+    @Override
+    public Integer selectCountByCondition(CarType carType) {
+           return  this.carTypeMapper.selectCountByCondition(carType);
+    }
+
+}

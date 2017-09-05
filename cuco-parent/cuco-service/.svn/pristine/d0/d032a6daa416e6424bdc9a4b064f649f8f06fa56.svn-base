@@ -1,0 +1,55 @@
+package cn.cuco.service.order.impl;
+
+import org.springframework.stereotype.Service;
+
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderMemberCarUsed;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.order.OrderMemberCarUsedService;
+
+@Service
+public class OrderMemberCarUsedServiceImpl implements OrderMemberCarUsedService {
+
+	@Override
+	public OrderMemberCarUsed createOrderMemberCarUsed(OrderMemberCarUsed orderMemberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderMemberCarUsed getOrderMemberCarUsed(OrderMemberCarUsed orderMemberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OrderMemberCarUsed> getOrderMemberCarUsedListByPage(OrderMemberCarUsed orderMemberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateOrderMemberCarUsedStatusByCancelForTask() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public OrderMemberCarUsed updateOrderMemberCarUsedStatusByPartPay(OrderMemberCarUsed orderMemberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderMemberCarUsed updateOrderMemberCarUsedStatusByCompletePay(OrderMemberCarUsed orderMemberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OperateLog> getOrderMemberCarUsedLogListByPage(OrderMemberCarUsed orderMemberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

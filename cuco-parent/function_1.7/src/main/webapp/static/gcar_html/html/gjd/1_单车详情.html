@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>单车详情</title>
+    <link rel="stylesheet" href="../../css/css.css">
+    <link rel="stylesheet" href="../../css/date.css">
+    <style>
+       header .query .car-icon{
+            width:1.8rem;
+            height:1.8rem;
+            margin-right:6px;
+            background: url(../../images/caricon_2.png) no-repeat left center;
+            background-size: 100%;
+        }
+        .a-car-page {
+            padding:0 4%;
+        }
+        .a-car-page .car-name{
+            margin-bottom: 4%;
+            padding:3% 0;
+            background: url(../../images/arrow_right_3.png) no-repeat right center;
+            background-size:10px;
+            color:#333;
+            border-bottom:1px solid #ccc;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header class="clearfix">
+        <span class="date-wrapper">
+            <a href="javascript:;" class="prev"></a>
+            <span class="date">...</span>
+        <a href="javascript:;" class="nxt"></a>
+        </span>
+        <a href="javascript:;" class="query"><i class="icon car-icon"></i>车辆概况</a>
+    </header>
+    <div class="a-car-page">
+        <p class="car-name">京A·HN796</p>
+        <div class="car-calendar">
+            
+        </div>
+    </div>
+
+    <script src="//cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+    <script src="../../js/touch.js"></script>
+    <script  src="../../js/calendar.js"></script>
+    <script src="../../js/carinfo.js"></script>
+</body>
+
+</html>

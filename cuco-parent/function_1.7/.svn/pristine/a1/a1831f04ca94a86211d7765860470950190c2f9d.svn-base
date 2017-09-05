@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>用车记录</title>
+    <link href="../../css/service.css" rel="stylesheet" type="text/css" />
+    <title></title>
+</head>
+<body>
+<div class="business">
+    <img src="../../images/business.jpg">
+    <div class="titBox">
+        <div class="title">
+            <em></em>
+            <span>企业合作</span>
+        </div>
+    </div>
+    <ul class="businessInfo">
+        <li>
+            <span class="name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
+            <input class="busiVal" type="text">
+        </li>
+        <li>
+            <span class="name">手机号码：</span>
+            <input class="busiVal" type="tel">
+        </li>
+        <li class="need">
+            <span class="name">合作需求：</span>
+            <textarea class="busiVal"></textarea>
+        </li>
+    </ul>
+    <div class="section">
+        <a href="javascript:;" class="button">确定</a>
+    </div>
+</div>
+</body>
+</html>

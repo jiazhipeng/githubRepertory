@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>十分抱歉，页面报错</title>
+    <link href="../css/css.css" rel="stylesheet" type="text/css" />
+</head>
+<body style="background: #000;">
+<div class="diaBox" style="display: block; background: #000;">
+    <div class="diaTable">
+        <div class="diaRow">
+            <div class="diaCell">
+                <img src="../images/404.jpg">
+                <a href="javascript:;" class="pageBack" id="back" style="color: #fff">返回</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var oBack = document.getElementById('back');
+
+    oBack.onclick=function(){
+        window.history.go(-1);
+    }
+</script>
+</body>
+</html>

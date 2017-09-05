@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.security.dao.OperationMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.security.entity.Operation" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="system_id" property="systemId" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Operation" >
+       select  <include refid="Base_Column_List" />
+    from td_operation  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test= "name != null and name != '' ">
+      	and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+      </if>
+      <if test= "systemId != null ">
+        and system_id = #{systemId,jdbcType=BIGINT}
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, name, system_id, 
+      created, modifier_id, modifier, 
+      lasttime_modify
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Operation" >
+    select 
+      id, name, system_id, 
+      created, modifier_id, modifier, 
+      lasttime_modify
+    from td_operation where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.security.entity.Operation" >
+    delete from td_operation where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_operation where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.security.entity.Operation" useGeneratedKeys="true" keyProperty="id">
+    insert into td_operation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "name != null and name != '' ">
+         name,
+      </if>
+      <if test= "systemId != null ">
+         system_id,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "systemId != null ">
+         #{systemId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_operation (
+         id,
+         name,
+         system_id,
+         created,
+         modifier_id,
+         modifier,
+         lasttime_modify)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.name,jdbcType=VARCHAR},
+         #{item.systemId,jdbcType=BIGINT},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=BIGINT},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.security.entity.Operation" >
+    update td_operation
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+      name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "systemId != null ">
+      system_id = #{systemId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+	<!-- 插入operation与api的关系表tr_operation_api -->
+	<insert id="insertOperationApi">
+		insert into tr_operation_api (api_id,operation_id) values (#{api_id,jdbcType=BIGINT},#{operation_id,jdbcType=BIGINT})
+	</insert>
+	
+	<!-- 根据操作ID删除对应的Api -->
+	<delete id="deleteApisByOperationId">
+		delete from tr_operation_api where operation_id = #{operation_id,jdbcType=BIGINT}
+	</delete>
+	
+	<!-- 查询名称相同的记录条数 -->
+	<select id="findRepeatRecordCount" parameterType="com.hy.security.entity.Operation" resultType="Integer">
+		select count(id) from td_operation 
+		where name = #{name,jdbcType=VARCHAR} 
+	      <if test= "id != null ">
+	        and id != #{id,jdbcType=BIGINT}
+	      </if>
+	</select>
+	
+	<!-- 根据节点查询所有已关联操作 -->
+	<select id="findMenuOperationsByMenuId" parameterType="com.hy.security.entity.Menu" resultMap="BaseResultMap">
+		  SELECT o.* from td_operation o
+			LEFT JOIN tr_menu_operation m ON o.id =m.operation_id and o.system_id=m.system_id
+			WHERE m.menu_id=#{id,jdbcType=BIGINT}
+   		 
+	</select>
+	<!-- 根据菜单节点查询所有未关联操作 -->
+	<select id="findNotRelatedsOperations" parameterType="com.hy.security.entity.MenuOperation" resultMap="BaseResultMap">
+	
+		SELECT t.* from td_operation t WHERE t.system_id=#{systemId,jdbcType=BIGINT} AND t.id NOT in(
+			SELECT o.id from td_operation o
+			LEFT JOIN tr_menu_operation m ON o.id =m.operation_id and o.system_id=m.system_id
+			WHERE m.menu_id=#{menuId,jdbcType=BIGINT} and m.system_id=#{systemId,jdbcType=BIGINT})
+		 
+	</select>
+	
+	<!-- 根据操作ID删除对应的Api -->
+	<delete id="deleteMenuOperations" parameterType="com.hy.security.entity.MenuOperation">
+		delete from tr_menu_operation where   menu_id = #{menuId,jdbcType=BIGINT}    and system_id = #{systemId,jdbcType=BIGINT}
+	</delete>
+	 <!-- 可批量添加数据 -->
+  <insert id="insertBatchMenuOperation" parameterType="java.util.List" >
+    insert into tr_menu_operation (
+         id,
+         menu_id,
+         operation_id,
+         system_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.menuId,jdbcType=BIGINT},
+         #{item.operationId,jdbcType=BIGINT},
+         #{item.systemId,jdbcType=BIGINT}
+         )
+    </foreach>
+  </insert>
+  
+  <!-- 查找角色ID所拥有操作 -->
+  <select id="findOperationsByRoleId" resultMap="BaseResultMap">
+    select 
+       a.id, a.name, a.system_id,a.created, a.modifier_id, a.modifier,a.lasttime_modify
+    from td_operation a  left join tr_role__menu_operation b  on a.id = b.operation_id
+    where b.role_id = #{role_id,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 查找角色ID和菜单ID所拥有操作 -->
+  <select id="findOperationsByRoleIdAndMenuId" resultMap="BaseResultMap">
+    select 
+       a.id, a.name, a.system_id,a.created, a.modifier_id, a.modifier,a.lasttime_modify
+    from td_operation a  left join tr_role__menu_operation b  on a.id = b.operation_id
+    where b.role_id = #{role_id,jdbcType=BIGINT} and b.menu_id = #{menu_id,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 根据操作名称、api名称查询操作 -->
+  <select id="findOperationsByOperation" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Operation" >
+  	 select
+  	  	distinct a.id, a.name, a.system_id,a.created, a.modifier_id, a.modifier,a.lasttime_modify
+     from 
+     	td_operation a left join tr_operation_api b on a.id = b.operation_id left join td_api c on b.api_id = c.id
+      <where> 
+      		<if test="systemId != null and systemId != '' ">
+	     		and a.system_id = #{systemId,jdbcType=BIGINT}
+	     	</if>
+	     	<if test="name != null and name != '' ">
+	     		and a.name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+	     	</if>
+	     	<if test="apiName != null and apiName != '' ">
+	     		and c.name like CONCAT('%',#{apiName,jdbcType=VARCHAR},'%')
+	     	</if>
+     	</where>
+  </select>
+	
+</mapper>

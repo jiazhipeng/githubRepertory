@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.OrderMemberCarUsedMapper" >
+<!-- 根据用户ID查询用户用车次数 语句 -->
+  <select id="getOrderMemberCarUsedCountByMemberId" resultType="INTEGER">
+       select  count(1) from td_order_member_car_used where member_id = #{memberId,jdbcType=BIGINT} and actual_payment > 0
+  </select>
+  <!-- 根据用户ID查询用户行驶公里数-->
+  <select id="getOrderMemberCarUsedMileagesByMemberId" resultType="BigDecimal">
+       select  sum(mileage) from td_order_member_car_used where member_id = #{memberId,jdbcType=BIGINT}
+  </select>
+  <!-- 根据用户ID查询用户行驶公里数-->
+  <select id="getLastOrderMemberCarUsed" resultMap="BaseResultMap">
+       select  <include refid="Base_Column_List" />
+       from td_order_member_car_used 
+       where (used_status != 3 or (used_status = 3 and actual_payment > 0))
+       	<if test= "startDate != null and endDate != null">
+			and actual_car_used_time between #{startDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test= "startDate != null and endDate == null">
+			and actual_car_used_time >= #{startDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test= "startDate == null and endDate != null">
+			and actual_car_used_time <![CDATA[<= ]]> #{endDate,jdbcType=TIMESTAMP}
+		</if>
+       order by actual_car_used_time desc limit 0,1
+  </select>
+  
+  <select id="getOrderMemberCarUsedListWithSort" resultMap="BaseResultMap" parameterType="cn.cuco.entity.OrderMemberCarUsed" >
+       select  <include refid="Base_Column_List" />
+    from td_order_member_car_used  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "carportId != null ">
+        and carport_id = #{carportId,jdbcType=BIGINT}      
+      </if>
+      <if test= "orderCartypeId != null ">
+        and order_cartype_id = #{orderCartypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "orderCarUsedTime != null ">
+        and order_car_used_time = #{orderCarUsedTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "orderCarUsedDay != null ">
+        and order_car_used_day = #{orderCarUsedDay,jdbcType=INTEGER}      
+      </if>
+      <if test= "orderCarUsedAddress != null and orderCarUsedAddress != '' ">
+        and order_car_used_address = #{orderCarUsedAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "orderCarReturnTime != null ">
+        and order_car_return_time = #{orderCarReturnTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "orderCarReturnAddress != null and orderCarReturnAddress != '' ">
+        and order_car_return_address = #{orderCarReturnAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "actualCartypeId != null ">
+        and actual_cartype_id = #{actualCartypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "actualCarUsedTime != null ">
+        and actual_car_used_time = #{actualCarUsedTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "actualCarUsedDay != null ">
+        and actual_car_used_day = #{actualCarUsedDay,jdbcType=INTEGER}      
+      </if>
+      <if test= "actualCarUsedAddress != null and actualCarUsedAddress != '' ">
+        and actual_car_used_address = #{actualCarUsedAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "actualCarReturnTime != null ">
+        and actual_car_return_time = #{actualCarReturnTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "actualCarReturnAddress != null and actualCarReturnAddress != '' ">
+        and actual_car_return_address = #{actualCarReturnAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "caroperateId != null ">
+        and caroperate_id = #{caroperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "changeStatus != null ">
+        and change_status = #{changeStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "usedStatus != null ">
+        and used_status = #{usedStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "mileage != null ">
+        and mileage = #{mileage,jdbcType=DECIMAL}      
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+        and city_code = #{cityCode,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "limitedBack != null ">
+        and limited_back = #{limitedBack,jdbcType=DECIMAL}      
+      </if>
+  </where>
+  order by created desc
+  </select>
+  
+  <select id="getMemberCarTypeUsedStatisticsByMemberId" resultType="java.util.HashMap">
+       select  order_cartype_id carTypeId,count(order_cartype_id) count from td_order_member_car_used 
+       where member_id = #{memberId,jdbcType=BIGINT}
+       group by order_cartype_id
+  </select>
+  
+  <select id="getOrderMemberCarUsedListByCarIdAndDate" resultMap="BaseResultMap">
+       select  <include refid="Base_Column_List" />
+       from td_order_member_car_used 
+       where used_status != 0 and used_status != 3
+       and caroperate_id = #{caroperateId,jdbcType=BIGINT} 
+       and actual_car_used_time <![CDATA[<= ]]> #{startDate,jdbcType=TIMESTAMP} 
+       and actual_car_return_time <![CDATA[>= ]]> #{startDate,jdbcType=TIMESTAMP}
+  </select>
+  
+  <!-- 查询用户待支付或者进行中的用车订单-->
+  <select id="selectOrderMemberCarUsedNotComplete"  resultMap="BaseResultMap" parameterType="cn.cuco.entity.OrderMemberCarUsed" >
+        select  <include refid="Base_Column_List" />
+    from td_order_member_car_used where member_id = #{memberId,jdbcType=BIGINT} and (order_status = 0 or (order_status =1 and (used_status = 0 or used_status = 1))) 
+  </select>
+</mapper>

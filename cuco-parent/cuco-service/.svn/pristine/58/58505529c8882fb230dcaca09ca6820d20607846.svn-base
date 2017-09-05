@@ -1,0 +1,125 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-23 09:21:46
+ */
+public class Restriction implements Serializable {
+
+    private static final long serialVersionUID = 8042446219584756L;
+
+    private Long id;//ID
+
+    private Integer cityId;//服务城市ID
+
+    private String cityCode;//城市编码
+
+    private String cityName;//服务城市名称
+
+    private Date restrictionsDate;//限行时间；格式：年月日
+
+    private String restrictions;//限行号码；例：1,2,3
+
+    private String beginDate;//限行开始时间
+
+    private String endDate;//限行结束时间
+
+    private String modifier;//操作人姓名
+
+    private Long modifierId;//操作人id
+
+    private Date lasttimeModify;//最后修改时间
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getCityId() {
+        return this.cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getCityCode() {
+        return this.cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getCityName() {
+        return this.cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public Date getRestrictionsDate() {
+        return this.restrictionsDate;
+    }
+
+    public void setRestrictionsDate(Date restrictionsDate) {
+        this.restrictionsDate = restrictionsDate;
+    }
+
+    public String getRestrictions() {
+        return this.restrictions;
+    }
+
+    public void setRestrictions(String restrictions) {
+        this.restrictions = restrictions;
+    }
+
+    public String getBeginDate() {
+        return this.beginDate;
+    }
+
+    public void setBeginDate(String beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public String getEndDate() {
+        return this.endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getModifier() {
+        return this.modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public Long getModifierId() {
+        return this.modifierId;
+    }
+
+    public void setModifierId(Long modifierId) {
+        this.modifierId = modifierId;
+    }
+
+    public Date getLasttimeModify() {
+        return this.lasttimeModify;
+    }
+
+    public void setLasttimeModify(Date lasttimeModify) {
+        this.lasttimeModify = lasttimeModify;
+    }
+
+}

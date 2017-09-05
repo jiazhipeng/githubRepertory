@@ -1,0 +1,38 @@
+package cn.cuco.service.log.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.OperationLogMapper;
+import cn.cuco.entity.OperationLog;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.log.OperationLogService;
+
+@Service(value = "operationLogService")
+public class OperationLogServiceImpl implements OperationLogService {
+
+    @Autowired
+    private OperationLogMapper<OperationLog> operationLogMapper;
+
+	@Override
+	public OperationLog createOperationLog(OperationLog operationLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OperationLog> getOperationLogByCondition(OperationLog tdOperationLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OperationLog> getOperationLogList(OperationLog tdOperationLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+   
+}

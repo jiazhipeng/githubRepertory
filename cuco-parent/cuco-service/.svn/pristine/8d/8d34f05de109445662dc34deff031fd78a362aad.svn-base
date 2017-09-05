@@ -1,0 +1,59 @@
+package cn.cuco.service.order.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.OrderCarUsedMapper;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.OrderCarUsed;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.order.OrderCarUsedService;
+
+/**
+ * @ClassName: OrderCarUsedServiceImpl
+ * @Description: 用车明细相关接口的实现
+ * @author zc.du
+ * @date 2017年2月23日 上午10:52:08
+ */
+@Service(value = "orderCarUsedService")
+public class OrderCarUsedServiceImpl implements OrderCarUsedService {
+
+	@Autowired
+    private OrderCarUsedMapper<OrderCarUsed> orderCarUsedMapper;
+	
+	@Override
+	public PageResult<OrderCarUsed> getOrderCarUsedListByPage(OrderCarUsed orderCarUsed) {
+		ParamVerifyUtils.paramNotNull(orderCarUsed);
+		Integer page = orderCarUsed.getPage();
+		Integer pageSize = orderCarUsed.getPageSize();
+		Integer totalSize = this.orderCarUsedMapper.getOrderCarUsedCountByFuzzy(orderCarUsed);
+		PageHelper.startPage(page, pageSize);
+		List<OrderCarUsed> list = this.orderCarUsedMapper.getOrderCarUsedListByFuzzy(orderCarUsed);
+		PageResult<OrderCarUsed> pageResult = new PageResult<OrderCarUsed>(page, pageSize, totalSize, list);
+		return pageResult;
+	}
+
+	@Override
+	public OrderCarUsed createOrderCarUsedForButtler(OrderCarUsed orderCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarUsed createOrderCarUsedForSystem(OrderCarUsed orderCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarUsed createOrderCarUsedForAdditionalDeduction(OrderCarUsed orderCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

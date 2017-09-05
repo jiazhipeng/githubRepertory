@@ -1,0 +1,63 @@
+package cn.cuco.service.payment.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.PaymentLogMapper;
+import cn.cuco.entity.PaymentLog;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.payment.PaymentLogService;
+
+@Service(value = "paymentLogService")
+public class PaymentLogServiceImpl implements PaymentLogService {
+
+    @Autowired
+    private PaymentLogMapper<PaymentLog> paymentLogMapper;
+
+	@Override
+	public PaymentLog createPaymentLog(PaymentLog paymentLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PaymentLog updatePaymentLog(PaymentLog paymentLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deletePaymentLog(PaymentLog paymentLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PaymentLog getPaymentLog(PaymentLog paymentLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<PaymentLog> getPaymentLogList(PaymentLog paymentLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<PaymentLog> getPaymentLogListByPage(
+			PaymentLog paymentLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getPaymentLogCount(PaymentLog paymentLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+
+}

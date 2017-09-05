@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.VersionMapper">
+    <resultMap id="BaseResultMap" type="com.hy.gcar.entity.Version">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="force" property="force" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP"/>
+        <result column="describe" property="describe" jdbcType="VARCHAR"/>
+        <result column="forceCode" property="forceCode" jdbcType="VARCHAR"/>
+        <result column="flag" property="flag" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id,name,force,code,address,updatetime,describe,forceCode
+  </sql>
+     <select id="selectVersinByCode" resultMap="BaseResultMap" parameterType="String">
+         select
+         t.id,t.name,t.force,t.code,address,t.describe,t.updatetime,t.forceCode,t.flag
+        from tc_version t
+        where code > #{code,jdbcType=VARCHAR}
+         order by updatetime desc
+    </select>
+     <select id="selectVersinByFlag" resultMap="BaseResultMap" parameterType="integer">
+         select
+         t.id,t.name,t.force,t.code,address,t.describe,t.updatetime,t.forceCode,t.flag
+        from tc_version t
+        where flag = #{flag,jdbcType=INTEGER}
+    </select>
+       <select id="selectVersinByCodeAndr" resultMap="BaseResultMap" parameterType="String">
+         select
+         t.id,t.name,t.force,t.code,address,t.describe,t.updatetime,t.forceCode
+        from tc_version t
+        where code > #{code,jdbcType=VARCHAR} and code !='2015'
+         order by updatetime desc 
+    </select>
+  
+</mapper>

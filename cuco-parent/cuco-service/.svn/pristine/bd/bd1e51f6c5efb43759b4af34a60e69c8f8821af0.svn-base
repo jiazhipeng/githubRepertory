@@ -1,0 +1,38 @@
+package cn.cuco.service.car;
+
+import java.util.List;
+
+import cn.cuco.entity.CarInsuranceDetailUrl;
+
+/** 
+* @ClassName: CarInsuranceDetailUrlService 
+* @Description: 车辆保险详情保单上传地址service 
+* @author gongbw
+* @date 2017年2月21日 下午3:14:29  
+*/
+public interface CarInsuranceDetailUrlService {
+
+	/**   
+     * @Title: createCarInsuranceDetailUrl   
+     * @Description: 创建车辆保险详情上传地址的基础方法   
+     * @param: CarInsuranceDetailUrl
+     * @return: CarInsuranceDetailUrl      
+     */
+	public CarInsuranceDetailUrl createCarInsuranceDetailUrl(CarInsuranceDetailUrl carInsuranceDetailUrl);
+	
+	/**   
+     * @Title: getCarInsuranceDetailUrlList   
+     * @Description: 获取车辆保险详情上传地址列表的基础方法
+     * @param: CarInsuranceDetailUrl
+     * @return: List<CarInsuranceDetailUrl>      
+     */
+	public List<CarInsuranceDetailUrl> getCarInsuranceDetailUrlList(CarInsuranceDetailUrl carInsuranceDetailUrl);
+	
+	/**   
+     * @Title: createCarInsuranceDetailUrlBatch   
+     * @Description: 批量创建车辆保险详情上传地址
+     * @param: List<CarInsuranceDetailUrl>
+     * @return: void      
+     */
+	public void createCarInsuranceDetailUrlBatch(List<CarInsuranceDetailUrl> carInsuranceDetailUrlList);
+}

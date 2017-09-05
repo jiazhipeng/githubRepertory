@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarInsuranceDetailMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.CarInsuranceDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="car_id" property="carId" jdbcType="BIGINT" />
+    <result column="compulsory_insurance_num" property="compulsoryInsuranceNum" jdbcType="VARCHAR" />
+    <result column="compulsory_insurance_start" property="compulsoryInsuranceStart" jdbcType="TIMESTAMP" />
+    <result column="compulsory_insurance_end" property="compulsoryInsuranceEnd" jdbcType="TIMESTAMP" />
+    <result column="business_insurance_num" property="businessInsuranceNum" jdbcType="VARCHAR" />
+    <result column="business_insurance_start" property="businessInsuranceStart" jdbcType="TIMESTAMP" />
+    <result column="business_insurance_end" property="businessInsuranceEnd" jdbcType="TIMESTAMP" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.CarInsuranceDetail" >
+       select  count(1) 
+    from td_car_insurance_detail  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "compulsoryInsuranceNum != null and compulsoryInsuranceNum != '' ">
+        and compulsory_insurance_num = #{compulsoryInsuranceNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "compulsoryInsuranceStart != null ">
+        and compulsory_insurance_start = #{compulsoryInsuranceStart,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "compulsoryInsuranceEnd != null ">
+        and compulsory_insurance_end = #{compulsoryInsuranceEnd,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "businessInsuranceNum != null and businessInsuranceNum != '' ">
+        and business_insurance_num = #{businessInsuranceNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "businessInsuranceStart != null ">
+        and business_insurance_start = #{businessInsuranceStart,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "businessInsuranceEnd != null ">
+        and business_insurance_end = #{businessInsuranceEnd,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarInsuranceDetail" >
+       select  <include refid="Base_Column_List" />
+    from td_car_insurance_detail  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "compulsoryInsuranceNum != null and compulsoryInsuranceNum != '' ">
+        and compulsory_insurance_num = #{compulsoryInsuranceNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "compulsoryInsuranceStart != null ">
+        and compulsory_insurance_start = #{compulsoryInsuranceStart,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "compulsoryInsuranceEnd != null ">
+        and compulsory_insurance_end = #{compulsoryInsuranceEnd,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "businessInsuranceNum != null and businessInsuranceNum != '' ">
+        and business_insurance_num = #{businessInsuranceNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "businessInsuranceStart != null ">
+        and business_insurance_start = #{businessInsuranceStart,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "businessInsuranceEnd != null ">
+        and business_insurance_end = #{businessInsuranceEnd,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, car_id, compulsory_insurance_num, 
+      compulsory_insurance_start, compulsory_insurance_end, business_insurance_num, 
+      business_insurance_start, business_insurance_end, created
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarInsuranceDetail" >
+    select 
+      id, car_id, compulsory_insurance_num, 
+      compulsory_insurance_start, compulsory_insurance_end, business_insurance_num, 
+      business_insurance_start, business_insurance_end, created
+    from td_car_insurance_detail where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.CarInsuranceDetail" >
+    delete from td_car_insurance_detail where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_car_insurance_detail where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.CarInsuranceDetail" >
+    insert into td_car_insurance_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "carId != null ">
+         car_id,
+      </if>
+      <if test= "compulsoryInsuranceNum != null and compulsoryInsuranceNum != '' ">
+         compulsory_insurance_num,
+      </if>
+      <if test= "compulsoryInsuranceStart != null ">
+         compulsory_insurance_start,
+      </if>
+      <if test= "compulsoryInsuranceEnd != null ">
+         compulsory_insurance_end,
+      </if>
+      <if test= "businessInsuranceNum != null and businessInsuranceNum != '' ">
+         business_insurance_num,
+      </if>
+      <if test= "businessInsuranceStart != null ">
+         business_insurance_start,
+      </if>
+      <if test= "businessInsuranceEnd != null ">
+         business_insurance_end,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carId != null ">
+         #{carId,jdbcType=BIGINT},
+      </if>
+      <if test= "compulsoryInsuranceNum != null and compulsoryInsuranceNum != '' ">
+         #{compulsoryInsuranceNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "compulsoryInsuranceStart != null ">
+         #{compulsoryInsuranceStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "compulsoryInsuranceEnd != null ">
+         #{compulsoryInsuranceEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "businessInsuranceNum != null and businessInsuranceNum != '' ">
+         #{businessInsuranceNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "businessInsuranceStart != null ">
+         #{businessInsuranceStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "businessInsuranceEnd != null ">
+         #{businessInsuranceEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_car_insurance_detail (
+         id,
+         car_id,
+         compulsory_insurance_num,
+         compulsory_insurance_start,
+         compulsory_insurance_end,
+         business_insurance_num,
+         business_insurance_start,
+         business_insurance_end,
+         created)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.carId,jdbcType=BIGINT},
+         #{item.compulsoryInsuranceNum,jdbcType=VARCHAR},
+         #{item.compulsoryInsuranceStart,jdbcType=TIMESTAMP},
+         #{item.compulsoryInsuranceEnd,jdbcType=TIMESTAMP},
+         #{item.businessInsuranceNum,jdbcType=VARCHAR},
+         #{item.businessInsuranceStart,jdbcType=TIMESTAMP},
+         #{item.businessInsuranceEnd,jdbcType=TIMESTAMP},
+         #{item.created,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.CarInsuranceDetail" >
+    update td_car_insurance_detail
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carId != null ">
+      car_id = #{carId,jdbcType=BIGINT},
+      </if>
+      <if test= "compulsoryInsuranceNum != null and compulsoryInsuranceNum != '' ">
+      compulsory_insurance_num = #{compulsoryInsuranceNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "compulsoryInsuranceStart != null ">
+      compulsory_insurance_start = #{compulsoryInsuranceStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "compulsoryInsuranceEnd != null ">
+      compulsory_insurance_end = #{compulsoryInsuranceEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "businessInsuranceNum != null and businessInsuranceNum != '' ">
+      business_insurance_num = #{businessInsuranceNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "businessInsuranceStart != null ">
+      business_insurance_start = #{businessInsuranceStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "businessInsuranceEnd != null ">
+      business_insurance_end = #{businessInsuranceEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

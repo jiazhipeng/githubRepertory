@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>修改资料</title>
+    <link href="../../css/user.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+    <style>
+        .aditBox .name {
+            width: 65px;
+        }
+        .aditBox input[type="text"], .aditBox input[type="tel"] {
+            width: 60%;
+            text-align: right;
+            float: right;
+        }
+        .icons {
+            width: 11px;
+            height: 20px;
+            background: url("../../images/arrow_right_3.png") no-repeat;
+            display: inline-block;
+            vertical-align: middle;
+            float: right;
+            background-size: 75%;
+            position: absolute;
+            right: 0;
+            top: 14px;
+        }
+        .name-right {
+            text-align: right;
+            display: inline-block;
+            width: 100%;
+            margin-left: -8px;
+        }
+        .per {
+            color: #ccc;
+        }
+        .section-info {
+            background: #fff;
+            margin-top: 10px;
+            border-top: 1px #ccc solid;
+            border-bottom: 1px #ccc solid;
+        }
+        .section-info .aditBox li:last-child {
+            border-bottom: 0;
+        }
+        .aditBox .info-head {
+            height: 100px;
+            line-height: 100px;
+        }
+        /*.info-img {*/
+            /*width: 70px;*/
+            /*height: 70px;*/
+        /*}*/
+        .user-info .userInfo {
+            background: #fff;
+            border-bottom: 1px #ccc solid;
+            border-top: 1px #ccc solid;
+            margin-top: 10px;
+            height: 100px;
+            line-height: 100px;
+        }
+        .user-info .userInfo .name {
+            line-height: 100px;
+            color: #666;
+        }
+        .user-info .userInfo .icons {
+            top: 70px;
+        }
+        .info-head {
+            width: 70px;
+            height: 70px;
+            float: right;
+            margin-right: 20px;
+        }
+
+        .fixed-head,.fixed-select,.update-name {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.7);
+        }
+        .fixed-head img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .select-cen {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        .select-cen li {
+            background: #fff;
+            border-bottom: 1px #ccc solid;
+            text-align: center;
+            font-size: 1.4rem;
+            line-height: 40px;
+            height: 40px;
+        }
+        .select-cen li:last-child {
+            border-bottom: 0;
+            margin-top: 5px;
+        }
+        .update-con {
+            background: #fff;
+            width: 300px;
+            height: auto;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            margin: auto;
+            border-radius: 3px;
+        }
+        .popup-head {
+            position: relative;
+        }
+        .popup-head h3 {
+            text-align: center;
+            font-size: 1.4rem;
+            margin-top: 10px;
+        }
+        .update-con {
+            text-align: center;
+        }
+        .ipn-text {
+            border: 1px #ccc solid;
+            border-radius: 2px;
+            font-size: 1.4rem;
+            padding: 5px 0;
+            text-indent: 1rem;
+        }
+        .popup-body {
+            padding: 20px 0;
+        }
+        .popup-foot {
+            border-top: 1px #ccc solid;
+            padding: 10px 0;
+        }
+        .popup-foot a {
+            color: #0c91e5;
+        }
+        .close {
+            position: absolute;
+            right: 10px;
+            top: -2px;
+        }
+    </style>
+</head>
+<body class="greyBg user-info">
+    <!--头像昵称-->
+    <div class="userInfo">
+        <!--<div class="icon">-->
+            <span class="name-right info-head">
+             <img src="../../images/usr.png">
+            </span>
+            <!--<em class="vip"></em>-->
+
+        <!--</div>-->
+        <i class="icons"></i>
+
+        <span class="name">头像</span>
+    </div>
+
+
+    <div class="section-info ">
+        <div class="section">
+        <ul class="aditBox">
+            <li>
+                <span class="name">姓名</span>
+                <input type="text" placeholder="影子">
+                <i class="icons"></i>
+
+            </li>
+            <li>
+                <span class="name">手机号</span>
+                <input type="tel" maxlength="11" placeholder="18645873692">
+            </li>
+            <li>
+                <span class="name">性别</span>
+                <span class="name-right">女</span>
+                <i class="icons"></i>
+
+            </li>
+            <li>
+                <span class="city name">城市</span>
+                <span class="name-right">北京</span>
+                <i class="icons"></i>
+
+            </li>
+            <li>
+                <span class="name">完善信息</span>
+                <span class="name-right per">未完善</span>
+                <i class="icons"></i>
+
+            </li>
+        </ul>
+    </div>
+    </div>
+
+    <div class="update-name">
+        <div class="update-con">
+            <div class="popup-head"><h3>修改姓名</h3><span class="close">&times;</span></div>
+            <div class="popup-body">
+               姓名: <input type="text" class="ipn-text" />
+            </div>
+            <div class="popup-foot">
+                <a href="javascript:">确认</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 点击头像操作-->
+    <!--<div class="fixed-select">-->
+        <!--<div class="select-cen">-->
+            <!--<ul>-->
+                <!--<li><a href="javascript:;">查看大图</a></li>-->
+                <!--<li><a href="javascript:;">拍照</a></li>-->
+                <!--<li><a href="javascript:;">从手机选择</a></li>-->
+                <!--<li><a href="javascript:;">取消</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--查看大图头像-->
+
+    <!--<div class="fixed-head">-->
+        <!--<img src="../../images/about_1.jpg"/>-->
+    <!--</div>-->
+
+
+
+    <!--<span class="button">保存</span>-->
+</body>
+</html>

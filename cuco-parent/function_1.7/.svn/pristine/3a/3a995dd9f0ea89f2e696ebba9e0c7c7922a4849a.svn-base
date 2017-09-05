@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>充电详情</title>
+    <link rel="stylesheet" href="../../css/css.css">
+    <link rel="stylesheet" href="../../css/gjd/jcgs_two.css">
+</head>
+
+<body class="greyBg">
+    <div class="charge-page">
+        <ul class="charge-info-list">
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        用车会员：
+                    </span>
+                    <span class="info-val">
+                        张谁(15323025230)
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        取车时间：
+                    </span>
+                    <span class="info-val">
+                        2016-06-11 9:00
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        取车地点：
+                    </span>
+                    <span class="info-val">
+                        北辰世纪中心
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        送车地点：
+                    </span>
+                    <span class="info-val">
+                        北辰世纪中心
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        使用车辆：
+                    </span>
+                    <span class="info-val">
+                        京A·23123
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <ul class="charge-info-list">
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        负责管家：
+                    </span>
+                    <span class="info-val">
+                        王小二
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        任务处理：
+                    </span>
+                    <span class="info-val">
+                        <span class="task-state radioRoup">
+                            <em>
+                                <input type="radio">
+                                <i>跟进中</i>
+                            </em>
+                            <em>
+                                <input type="radio">
+                                <i>出发取车</i>
+                            </em>
+                            <em>
+                                <input type="radio">
+                               <i>取消任务</i>
+                            </em>
+                        </span>
+                    </span>
+                </a>
+            </li>
+            <li data-val="aaa">
+                <a href="javascript:;">
+                    <span class="info-name">
+                        任务备注：
+                    </span>
+                    <span class="info-val">
+                        输入备注信息
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <div class="charge-task-t">
+            任务记录
+        </div>
+        <ul class="charge-task-list">
+            <li>
+                <div class="row">
+                    <p>待分配</p>
+                    <p>徐林峰(会员)-</p>
+                    <p>2016-06-11 9:00</p>
+                </div>
+                <div class="row">
+                    备注：徐林峰徐林峰徐林峰徐林峰徐林峰徐林峰徐林峰徐林峰徐林峰徐林峰
+                </div>
+            </li>
+            <li>
+                <p>待分配</p>
+                <p>徐林峰(会员)-</p>
+                <p>2016-06-11 9:00</p>
+            </li>
+            <li>
+                <p>待分配</p>
+                <p>徐林峰(会员)-</p>
+                <p>2016-06-11 9:00</p>
+            </li>
+        </ul>
+        <div class="btns">
+            <a href="javscript:;" class="button cencle">取消</a>
+            <a href="javscript:;" class="button">确定</a>
+        </div>
+    </div>
+
+    <!--填写备注-->
+    <div class="charge-page charge-dia remark" style="display:none;">
+        <textarea class="textarea"></textarea>
+        <div class="btns">
+            <a href="javscript:;" class="button cencle">取消</a>
+            <a href="javscript:;" class="button">确定</a>
+        </div>
+    </div>
+
+    <!--管家列表-->
+    <div class="charge-page charge-dia" style="display:none;">
+        <div class="charge-tasker">
+            <div class="tasker-t">当前负责销售<span>暂未选择</span></div>
+            <ul>
+                <li>测试销售</li>
+                <li class="on">吕静</li>
+                <li>曲佳鹏</li>
+                <li>赵幸运</li>
+                <li>袁一森</li>
+                <li>王志勇</li>
+                <li>吕静</li>
+                <li>曲佳鹏</li>
+                <li>赵幸运</li>
+                <li>袁一森</li>
+                <li>王志勇</li>
+                <li>吕静</li>
+                <li>曲佳鹏</li>
+                <li>赵幸运</li>
+                <li>袁一森</li>
+                <li>王志勇</li>
+            </ul>
+        </div>
+        <div class="btns">
+            <a href="javscript:;" class="button cencle">取消</a>
+            <a href="javscript:;" class="button">确定</a>
+        </div>
+    </div>
+
+    <!--地址选择-->
+    <div class="charge-page charge-dia" style="display:none;">
+        <div class="searc-sec">
+            <div class="searchBox">
+                <a href="javascript:;" class="searchBtn"></a>
+                <input type="search" placeholder="请输入地点">
+                <a href="javascript:;" class="cencle-search">取消</a>
+            </div>
+            <ul class="search-list">
+                <li>
+                    <p>奥林匹克公园</p>
+                    <span>北京市朝阳区</span>
+                </li>
+                <li>
+                    <p>奥林匹克森林公园</p>
+                    <span>北京市朝阳区</span>
+                </li>
+            </ul>
+
+
+            <div class="btns">
+                <a href="javscript:;" class="button cencle">取消</a>
+                <a href="javscript:;" class="button">确定</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

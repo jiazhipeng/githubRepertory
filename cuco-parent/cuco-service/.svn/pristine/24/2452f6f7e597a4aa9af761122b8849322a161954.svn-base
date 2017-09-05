@@ -1,0 +1,41 @@
+package cn.cuco.service.statistics.impl;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.service.car.carInfo.CarService;
+import cn.cuco.service.statistics.OperationStatisticsService;
+
+@Service
+public class OperationStatisticsServiceImpl implements OperationStatisticsService{
+
+	protected Logger logger = Logger.getLogger(this.getClass());
+	
+	@Autowired
+	private CarService carService;
+
+	@Override
+	public List<Map<String, String>> getOperationStatisticsByDay(Date startTime, Date endTime, Long carportId, Long carTypeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Map<String, String>> getOperationStatisticsByWeek(Date startTime, Date endTime, Long carportId, Long carTypeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Map<String, String>> getOperationStatisticsByMonth(Date startTime, Date endTime, Long carportId, Long carTypeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+}

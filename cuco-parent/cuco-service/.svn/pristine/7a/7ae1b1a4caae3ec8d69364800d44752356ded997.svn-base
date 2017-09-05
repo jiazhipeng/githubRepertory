@@ -1,0 +1,490 @@
+package cn.cuco.service.log.impl;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.OperateLogMapper;
+import cn.cuco.entity.ButlerTask;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarAccident;
+import cn.cuco.entity.CarInsuranceDetail;
+import cn.cuco.entity.CarRepair;
+import cn.cuco.entity.CarType;
+import cn.cuco.entity.CarViolation;
+import cn.cuco.entity.Carport;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OperateSetting;
+import cn.cuco.entity.Parking;
+import cn.cuco.entity.PreAuthorizedDebit;
+import cn.cuco.enums.CarEnum;
+import cn.cuco.enums.CarViolationEnum;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.enums.TaskStatus;
+import cn.cuco.enums.Valid;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.business.OperateSettingService;
+import cn.cuco.service.basic.business.ParkingService;
+import cn.cuco.service.basic.carport.CarTypeService;
+import cn.cuco.service.basic.carport.CarportService;
+import cn.cuco.service.car.carInfo.CarService;
+import cn.cuco.service.car.carOperate.CarAccidentService;
+import cn.cuco.service.car.carOperate.CarRepairService;
+import cn.cuco.service.car.carOperate.CarViolationService;
+import cn.cuco.service.log.OperateLogService;
+import cn.cuco.service.payment.preAuthorizedDebit.PreAuthorizedDebitService;
+import cn.cuco.service.task.ButlerTaskService;
+
+@Service(value = "operateLogService")
+public class OperateLogServiceImpl implements OperateLogService {
+
+    @Autowired
+    private OperateLogMapper<OperateLog> operateLogMapper;
+    @Autowired
+    private OperateSettingService operateSettingService;
+    @Autowired
+    private CarService CarService;
+    @Autowired
+    private ParkingService parkingService;
+    @Autowired
+    private CarportService carportService;
+    @Autowired
+    private CarTypeService carTypeService;
+    @Autowired
+    private CarRepairService carRepairService;
+    @Autowired
+    private CarAccidentService carAccidentService;
+    @Autowired
+    private ButlerTaskService butlerTaskService;
+    @Autowired
+    private PreAuthorizedDebitService preAuthorizedDebitService;
+    @Autowired
+    private CarViolationService carViolationService;
+    
+    /**
+     * 日志分页
+     */
+    public PageResult<OperateLog> getOperateLogByPage(OperateLog OperateLog){
+    	ParamVerifyUtils.paramNotNull(OperateLog);
+		ParamVerifyUtils.paramNotNull(OperateLog.getType(), "日志类型不能为空");
+		
+		//设置参数类型
+		Integer page = OperateLog.getPage();
+	    Integer pageSize = OperateLog.getPageSize();
+	     /*搜索条件*/
+	    OperateLog operateLogSearch = new OperateLog();
+	    operateLogSearch.setType(OperateLog.getType());
+	    operateLogSearch.setOperationId(OperateLog.getOperationId());
+	    List<OperateLog> operateLogs = null;
+	    /*总记录数*/
+	    Integer totalSize = this.operateLogMapper.selectCountByCondition(operateLogSearch);
+	    /*分页信息*/
+	    PageHelper.startPage(page,pageSize);
+	    operateLogs = this.operateLogMapper.selectByCondition(operateLogSearch);
+	    PageResult<OperateLog> pageResult = new PageResult<OperateLog>(page,pageSize,totalSize,operateLogs);
+	    return pageResult;
+    }
+    
+    
+    /**
+     * 添加日志
+     */
+	@Override
+	public OperateLog createOperateLog(OperateLog operateLog) {
+		ParamVerifyUtils.paramNotNull(operateLog);
+		ParamVerifyUtils.paramNotNull(operateLog.getType(), "添加日志类型不能为空");
+		ParamVerifyUtils.paramNotNull(operateLog.getOperationId(), "添加日志操作ID不能为空");
+		ParamVerifyUtils.paramNotNull(operateLog.getModifierId(), "添加日志操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(operateLog.getModifier(), "添加日志操作人不能为空");
+		operateLog.setCreated(new Date());
+		//添加日志
+		operateLogMapper.insertSelective(operateLog);
+		return operateLogMapper.selectByPrimaryKey(operateLog.getId());
+	}
+
+	/**
+	 * 查询日志列表
+	 */
+	@Override
+	public List<OperateLog> getOperateLogList(OperateLog operateLog) {
+		ParamVerifyUtils.paramNotNull(operateLog);
+		ParamVerifyUtils.paramNotNull(operateLog.getType(), "添加日志类型不能为空");
+		ParamVerifyUtils.paramNotNull(operateLog.getOperationId(), "添加日志操作ID不能为空");
+		return operateLogMapper.selectByCondition(operateLog);
+	}
+
+	/**
+	 * 查询日志总条数
+	 */
+	@Override
+	public Integer getOperateLogCount(OperateLog operateLog) {
+		ParamVerifyUtils.paramNotNull(operateLog);
+		ParamVerifyUtils.paramNotNull(operateLog.getType(), "添加日志类型不能为空");
+		ParamVerifyUtils.paramNotNull(operateLog.getOperationId(), "添加日志操作ID不能为空");
+		return operateLogMapper.selectCountByCondition(operateLog);
+	}
+	
+	/**
+	 * 创建停车场修改日志
+	 */
+	@Override
+	public void createLogForParking(Parking parking) {
+		ParamVerifyUtils.paramNotNull(parking);
+		ParamVerifyUtils.paramNotNull(parking.getId(), "添加停车场日志操作ID不能为空");
+		ParamVerifyUtils.paramNotNull(parking.getModifierId(), "添加停车场日志操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(parking.getModifier(), "添加停车场日志操作人不能为空");
+		ParamVerifyUtils.paramNotNull(parking.getValid(), "添加停车场日志状态不能为空");
+		
+		OperateLog operateLog = new OperateLog();
+		operateLog.setType(OperateLogEnum.PARKING.getValue());
+		operateLog.setOperationId(parking.getId());
+		operateLog.setModifierId(parking.getModifierId());
+		operateLog.setModifier(parking.getModifier());
+		operateLog.setStatus(parking.getValid());
+		String remark ="";
+		if(parking.getValid() == Valid.UP.getValue().intValue()){
+			remark +="创建停车场";
+		}else{
+			remark +="删除停车场";
+		}
+		operateLog.setRemark(remark);
+		this.createOperateLog(operateLog);
+	}
+
+	/**
+	 * 运营参数配置日志
+	 */
+	@Override
+	public void createOperateLogForOperateSetting(OperateSetting operateSetting) {
+		ParamVerifyUtils.paramNotNull(operateSetting);
+		ParamVerifyUtils.paramNotNull(operateSetting.getId(), "创建参数配置日志，配置ID不能为空");
+		ParamVerifyUtils.paramNotNull(operateSetting.getModifierId(), "创建参数配置日志，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(operateSetting.getModifier(), "创建参数配置日志，操作ID不能为空");
+		//取旧的操作数据
+		OperateSetting old_operateSetting = operateSettingService.getOperateSettingById(operateSetting.getId());
+		OperateLog operateLog = new OperateLog();
+		operateLog.setType(OperateLogEnum.OPERATE_SETTING.getValue());
+		operateLog.setOperationId(operateSetting.getId());
+		operateLog.setModifierId(operateSetting.getModifierId());
+		operateLog.setModifier(operateSetting.getModifier());
+		//拼接日志
+		String remark = "";
+		if(old_operateSetting!=null){
+			if(StringUtils.isNoneBlank(operateSetting.getParameterValue()) && !old_operateSetting.getParameterValue().equals(operateSetting.getParameterValue())){
+				remark +="参数由 "+old_operateSetting.getParameterValue() +"变更为 "+operateSetting.getParameterValue();
+			}
+			operateLog.setRemark(remark);
+		}
+		this.createOperateLog(operateLog);
+	}
+	
+	/**
+	 * 创建车型日志
+	 */
+	@Override
+	public void createOperateLogForCartype(CarType carType){
+		ParamVerifyUtils.paramNotNull(carType);
+		ParamVerifyUtils.paramNotNull(carType.getId(), "创建车型日志，车型ID");
+		ParamVerifyUtils.paramNotNull(carType.getModifierId(), "创建车型日志，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getModifier(), "创建车型日志，操作ID不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getValid(), "添加车型日志,状态不能为空");
+		//取旧的车型数据
+		CarType old_carType = carTypeService.getCarTypeById(carType.getId());
+		
+		OperateLog operateLog = new OperateLog();
+		operateLog.setType(OperateLogEnum.CAR_TYPE.getValue());
+		operateLog.setOperationId(carType.getId());
+		operateLog.setModifierId(carType.getModifierId());
+		operateLog.setModifier(carType.getModifier());
+		operateLog.setStatus(carType.getValid());
+		String remark ="";
+		if(old_carType==null){
+			remark+="创建车型";
+		}else if(carType.getValid() == Valid.DOWN.getValue().intValue()){
+			remark+=Valid.DOWN.getDisplay();
+		}else if(carType.getValid() == Valid.UP.getValue().intValue()){
+			remark+=Valid.UP.getDisplay();
+		}
+		operateLog.setRemark(remark);
+		this.createOperateLog(operateLog);
+	}
+	
+	/**
+	 * 创建车库日志
+	 */
+	@Override
+	public void createOperateLogForCarport(Carport carport){
+		ParamVerifyUtils.paramNotNull(carport);
+		ParamVerifyUtils.paramNotNull(carport.getId(), "创建车库日志，车型ID");
+		ParamVerifyUtils.paramNotNull(carport.getModifierId(), "创建车库日志，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carport.getModifier(), "创建车库日志，操作ID不能为空");
+		ParamVerifyUtils.paramNotNull(carport.getValid(), "添加车库日志,状态不能为空");
+		//取旧的车库数据
+		Carport old_carport = carportService.getCarportById(carport.getId());
+		
+		OperateLog operateLog = new OperateLog();
+		operateLog.setType(OperateLogEnum.CARPORT.getValue());
+		operateLog.setOperationId(carport.getId());
+		operateLog.setModifierId(carport.getModifierId());
+		operateLog.setModifier(carport.getModifier());
+		operateLog.setStatus(carport.getValid());
+		String remark ="";
+		if(old_carport==null){
+			remark+="创建车库";
+		}else if(carport.getValid() == Valid.DOWN.getValue().intValue()){
+			remark+=Valid.DOWN.getDisplay();
+		}else if(carport.getValid() == Valid.UP.getValue().intValue()){
+			remark+=Valid.UP.getDisplay();
+		}
+		operateLog.setRemark(remark);
+		this.createOperateLog(operateLog);
+	}
+	
+	/**
+	 * 车辆维修操作日志
+	 */
+	@Override
+	public void createOperateLogForCarRepair(CarRepair carRepair) {
+		ParamVerifyUtils.paramNotNull(carRepair);
+		ParamVerifyUtils.paramNotNull(carRepair.getId(), "创建车辆维修操作日志，配置ID不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getModifierId(), "创建车辆维修操作日志，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getModifier(), "创建车辆维修操作日志，操作ID不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getStatus(), "添加车库日志,状态不能为空");
+		//取旧的操作数据
+//		CarRepair old_carRepair = carRepairService.getCarRepairById(carRepair.getId());
+		OperateLog operateLog = new OperateLog();
+		operateLog.setType(OperateLogEnum.REPAIR.getValue());
+		operateLog.setOperationId(carRepair.getId());
+		operateLog.setModifierId(carRepair.getModifierId());
+		operateLog.setModifier(carRepair.getModifier());
+		operateLog.setStatus(carRepair.getStatus());
+		//拼接日志
+		String remark = "";
+		if(StringUtils.isNotBlank(carRepair.getRemark())){
+			operateLog.setRemark(remark);
+		}
+		this.createOperateLog(operateLog);
+	}
+	
+	/**
+	 * 出险操作日志
+	 */
+	@Override
+	public void createOperateLogForCarAccident(CarAccident carAccident) {
+		ParamVerifyUtils.paramNotNull(carAccident);
+		ParamVerifyUtils.paramNotNull(carAccident.getId(), "创建出险操作日志，配置ID不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifierId(), "创建出险操作日志，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifier(), "创建出险操作日志，操作ID不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getStatus(), "添加车库日志,状态不能为空");
+		//取旧的操作数据
+//		CarAccident old_carAccident = carAccidentService.getCarAccidentById(carAccident.getId());
+		OperateLog operateLog = new OperateLog();
+		operateLog.setType(OperateLogEnum.CAR_ACCIDENT.getValue());
+		operateLog.setOperationId(carAccident.getId());
+		operateLog.setModifierId(carAccident.getModifierId());
+		operateLog.setModifier(carAccident.getModifier());
+		operateLog.setStatus(carAccident.getStatus());
+		//拼接日志
+		String remark = "";
+		if(StringUtils.isNotBlank(carAccident.getRemark())){
+			operateLog.setRemark(remark);
+		}
+		this.createOperateLog(operateLog);
+	}
+	
+	@Override
+	public void createLogForCarInsurance(CarInsuranceDetail carInsuranceDetail) {
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail, "创建车辆保险日志，车辆保险日志对象不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getId(), "创建车辆保险日志，车辆保险日志对象ID不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getModifierId(), "创建车辆保险日志，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getModifier(), "创建车辆保险日志，操作人不能为空");
+		OperateLog operateLog = new OperateLog();
+		operateLog.setType(OperateLogEnum.INSURANCE.getValue());
+		operateLog.setOperationId(carInsuranceDetail.getId());
+		operateLog.setModifierId(carInsuranceDetail.getModifierId());
+		operateLog.setModifier(carInsuranceDetail.getModifier());
+		operateLog.setRemark("添加保险");
+		this.createOperateLog(operateLog);
+		
+	}
+
+	@Override
+	public void createLogForCar(Car car) {
+		ParamVerifyUtils.paramNotNull(car, "创建车辆日志，车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car.getId(), "创建车辆日志，车辆对象ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifierId(), "创建车辆日志，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifier(), "创建车辆日志，操作人不能为空");
+		Car old_car = this.CarService.getCarById(car.getId());
+		String remark="";
+		if(null==old_car){
+			//表示是创建车辆
+			remark = "新建车辆";
+		}
+		if(null!=old_car){
+			if(car.getStatus()!=old_car.getStatus()){
+				//状态发生改变
+				remark = "更改车辆状态为"+CarEnum.CarStatus.getName(car.getStatus());
+			}
+		}
+		OperateLog operateLog = new OperateLog();
+		operateLog.setType(OperateLogEnum.CAR.getValue());
+		operateLog.setOperationId(car.getId());
+		operateLog.setModifierId(car.getModifierId());
+		operateLog.setModifier(car.getModifier());
+		operateLog.setRemark(remark);
+		this.createOperateLog(operateLog);
+		
+	}
+
+	/**
+	 * 创建取车日志
+	 */
+	@Override
+	public void createeOperateLogForButlerTask(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask, "创建任务日志，任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "创建任务日志，任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "创建任务日志，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "创建任务辆日志，操作人不能为空");
+		//查询任务
+		ButlerTask old_butlerTask = this.butlerTaskService.getButlerTaskById(butlerTask.getId());
+		OperateLog operateLog = new OperateLog();
+		//备注
+		String remark = "";
+		if(StringUtils.isNotBlank(butlerTask.getRemark())){
+			remark += "备注："+butlerTask.getRemark()+"<br/>";
+		}
+		//变更状态判断
+		if(null != butlerTask.getStatus()){
+			if(!butlerTask.getStatus().equals(old_butlerTask.getStatus())){
+				remark += "备注：将状态变更为"+TaskStatus.getName(butlerTask.getStatus())+"<br/>";
+			}
+		}
+		//管家变更
+		if(null != butlerTask.getOperaterId()){
+			if(!butlerTask.getOperaterId().equals(old_butlerTask.getOperaterId())){
+				remark+="备注："+butlerTask.getModifier()+"将任务指派给"+butlerTask.getOperaterName()+"<br/>";
+			}
+		}
+		//客服变更
+		if(null != butlerTask.getCustomerId()){
+			if(!butlerTask.getCustomerId().equals(old_butlerTask.getCustomerId())){
+				remark+="备注："+butlerTask.getModifier()+"将任务指派给"+butlerTask.getCustomerName()+"<br/>";
+			}
+		}
+		if(null != butlerTask.getPlanTime()){
+			if(null!=butlerTask.getPlanTime()&&null!=old_butlerTask.getPlanTime()){
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				if(0 != (butlerTask.getPlanTime().compareTo(old_butlerTask.getPlanTime()))){
+					remark+="备注：变更预计取车时间，由"+sdf.format(old_butlerTask.getPlanTime())+"变为"+sdf.format(butlerTask.getPlanTime())+"<br/>";
+				}
+			}
+		}
+		//送地点变更
+		if(StringUtils.isNotBlank(butlerTask.getTaskAddress()) ){
+			if(!butlerTask.getTaskAddress().equals(old_butlerTask.getTaskAddress())){
+				remark+="备注：变更预计取车地点，由"+old_butlerTask.getTaskAddress()+"变为"+butlerTask.getTaskAddress()+"<br/>";
+			}
+		}
+		//插入日志
+		if(!remark.isEmpty()){
+			operateLog.setRemark(remark.substring(0, remark.lastIndexOf("<br/>")));
+		}
+		//插入记录
+		if(null != butlerTask.getStatus()){
+			operateLog.setStatus(butlerTask.getStatus());
+		}else{
+			operateLog.setStatus(old_butlerTask.getStatus());
+		}
+		operateLog.setOperationId(butlerTask.getId());
+		operateLog.setType(OperateLogEnum.TASK.getValue());
+		operateLog.setModifierId(butlerTask.getModifierId());
+		operateLog.setModifier(butlerTask.getModifier());
+		this.createOperateLog(operateLog);
+	}
+   
+	/**
+	 * 创建预授权日志
+	 */
+	@Override
+	public void createeOperateLogForPreAuthorizedDebit(PreAuthorizedDebit preAuthorizedDebit){
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit);
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getId(), "创建预授权日志，预授权ID");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getModifierId(), "创建预授权日志，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getModifier(), "创建预授权日志，操作ID不能为空");
+		
+		PreAuthorizedDebit old_preAuthorizedDebit = this.preAuthorizedDebitService.getPreAuthorizedDebitById(preAuthorizedDebit.getId());
+		
+		OperateLog operateLog = new OperateLog();
+		operateLog.setType(OperateLogEnum.PRE_AUTHORIZED_DEBIT.getValue());
+		operateLog.setOperationId(preAuthorizedDebit.getId());
+		operateLog.setModifierId(preAuthorizedDebit.getModifierId());
+		operateLog.setModifier(preAuthorizedDebit.getModifier());
+		operateLog.setStatus(preAuthorizedDebit.getStatus());
+		String remark ="";
+		if(old_preAuthorizedDebit==null){
+			remark+="创建预授权"+"<br/>";
+		}
+		if(StringUtils.isNotBlank(preAuthorizedDebit.getRemark())){
+			remark += "备注："+preAuthorizedDebit.getRemark()+"<br/>";
+		}
+		//插入日志
+		if(!remark.isEmpty()){
+			operateLog.setRemark(remark.substring(0, remark.lastIndexOf("<br/>")));
+		}
+		//插入记录
+		if(null != preAuthorizedDebit.getStatus()){
+			operateLog.setStatus(preAuthorizedDebit.getStatus());
+		}else{
+			operateLog.setStatus(old_preAuthorizedDebit.getStatus());
+		}
+		this.createOperateLog(operateLog);
+	}
+
+
+	@Override
+	public void createLogForCarViolation(CarViolation carViolation) {
+		ParamVerifyUtils.paramNotNull(carViolation, "创建车辆违章日志，车辆违章对象不能为空");
+		ParamVerifyUtils.paramNotNull(carViolation.getId(), "创建车辆违章日志，车辆违章对象ID不能为空");
+		ParamVerifyUtils.paramNotNull(carViolation.getModifierId(), "创建车辆违章日志，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(carViolation.getModifier(), "创建车辆违章日志，操作人不能为空");
+		OperateLog operateLog = new OperateLog();
+		operateLog.setType(OperateLogEnum.CAR_VIOLATION.getValue());
+		operateLog.setOperationId(carViolation.getId());
+		operateLog.setModifierId(carViolation.getModifierId());
+		operateLog.setModifier(carViolation.getModifier());
+		CarViolation carViolation_old = this.carViolationService.getCarViolationById(carViolation.getId());
+		String remark = "";
+		if(StringUtils.isNotBlank(carViolation.getRemark())){
+			remark += carViolation.getRemark()+";";
+		}
+		if(null == carViolation_old){
+			remark += "添加违章";
+		}else{
+			if(null==carViolation_old.getDealType()&&null!=carViolation.getDealType()){
+				remark += "选择处理方式为"+CarViolationEnum.dealType.getName(carViolation.getDealType());
+			}
+			if(null!=carViolation_old.getDealType()&&(carViolation_old.getDealType()!=carViolation.getDealType())){
+				remark += "变更处理方式为"+CarViolationEnum.dealType.getName(carViolation.getDealType());
+			}
+			if(CarViolationEnum.status.PROCESSED.getIndex()==carViolation.getStatus()){
+				remark += "违章已处理";
+			}
+			if(CollectionUtils.isEmpty(carViolation_old.getCarAttachmentList())&&CollectionUtils.isNotEmpty(carViolation_old.getCarAttachmentList())){
+				remark += "添加凭证";
+			}
+		}
+		if(!remark.isEmpty()){
+			operateLog.setRemark(remark);
+		}
+		this.createOperateLog(operateLog);
+	}
+	
+}

@@ -1,0 +1,60 @@
+package cn.cuco.controller.manager.supplier;
+
+import cn.cuco.common.httpservice.HttpServiceContext;
+import cn.cuco.common.utils.PrePersistUtils;
+import cn.cuco.entity.Supplier;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.business.SupplierService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import cn.cuco.annotation.API;
+
+/**
+ * @ClassName:
+ * @Description：
+ * @author：WangShuai
+ * @date：2017年02月24 18:39:00
+ */
+@RestController
+public class SupplierController {
+
+    @Autowired
+    private SupplierService supplierService;
+
+    @API(value = "供应商-详情")
+    @RequestMapping(value = "/supplier/getSupplierById",method = RequestMethod.GET)
+    private Object getSupplierById(@RequestParam Long id){
+
+        return supplierService.getSupplierById(id);
+    }
+
+    @API(value = "供应商-新建")
+    @RequestMapping(value = "/supplier/createSupplier",method = RequestMethod.POST)
+    private Object createSupplier(@RequestBody Supplier supplier){
+        PrePersistUtils.onCreate(supplier, HttpServiceContext.getCurrentUserId(),HttpServiceContext.getCurrentUserName());
+        return supplierService.createSupplier(supplier);
+    }
+
+    @API(value = "供应商-修改")
+    @RequestMapping(value = "/supplier/updateSupplier",method = RequestMethod.POST)
+    private Object updateSupplier(@RequestBody Supplier supplier){
+        PrePersistUtils.onModify(supplier,HttpServiceContext.getCurrentUserId(),HttpServiceContext.getCurrentUserName());
+        return supplierService.updateSupplier(supplier);
+    }
+
+    @API(value = "供应商-分页")
+    @RequestMapping(value = "/supplier/getSupplierListByPage",method = RequestMethod.POST)
+    private Object getSupplierListByPage(@RequestBody Supplier supplier){
+
+        return supplierService.getSupplierByPage(supplier);
+    }
+
+    @API(value = "供应商-列表")
+    @RequestMapping(value = "/supplier/getSupplierList",method = RequestMethod.GET)
+    private Object getSupplierList(){
+
+        PageResult<Supplier> pageResult = supplierService.getSupplierByPage(new Supplier());
+
+        return pageResult.getItems();
+    }
+}

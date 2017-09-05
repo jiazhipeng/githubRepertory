@@ -1,0 +1,70 @@
+package cn.cuco.service.member;
+
+import java.util.List;
+
+import cn.cuco.entity.MemberLoginLog;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户登陆日志相关接口
+ * @author zc.du
+ */
+public interface MemberLoginLogService {
+	
+	/** 
+    * @Description: 创建用户登陆日志基础方法
+    * @param memberLoginLog
+    * @return MemberLoginLog
+    * @throws 
+    */
+    public MemberLoginLog createMemberLoginLog(MemberLoginLog memberLoginLog) throws Exception;
+    
+    /** 
+    * @Description: 修改用户登陆日志基础方法
+    * @param memberLoginLog
+    * @return MemberLoginLog
+    * @throws 
+    */
+    public MemberLoginLog updateMemberLoginLog(MemberLoginLog memberLoginLog) throws Exception;
+    
+    /** 
+    * @Description: 删除用户登陆日志基础方法
+    * @param memberLoginLog
+    * @return Integer
+    * @throws 
+    */
+    public Integer deleteMemberLoginLog(MemberLoginLog memberLoginLog) throws Exception;
+    
+    /** 
+     * @Description: 查询用户登陆日志基础方法
+     * @param memberLoginLog
+     * @return MemberLoginLog
+     * @throws 
+     */
+    public MemberLoginLog getMemberLoginLog(MemberLoginLog memberLoginLog) throws Exception; 
+    
+    /** 
+     * @Description: 查询用户登陆日志列表基础方法
+     * @param memberLoginLog
+     * @return List<MemberLoginLog>
+     * @throws 
+     */
+    public List<MemberLoginLog> getMemberLoginLogList(MemberLoginLog memberLoginLog) throws Exception;
+    
+    /** 
+     * @Description: 分页查询用户登陆日志列表基础方法
+     * @param memberLoginLog
+     * @return PageResult<MemberLoginLog>
+     * @throws 
+     */
+    public PageResult<MemberLoginLog> getMemberLoginLogListByPage(MemberLoginLog memberLoginLog) throws Exception;
+
+    /** 
+     * @Description: 查询用户登陆日志数量基础方法
+     * @param memberLoginLog
+     * @return Integer
+     * @throws 
+     */
+    public Integer getMemberLoginLogCount(MemberLoginLog memberLoginLog) throws Exception;
+
+}

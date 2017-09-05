@@ -1,0 +1,67 @@
+package cn.cuco.service.member.info.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberAttachmentMapper;
+import cn.cuco.entity.MemberAttachment;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.info.MemberAttachmentService;
+
+@Service(value = "memberAttachmentService")
+public class MemberAttachmentServiceImpl implements MemberAttachmentService {
+
+    @Autowired
+    private MemberAttachmentMapper<MemberAttachment> memberAttachmentMapper;
+
+	@Override
+	public MemberAttachment createMemberAttachment(
+			MemberAttachment memberAttachment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberAttachment updateMemberAttachment(
+			MemberAttachment memberAttachment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteMemberAttachment(MemberAttachment memberAttachment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberAttachment getMemberAttachment(
+			MemberAttachment memberAttachment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemberAttachment> getMemberAttachmentList(
+			MemberAttachment memberAttachment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberAttachment> getMemberAttachmentListByPage(
+			MemberAttachment memberAttachment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMemberAttachmentCount(MemberAttachment memberAttachment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+   
+}

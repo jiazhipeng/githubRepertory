@@ -1,0 +1,45 @@
+package cn.cuco.service.log;
+
+
+import cn.cuco.entity.OperationLog;
+import cn.cuco.page.PageResult;
+
+import java.util.List;
+
+/**
+* @ClassName: OperationLogService 
+* @Description: 日志接口
+* @author huanghua
+* @date 2017年2月21日 下午3:59:33
+ */
+public interface OperationLogService {
+	
+    /**
+    * @Title: createOperationLog 
+    * @Description: 创建日志
+    * @param operationLog
+    * @return OperationLog
+    * @throws
+     */
+    public OperationLog createOperationLog(OperationLog operationLog);
+
+    /**
+    * @Title: getOperationLogByCondition 
+    * @Description: 分页取日志
+    * @param @param tdOperationLog
+    * @param @return
+    * @return List<OperationLog>
+    * @throws
+     */
+    public PageResult<OperationLog> getOperationLogByCondition(OperationLog tdOperationLog);
+
+    /**
+    * @Title: getOperationLogList 
+    * @Description: 取日志列表
+    * @param @param tdOperationLog
+    * @param @return
+    * @return List<OperationLog>
+    * @throws
+     */
+    public List<OperationLog> getOperationLogList(OperationLog tdOperationLog);
+}

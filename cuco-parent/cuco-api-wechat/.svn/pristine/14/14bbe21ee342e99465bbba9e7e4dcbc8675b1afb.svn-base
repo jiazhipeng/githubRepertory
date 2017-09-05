@@ -1,0 +1,143 @@
+package cn.cuco.controller.wechat;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.fastjson.JSONObject;
+
+import cn.cuco.constant.Constant;
+import cn.cuco.service.wechat.event.EventsService;
+import cn.cuco.service.wechat.event.factory.WechatEventFactory;
+import cn.cuco.wechat.entity.WeChatReceiveMsg;
+import cn.cuco.wechat.entity.WechatCallBack;
+import cn.cuco.wechat.util.AccessTokenUtil;
+import cn.cuco.wechat.util.OpenIdUtils;
+import cn.cuco.wechat.util.WechatUrl;
+
+/**
+ * 
+* @ClassName: CallBackController 
+* @Description: wechat回调接口
+* @author jiaxiaoxian
+* @date 2017年3月7日 下午2:03:16
+ */
+@RestController
+@RequestMapping(value = "/wechat")
+public class CallBackController {
+	
+	/**
+	 * logger工具
+	 */
+	private static Logger logger = Logger.getLogger(CallBackController.class);
+
+	/**
+	 * 
+	* @Title: setOpenId 
+	* @Description: wechat重定向地址,返回用户code和 state
+	* @author jiaxiaoxian
+	* @param code 
+	* @param state  穿参数为 memberId， 用来绑定openId
+	* @return void
+	 */
+	@RequestMapping("setOpenId")  
+	public void setOpenId(String code,String state){
+		OpenIdUtils.getOpenId(code, Long.decode(state));
+	}
+	
+	/**
+	 * 
+	* @Title: authorization 
+	* @Description: 用户静默授权， 获取code,从而换取 openId
+	* @author jiaxiaoxian
+	* @param memberId
+	* @return void
+	 */
+	@RequestMapping("authorization")  
+	public String authorization(Long memberId){
+		String callUrl = Constant.domain + "wechat/setOpenId";
+		try {
+			String url = WechatUrl.getUrlBySnsapibase(callUrl,memberId.toString());
+			return "redirect:" + url;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	/**
+	 * 验证token
+	 * 
+	 * @param signature
+	 * @param timestamp
+	 * @param nonce
+	 * @param echostr
+	 * @return
+	 * @throws IOException 
+	 * @throws NoSuchAlgorithmException
+	 */
+	@RequestMapping("/wechat")
+	public void wechat(WechatCallBack wechatCallBack,HttpServletRequest request,HttpServletResponse response) throws IOException {
+		
+		logger.info("------------weixin callback begin--------------");
+		String token = Constant.WECHAT_TOKEN;
+		
+		String signature = wechatCallBack.getSignature();// 微信加密签名
+		String timestamp = wechatCallBack.getTimestamp(); //时间戳
+		String nonce = wechatCallBack.getNonce();//随机数
+		
+		String tmpStr = "";
+		String returnMessage = "success";
+		try {
+			tmpStr = AccessTokenUtil.getSHA1(token, timestamp, nonce);
+			if(!tmpStr.equals(signature)){
+				return;
+			}
+			String method = request.getMethod();
+			logger.info("微信方法method:"+method);
+			if(!method.equals("POST")){
+				logger.info("随机字符串getEchostr:"+wechatCallBack.getEchostr());
+				this.returnMessage(wechatCallBack.getEchostr(), response);
+				return;
+			}
+			
+			WeChatReceiveMsg msg = AccessTokenUtil.getMsg(request.getInputStream());
+			logger.info("微信回掉消息为：" + JSONObject.toJSONString(msg));
+			String msgType = msg.getMsgType();
+			
+			if (msgType.equals("event")) {//接收事件消息
+				String event = msg.getEvent();
+				EventsService eventsService = WechatEventFactory.create(event);
+				if(eventsService!=null){
+					returnMessage = eventsService.response(msg);
+				}
+			}else {//接收普通消息
+				msg.setEventKey("but_lianxikefu");
+				EventsService eventsService = WechatEventFactory.create("click");
+				if(eventsService!=null){
+					returnMessage = eventsService.response(msg);
+				}
+			}
+			
+		} catch (Exception e1) {
+			logger.error("callback validate exception {}",e1);
+			this.returnMessage(returnMessage, response);
+		}
+		this.returnMessage(returnMessage, response);
+		logger.info("---------------weixin callback end-------------");
+	}
+
+
+
+	private void returnMessage(String message, HttpServletResponse response) throws IOException {
+		PrintWriter write = response.getWriter();
+		write.print(message);
+		write.flush();
+		write.close();
+	}
+}

@@ -1,0 +1,54 @@
+package cn.cuco.service.basic.carport;
+
+
+import cn.cuco.entity.BasicCarTypePricing;
+import java.util.List;
+
+/**
+* @ClassName: BasicCarTypePricingService 
+* @Description: 运营车型公里计费规则接口
+* @author huanghua
+* @date 2017年2月21日 下午1:58:35
+ */
+public interface CarTypePriceService {
+
+
+    /**
+    * @Title: createBasicCarTypePricingBatch 
+    * @Description: 批量插入运营公里计费规则
+    * @param  basicCarTypePricing
+    * @return Integer
+    * @throws
+     */
+    public void createBasicCarTypePricingBatch(List<BasicCarTypePricing> basicCarTypePricing);
+
+
+    /**
+    * @Title: deleteBasicCarTypePricingBatchByCityId 
+    * @Description: 根据城市Id删除运营公里计费规则
+    * @param  basicCarTypePricing
+    * @return Integer
+    * @throws
+     */
+    public void deleteBasicCarTypePricingBatchByCityId(BasicCarTypePricing basicCarTypePricing);
+
+
+    /**
+    * @Title: getBasicCarTypePricingsByCityId 
+    * @Description: 根据城市Id查询运营公里计费规则
+    * @param basicCarTypePricing
+    * @return List<BasicCarTypePricing>
+    * @throws
+     */
+    public List<BasicCarTypePricing> getBasicCarTypePricingsByCityId(BasicCarTypePricing basicCarTypePricing);
+    
+    /**
+    * @Title: getAllCarTypeCityAll 
+    * @Description: 取所有城市
+    * @param @return
+    * @return List<BasicCarTypePricing>
+    * @throws
+     */
+    public List<BasicCarTypePricing> getAllCarTypeCityAll();
+
+}

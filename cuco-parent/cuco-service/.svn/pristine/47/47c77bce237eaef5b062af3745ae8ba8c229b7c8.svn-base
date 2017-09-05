@@ -1,0 +1,239 @@
+package cn.cuco.service.task.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.ButlerTaskMapper;
+import cn.cuco.entity.ButlerTask;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.TransferList;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.task.ButlerTaskService;
+
+@Service(value = "butlerTaskService")
+public class ButlerTaskServiceImpl implements ButlerTaskService {
+
+    @Autowired
+    private ButlerTaskMapper<ButlerTask> butlerTaskMapper;
+
+	@Override
+	public ButlerTask createUserCarSendCarButlerTask(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask createUserCarGetCarButlerTask(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask createUserChangeSendCarButlerTask(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask createUserChangeGetCarButlerTask(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask createRestrictionChangeSendCarButlerTask(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask createRestrictionChangeGetCarButlerTask(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask getButlerTaskById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public PageResult<ButlerTask> getButlerTaskPageForWaitDealWith(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public PageResult<ButlerTask> getButlerTasPageForProcessing(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public PageResult<ButlerTask> getButlerTaskPageForEnded(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateTaskHousekeeper(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateTaskCustomer(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<ButlerTask> getButlerTaskList(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateSendButlerTaskByWaiting(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateButlerTaskBySendCar(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateButlerTaskBySendIn(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateSendButlerTaskByArrive(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateSendButlerTaskByCompleted(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateButlerTaskByCancelled(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateGetButlerTaskByWaiting(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateButlerTaskByTakeCar(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateButlerTaskByGetIn(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateGetButlerTaskByArrive(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ButlerTask updateGetButlerTaskByCompleted(ButlerTask butlerTask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public PageResult<OperateLog> getButlerTaskLogByPage(OperateLog operateLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public TransferList createButerTaskTransfer(TransferList transferList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	/**
+	* @Title: getButerTaskTransferList 
+	* @Description: 取任务附件列表
+	* @author huanghua
+	* @param transferList
+	* @return
+	* @return List<TransferList>
+	 */
+	private List<TransferList> getButerTaskTransferList(TransferList transferList){
+		return null;
+	}
+}

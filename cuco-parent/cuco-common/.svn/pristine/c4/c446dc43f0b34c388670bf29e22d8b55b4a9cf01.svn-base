@@ -1,0 +1,225 @@
+package cn.cuco.httpservice;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+import cn.cuco.common.utils.MyX509TrustManager;
+/**
+ * @ClassName: HttpClientUtils 
+ * @Description: TODO
+ * @author: wangchuntao 
+ * @date: 2017年2月20日 下午12:18:06
+ */
+public class HttpClientUtils {
+	private static Logger log = LoggerFactory.getLogger(HttpClientUtils.class);
+
+
+	private static final CloseableHttpClient httpClient;
+	public static final String CHARSET = "UTF-8";
+
+	static {
+		RequestConfig config = RequestConfig.custom().setConnectTimeout(60000).setSocketTimeout(15000).build();
+		httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+	}
+
+	/**
+	 * 向指定 URL 发送POST方法的请求
+	 * 
+	 * @param url
+	 *            发送请求的 URL
+	 * @param param
+	 *            请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
+	 * @return 所代表远程资源的响应结果
+	 * @throws IOException 
+	 */
+	public static String sendPost(String url, String param) throws IOException {
+		PrintWriter out = null;
+		BufferedReader in = null;
+		String result = "";
+		URL realUrl = new URL(url);
+		// 打开和URL之间的连接
+		URLConnection conn = realUrl.openConnection();
+		// 设置通用的请求属性
+		conn.setRequestProperty("accept", "*/*");
+		conn.setRequestProperty("connection", "Keep-Alive");
+		conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+		// 发送POST请求必须设置如下两行
+		conn.setDoOutput(true);
+		conn.setDoInput(true);
+		// 获取URLConnection对象对应的输出流
+//		out = new PrintWriter(conn.getOutputStream());
+		out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream(),"utf-8")); 
+		// 发送请求参数
+		out.print(param);
+		// flush输出流的缓冲
+		out.flush();
+		// 定义BufferedReader输入流来读取URL的响应
+		in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+		String line;
+		while ((line = in.readLine()) != null) {
+			result += line;
+		}
+		if (out != null) {
+			out.close();
+		}
+		if (in != null) {
+			in.close();
+		}
+
+		return result;
+	}	
+
+	/**
+	 * HTTP Get 获取内容
+	 * 
+	 * @param url
+	 *            请求的url地址 ?之前的地址
+	 * @param params
+	 *            请求的参数
+	 * @param charset
+	 *            编码格式
+	 * @return 页面内容
+	 * @throws IOException 
+	 * @throws UnsupportedEncodingException 
+	 * @throws ParseException 
+	 */
+	public static String sendGet(String url, Map<String, String> params, String charset) throws ParseException, UnsupportedEncodingException, IOException {
+		if (StringUtils.isBlank(url)) {
+			return null;
+		}
+		log.info("HTTP get 发送的url 为>>>>>>>>>" + url);
+		if (params != null && !params.isEmpty()) {
+			List<NameValuePair> pairs = new ArrayList<NameValuePair>(params.size());
+			for (Map.Entry<String, String> entry : params.entrySet()) {
+				String value = entry.getValue();
+				if (value != null) {
+					pairs.add(new BasicNameValuePair(entry.getKey(), value));
+				}
+			}
+			url += "?" + EntityUtils.toString(new UrlEncodedFormEntity(pairs, charset));
+		}
+		HttpGet httpGet = new HttpGet(url);
+		CloseableHttpResponse response = httpClient.execute(httpGet);
+		int statusCode = response.getStatusLine().getStatusCode();
+		if (statusCode != 200) {
+			httpGet.abort();
+			throw new RuntimeException("HttpClient,error status code :" + statusCode);
+		}
+		HttpEntity entity = response.getEntity();
+		String result = null;
+		if (entity != null) {
+			result = EntityUtils.toString(entity, "utf-8");
+		}
+		EntityUtils.consume(entity);
+		response.close();
+		return result;
+		
+	}
+
+	
+	/**
+	 * @throws IOException 
+	 * @throws MalformedURLException 
+	 * @throws ProtocolException 
+	 * @throws KeyManagementException 
+	 * @throws NoSuchProviderException 
+	 * @throws NoSuchAlgorithmException 
+	 * 
+	* @Title: httpRequest 
+	* @Description: TODO
+	* @author q.p.x
+	* @param @param requestUrl
+	* @param @param requestMethod
+	* @param @param outputStr
+	* @param @return    
+	* @return JSONObject    
+	* @date 2016年5月11日 下午4:47:46 
+	* @throws
+	 */
+	public static JSONObject sendSSL(String requestUrl, String requestMethod, String outputStr) throws NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException, IOException {
+		StringBuffer buffer = new StringBuffer();
+		// 创建SSLContext对象，并使用我们指定的信任管理器初始化
+		TrustManager[] tm = { new MyX509TrustManager() };
+		SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+		sslContext.init(null, tm, new java.security.SecureRandom());
+		// 从上述SSLContext对象中得到SSLSocketFactory对象
+		SSLSocketFactory ssf = sslContext.getSocketFactory();
+
+		URL url = new URL(requestUrl);
+		HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
+		httpUrlConn.setSSLSocketFactory(ssf);
+
+		httpUrlConn.setDoOutput(true);
+		httpUrlConn.setDoInput(true);
+		httpUrlConn.setUseCaches(false);
+		// 设置请求方式（GET/POST）
+		httpUrlConn.setRequestMethod(requestMethod);
+
+		if ("GET".equalsIgnoreCase(requestMethod)){
+			httpUrlConn.connect();
+		}
+
+		// 当有数据需要提交时
+		if (null != outputStr) {
+			OutputStream outputStream = httpUrlConn.getOutputStream();
+			// 注意编码格式，防止中文乱码
+			outputStream.write(outputStr.getBytes("UTF-8"));
+			outputStream.close();
+		}
+
+		// 将返回的输入流转换成字符串
+		InputStream inputStream = httpUrlConn.getInputStream();
+		InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+		String str = null;
+		while ((str = bufferedReader.readLine()) != null) {
+			buffer.append(str);
+		}
+		bufferedReader.close();
+		inputStreamReader.close();
+		// 释放资源
+		inputStream.close();
+		inputStream = null;
+		httpUrlConn.disconnect();
+		return JSON.parseObject(buffer.toString());
+
+	}
+}

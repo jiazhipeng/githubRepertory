@@ -1,0 +1,5 @@
+package cn.cuco.dao;
+
+public interface CarAttachmentMapper<T> extends BaseDao<T> {
+
+}

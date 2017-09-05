@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CountriesMapper" >
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByConditionByPage" resultType="INTEGER" parameterType="cn.cuco.entity.Countries" >
+       select  count(1) 
+    from tc_countries  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "title != null and title != '' ">
+        and title = #{title,jdbcType=VARCHAR}      
+      </if>
+      <if test= "code != null and code != '' ">
+        and code = #{code,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByConditionByPage" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Countries" >
+       select  <include refid="Base_Column_List" />
+    from tc_countries  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "title != null and title != '' ">
+        and title = #{title,jdbcType=VARCHAR}      
+      </if>
+      <if test= "code != null and code != '' ">
+        and code = #{code,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+</mapper>

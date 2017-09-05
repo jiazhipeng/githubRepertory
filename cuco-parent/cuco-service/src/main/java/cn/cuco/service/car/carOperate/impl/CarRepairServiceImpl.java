@@ -1,0 +1,189 @@
+package cn.cuco.service.car.carOperate.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.CarRepairMapper;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarAccident;
+import cn.cuco.entity.CarRepair;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.enums.CarRepairStatus;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.car.carInfo.CarService;
+import cn.cuco.service.car.carOperate.CarRepairService;
+import cn.cuco.service.log.OperateLogService;
+
+@Service
+public class CarRepairServiceImpl implements CarRepairService {
+
+    @Autowired
+    private CarRepairMapper<CarRepair> carRepairMapper;
+    @Autowired
+    private CarService carService;
+    @Autowired
+    private OperateLogService operateLogService;
+    /**
+     * 分页
+     */
+	@Override
+	public PageResult<CarRepair> getCarRepairByCondition(CarRepair carRepair) {
+		Integer page = carRepair.getPage();
+	    Integer pageSize = carRepair.getPageSize();
+	     /*搜索条件*/
+	    CarRepair carRepairSearch = new CarRepair();
+        if(StringUtils.isNotBlank(carRepair.getCarPlateNum())){
+        	carRepairSearch.setCarPlateNum(carRepair.getCarPlateNum());
+        }
+        if(carRepair.getStatus()!=null){
+        	carRepairSearch.setStatus(carRepair.getStatus());
+        }
+	    List<CarRepair> carRepairs = null;
+	    /*总记录数*/
+	    Integer totalSize = this.carRepairMapper.selectCountByConditionByPage(carRepairSearch);
+	    /*分页信息*/
+	    PageHelper.startPage(page,pageSize);
+	    carRepairs = this.carRepairMapper.selectByConditionByPage(carRepairSearch);
+	    
+        PageResult<CarRepair> pageResult = new PageResult<CarRepair>(page,pageSize,totalSize,carRepairs);
+		return pageResult;
+	}
+    
+	/**
+	 * 创建维修
+	 */
+	@Override
+	public CarRepair createCarRepair(CarRepair carRepair) {
+		ParamVerifyUtils.paramNotNull(carRepair);
+		ParamVerifyUtils.paramNotNull(carRepair.getCarId(), "创建维修，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getRepairReason(), "创建维修，维修原因不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getRepairTimeStart(), "创建维修，维修时间不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getRepairCompany(), "创建维修，维修厂商名称不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getRepairPlace(), "创建维修，维修地点不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getCreater(), "创建维修，创建人不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getModifier(), "创建维修，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getModifierId(), "创建维修，操作人id不能为空");
+		//车辆信息
+		Car car = carService.getCarById(carRepair.getCarId());
+		ParamVerifyUtils.paramNotNull(car, "创建维修，车辆不存在");
+		carRepair.setCarBrand(car.getCarBrand());
+		carRepair.setCarType(car.getCarType());
+		carRepair.setCarPlateNum(car.getCarPlateNum());
+		carRepair.setCarSupplierId(car.getCarSupplierId());
+		carRepair.setCreated(new Date());
+		carRepair.setCreater(carRepair.getModifier());
+		carRepair.setStatus(CarRepairStatus.CARREPAIR_WAIT.getIndex());
+		//创建维修
+		this.carRepairMapper.insertSelective(carRepair);
+		//创建日志
+		operateLogService.createOperateLogForCarRepair(carRepair);
+		return carRepair;
+	}
+	
+	/**
+	 * 修改车辆维修状态-维修中
+	 */
+	@Override
+	public CarRepair updateCarRepairByMaintenance(CarRepair carRepair) {
+		ParamVerifyUtils.paramNotNull(carRepair);
+		ParamVerifyUtils.paramNotNull(carRepair.getId(), "修改维修，维修ID不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getModifier(), "修改维修，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getModifierId(), "修改维修，操作人id不能为空");
+		CarRepair carRepairView =  this.getCarRepairById(carRepair.getId());
+		ParamVerifyUtils.paramNotNull(carRepairView, "维修数据不存在");
+		//维修状态
+		carRepair.setStatus(CarRepairStatus.CARREPAIR_IN.getIndex());
+		//维护维修
+		this.updateCarRepair(carRepair);
+		//修改车辆状态
+		Car car = new Car();
+		car.setModifier(carRepair.getModifier());
+		car.setModifierId(carRepair.getModifierId());
+		car.setId(carRepairView.getCarId());
+		carService.updateCarByRepairing(car);
+		return carRepair;
+	}
+
+	/**
+	 * 修改车辆维修状态-完成维修
+	 */
+	@Override
+	public CarRepair updateCarRepairBycompleted(CarRepair carRepair) {
+		ParamVerifyUtils.paramNotNull(carRepair);
+		ParamVerifyUtils.paramNotNull(carRepair.getId(), "修改维修，维修ID不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getRepairPrice(), "修改维修，维修金额不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getModifier(), "修改维修，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getModifierId(), "修改维修，操作人id不能为空");
+		CarRepair carRepairView =  this.getCarRepairById(carRepair.getId());
+		ParamVerifyUtils.paramNotNull(carRepairView, "维修数据不存在");
+		//维修状态
+		carRepair.setStatus(CarRepairStatus.CARREPAIR_COMPLETE.getIndex());
+		//维护维修
+		carRepair.setRepairTimeEnd(new Date());
+		this.updateCarRepair(carRepair);
+		//修改车辆状态
+		Car car = new Car();
+		car.setId(carRepairView.getCarId());
+		car.setModifier(carRepair.getModifier());
+		car.setModifierId(carRepair.getModifierId());
+		carService.updateCarByWaitDistribute(car);
+		return carRepair;
+	}
+
+	/**
+	 * 查看详情
+	 */
+	@Override
+	public CarRepair getCarRepairById(Long id) {
+		ParamVerifyUtils.paramNotNull(id, "修改维修，维修ID不能为空");
+		return this.carRepairMapper.selectByPrimaryKey(id);
+	}
+
+	/**
+	 * 日志分页
+	 */
+	@Override
+	public PageResult<OperateLog> getCarRepairLogByPage(OperateLog operateLog) {
+		ParamVerifyUtils.paramNotNull(operateLog);
+		ParamVerifyUtils.paramNotNull(operateLog.getOperationId(), "查询车辆维修ID不能为空");
+		operateLog.setType(OperateLogEnum.REPAIR.getValue());
+		return operateLogService.getOperateLogByPage(operateLog);
+	}
+	/**
+	* @Title: updateCarRepair 
+	* @Description: 修改数据
+	* @author huanghua
+	* @param carRepair
+	* @return void
+	 */
+	private void updateCarRepair(CarRepair carRepair){
+		//维护维修
+		this.carRepairMapper.updateByPrimaryKeySelective(carRepair);
+		//创建日志
+		operateLogService.createOperateLogForCarRepair(carRepair);
+	}
+
+	/**
+	 * 添加备注
+	 */
+	@Override
+	public CarRepair createCarRepairRemark(CarRepair carRepair) {
+		ParamVerifyUtils.paramNotNull(carRepair);
+		ParamVerifyUtils.paramNotNull(carRepair.getId(), "添加备注 ，维修ID不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getRemark(), "添加备注，备注ID不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getModifier(), "添加备注，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carRepair.getModifierId(), "添加备注，操作人id不能为空");
+		CarRepair carRepairView = this.getCarRepairById(carRepair.getId());
+		carRepair.setStatus(carRepairView.getStatus());
+		operateLogService.createOperateLogForCarRepair(carRepair);
+		return carRepairView;
+	}
+}

@@ -1,0 +1,26 @@
+package cn.cuco.service.statistics;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+/** 
+* @ClassName: CarportStatisticsService 
+* @Description: 车库统计
+* @author zc.du
+* @date 2017年3月1日 上午10:27:32  
+*/
+public interface CarportStatisticsService {
+
+	/**   
+	 * @Title: getOperationStatisticsByDay   
+	 * @Description: 解锁车库统计 
+	 * @param: startTime
+	 * @param: endTime 
+	 * @param: carportId
+	 * @param: carTypeId
+	 * @return: List<Map<String,Integer>>      
+	 */
+	public List<Map<String,Integer>> getUnlockCarportStatistics(Date startTime, Date endTime, Integer type);
+	
+}

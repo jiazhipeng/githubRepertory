@@ -1,0 +1,58 @@
+package cn.cuco.service.basic.business;
+
+
+import cn.cuco.entity.Parking;
+import cn.cuco.page.PageResult;
+
+/**
+* @ClassName: ParkingService 
+* @Description: 停车场接口
+* @author huanghua
+* @date 2017年2月21日 下午2:21:39
+ */
+public interface ParkingService {
+	
+    /**
+    * @Title: createParking 
+    * @Description: 创建停车场
+    * @param @param parking
+    * @return Parking
+     */
+    public Parking createParking(Parking parking);
+
+    /**
+    * @Title: updateParking 
+    * @Description: 修改停车场信息
+    * @param @param parking
+    * @return Parking
+     */
+     public Parking updateParking(Parking parking);
+
+     /**
+     * @Title: getParkingById 
+     * @Description: 取停车场信息
+     * @author huanghua
+     * @param id
+     * @return Parking
+      */
+     public Parking getParkingById(Long id);
+
+     /**
+     * @Title: getParkingByCondition 
+     * @Description: 分页查询停车场
+     * @param @param parking
+     * @param @return
+     * @return PageResult<Parking>
+      */
+     public PageResult<Parking> getParkingByPage(Parking parking);
+    
+     /**
+     * @Title: deleteParkingById 
+     * @Description: 删除停车场
+     * @author huanghua
+     * @param parking
+     * @return void
+      */
+     public void deleteParkingById(Parking parking);
+
+}

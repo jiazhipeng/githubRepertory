@@ -1,0 +1,9 @@
+#app \u6d88\u606f\u63a8\u9001
+YONGHAOCHE_ANDROID_KEY = 569dcb00e0f55a6f2b0017ff
+YONGHAOCHE_ANDROID_SECRET = i7k6anmbrdwoym0upaz8onjrys9etacf
+YONGHAOCHE_IOS_KEY=56efc39a67e58e744a0025b9
+YONGHAOCHE_IOS_SECRET=21iaqxwfnz8sankggspvtr6jrdhd2rq3
+#zhengshi push
+#PUSH_IS_TEST_MODE=false
+#test push
+PUSH_IS_TEST_MODE=true

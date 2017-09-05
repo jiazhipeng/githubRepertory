@@ -1,0 +1,92 @@
+package cn.cuco.service.member.account.impl;
+
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.MemberAccountMapper;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberAccount;
+import cn.cuco.entity.MemberAccountLog;
+import cn.cuco.entity.OrderCarUsed;
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.account.MemberAccountService;
+import cn.cuco.service.member.info.MemberService;
+
+/** 
+* @ClassName: MemberAccountServiceImpl 
+* @Description: 用户账户相关接口实现
+* @author zc.du
+* @date 2017年2月23日 上午10:37:13  
+*/
+@Service(value = "memberAccountService")
+public class MemberAccountServiceImpl implements MemberAccountService {
+
+    @Autowired
+    private MemberAccountMapper<MemberAccount> memberAccountMapper;
+    @Autowired
+    private MemberService memberService;
+
+	@Override
+	public MemberAccount createMemberAccount(MemberAccount memberAccount) {
+		ParamVerifyUtils.paramNotNull(memberAccount);
+		ParamVerifyUtils.paramNotNull(memberAccount.getMemberId(),"创建账户时，用户ID不能为空");
+		Member member = memberService.getMemberById(memberAccount.getMemberId());
+		ParamVerifyUtils.paramNotNull(member,"创建用户时，用户不存在");
+		MemberAccount old = getMemberAccountByMemberId(memberAccount.getMemberId());
+		if(null != old){
+			ExceptionUtil.throwWarn("该用户已经存在账户");
+		}
+		this.memberAccountMapper.insertSelective(memberAccount);
+		return getMemberAccountById(memberAccount.getId());
+	}
+
+	@Override
+	public MemberAccount updateMemberAccount(MemberAccount memberAccount) {
+		ParamVerifyUtils.paramNotNull(memberAccount);
+		return null;
+	}
+
+	@Override
+	public MemberAccount updateMemberAccountForSettlement(
+			OrderCarUsed orderCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberAccount updateMemberAccountForMemberRenewal(
+			OrderRenewal orderRenewal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberAccount getMemberAccountByMemberId(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId,"创建账户时，用户ID不能为空");
+		MemberAccount account = new MemberAccount();
+		account.setMemberId(memberId);
+		List<MemberAccount> list = this.memberAccountMapper.selectByCondition(account);
+		if(CollectionUtils.isNotEmpty(list)){
+			return list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberAccountLog> getMemberAccountLogListByPage(
+			MemberAccountLog memberAccountLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private MemberAccount getMemberAccountById(Long id){
+		return this.memberAccountMapper.selectByPrimaryKey(id);
+	}
+
+}

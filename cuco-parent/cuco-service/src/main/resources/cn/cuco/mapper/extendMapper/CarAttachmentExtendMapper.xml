@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarAttachmentMapper" > 
+
+  <!-- 根据车辆附件主表ID以及类型删除 -->
+  <delete id="deleteByParentId" parameterType="cn.cuco.entity.CarAttachment" >
+    delete from td_car_attachment where parent_id = #{parentId,jdbcType=BIGINT} and type = #{type,jdbcType=INTEGER} 
+  </delete>
+
+</mapper>

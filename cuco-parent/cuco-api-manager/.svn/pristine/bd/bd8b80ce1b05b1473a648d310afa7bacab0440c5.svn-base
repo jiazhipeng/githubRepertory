@@ -1,0 +1,116 @@
+package cn.cuco.controller.manager.order;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.cuco.annotation.API;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.controller.entity.MemberVO;
+import cn.cuco.controller.entity.OperateLogVO;
+import cn.cuco.controller.entity.OrderCarportVO;
+import cn.cuco.entity.Carport;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderCarport;
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.carport.CarportService;
+import cn.cuco.service.member.info.MemberService;
+import cn.cuco.service.order.OrderCarportService;
+
+@RestController
+@RequestMapping(value = "/orderCarport")
+public class OrderCarportController {
+	
+	@Autowired
+	private OrderCarportService orderCarportService;
+	
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private CarportService carportService;
+
+	@API(value = "解锁订单列表")
+	@RequestMapping(value = "getOrderListByPage", method = RequestMethod.POST)
+	public Object getOrderListByPage(OrderCarportVO orderCarportVO){
+		
+		ParamVerifyUtils.paramNotNull(orderCarportVO,"参数不可以为null");
+		Integer page = orderCarportVO.getPage();
+		Integer pageSize = orderCarportVO.getPageSize();
+		OrderCarport orderCarport = new OrderCarport();
+		BeanUtils.copyProperties(orderCarportVO, orderCarport);
+		PageResult<OrderCarport> orderCarportResult = orderCarportService.getOrderCarportListByPage(orderCarport);
+		Integer totalSize = orderCarportResult.getTotalSize();
+		List<OrderCarportVO> orderCarportVOList = null;
+		if(CollectionUtils.isNotEmpty(orderCarportResult.getItems())){
+			orderCarportVOList = new ArrayList<OrderCarportVO>();
+			for(OrderCarport getOrderCarport : orderCarportResult.getItems()){
+				OrderCarportVO vo = new OrderCarportVO();
+				BeanUtils.copyProperties(getOrderCarport, vo);
+				orderCarportVOList.add(vo);
+			}
+		}
+		return new PageResult<OrderCarportVO>(page, pageSize, totalSize, orderCarportVOList);
+	}
+	
+	@API(value = "解锁订单日志列表")
+	@RequestMapping(value = "getOrderLogById", method = RequestMethod.GET)
+	public Object getOrderLogById(OrderCarportVO orderCarportVO){
+		
+		ParamVerifyUtils.paramNotNull(orderCarportVO,"参数不可以为null");
+		Integer page = orderCarportVO.getPage();
+		Integer pageSize = orderCarportVO.getPageSize();
+		OrderCarport orderCarport = new OrderCarport();
+		BeanUtils.copyProperties(orderCarportVO, orderCarport);
+		PageResult<OperateLog> operateLogResult = orderCarportService.getOrderCarportLogListByPage(orderCarport);
+		Integer totalSize = operateLogResult.getTotalSize();
+		List<OperateLogVO> operateLogVOList = null;
+		if(CollectionUtils.isNotEmpty(operateLogResult.getItems())){
+			operateLogVOList = new ArrayList<OperateLogVO>();
+			for(OperateLog getOperateLog : operateLogResult.getItems()){
+				OperateLogVO vo = new OperateLogVO();
+				BeanUtils.copyProperties(getOperateLog, vo);
+				OrderCarport getTotal = new OrderCarport();
+				getTotal.setId(getOperateLog.getOperationId());
+				OrderCarport orderCarportTotal = orderCarportService.getOrderCarport(getTotal);
+				if(orderCarportTotal != null){
+					vo.setTotal(orderCarportTotal.getTotal());
+				}
+				operateLogVOList.add(vo);
+			}
+		}
+		return new PageResult<OperateLogVO>(page, pageSize, totalSize, operateLogVOList);
+	}
+	
+	@API(value = "解锁订单详情")
+	@RequestMapping(value = "getOrderById", method = RequestMethod.GET)
+	public Object getOrderById(OrderCarportVO orderCarportVO){
+		
+		ParamVerifyUtils.paramNotNull(orderCarportVO,"参数不可以为null");
+		ParamVerifyUtils.paramNotNull(orderCarportVO.getId(),"参数id不可以为null");
+		OrderCarport getOrderCarport = new OrderCarport();
+		BeanUtils.copyProperties(orderCarportVO, getOrderCarport);
+		OrderCarport orderCarport = orderCarportService.getOrderCarport(getOrderCarport);
+		BeanUtils.copyProperties(orderCarport, orderCarportVO);
+		if(orderCarport != null){
+			Member member = memberService.getMemberById(orderCarport.getMemberId());
+			if(member != null){
+				orderCarportVO.setName(member.getName());
+				orderCarportVO.setMobile(member.getMobile());
+			}
+			Carport carport = carportService.getCarportById(orderCarport.getCarportId());
+			if(carport != null){
+				orderCarportVO.setCarportName(carport.getCarportName());
+			}
+		}
+		return orderCarportVO;
+	}
+ }

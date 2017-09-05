@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.CaptchaMapper">
+    <resultMap id="BaseResultMap" type="com.hy.gcar.entity.Captcha">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+	
+	<insert id="insert" parameterType="com.hy.gcar.entity.Captcha">
+		insert into td_captcha(mobile,code,count,date)values(#{mobile,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR},#{count,jdbcType=INTEGER},#{date,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.hy.gcar.entity.Captcha">
+		update td_captcha
+		set mobile = #{mobile,jdbcType=VARCHAR},
+		code = #{code,jdbcType=VARCHAR},
+		count = #{count,jdbcType=INTEGER},
+		date = #{date,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="getCaptchaByMobile" parameterType="String" resultMap="BaseResultMap">
+		select id,mobile,code,count,date from td_captcha where mobile = #{mobile,jdbcType=VARCHAR}
+	</select>
+</mapper>

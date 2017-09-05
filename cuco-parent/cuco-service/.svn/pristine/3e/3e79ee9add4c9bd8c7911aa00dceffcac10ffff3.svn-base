@@ -1,0 +1,96 @@
+package cn.cuco.service.member;
+
+
+import java.util.List;
+
+import cn.cuco.entity.MemberAccount;
+import cn.cuco.entity.MemberAccountLog;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户账户相关接口
+ * @author zc.du
+ */
+public interface MemberAccountService {
+	/** 
+    * @Description: 创建用户账户基础方法
+    * @param memberAccount
+    * @return MemberAccount
+    * @throws 
+    */
+    public MemberAccount createMemberAccount(MemberAccount memberAccount) throws Exception;
+    
+    /** 
+    * @Description: 修改用户账户基础方法
+    * @param memberAccount
+    * @return MemberAccount
+    * @throws 
+    */
+    public MemberAccount updateMemberAccount(MemberAccount memberAccount) throws Exception;
+    
+    /** 
+    * @Description: 删除用户账户基础方法
+    * @param memberAccount
+    * @return Integer
+    * @throws 
+    */
+    public Integer deleteMemberAccount(MemberAccount memberAccount) throws Exception;
+    
+    /** 
+     * @Description: 查询用户账户基础方法
+     * @param memberAccount
+     * @return MemberAccount
+     * @throws 
+     */
+    public MemberAccount getMemberAccount(MemberAccount memberAccount) throws Exception; 
+    
+    /** 
+     * @Description: 查询用户账户列表基础方法
+     * @param memberAccount
+     * @return List<MemberAccount>
+     * @throws 
+     */
+    public List<MemberAccount> getMemberAccountList(MemberAccount memberAccount) throws Exception;
+    
+    /** 
+     * @Description: 分页查询用户账户列表基础方法
+     * @param memberAccount
+     * @return PageResult<MemberAccount>
+     * @throws 
+     */
+    public PageResult<MemberAccount> getMemberAccountListByPage(MemberAccount memberAccount) throws Exception;
+
+    /** 
+     * @Description: 查询用户账户数量基础方法
+     * @param memberAccount
+     * @return Integer
+     * @throws 
+     */
+    public Integer getMemberAccountCount(MemberAccount memberAccount) throws Exception;
+    
+    /** 
+     * @Description: 查询用户账户明细列表基础方法
+     * @param memberAccountLog
+     * @return List<MemberAccountLog>
+     * @throws 
+     */
+    public List<MemberAccountLog> getMemberAccountLogList(MemberAccountLog memberAccountLog) throws Exception;
+    
+    /** 
+     * @Description: 分页查询用户账户明细列表基础方法
+     * @param memberAccountLog
+     * @return PageResult<MemberAccountLog>
+     * @throws 
+     */
+    public PageResult<MemberAccountLog> getMemberAccountLogListByPage(MemberAccountLog memberAccountLog) throws Exception;
+
+    /** 
+     * @Description: 查询用户账户明细数量基础方法
+     * @param memberAccountLog
+     * @return Integer
+     * @throws 
+     */
+    public Integer getMemberAccountLogCount(MemberAccountLog memberAccountLog) throws Exception;
+
+
+}

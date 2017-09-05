@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface ChargeOrderMapper<T> extends BaseDao<T> {
+
+}

@@ -1,0 +1,16 @@
+package cn.cuco.service.repertory.impl;
+
+import org.springframework.stereotype.Service;
+
+import cn.cuco.service.repertory.RepertoryService;
+
+/** 
+* @ClassName: RepertoryServiceImpl 
+* @Description: 库存service层 实现层
+* @author gongbw
+* @date 2017年2月21日 下午1:33:41  
+*/
+@Service
+public class RepertoryServiceImpl implements RepertoryService{
+
+}

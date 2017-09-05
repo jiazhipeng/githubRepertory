@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>车辆维修中详情页</title>
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/4v.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="greyBg">
+   <header>
+        <span class="date">京P·A87D9（红）</span>
+    </header>
+    <section class="content">
+        <div class="list-block">
+            <ul>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">品牌：</div>
+                        <div class="item-after">特斯拉</div>
+                    </div>
+                </li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">车架：</div>
+                        <div class="item-after">极致超薄型</div>
+                    </div>
+                </li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">车架号：</div>
+                        <div class="item-after">极致超薄型</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+       
+    </section>    
+    <div class="btns">
+        <a href="javscript:;" class="button cencle">转派</a>
+        <a href="javscript:;" class="button">接单</a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,457 @@
+package cn.cuco.service.car.stock.impl;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.common.utils.date.DateUtils;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.CarMapper;
+import cn.cuco.dao.MemberCarportMapper;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarOperatePlan;
+import cn.cuco.entity.CarType;
+import cn.cuco.entity.Carport;
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.entity.Restriction;
+import cn.cuco.entity.SecurityInterval;
+import cn.cuco.exception.RuntimeExceptionWarn;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.business.RestrictionService;
+import cn.cuco.service.basic.business.SecurityIntervalService;
+import cn.cuco.service.basic.carport.CarportService;
+import cn.cuco.service.car.stock.StockService;
+import cn.cuco.service.member.carUsed.MemberCarportService;
+
+/** 
+* @ClassName: RepertoryServiceImpl 
+* @Description: 库存service层 实现层
+* @author gongbw
+* @date 2017年2月21日 下午1:33:41  
+*/
+@Service
+public class StockServiceImpl implements StockService{
+	
+	@Autowired
+	private CarMapper<Car> carMapper;
+	@Autowired
+	private MemberCarportMapper<MemberCarport> memberCarportMapper;
+	@Autowired
+	private SqlSessionFactoryBean sqlSessionFactoryBean;
+	@Autowired
+	private SecurityIntervalService securityIntervalService;
+	@Autowired
+	private MemberCarportService memberCarportService;
+	@Autowired
+    private CarportService carportService;
+	@Autowired
+    private RestrictionService restrictionService;
+	
+	protected Logger logger = Logger.getLogger(this.getClass());
+	
+	@Override
+	public List<Map<String, Object>> getRepertoryByDay(Long carportId, Date useCarStartDay, Date useCarEndDay){
+		ParamVerifyUtils.paramNotNull(useCarStartDay,"根据车库查询库存分布情况，开始日期不能为空");
+		ParamVerifyUtils.paramNotNull(useCarEndDay,"根据车库查询库存分布情况，结束日期不能为空");
+		this.logger.info("查询库存开始日期是----"+useCarStartDay+"结束日期是----"+useCarEndDay);
+		if(useCarStartDay.after(useCarEndDay)){
+			throw new RuntimeExceptionWarn("开始时间不能在开始时间之后");
+		}
+		List<Map<String, Object>> returnList = new ArrayList<>();
+		SqlSession session=null;
+		try {
+			session=sqlSessionFactoryBean.getObject().openSession();
+			//根据车库ID查询车库下面所有车型的车辆总数
+			int total = this.getCarTotalByCarPort(carportId);
+			this.logger.info("车库ID为--"+carportId+"--的全部车辆总数为--"+total);
+			//根据车库ID查询车库下面所有车型的不可用车辆总数
+			int unabletotal = this.getUnableCarTotalByCarPort(carportId);
+			this.logger.info("车库ID为--"+carportId+"--的不可用车辆总数为--"+unabletotal);
+			//根据车库查询解锁的数量
+			int unlockTotal = this.getUnlockTotal(carportId);
+			this.logger.info("车库ID为--"+carportId+"--解锁数量为--"+unlockTotal);
+			//得到库存安全区间
+			SecurityInterval securityInterval = this.getScurityInterval(carportId);
+			//时间格式化
+			useCarStartDay = DateUtils.getDayMiniDate(DateUtils.formatDate(useCarStartDay));
+			Date useCarStartDayMax = DateUtils.getDayMaxDate(DateUtils.formatDate(useCarStartDay));
+			useCarEndDay = DateUtils.getDayMaxDate(DateUtils.formatDate(useCarEndDay));
+			long count =(useCarEndDay.getTime()-useCarStartDay.getTime()) / (1000 * 60 * 60 * 24) +1;
+			this.logger.info("查询库存的天数----"+count);
+			Map<String, Object> returnMap = new LinkedHashMap<String, Object>();
+			for(int i = 0; i < count; i++){
+				Map<String, Object> countMap = new HashMap<String, Object>();
+				CarOperatePlan carOperatePlan = new CarOperatePlan();
+				carOperatePlan.setCarportId(carportId);
+				carOperatePlan.setStartTime(useCarStartDay);
+				carOperatePlan.setEndTime(useCarStartDayMax);
+				//根据车库查询会员占用的车辆总数
+				Integer memberPlanSize = session.selectOne("cn.cuco.dao.CarOperatePlanMapper.getCarPlanTotalByMember", carOperatePlan);
+				this.logger.info(DateUtils.formatDate(useCarStartDay, "yyyy-MM-dd HH:mm:ss")+"至"+DateUtils.formatDate(useCarStartDayMax, "yyyy-MM-dd HH:mm:ss")+"的会员占用数为---"+memberPlanSize);
+				//根据车库查询非会员占用的车辆总数
+				Integer notMemberPlanSize = session.selectOne("cn.cuco.dao.CarOperatePlanMapper.getCarPlanTotalByUnMember", carOperatePlan);
+				this.logger.info(DateUtils.formatDate(useCarStartDay, "yyyy-MM-dd HH:mm:ss")+"至"+DateUtils.formatDate(useCarStartDayMax, "yyyy-MM-dd HH:mm:ss")+"的非会员占用数为---"+notMemberPlanSize);
+				//计算得到安全((根据解锁车库总数-会员正在用车数)*安全系统)
+				int securityCount = this.getScurityCount(securityInterval,unlockTotal,memberPlanSize,notMemberPlanSize,total-unabletotal);
+				this.logger.info("计算得到安全区间数量为--"+securityCount);
+				//得到闲置的数量
+				int freecount = total - unabletotal - memberPlanSize - notMemberPlanSize - securityCount;
+				countMap.put("unabletotal",unabletotal);
+				countMap.put("freecount",freecount);
+				countMap.put("securityCount",securityCount);
+				countMap.put("memberPlanSize",memberPlanSize);
+				countMap.put("notMemberPlanSize",notMemberPlanSize);
+				countMap.put("total",total);
+				returnMap.put(DateUtils.formatDate(useCarStartDay),countMap);
+				//循环结束之后日期都+1
+				useCarStartDay=DateUtils.addDays(useCarStartDay, 1);
+				useCarStartDayMax=DateUtils.addDays(useCarStartDayMax, 1);
+			}
+			returnList.add(returnMap);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return returnList;
+	}
+	
+	/**   
+	 * @Title: getCarTotalByCarPort   
+	 * @Description: 根据车库ID查询车库下面所有车型的车辆总数  
+	 * @param: carportId
+	 * @return: int      
+	 */
+	private int getCarTotalByCarPort(Long carportId){
+		Car car = new Car();
+		car.setCarPortId(carportId);
+		int total = this.carMapper.getCarTotalByCarPort(car);
+		return total;
+	}
+	
+	/**   
+	 * @Title: getAbleCarTotalByCarTypeId   
+	 * @Description: 根据车型ID可用的车辆总数  
+	 * @param: carTypeId
+	 * @return: int      
+	 */
+	private int getAbleCarTotalByCarTypeId(Long carTypeId, String restrictions){
+		Car car = new Car();
+		car.setCarTypeId(carTypeId);
+		if(null!=restrictions){
+			car.setRestrictions(restrictions);
+		}
+		int total = this.carMapper.getAbleCarTotalByCarTypeId(car);
+		return total;
+	}
+	
+	/**   
+	 * @Title: getCarTotalByCarPort   
+	 * @Description: 根据车库ID查询车库下面所有车型的不可用车辆总数
+	 * @param: carportId
+	 * @return: int      
+	 */
+	private int getUnableCarTotalByCarPort(Long carportId){
+		Car car = new Car();
+		car.setCarPortId(carportId);
+		int total = this.carMapper.getUnableCarTotalByCarPort(car);
+		return total;
+	}
+	
+	/**   
+	 * @Title: getScurityInterval   
+	 * @Description: 查询得到库存安全区间对象
+	 * @param: carportId
+	 * @return: SecurityInterval      
+	 */
+	private SecurityInterval getScurityInterval(Long carportId){
+		SecurityInterval securityInterval = this.securityIntervalService.getSecurityIntervalByCreatedDesc();
+		if(null==securityInterval){
+			throw new RuntimeExceptionWarn("没有查到安全区间配置信息");
+		}
+		return securityInterval;
+	}
+	
+	/**   
+	 * @Title: getScurityCount   
+	 * @Description: 查询得到安全系统
+	 * @param: SecurityInterval
+	 * @param: unlockTotal
+	 * @param: memberPlanSize
+	 * @return: int      
+	 */
+	private int getScurityCount(SecurityInterval securityInterval, int unlockTotal, int memberPlanSize, int notMemberPlanSize, int abletotal){
+		//得到理论上的安全数量向上取整
+		int scuritytotal = securityInterval.getLimitPercent().multiply(new BigDecimal(unlockTotal - memberPlanSize)).setScale(0, BigDecimal.ROUND_UP).intValue();
+		this.logger.info("得到理论上的安全区域值为--"+scuritytotal);
+		int scurityMax = securityInterval.getMax();
+		this.logger.info("数据库里的安全区间的上线值为--"+scurityMax);
+		int scurityMin = securityInterval.getMin();
+		this.logger.info("数据库里的安全区间的下线值为--"+scurityMin);
+		//实际还剩余的可用车辆数
+		int reallyAbletotal = abletotal - memberPlanSize - notMemberPlanSize;
+		this.logger.info("库里实际还剩余的车辆可用数量为--"+reallyAbletotal);
+		//首先跟实际剩余的数量进行比较，如果比实际剩余总数量都大，就把实际剩余总数量赋值给他，避免闲置的数量为负数
+		if(scuritytotal > reallyAbletotal){
+			scuritytotal = reallyAbletotal;
+		}
+		if(scuritytotal > scurityMax){
+			scuritytotal = scurityMax;
+		}
+		return scuritytotal;
+		
+	}
+	/**   
+	 * @Title: getCarTotalBySecurity   
+	 * @Description: 根据车库ID查询车库的安全区间
+	 * @param: carportId
+	 * @return: int      
+	 */
+	private int getUnlockTotal(Long carportId){
+		MemberCarport memberCarport = new MemberCarport();
+		memberCarport.setCarportId(carportId);
+		int total = this.memberCarportMapper.selectCountByCondition(memberCarport);
+		return total;
+	}
+
+	@Override
+	public List<Map<Object, Object>> getUsableCarTypeByUnMember(Long carportId, Long memberId, Date useCarStartTime,
+			Date useCarEndTime) {
+		ParamVerifyUtils.paramNotNull(carportId,"用户发起用车，车库ID不能为空");
+		ParamVerifyUtils.paramNotNull(memberId,"用户发起用车，用户ID不能为空");
+		ParamVerifyUtils.paramNotNull(useCarStartTime,"用户发起用车，开始时间不能为空");
+		ParamVerifyUtils.paramNotNull(useCarEndTime,"用户发起用车，结束时间不能为空");
+		if(useCarStartTime.after(useCarEndTime)){
+			throw new RuntimeExceptionWarn("用车开始时间不能在用车开始时间之后");
+		}
+		MemberCarport memberCarport = new MemberCarport();
+		memberCarport.setCarportId(carportId);
+		memberCarport.setMemberId(memberId);
+		PageResult<MemberCarport> memberCarportListPage = this.memberCarportService.getMemberCarportListByPage(memberCarport);
+		if(memberCarportListPage.getTotalSize() >0){
+			//没有查询到该用户对于该车库的解锁信息
+			throw new RuntimeExceptionWarn("该用户对这个车库已经进行了解锁，并非非会员发起用车");
+		}
+		this.logger.info("用户ID为--"+memberId+"--针对车库---"+carportId+"---发起用车开始时间是----"+DateUtils.formatDate(useCarStartTime,"yyyy-MM-dd HH:mm:ss")+",用车结束时间结束时间是----"+DateUtils.formatDate(useCarEndTime,"yyyy-MM-dd HH:mm:ss"));
+		//获取车型列表
+		SqlSession session=null;
+		List<Map<Object, Object>> returnList = new ArrayList<>();
+		try {
+			//得到库存安全区间
+			SecurityInterval securityInterval = this.getScurityInterval(carportId);
+			//根据车库查询解锁的数量
+			int unlockTotal = this.getUnlockTotal(carportId);
+			this.logger.info("车库ID为--"+carportId+"--解锁数量为--"+unlockTotal);
+			Carport carport = this.carportService.getCarportById(carportId);
+			if(null==carport){
+				throw new RuntimeExceptionWarn("没有查到该车库信息");
+			}
+			if(CollectionUtils.isEmpty(carport.getCarTypes())){
+				throw new RuntimeExceptionWarn("该车库下面没有查询到车型信息");
+			}
+			session=sqlSessionFactoryBean.getObject().openSession();
+			useCarStartTime = chechMinutes(useCarStartTime);
+			this.logger.info("查询库存开始时间规则化之后的时间是----"+DateUtils.formatDate(useCarStartTime,"yyyy-MM-dd HH:mm:ss"));
+			useCarEndTime = chechMinutes(useCarEndTime);
+			this.logger.info("查询库存结束时间规则化之后的时间是----"+DateUtils.formatDate(useCarStartTime,"yyyy-MM-dd HH:mm:ss"));
+			//计算得到两个需要查询的时间段
+			long count =(useCarEndTime.getTime()-useCarStartTime.getTime()) / (1000 * 60 * 60);
+			this.logger.info("需要循环的总次数为----"+count);
+			Date currentDate = useCarStartTime;//限号只考虑发起用车当天
+			for(CarType carty : carport.getCarTypes()){
+				Map<Object, Object> resultMap = new HashMap<Object, Object>();
+				//根据车型ID查询可用车辆总数
+				int ableTotal = this.getAbleCarTotalByCarTypeId(carty.getId(),null);
+				this.logger.info("车型ID为--"+carty.getId()+"--的可用库存总数量为--"+ableTotal);
+				//根据车型ID查询限号之后的可用车辆总数
+				int ableTotalAfterRestriction = this.getAbleCarTotalAfterRestriction(carty,useCarStartTime,ableTotal);
+				this.logger.info("车型ID为--"+carty.getId()+"--的考虑限号之后的可用库存总数量为--"+ableTotalAfterRestriction);
+				resultMap.put(carty, true);
+				for (int i = 0; i < count; i++) {
+					useCarEndTime = DateUtils.addHours(useCarStartTime, 1);
+					CarOperatePlan carOperatePlan = new CarOperatePlan();
+					carOperatePlan.setCarTypeId(carty.getId());
+					carOperatePlan.setStartTime(useCarStartTime);
+					carOperatePlan.setEndTime(useCarEndTime);
+					//根据车型ID查询会员占用的车辆总数
+					int memberPlanSize = session.selectOne("cn.cuco.dao.CarOperatePlanMapper.getMemberCarPlanTotalByCarTypeId", carOperatePlan);
+					this.logger.info("时间段为--"+DateUtils.formatDate(useCarStartTime, "yyyy-MM-dd HH:mm:ss")+"至"+DateUtils.formatDate(useCarEndTime, "yyyy-MM-dd HH:mm:ss")+"会员占用的车辆总数为--"+memberPlanSize);
+					int notMemberPlanSize = session.selectOne("cn.cuco.dao.CarOperatePlanMapper.getUnMemberCarPlanTotalByCarTypeId", carOperatePlan);
+					this.logger.info("时间段为--"+DateUtils.formatDate(useCarStartTime, "yyyy-MM-dd HH:mm:ss")+"至"+DateUtils.formatDate(useCarEndTime, "yyyy-MM-dd HH:mm:ss")+"非会员占用的车辆总数为--"+notMemberPlanSize);
+					if(currentDate.getYear() == useCarStartTime.getYear() && currentDate.getMonth() ==useCarStartTime.getMonth() && currentDate.getDate() == useCarStartTime.getDate()){
+						//表示是发起用车当天
+						//得到安全区间的数量
+						int securityCount = this.getScurityCount(securityInterval,unlockTotal,memberPlanSize,notMemberPlanSize,ableTotalAfterRestriction);
+						if(ableTotalAfterRestriction-securityCount<=memberPlanSize){
+							//已经某个时间段已经占满了
+							resultMap.put(carty, false);
+							break;
+						}
+					}else{
+						//得到安全区间的数量
+						int securityCount = this.getScurityCount(securityInterval,unlockTotal,memberPlanSize,notMemberPlanSize,ableTotal);
+						if(ableTotal-securityCount<=memberPlanSize){
+							//已经某个时间段已经占满了
+							resultMap.put(carty, false);
+							break;
+						}
+					}
+					useCarStartTime = useCarEndTime;
+				}
+				returnList.add(resultMap);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return returnList;
+	}
+
+	@Override
+	public List<Map<Object, Object>> getUsableCarTypeByMember(Long carportId, Long memberId, Date useCarStartTime,
+			Date useCarEndTime) {
+		ParamVerifyUtils.paramNotNull(carportId,"用户发起用车，车库ID不能为空");
+		ParamVerifyUtils.paramNotNull(memberId,"用户发起用车，用户ID不能为空");
+		ParamVerifyUtils.paramNotNull(useCarStartTime,"用户发起用车，开始时间不能为空");
+		ParamVerifyUtils.paramNotNull(useCarEndTime,"用户发起用车，结束时间不能为空");
+		if(useCarStartTime.after(useCarEndTime)){
+			throw new RuntimeExceptionWarn("用车开始时间不能在用车开始时间之后");
+		}
+		MemberCarport memberCarport = new MemberCarport();
+		memberCarport.setCarportId(carportId);
+		memberCarport.setMemberId(memberId);
+		PageResult<MemberCarport> memberCarportListPage = this.memberCarportService.getMemberCarportListByPage(memberCarport);
+		if(0 == memberCarportListPage.getTotalSize()){
+			//没有查询到该用户对于该车库的解锁信息
+			throw new RuntimeExceptionWarn("该用户没有对这个车库进行解锁");
+		}
+		this.logger.info("用户ID为--"+memberId+"--针对车库---"+carportId+"---发起用车开始时间是----"+DateUtils.formatDate(useCarStartTime,"yyyy-MM-dd HH:mm:ss")+",用车结束时间结束时间是----"+DateUtils.formatDate(useCarEndTime,"yyyy-MM-dd HH:mm:ss"));
+		//获取车型列表
+		SqlSession session=null;
+		List<Map<Object, Object>> returnList = new ArrayList<>();
+		
+		try {
+			Carport carport = this.carportService.getCarportById(carportId);
+			if(null==carport){
+				throw new RuntimeExceptionWarn("没有查到该车库信息");
+			}
+			if(CollectionUtils.isEmpty(carport.getCarTypes())){
+				throw new RuntimeExceptionWarn("该车库下面没有查询到车型信息");
+			}
+			session=sqlSessionFactoryBean.getObject().openSession();
+			useCarStartTime = chechMinutes(useCarStartTime);
+			this.logger.info("查询库存开始时间规则化之后的时间是----"+DateUtils.formatDate(useCarStartTime,"yyyy-MM-dd HH:mm:ss"));
+			useCarEndTime = chechMinutes(useCarEndTime);
+			this.logger.info("查询库存结束时间规则化之后的时间是----"+DateUtils.formatDate(useCarStartTime,"yyyy-MM-dd HH:mm:ss"));
+			//计算得到两个需要查询的时间段
+			long count =(useCarEndTime.getTime()-useCarStartTime.getTime()) / (1000 * 60 * 60);
+			this.logger.info("需要循环的总次数为----"+count);
+			Date currentDate = useCarStartTime;//限号只考虑发起用车当天
+			for(CarType carty : carport.getCarTypes()){
+				Map<Object, Object> resultMap = new HashMap<Object, Object>();
+				//根据车型ID查询可用车辆总数
+				int ableTotal = this.getAbleCarTotalByCarTypeId(carty.getId(),null);
+				this.logger.info("车型ID为--"+carty.getId()+"--的可用库存总数量为--"+ableTotal);
+				//根据车型ID查询限号之后的可用车辆总数
+				int ableTotalAfterRestriction = this.getAbleCarTotalAfterRestriction(carty,useCarStartTime,ableTotal);
+				this.logger.info("车型ID为--"+carty.getId()+"--的考虑限号之后的可用库存总数量为--"+ableTotalAfterRestriction);
+				resultMap.put(carty, true);
+				for (int i = 0; i < count; i++) {
+					useCarEndTime = DateUtils.addHours(useCarStartTime, 1);
+					CarOperatePlan carOperatePlan = new CarOperatePlan();
+					carOperatePlan.setCarTypeId(carty.getId());
+					carOperatePlan.setStartTime(useCarStartTime);
+					carOperatePlan.setEndTime(useCarEndTime);
+					//根据车型ID查询已经占用的车辆总数
+					int planSize = session.selectOne("cn.cuco.dao.CarOperatePlanMapper.getCarPlanTotalByCarTypeId", carOperatePlan);
+					this.logger.info("时间段为--"+DateUtils.formatDate(useCarStartTime, "yyyy-MM-dd HH:mm:ss")+"至"+DateUtils.formatDate(useCarEndTime, "yyyy-MM-dd HH:mm:ss")+"已经占用的车辆总数为--"+planSize);
+					if(currentDate.getYear() == useCarStartTime.getYear() && currentDate.getMonth() ==useCarStartTime.getMonth() && currentDate.getDate() == useCarStartTime.getDate()){
+						//表示是发起用车当天
+						if(ableTotalAfterRestriction<=planSize){
+							//已经某个时间段已经占满了
+							resultMap.put(carty, false);
+							break;
+						}
+					}else{
+						if(ableTotal<=planSize){
+							//已经某个时间段已经占满了
+							resultMap.put(carty, false);
+							break;
+						}
+					}
+					useCarStartTime = useCarEndTime;
+				}
+				returnList.add(resultMap);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return returnList;
+	}
+
+	/**
+	 * 判断分钟，精确到小时，如果是大于30分钟，则算入下一个小时，如果小于30分钟，则算上一个小时(例如，时间是2016-11-10 10:55， 则算2016-11-10 11；时间是2016-11-10 10:25，则算2016-11-10 10)
+	 * @param date
+	 * @return
+	 */
+	private Date chechMinutes(Date date) {
+		if(date==null){
+			return null;
+		}
+		int start = Integer.parseInt(DateUtils.getMinutes(date));
+		if(start>=30){
+			date=DateUtils.addMinutes(date, 30);
+		}else{
+			date=DateUtils.addMinutes(date, -start);
+		}
+		return date;
+	}
+	
+	/**   
+	 * @Title: getAbleCarTotalAfterRestriction   
+	 * @Description: 考虑限号之后得到车辆库存情况  
+	 * @param:       
+	 * @return: int      
+	 */
+	private int getAbleCarTotalAfterRestriction(CarType carType, Date useCarStartTime, int ableTotal){
+		if(0==carType.getIsRestriction()){
+			//这种车型不考虑限号的情况
+			return ableTotal;
+		}
+		//限号
+		Restriction search = new Restriction();
+		search.setCityId(Long.parseLong("2"));
+		search.setRestrictionsDate(useCarStartTime);
+		Restriction restriction = this.restrictionService.getRestrictionByDate(search);
+		if(null == restriction){
+			//没有限号信息
+			return ableTotal;
+		}
+		String restrictions = restriction.getRestrictions();
+		this.logger.info("车型ID为--"+carType.getId()+"--的日期为--"+DateUtils.formatDate(useCarStartTime)+"--的限号车辆尾号为--"+restrictions);
+		if(null==restrictions || "".equals(restrictions)){
+			return ableTotal;
+		}
+		//得到当天的限制号码
+		restrictions = "( " + restrictions +" )";
+		return this.getAbleCarTotalByCarTypeId(carType.getId(), restrictions);
+	}
+
+}

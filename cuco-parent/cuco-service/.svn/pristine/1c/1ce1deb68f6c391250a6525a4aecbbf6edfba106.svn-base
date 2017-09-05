@@ -1,0 +1,59 @@
+package cn.cuco.service.order;
+
+import java.util.List;
+
+import cn.cuco.entity.OrderCarUsed;
+import cn.cuco.page.PageResult;
+
+/** 
+* @ClassName: OrderCarUsedService 
+* @Description: 用户用车结算明细相关接口
+* @author zc.du
+* @date 2017年2月23日 上午10:47:07  
+*/
+public interface OrderCarUsedService {
+    /** 
+    * @Title: createOrderCarUsed 
+    * @Description: 创建用户用车结算明细
+    * @author zc.du
+    * @param orderCarUsed
+    * @return OrderCarUsed
+    */
+    public OrderCarUsed createOrderCarUsed(OrderCarUsed orderCarUsed);
+    
+    /** 
+    * @Title: getOrderCarUsedList 
+    * @Description: 查询用户用车结算明细列表
+    * @author zc.du
+    * @param orderCarUsed
+    * @return List<OrderCarUsed>
+    */
+    public List<OrderCarUsed> getOrderCarUsedList(OrderCarUsed orderCarUsed);
+    
+    /** 
+    * @Title: getOrderCarUsedListByPage 
+    * @Description: 分页查询用户用车明细列表
+    * @author zc.du
+    * @param orderCarUsed
+    * @return PageResult<OrderCarUsed>
+    */
+    public PageResult<OrderCarUsed> getOrderCarUsedListByPage(OrderCarUsed orderCarUsed);
+
+    /** 
+    * @Title: SettlementForButler 
+    * @Description: 结算用车明细
+    * @author zc.du
+    * @param orderCarUsed
+    * @return OrderCarUsed
+    */
+    public OrderCarUsed SettlementForButler(OrderCarUsed orderCarUsed);
+    
+    /** 
+    * @Title: SettlementForAddition 
+    * @Description: 补加结算用车明细
+    * @author zc.du
+    * @param orderCarUsed
+    * @return OrderCarUsed
+    */
+    public OrderCarUsed SettlementForAddition(OrderCarUsed orderCarUsed); 
+}

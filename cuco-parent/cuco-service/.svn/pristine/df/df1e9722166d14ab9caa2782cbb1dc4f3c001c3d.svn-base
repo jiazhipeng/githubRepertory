@@ -1,0 +1,82 @@
+package cn.cuco.service.order;
+
+import java.util.List;
+
+import cn.cuco.entity.OrderCarUsed;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户用车结算明细相关接口
+ * @author zc.du
+ */
+public interface OrderCarUsedService {
+	/** 
+    * @Description: 创建用户用车费用基础方法
+    * @param orderCarUsed
+    * @return OrderCarUsed
+    */
+    public OrderCarUsed createOrderCarUsed(OrderCarUsed orderCarUsed);
+    
+    /** 
+    * @Description: 修改用户用车费用基础方法
+    * @param orderCarUsed
+    * @return OrderCarUsed
+    */
+    public OrderCarUsed updateOrderCarUsed(OrderCarUsed orderCarUsed);
+    
+    /** 
+    * @Description: 删除用户用车费用基础方法
+    * @param orderCarUsed
+    * @return Integer
+    */
+    public Integer deleteOrderCarUsed(OrderCarUsed orderCarUsed);
+    
+    /** 
+     * @Description: 查询用户用车费用基础方法
+     * @param orderCarUsed
+     * @return OrderCarUsed
+     */
+    public OrderCarUsed getOrderCarUsed(OrderCarUsed orderCarUsed); 
+    
+    /** 
+     * @Description: 查询用户用车费用列表基础方法
+     * @param orderCarUsed
+     * @return List<OrderCarUsed>
+     */
+    public List<OrderCarUsed> getOrderCarUsedList(OrderCarUsed orderCarUsed);
+    
+    /** 
+     * @Description: 分页查询用户用车费用列表基础方法
+     * @param orderCarUsed
+     * @return PageResult<OrderCarUsed>
+     */
+    public PageResult<OrderCarUsed> getOrderCarUsedListByPage(OrderCarUsed orderCarUsed);
+
+    /** 
+     * @Description: 查询用户用车费用数量基础方法
+     * @param orderCarUsed
+     * @return Integer
+     */
+    public Integer getOrderCarUsedCount(OrderCarUsed orderCarUsed);
+    
+    /** 
+     * @Description: 管家结算方法
+     * @param orderCarUsed
+     * @return OrderCarUsed
+     */
+    public OrderCarUsed SettlementForButler(OrderCarUsed orderCarUsed);
+    
+    /** 
+     * @Description: 系统结算方法
+     * @param orderCarUsed
+     * @return OrderCarUsed
+     */
+    public OrderCarUsed SettlementForSystem(OrderCarUsed orderCarUsed);
+    
+    /** 
+     * @Description: 补加结算方法
+     * @param orderCarUsed
+     * @return OrderCarUsed
+     */
+    public OrderCarUsed SettlementForAddition(OrderCarUsed orderCarUsed); 
+}

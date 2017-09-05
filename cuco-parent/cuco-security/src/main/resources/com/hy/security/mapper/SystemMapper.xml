@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.security.dao.SystemMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.security.entity.System" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="route_url" property="routeUrl" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="app_id" property="appId" jdbcType="VARCHAR" />
+    <result column="app_secret" property="appSecret" jdbcType="VARCHAR" />
+    <result column="api_sync_url" property="apiSyncUrl" jdbcType="VARCHAR" />
+    <result column="organization_id" property="organizationId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="is_value" property="isValue" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.security.entity.System" >
+       select  <include refid="Base_Column_List" />
+    from td_system  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "code != null and code != '' ">
+        and code = #{code,jdbcType=VARCHAR}      
+      </if>
+      <if test= "routeUrl != null and routeUrl != '' ">
+        and route_url = #{routeUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "description != null and description != '' ">
+        and description = #{description,jdbcType=VARCHAR}      
+      </if>
+      <if test= "appId != null and appId != '' ">
+        and app_id = #{appId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "appSecret != null and appSecret != '' ">
+        and app_secret = #{appSecret,jdbcType=VARCHAR}      
+      </if>
+      <if test= "apiSyncUrl != null and apiSyncUrl != '' ">
+        and api_sync_url = #{apiSyncUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "organizationId != null ">
+        and organization_id = #{organizationId,jdbcType=BIGINT}      
+      </if>
+      <if test= "type != null and type != '' ">
+        and type = #{type,jdbcType=VARCHAR}      
+      </if>
+      <if test= "isValue != null ">
+        and is_value = #{isValue,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "name != null and name != '' ">
+        and name = #{name,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+    <!-- 分条件查询sql 语句  记录数 -->
+    <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.hy.security.entity.System" >
+        select  count(1)
+        from td_system
+        <where>
+            <if test= "id != null ">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test= "code != null and code != '' ">
+                and code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test= "routeUrl != null and routeUrl != '' ">
+                and route_url = #{routeUrl,jdbcType=VARCHAR}
+            </if>
+            <if test= "description != null and description != '' ">
+                and description = #{description,jdbcType=VARCHAR}
+            </if>
+            <if test= "appId != null and appId != '' ">
+                and app_id = #{appId,jdbcType=VARCHAR}
+            </if>
+            <if test= "appSecret != null and appSecret != '' ">
+                and app_secret = #{appSecret,jdbcType=VARCHAR}
+            </if>
+            <if test= "apiSyncUrl != null and apiSyncUrl != '' ">
+                and api_sync_url = #{apiSyncUrl,jdbcType=VARCHAR}
+            </if>
+            <if test= "organizationId != null ">
+                and organization_id = #{organizationId,jdbcType=BIGINT}
+            </if>
+            <if test= "type != null and type != '' ">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test= "isValue != null ">
+                and is_value = #{isValue,jdbcType=INTEGER}
+            </if>
+            <if test= "created != null ">
+                and created = #{created,jdbcType=TIMESTAMP}
+            </if>
+            <if test= "modifierId != null ">
+                and modifier_id = #{modifierId,jdbcType=BIGINT}
+            </if>
+            <if test= "modifier != null and modifier != '' ">
+                and modifier = #{modifier,jdbcType=VARCHAR}
+            </if>
+            <if test= "lasttimeModify != null ">
+                and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+            </if>
+            <if test= "name != null and name != '' ">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, code, route_url, 
+      description, app_id, app_secret, 
+      api_sync_url, organization_id, type, 
+      is_value, created, modifier_id, 
+      modifier, lasttime_modify, name
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.security.entity.System" >
+    select 
+      id, code, route_url, 
+      description, app_id, app_secret, 
+      api_sync_url, organization_id, type, 
+      is_value, created, modifier_id, 
+      modifier, lasttime_modify, name
+    from td_system where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.security.entity.System" >
+    delete from td_system where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_system where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.security.entity.System" useGeneratedKeys="true" keyProperty="id">
+    insert into td_system
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "code != null and code != '' ">
+         code,
+      </if>
+      <if test= "routeUrl != null and routeUrl != '' ">
+         route_url,
+      </if>
+      <if test= "description != null and description != '' ">
+         description,
+      </if>
+      <if test= "appId != null and appId != '' ">
+         app_id,
+      </if>
+      <if test= "appSecret != null and appSecret != '' ">
+         app_secret,
+      </if>
+      <if test= "apiSyncUrl != null and apiSyncUrl != '' ">
+         api_sync_url,
+      </if>
+      <if test= "organizationId != null ">
+         organization_id,
+      </if>
+      <if test= "type != null and type != '' ">
+         type,
+      </if>
+      <if test= "isValue != null ">
+         is_value,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "name != null and name != '' ">
+         name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "code != null and code != '' ">
+         #{code,jdbcType=VARCHAR},
+      </if>
+      <if test= "routeUrl != null and routeUrl != '' ">
+         #{routeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "description != null and description != '' ">
+         #{description,jdbcType=VARCHAR},
+      </if>
+      <if test= "appId != null and appId != '' ">
+         #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test= "appSecret != null and appSecret != '' ">
+         #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test= "apiSyncUrl != null and apiSyncUrl != '' ">
+         #{apiSyncUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "organizationId != null ">
+         #{organizationId,jdbcType=BIGINT},
+      </if>
+      <if test= "type != null and type != '' ">
+         #{type,jdbcType=VARCHAR},
+      </if>
+      <if test= "isValue != null ">
+         #{isValue,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "name != null and name != '' ">
+         #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_system (
+         id,
+         code,
+         route_url,
+         description,
+         app_id,
+         app_secret,
+         api_sync_url,
+         organization_id,
+         type,
+         is_value,
+         created,
+         modifier_id,
+         modifier,
+         lasttime_modify,
+         name)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.code,jdbcType=VARCHAR},
+         #{item.routeUrl,jdbcType=VARCHAR},
+         #{item.description,jdbcType=VARCHAR},
+         #{item.appId,jdbcType=VARCHAR},
+         #{item.appSecret,jdbcType=VARCHAR},
+         #{item.apiSyncUrl,jdbcType=VARCHAR},
+         #{item.organizationId,jdbcType=BIGINT},
+         #{item.type,jdbcType=VARCHAR},
+         #{item.isValue,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=BIGINT},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.name,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.security.entity.System" >
+    update td_system
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "code != null and code != '' ">
+      code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test= "routeUrl != null and routeUrl != '' ">
+      route_url = #{routeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "description != null and description != '' ">
+      description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test= "appId != null and appId != '' ">
+      app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test= "appSecret != null and appSecret != '' ">
+      app_secret = #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test= "apiSyncUrl != null and apiSyncUrl != '' ">
+      api_sync_url = #{apiSyncUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "organizationId != null ">
+      organization_id = #{organizationId,jdbcType=BIGINT},
+      </if>
+      <if test= "type != null and type != '' ">
+      type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test= "isValue != null ">
+      is_value = #{isValue,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "name != null and name != '' ">
+      name = #{name,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+    <!-- 自定义 start -->
+    <select id="findSystemsOfUser" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select DISTINCT t3.*
+        from tr_user_role t1
+        left join td_role t2 on t1.role_id=t2.id
+        left join td_system t3 on t2.system_id=t3.id
+        where t2.is_value=0 and t3.is_value=0
+        and t1.user_id=#{userId}
+    </select>
+	<select id="selectSystemByToken" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select * from td_system where md5(CONCAT(app_id,app_secret))=#{token,jdbcType=VARCHAR} limit 1;
+    </select>
+	
+    <!-- 自定义 end -->
+
+</mapper>

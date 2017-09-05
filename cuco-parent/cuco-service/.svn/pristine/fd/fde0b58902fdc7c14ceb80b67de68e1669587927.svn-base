@@ -1,0 +1,57 @@
+package cn.cuco.service.order.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.OrderMapper;
+import cn.cuco.entity.Order;
+import cn.cuco.service.order.OrderService;
+
+@Service(value = "orderService")
+public class OrderServiceImpl implements OrderService {
+
+    @Autowired
+    private OrderMapper<Order> orderMapper;
+    
+    @Override
+    public Integer insertSelective(Order order) throws Exception {
+           return this.orderMapper.insertSelective(order);
+        }
+
+    @Override
+    public Integer insertBatch(List<Order> order) throws Exception {
+           return this.orderMapper.insertBatch(order) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.orderMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.orderMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(Order order) {
+           return this.orderMapper.updateByPrimaryKeySelective(order);
+    }
+
+    @Override
+    public Order findById(Object id) {
+           return (Order) this.orderMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Order> selectByCondition(Order order) {
+           return (List<Order>) this.orderMapper.selectByCondition(order);
+    }
+
+    @Override
+    public Integer selectCountByCondition(Order order) {
+           return  this.orderMapper.selectCountByCondition(order);
+    }
+
+}

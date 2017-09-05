@@ -1,0 +1,37 @@
+@charset "utf-8";
+@import url("css.css");
+.companyList{ margin: 2% auto 0; font-size: 1.5rem; background: #fff; border-bottom:1px solid #ccc;}
+.companyList li{border-bottom: 1px solid #ccc; padding: 15px 0; width: 92%; margin: auto;}
+.companyList li:last-child{border-bottom: 0;}
+.companyList a,.companyList li{display: block; overflow: hidden;}
+.companyList a{background: url("../images/arrow_right_3.png") no-repeat right center; background-size: 8px; padding-right: 16px;}
+.companyList .lastVal{float: right;}
+
+.companyName{font-size: 1.7rem; color: #333; padding: 4% 0; width: 92%; margin: auto;}
+.personList{ border-top: 1px solid #ccc; border-bottom: 0; margin-top: 0; margin-bottom: 80px;}
+.personList li{color: #666;}
+.personList li:last-child{border-bottom: 1px solid #ccc;}
+.personList span{width: 33.3333%; float: left; display: block;}
+.personList span:last-child{text-align: right;}
+
+
+/*人员管理*/
+.personManage li{border-bottom: 1px solid #ccc; padding: 12px 4%; font-size: 1.5rem;}
+.personManage li p{display: inline-block;}
+.personManage li .name,.bindInfo li .name{min-width: 70px; text-align: right;}
+
+/*人员绑定*/
+.bind{width: 100%; padding: 4%; font-size: 1.6rem; box-sizing: border-box; border-bottom: 1px solid #ccc;}
+
+/*人员信息*/
+.bindInfo{width: 92%; margin: auto;}
+.bindInfo li{border-bottom: 1px solid #ccc; min-height:40px; position: relative; font-size: 1.5rem;}
+.bindInfo li .name{position: absolute; left: 0; top: 0; padding: 12px 0;}
+.bindInfo li .val{width: 100%; padding: 12px 0; padding-left: 70px; box-sizing: border-box;}
+.bindInfo li input[type="text"],.bindInfo li select{width: 100%; font-size: 1.5rem;}
+.bindInfo li select{-webkit-appearance: none; background: url("../images/arrow_down.png") no-repeat right center; background-size: 12px;}
+.bindAd{color: #999; font-size: 1.3rem; width: 92%; margin:9px auto 70px;}
+
+.page{position:relative; background:none; height:auto;}
+
+

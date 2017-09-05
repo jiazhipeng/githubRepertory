@@ -1,0 +1,57 @@
+package cn.cuco.service.member.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberLoginLogMapper;
+import cn.cuco.entity.MemberLoginLog;
+import cn.cuco.service.member.MemberLoginLogService;
+
+@Service(value = "memberLoginLogService")
+public class MemberLoginLogServiceImpl implements MemberLoginLogService {
+
+    @Autowired
+    private MemberLoginLogMapper<MemberLoginLog> memberLoginLogMapper;
+    
+    @Override
+    public Integer insertSelective(MemberLoginLog memberLoginLog) throws Exception {
+           return this.memberLoginLogMapper.insertSelective(memberLoginLog);
+        }
+
+    @Override
+    public Integer insertBatch(List<MemberLoginLog> memberLoginLog) throws Exception {
+           return this.memberLoginLogMapper.insertBatch(memberLoginLog) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.memberLoginLogMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.memberLoginLogMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(MemberLoginLog memberLoginLog) {
+           return this.memberLoginLogMapper.updateByPrimaryKeySelective(memberLoginLog);
+    }
+
+    @Override
+    public MemberLoginLog findById(Object id) {
+           return (MemberLoginLog) this.memberLoginLogMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<MemberLoginLog> selectByCondition(MemberLoginLog memberLoginLog) {
+           return (List<MemberLoginLog>) this.memberLoginLogMapper.selectByCondition(memberLoginLog);
+    }
+
+    @Override
+    public Integer selectCountByCondition(MemberLoginLog memberLoginLog) {
+           return  this.memberLoginLogMapper.selectCountByCondition(memberLoginLog);
+    }
+
+}

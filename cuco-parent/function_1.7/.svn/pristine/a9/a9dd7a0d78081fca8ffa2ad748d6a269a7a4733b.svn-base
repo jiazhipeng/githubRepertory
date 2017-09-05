@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>故障换车</title>
+    <link rel="stylesheet" href="../../css/css.css">
+    <link rel="stylesheet" href="../../css/gjd/jcgs_two.css">
+</head>
+
+<body class="greyBg">
+    <div class="charge-page">
+        <ul class="charge-info-list">
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        更换车辆：
+                    </span>
+                    <span class="info-val">
+                        请选择车辆
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        还车备注：
+                    </span>
+                    <span class="info-val">
+                        请输入备注
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        修理厂商：
+                    </span>
+                    <span class="info-val">
+                        请输入修理厂商
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <div class="btns">
+            <a href="javscript:;" class="button cencle">取消</a>
+            <a href="javscript:;" class="button">更换车辆</a>
+        </div>
+    </div>
+
+    <!--填写备注-->
+    <div class="charge-page charge-dia remark" style="display:none;">
+        <textarea class="textarea"></textarea>
+        <div class="btns">
+            <a href="javscript:;" class="button cencle">取消</a>
+            <a href="javscript:;" class="button">确定</a>
+        </div>
+    </div>
+</body>
+
+</html>

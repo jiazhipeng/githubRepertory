@@ -1,0 +1,119 @@
+package cn.cuco.service.order;
+
+
+import java.util.List;
+
+import cn.cuco.entity.ChargeOrder;
+import cn.cuco.page.PageResult;
+
+/**
+ * 续费订单相关接口
+ * @author zc.du
+ */
+public interface ChargeOrderService {
+	/** 
+    * @Description: 创建续费订单基础方法
+    * @param chargeOrder
+    * @return ChargeOrder
+    * @throws 
+    */
+    public ChargeOrder createChargeOrder(ChargeOrder chargeOrder) throws Exception;
+    
+    /** 
+    * @Description: 修改续费订单基础方法
+    * @param chargeOrder
+    * @return ChargeOrder
+    * @throws 
+    */
+    public ChargeOrder updateChargeOrder(ChargeOrder chargeOrder) throws Exception;
+    
+    /** 
+    * @Description: 删除续费订单基础方法
+    * @param chargeOrder
+    * @return Integer
+    * @throws 
+    */
+    public Integer deleteChargeOrder(ChargeOrder chargeOrder) throws Exception;
+    
+    /** 
+     * @Description: 查询续费订单基础方法
+     * @param chargeOrder
+     * @return ChargeOrder
+     * @throws 
+     */
+    public ChargeOrder getChargeOrder(ChargeOrder chargeOrder) throws Exception; 
+    
+    /** 
+     * @Description: 查询续费订单列表基础方法
+     * @param chargeOrder
+     * @return List<ChargeOrder>
+     * @throws 
+     */
+    public List<ChargeOrder> getChargeOrderList(ChargeOrder chargeOrder) throws Exception;
+    
+    /** 
+     * @Description: 分页查询续费订单列表基础方法
+     * @param chargeOrder
+     * @return PageResult<ChargeOrder>
+     * @throws 
+     */
+    public PageResult<ChargeOrder> getChargeOrderListByPage(ChargeOrder chargeOrder) throws Exception;
+
+    /** 
+     * @Description: 查询续费订单数量基础方法
+     * @param chargeOrder
+     * @return Integer
+     * @throws 
+     */
+    public Integer getChargeOrderCount(ChargeOrder chargeOrder) throws Exception;
+    
+    /** 
+     * @Description: app端发起续费订单
+     * @param chargeOrder
+     * @return ChargeOrder
+     * @throws 
+     */
+    public ChargeOrder createOrderForApp(ChargeOrder chargeOrder) throws Exception;
+    
+    /** 
+     * @Description: app端修改续费订单状态为"已取消"
+     * @param chargeOrder
+     * @return ChargeOrder
+     * @throws 
+     */
+    public ChargeOrder updateChargeOrderStatusByCancelForApp(ChargeOrder chargeOrder) throws Exception;
+    
+    /** 
+     * @Description: 修改续费订单状态为"已取消"
+     * @param chargeOrder
+     * @return ChargeOrder
+     * @throws 
+     */
+    public ChargeOrder updateChargeOrderStatusByCancel(ChargeOrder chargeOrder) throws Exception;
+    
+    /** 
+     * @Description: 修改续费订单状态为"支付中"
+     * @param chargeOrder
+     * @return ChargeOrder
+     * @throws 
+     */
+    public ChargeOrder updateChargeOrderStatusByPaying(ChargeOrder chargeOrder) throws Exception;
+    
+    /** 
+     * @Description: 修改续费订单状态为"部分付款"
+     * @param chargeOrder
+     * @return ChargeOrder
+     * @throws 
+     */
+    public ChargeOrder updateChargeOrderStatusByPartPay(ChargeOrder chargeOrder) throws Exception;
+    
+    /** 
+     * @Description: 修改续费订单状态为"已付款"
+     * @param chargeOrder
+     * @return ChargeOrder
+     * @throws 
+     */
+    public ChargeOrder updateChargeOrderStatusByCompletePay(ChargeOrder chargeOrder) throws Exception;
+
+
+}

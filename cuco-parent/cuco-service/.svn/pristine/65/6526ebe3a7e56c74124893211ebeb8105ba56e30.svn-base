@@ -1,0 +1,86 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.math.BigDecimal;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-22 14:30:41
+ */
+public class CarUsedLog implements Serializable {
+
+    private static final long serialVersionUID = 2117208157480190L;
+
+    private Long id;//车辆日志ID
+
+    private Long carId;//车辆ID
+
+    private String carPlateNum;//车牌号
+
+    private Integer type;//车辆运营类型（）
+
+    private String driver;//行驶人
+
+    private BigDecimal drivingMileage;//行驶公里数（km）
+
+    private Date created;//创建时间
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getCarId() {
+        return this.carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
+    }
+
+    public String getCarPlateNum() {
+        return this.carPlateNum;
+    }
+
+    public void setCarPlateNum(String carPlateNum) {
+        this.carPlateNum = carPlateNum;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getDriver() {
+        return this.driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+
+    public BigDecimal getDrivingMileage() {
+        return this.drivingMileage;
+    }
+
+    public void setDrivingMileage(BigDecimal drivingMileage) {
+        this.drivingMileage = drivingMileage;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+}

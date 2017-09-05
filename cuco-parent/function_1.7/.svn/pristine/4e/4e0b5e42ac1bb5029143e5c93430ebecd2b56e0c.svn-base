@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>城市</title>
+    <link rel="stylesheet" href="../../css/css.css">
+    <style>
+        .cities{
+            margin:0 1.8rem;
+        }
+        .city{
+            line-height:4.5rem;
+            border-bottom:1px solid  #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cities">
+    <div class="city">上海</div>
+    <div class="city">北京</div>
+</div>
+<script src="../../js/zepto.js"></script>
+</body>
+</html>

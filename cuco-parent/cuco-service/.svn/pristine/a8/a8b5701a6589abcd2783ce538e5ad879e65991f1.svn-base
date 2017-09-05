@@ -1,0 +1,262 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
+import cn.cuco.page.PageQuery;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-24 10:35:23
+ */
+public class OrderCarUsed extends PageQuery<OrderCarUsed> implements Serializable {
+
+    private static final long serialVersionUID = 1750344971715047L;
+
+    private Long id;//主键ID
+
+    private Long memberCarUsedId;//用车记录主表ID
+
+    private Long memberId;//用户ID
+
+    private String memberName;//用户姓名
+
+    private String mobile;//手机号
+
+    private Long carportId;//车库ID
+
+    private Long cartypeId;//车型ID
+
+    private Long caroperateId;//运营车辆ID
+
+    private String carPlateNum;//车牌号码
+
+    private BigDecimal total;//用车总费用
+
+    private BigDecimal basicPrice;//基础费
+
+    private BigDecimal mileage;//行驶里程
+
+    private BigDecimal perKilometrePrice;//行驶每公里的价格(元/km)
+
+    private BigDecimal gasoline;//油耗（L）
+
+    private BigDecimal perGasolinePrice;//燃油价格(元/L)
+
+    private BigDecimal insurancePrice;//保险费用
+
+    private BigDecimal servicePrice;//服务费
+
+    private BigDecimal limitedBack;//限号补回费
+
+    private Date created;//创建时间
+
+    private String modifer;//修改人
+
+    private Long modifierId;//修改人ID
+    
+    private Integer type;//用车类型: 0:非会员用车;1:会员用车
+    
+    
+    //********************************
+    private Date timeStart; //结算开始时间
+    private Date timeEnd;//结算结束时间
+
+
+	public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getMemberCarUsedId() {
+        return this.memberCarUsedId;
+    }
+
+    public void setMemberCarUsedId(Long memberCarUsedId) {
+        this.memberCarUsedId = memberCarUsedId;
+    }
+
+    public Long getMemberId() {
+        return this.memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getMemberName() {
+        return this.memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getMobile() {
+        return this.mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public Long getCarportId() {
+        return this.carportId;
+    }
+
+    public void setCarportId(Long carportId) {
+        this.carportId = carportId;
+    }
+
+    public Long getCartypeId() {
+        return this.cartypeId;
+    }
+
+    public void setCartypeId(Long cartypeId) {
+        this.cartypeId = cartypeId;
+    }
+
+    public Long getCaroperateId() {
+        return this.caroperateId;
+    }
+
+    public void setCaroperateId(Long caroperateId) {
+        this.caroperateId = caroperateId;
+    }
+
+    public String getCarPlateNum() {
+        return this.carPlateNum;
+    }
+
+    public void setCarPlateNum(String carPlateNum) {
+        this.carPlateNum = carPlateNum;
+    }
+
+    public BigDecimal getTotal() {
+        return this.total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public BigDecimal getBasicPrice() {
+        return this.basicPrice;
+    }
+
+    public void setBasicPrice(BigDecimal basicPrice) {
+        this.basicPrice = basicPrice;
+    }
+
+    public BigDecimal getMileage() {
+        return this.mileage;
+    }
+
+    public void setMileage(BigDecimal mileage) {
+        this.mileage = mileage;
+    }
+
+    public BigDecimal getPerKilometrePrice() {
+        return this.perKilometrePrice;
+    }
+
+    public void setPerKilometrePrice(BigDecimal perKilometrePrice) {
+        this.perKilometrePrice = perKilometrePrice;
+    }
+
+    public BigDecimal getGasoline() {
+        return this.gasoline;
+    }
+
+    public void setGasoline(BigDecimal gasoline) {
+        this.gasoline = gasoline;
+    }
+
+    public BigDecimal getPerGasolinePrice() {
+        return this.perGasolinePrice;
+    }
+
+    public void setPerGasolinePrice(BigDecimal perGasolinePrice) {
+        this.perGasolinePrice = perGasolinePrice;
+    }
+
+    public BigDecimal getInsurancePrice() {
+        return this.insurancePrice;
+    }
+
+    public void setInsurancePrice(BigDecimal insurancePrice) {
+        this.insurancePrice = insurancePrice;
+    }
+
+    public BigDecimal getServicePrice() {
+        return this.servicePrice;
+    }
+
+    public void setServicePrice(BigDecimal servicePrice) {
+        this.servicePrice = servicePrice;
+    }
+
+    public BigDecimal getLimitedBack() {
+        return this.limitedBack;
+    }
+
+    public void setLimitedBack(BigDecimal limitedBack) {
+        this.limitedBack = limitedBack;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getModifer() {
+        return this.modifer;
+    }
+
+    public void setModifer(String modifer) {
+        this.modifer = modifer;
+    }
+
+    public Long getModifierId() {
+        return this.modifierId;
+    }
+
+    public void setModifierId(Long modifierId) {
+        this.modifierId = modifierId;
+    }
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public Date getTimeStart() {
+		return timeStart;
+	}
+
+	public void setTimeStart(Date timeStart) {
+		this.timeStart = timeStart;
+	}
+
+	public Date getTimeEnd() {
+		return timeEnd;
+	}
+
+	public void setTimeEnd(Date timeEnd) {
+		this.timeEnd = timeEnd;
+	}
+
+	
+
+}

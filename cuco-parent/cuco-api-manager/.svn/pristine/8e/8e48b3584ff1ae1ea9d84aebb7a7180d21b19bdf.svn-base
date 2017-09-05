@@ -1,0 +1,50 @@
+package cn.cuco.controller.manager.car.repair;
+
+import org.springframework.web.bind.annotation.RestController;
+import cn.cuco.annotation.API;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+/**
+ * @ClassName:
+ * @Description：
+ * @author：WangShuai
+ * @date：2017年02月24 18:20:00
+ */
+@RestController
+public class CarRepairController {
+
+    @API(value = "维修-分页")
+    @RequestMapping(value = "",method = RequestMethod.POST)
+    private Object getCarRepairListByPage(){
+
+        return null;
+    }
+
+    @API(value = "维修-创建")
+    @RequestMapping(value = "/carRepair/createCarRepair",method = RequestMethod.POST)
+    private Object createCarRepair(){
+
+        return null;
+    }
+
+    @API(value = "维修-操作日志-分页")
+    @RequestMapping(value = "/carRepair/getCarRepairLogListByPage",method = RequestMethod.POST)
+    private Object getCarRepairLogListByPage(){
+
+        return null;
+    }
+
+    @API(value = "维修-状态修改")
+    @RequestMapping(value = "/carRepair/updateStatus",method = RequestMethod.POST)
+    private Object updateStatus(){
+
+        return null;
+    }
+
+    @API(value = "维修-详情")
+    @RequestMapping(value = "/carRepair/getCarRepairById",method = RequestMethod.GET)
+    private Object getCarRepairById(){
+
+        return null;
+    }
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.ParkingMapper" >
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByConditionByPage" resultType="INTEGER" parameterType="cn.cuco.entity.Parking" >
+       select  count(1) 
+    from td_parking  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "parkingName != null and parkingName != '' ">
+        and parking_name like  CONCAT('%',CONCAT(#{parkingName,jdbcType=VARCHAR},'%'))        
+      </if>
+      <if test= "parkingAddress != null and parkingAddress != '' ">
+        and parking_address = #{parkingAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "validate != null ">
+        and validate = #{validate,jdbcType=INTEGER}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByConditionByPage" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Parking" >
+       select  <include refid="Base_Column_List" />
+    from td_parking  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "parkingName != null and parkingName != '' ">
+       and parking_name like  CONCAT('%',CONCAT(#{parkingName,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "parkingAddress != null and parkingAddress != '' ">
+        and parking_address = #{parkingAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "validate != null ">
+        and validate = #{validate,jdbcType=INTEGER}      
+      </if>
+  </where>
+  </select>
+</mapper>

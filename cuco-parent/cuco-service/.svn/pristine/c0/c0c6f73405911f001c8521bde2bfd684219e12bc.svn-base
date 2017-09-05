@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.BasicRestrictionMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.BasicRestriction" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="restrictions_date" property="restrictionsDate" jdbcType="TIMESTAMP" />
+    <result column="restrictions" property="restrictions" jdbcType="VARCHAR" />
+    <result column="begin_date" property="beginDate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.BasicRestriction" >
+       select  count(1) 
+    from tc_basic_restriction  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "cityId != null ">
+        and city_id = #{cityId,jdbcType=INTEGER}      
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+        and city_code = #{cityCode,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+        and city_name = #{cityName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "restrictionsDate != null ">
+        and restrictions_date = #{restrictionsDate,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "restrictions != null and restrictions != '' ">
+        and restrictions = #{restrictions,jdbcType=VARCHAR}      
+      </if>
+      <if test= "beginDate != null and beginDate != '' ">
+        and begin_date = #{beginDate,jdbcType=VARCHAR}      
+      </if>
+      <if test= "endDate != null and endDate != '' ">
+        and end_date = #{endDate,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.BasicRestriction" >
+       select  <include refid="Base_Column_List" />
+    from tc_basic_restriction  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "cityId != null ">
+        and city_id = #{cityId,jdbcType=INTEGER}      
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+        and city_code = #{cityCode,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+        and city_name = #{cityName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "restrictionsDate != null ">
+        and restrictions_date = #{restrictionsDate,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "restrictions != null and restrictions != '' ">
+        and restrictions = #{restrictions,jdbcType=VARCHAR}      
+      </if>
+      <if test= "beginDate != null and beginDate != '' ">
+        and begin_date = #{beginDate,jdbcType=VARCHAR}      
+      </if>
+      <if test= "endDate != null and endDate != '' ">
+        and end_date = #{endDate,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, city_id, city_code, 
+      city_name, restrictions_date, restrictions, 
+      begin_date, end_date
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.BasicRestriction" >
+    select 
+      id, city_id, city_code, 
+      city_name, restrictions_date, restrictions, 
+      begin_date, end_date
+    from tc_basic_restriction where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.BasicRestriction" >
+    delete from tc_basic_restriction where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tc_basic_restriction where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.BasicRestriction" >
+    insert into tc_basic_restriction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "cityId != null ">
+         city_id,
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         city_code,
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         city_name,
+      </if>
+      <if test= "restrictionsDate != null ">
+         restrictions_date,
+      </if>
+      <if test= "restrictions != null and restrictions != '' ">
+         restrictions,
+      </if>
+      <if test= "beginDate != null and beginDate != '' ">
+         begin_date,
+      </if>
+      <if test= "endDate != null and endDate != '' ">
+         end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "cityId != null ">
+         #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "restrictionsDate != null ">
+         #{restrictionsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "restrictions != null and restrictions != '' ">
+         #{restrictions,jdbcType=VARCHAR},
+      </if>
+      <if test= "beginDate != null and beginDate != '' ">
+         #{beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test= "endDate != null and endDate != '' ">
+         #{endDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tc_basic_restriction (
+         id,
+         city_id,
+         city_code,
+         city_name,
+         restrictions_date,
+         restrictions,
+         begin_date,
+         end_date)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.cityId,jdbcType=INTEGER},
+         #{item.cityCode,jdbcType=VARCHAR},
+         #{item.cityName,jdbcType=VARCHAR},
+         #{item.restrictionsDate,jdbcType=TIMESTAMP},
+         #{item.restrictions,jdbcType=VARCHAR},
+         #{item.beginDate,jdbcType=VARCHAR},
+         #{item.endDate,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.BasicRestriction" >
+    update tc_basic_restriction
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "cityId != null ">
+      city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+      city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "restrictionsDate != null ">
+      restrictions_date = #{restrictionsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "restrictions != null and restrictions != '' ">
+      restrictions = #{restrictions,jdbcType=VARCHAR},
+      </if>
+      <if test= "beginDate != null and beginDate != '' ">
+      begin_date = #{beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test= "endDate != null and endDate != '' ">
+      end_date = #{endDate,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.PreAuthorizedDebitMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.PreAuthorizedDebit" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_mobile" property="memberMobile" jdbcType="VARCHAR" />
+    <result column="car_id" property="carId" jdbcType="BIGINT" />
+    <result column="car_plate_num" property="carPlateNum" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="source" property="source" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="frozen_amount" property="frozenAmount" jdbcType="DECIMAL" />
+    <result column="frozen_time" property="frozenTime" jdbcType="TIMESTAMP" />
+    <result column="expect_unfreeze_time" property="expectUnfreezeTime" jdbcType="TIMESTAMP" />
+    <result column="unfreeze_amount" property="unfreezeAmount" jdbcType="DECIMAL" />
+    <result column="deduction_amount" property="deductionAmount" jdbcType="DECIMAL" />
+    <result column="actual_unfreeze_time" property="actualUnfreezeTime" jdbcType="TIMESTAMP" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="car_used_id" property="carUsedId" jdbcType="BIGINT" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.PreAuthorizedDebit" >
+       select  count(1) 
+    from td_pre_authorized_debit  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "source != null ">
+        and source = #{source,jdbcType=INTEGER}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "frozenAmount != null ">
+        and frozen_amount = #{frozenAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "frozenTime != null ">
+        and frozen_time = #{frozenTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "expectUnfreezeTime != null ">
+        and expect_unfreeze_time = #{expectUnfreezeTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "unfreezeAmount != null ">
+        and unfreeze_amount = #{unfreezeAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "deductionAmount != null ">
+        and deduction_amount = #{deductionAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "actualUnfreezeTime != null ">
+        and actual_unfreeze_time = #{actualUnfreezeTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carUsedId != null ">
+        and car_used_id = #{carUsedId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.PreAuthorizedDebit" >
+       select  <include refid="Base_Column_List" />
+    from td_pre_authorized_debit  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "source != null ">
+        and source = #{source,jdbcType=INTEGER}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "frozenAmount != null ">
+        and frozen_amount = #{frozenAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "frozenTime != null ">
+        and frozen_time = #{frozenTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "expectUnfreezeTime != null ">
+        and expect_unfreeze_time = #{expectUnfreezeTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "unfreezeAmount != null ">
+        and unfreeze_amount = #{unfreezeAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "deductionAmount != null ">
+        and deduction_amount = #{deductionAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "actualUnfreezeTime != null ">
+        and actual_unfreeze_time = #{actualUnfreezeTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carUsedId != null ">
+        and car_used_id = #{carUsedId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, member_id, member_name, 
+      member_mobile, car_id, car_plate_num, 
+      type, source, status, 
+      frozen_amount, frozen_time, expect_unfreeze_time, 
+      unfreeze_amount, deduction_amount, actual_unfreeze_time, 
+      created, remark, lasttime_modify, 
+      modifier_id, modifier, car_used_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.PreAuthorizedDebit" >
+    select 
+      id, member_id, member_name, 
+      member_mobile, car_id, car_plate_num, 
+      type, source, status, 
+      frozen_amount, frozen_time, expect_unfreeze_time, 
+      unfreeze_amount, deduction_amount, actual_unfreeze_time, 
+      created, remark, lasttime_modify, 
+      modifier_id, modifier, car_used_id
+    from td_pre_authorized_debit where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.PreAuthorizedDebit" >
+    delete from td_pre_authorized_debit where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_pre_authorized_debit where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.PreAuthorizedDebit" >
+    insert into td_pre_authorized_debit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         member_mobile,
+      </if>
+      <if test= "carId != null ">
+         car_id,
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         car_plate_num,
+      </if>
+      <if test= "type != null ">
+         type,
+      </if>
+      <if test= "source != null ">
+         source,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "frozenAmount != null ">
+         frozen_amount,
+      </if>
+      <if test= "frozenTime != null ">
+         frozen_time,
+      </if>
+      <if test= "expectUnfreezeTime != null ">
+         expect_unfreeze_time,
+      </if>
+      <if test= "unfreezeAmount != null ">
+         unfreeze_amount,
+      </if>
+      <if test= "deductionAmount != null ">
+         deduction_amount,
+      </if>
+      <if test= "actualUnfreezeTime != null ">
+         actual_unfreeze_time,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "remark != null and remark != '' ">
+         remark,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "carUsedId != null ">
+         car_used_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "carId != null ">
+         #{carId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "type != null ">
+         #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "source != null ">
+         #{source,jdbcType=INTEGER},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "frozenAmount != null ">
+         #{frozenAmount,jdbcType=DECIMAL},
+      </if>
+      <if test= "frozenTime != null ">
+         #{frozenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "expectUnfreezeTime != null ">
+         #{expectUnfreezeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "unfreezeAmount != null ">
+         #{unfreezeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test= "deductionAmount != null ">
+         #{deductionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test= "actualUnfreezeTime != null ">
+         #{actualUnfreezeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remark != null and remark != '' ">
+         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "carUsedId != null ">
+         #{carUsedId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_pre_authorized_debit (
+         id,
+         member_id,
+         member_name,
+         member_mobile,
+         car_id,
+         car_plate_num,
+         type,
+         source,
+         status,
+         frozen_amount,
+         frozen_time,
+         expect_unfreeze_time,
+         unfreeze_amount,
+         deduction_amount,
+         actual_unfreeze_time,
+         created,
+         remark,
+         lasttime_modify,
+         modifier_id,
+         modifier,
+         car_used_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.memberMobile,jdbcType=VARCHAR},
+         #{item.carId,jdbcType=BIGINT},
+         #{item.carPlateNum,jdbcType=VARCHAR},
+         #{item.type,jdbcType=INTEGER},
+         #{item.source,jdbcType=INTEGER},
+         #{item.status,jdbcType=INTEGER},
+         #{item.frozenAmount,jdbcType=DECIMAL},
+         #{item.frozenTime,jdbcType=TIMESTAMP},
+         #{item.expectUnfreezeTime,jdbcType=TIMESTAMP},
+         #{item.unfreezeAmount,jdbcType=DECIMAL},
+         #{item.deductionAmount,jdbcType=DECIMAL},
+         #{item.actualUnfreezeTime,jdbcType=TIMESTAMP},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.remark,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=BIGINT},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.carUsedId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.PreAuthorizedDebit" >
+    update td_pre_authorized_debit
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+      member_mobile = #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "carId != null ">
+      car_id = #{carId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+      car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "type != null ">
+      type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "source != null ">
+      source = #{source,jdbcType=INTEGER},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "frozenAmount != null ">
+      frozen_amount = #{frozenAmount,jdbcType=DECIMAL},
+      </if>
+      <if test= "frozenTime != null ">
+      frozen_time = #{frozenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "expectUnfreezeTime != null ">
+      expect_unfreeze_time = #{expectUnfreezeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "unfreezeAmount != null ">
+      unfreeze_amount = #{unfreezeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test= "deductionAmount != null ">
+      deduction_amount = #{deductionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test= "actualUnfreezeTime != null ">
+      actual_unfreeze_time = #{actualUnfreezeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remark != null and remark != '' ">
+      remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "carUsedId != null ">
+      car_used_id = #{carUsedId,jdbcType=BIGINT}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

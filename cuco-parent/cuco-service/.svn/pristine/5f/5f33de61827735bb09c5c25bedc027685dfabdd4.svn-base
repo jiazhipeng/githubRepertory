@@ -1,0 +1,118 @@
+package cn.cuco.service.payment.impl;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.PaymentMapper;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderMemberCarUsed;
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.entity.Payment;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.log.OperateLogService;
+import cn.cuco.service.order.OrderMemberCarUsedService;
+import cn.cuco.service.order.OrderRenewalService;
+import cn.cuco.service.payment.PaymentService;
+
+/**
+ * @ClassName: PaymentServiceImpl
+ * @Description: 支付记录相关接口的实现
+ * @author zc.du
+ * @date 2017年2月23日 上午10:58:02
+ */
+@Service(value = "paymentService")
+public class PaymentServiceImpl implements PaymentService {
+
+	@Autowired
+	private PaymentMapper<Payment> paymentMapper;
+	@Autowired
+	private OperateLogService operateLogService;
+	@Autowired
+	private OrderRenewalService orderRenewalService;
+	@Autowired
+	private OrderMemberCarUsedService orderMemberCarUsedService;
+
+	@Override
+	public Payment callBackForPayment(Payment payment) {
+		ParamVerifyUtils.paramNotNull(payment, "支付回调时，支付记录不能为空");
+		ParamVerifyUtils.paramNotNull(payment.getPaymentType(), "支付回调时，支付类型不能为空");
+		ParamVerifyUtils.paramNotNull(payment.getOrderNo(), "支付回调时，支付订单号不能为空");
+		ParamVerifyUtils.paramNotNull(payment.getPayWaterNo(), "支付回调时，支付流水号号不能为空");
+		ParamVerifyUtils.paramNotNull(payment.getPaymentJson(), "支付回调时，支付json不能为空");
+		ParamVerifyUtils.paramNotNull(payment.getPaymentStatus(), "支付回调时，支付状态不能为空");
+
+		// 查找对应的支付订单
+		if (payment.getOrderNo().indexOf("YC") == 0) {
+			// 用车订单
+			return this.dealWithOrderMemberCarUsed(payment);
+		} else if (payment.getOrderNo().indexOf("CZ") == 0) {
+			// 续费订单
+			return this.dealWithOrderRenewal(payment);
+		}
+		return null;
+	}
+
+	@Override
+	public PageResult<Payment> getPaymentListByPage(Payment payment) {
+		ParamVerifyUtils.paramNotNull(payment);
+		Integer page = payment.getPage();
+		Integer pageSize = payment.getPageSize();
+		Integer totalSize = this.paymentMapper.selectCountByCondition(payment);
+		PageHelper.startPage(page, pageSize);
+		List<Payment> list = this.paymentMapper.selectByCondition(payment);
+		PageResult<Payment> pageResult = new PageResult<Payment>(page, pageSize, totalSize, list);
+		return pageResult;
+	}
+
+	@Override
+	public PageResult<OperateLog> getPaymentLogListByPage(Payment payment) {
+		ParamVerifyUtils.paramNotNull(payment);
+		ParamVerifyUtils.paramNotNull(payment.getId(), "支付记录ID不能为空");
+		OperateLog log = new OperateLog();
+		log.setPage(payment.getPage());
+		log.setPageSize(payment.getPageSize());
+		log.setOperationId(payment.getId());
+		log.setType(OperateLogEnum.PAYMENT.getValue());
+		return this.operateLogService.getOperateLogByPage(log);
+	}
+
+	private Payment dealWithOrderMemberCarUsed(Payment payment) {
+		OrderMemberCarUsed order = new OrderMemberCarUsed();
+		order = this.orderMemberCarUsedService.getOrderMemberCarUsed(order);
+		if (null == order) {
+			ExceptionUtil.throwWarn("用车订单不存在");
+		}
+		BigDecimal cur = payment.getOrderAmount();
+		if(payment.getPaymentStatus().equals(3)){
+//			BigDecimal payment = 
+		}
+		// 如果支付成功，修改订单状态、插入订单日志
+		
+		// 创建支付记录、增加支付日志
+		/*payment.setOrderId(order.getId());
+		payment.setMemberId(order.getMemberId());
+		payment.setMemberName(order.getMemberName());
+		payment.setMemberMobile(order.getMemberMobile());
+		OperateLog payLog = new OperateLog(operationId, type, status, modifierId, modifier, created, remark);*/
+		return null;
+	}
+
+	private Payment dealWithOrderRenewal(Payment payment) {
+		OrderRenewal order = new OrderRenewal();
+		order.setOrderNum(payment.getOrderNo());
+		order = this.orderRenewalService.getOrderRenewal(order);
+		if (null == order) {
+			ExceptionUtil.throwWarn("续费订单不存在");
+		}
+		return null;
+	}
+
+}

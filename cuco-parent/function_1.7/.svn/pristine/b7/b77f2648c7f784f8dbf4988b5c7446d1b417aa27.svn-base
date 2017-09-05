@@ -1,0 +1,159 @@
+header {
+    padding: 0 1.5rem;
+}
+
+header {
+    height: 4rem;
+    background: #191919;
+}
+
+header .date-wrapper {
+    color: #fff;
+    line-height: 4rem;
+    float: left;
+}
+
+header .date-wrapper .prev {
+    background: url(../../images/arrow_left.png) 0 0 no-repeat;
+    display: inline-block;
+    width: 1.4rem;
+    height: 1.4rem;
+    background-size: contain;
+    vertical-align: middle;
+}
+
+header .date-wrapper .nxt {
+    background: url(../../images/arrow_right_white.png) 0 0 no-repeat;
+    display: inline-block;
+    width: 1.4rem;
+    height: 1.4rem;
+    background-size: contain;
+    margin-left: .5rem;
+    vertical-align: middle;
+}
+
+header .date-wrapper .nxt {}
+
+header .query {
+    color: #fff;
+    float: right;
+    line-height: 4rem;
+}
+
+header .query .icon {
+    background: url(../../images/search.png) 0 0 no-repeat;
+    height: 1.3rem;
+    width: 1.3rem;
+    display: inline-block;
+    background-size: cover;
+    vertical-align: middle;
+    margin-right: .3rem;
+}
+
+.content {
+    margin: 0 1.5rem;
+}
+
+.content .nav {
+    display: flex;
+    border-bottom: 1px solid #d9d9d9;
+    height: 3.5rem;
+    align-items: center;
+    text-align: center;
+}
+
+.content .nav .nav-item {
+    flex: 1;
+    line-height: 3.5rem;
+    height: 100%;
+}
+
+.content .nav .nav-item.active {
+    color: #434343;
+    border-bottom: 1px solid #434343;
+}
+
+.page {
+    display: none;
+}
+
+.page:nth-of-type(1) {
+    display: block;
+}
+
+.datepicker {}
+
+.datepicker .datepicker-title {
+    height: 3rem;
+    background: #eee;
+    margin-top: 1rem;
+    display: flex;
+    text-align: center;
+}
+
+.datepicker .datepicker-title span {
+    flex: 1;
+    align-self: center;
+}
+
+.datepicker .datepicker-r {
+    height: 6rem;
+    display: flex;
+    text-align: center;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.datepicker .datepicker-r span {
+    font-size: 2rem;
+    flex: 1;
+    align-self: center;
+    padding: .5rem;
+    position: relative;
+}
+
+.datepicker .datepicker-r span.crrt {
+    background: #161616;
+    color: #fff;
+}
+
+.datepicker .datepicker-r i {
+    font-size: 1rem;
+    display: block;
+    align-self: center;
+    margin-top: .3rem;
+}
+
+
+/*.datepicker .datepicker-r .yong{
+    background: #161616;
+    color:#fff;
+}*/
+.datepicker .datepicker-r span em{
+    width:24px;
+    height:24px;
+    line-height:24px;
+    position:absolute;
+    right:-6px;
+    top:-12px;
+    border-radius:50%;
+    color:#fff;
+    font-size:1.3rem;
+}
+.datepicker .datepicker-r .yong em{
+    background: #00bf9a;
+}
+.datepicker .datepicker-r .zhang em{
+    background: #ff7624;
+}
+.datepicker .datepicker-r .zheng em{
+    background: #0c8ad3;
+}
+.datepicker .datepicker-r .yu em{
+    background: #f6c915;
+}
+.datepicker .datepicker-r .shi em{
+    background: #D5D5D5;
+}
+.datepicker .datepicker-r .qian em{
+    background: #27c4f9;
+}

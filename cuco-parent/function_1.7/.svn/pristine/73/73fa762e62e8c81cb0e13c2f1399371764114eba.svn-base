@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>创建会员</title>
+    <link href="../../css/order.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<ul class="creMember">
+    <li class="arrowRight">
+        会员类型：
+            <span class="radioRoup">
+                <input type="radio" name="mType" checked>个人会员
+                <input type="radio" name="mType">企业会员
+            </span>
+    </li>
+</ul>
+
+<!--个人会员-->
+<ul class="creMember">
+    <li>
+        姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：
+        <input type="text" placeholder="请输入姓名">
+    </li>
+    <li>
+        手机号码：
+        <input type="tel" placeholder="请输入手机号码" maxlength="11">
+    </li>
+    <li>
+        性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：
+            <span class="radioRoup">
+                <input type="radio" name="sex">男
+                <input type="radio" name="sex">女
+            </span>
+    </li>
+    <li class="rightArrow">
+        <a href="javascript:;">
+            城&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;市：
+            <span class="color999">请选择城市</span>
+        </a>
+    </li>
+</ul>
+
+<!--企业会员-->
+<ul class="creMember" style="display: none;">
+    <li>
+       企业名称:
+        <input type="text">
+    </li>
+    <li>
+        组织机构代码：
+        <input type="text">
+    </li>
+    <li class="arrowRight">
+        联&nbsp;&nbsp;系&nbsp;&nbsp;人&nbsp;:
+            <span class="radioRoup">
+                <input type="radio" name="sex">男
+                <input type="radio" name="sex">女
+            </span>
+    </li>
+    <li class="rightArrow">
+        <a href="javascript:;">
+            联系电话：
+            <input type="tel" placeholder="请输入手机号码" maxlength="11">
+        </a>
+    </li>
+    <li class="rightArrow">
+        <a href="javascript:;">
+            所属城市：
+            <span class="color999">请选择城市</span>
+        </a>
+    </li>
+</ul>
+
+<div class="fixBtn">
+    <a href="javascript:;" class="button">确定</a>
+</div>
+</body>
+</html>

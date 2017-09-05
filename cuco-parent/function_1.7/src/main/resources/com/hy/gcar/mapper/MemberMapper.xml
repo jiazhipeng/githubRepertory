@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.MemberMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.Member" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="from_member" property="fromMember" jdbcType="INTEGER" />
+    <result column="marketing_id" property="marketingId" jdbcType="BIGINT" />
+    <result column="marketing_name" property="marketingName" jdbcType="VARCHAR" />
+    <result column="recommend_id" property="recommendId" jdbcType="BIGINT" />
+    <result column="recommend_name" property="recommendName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="statuts" property="statuts" jdbcType="INTEGER" />
+    <result column="is_selles" property="isSelles" jdbcType="INTEGER" />
+    <result column="is_butler" property="isButler" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="focus_type" property="focusType" jdbcType="INTEGER" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="is_test_driver" property="isTestDriver" jdbcType="INTEGER" />
+    <result column="image_qrcode" property="imageQrcode" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="VARCHAR" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="org_tel" property="orgTel" jdbcType="VARCHAR" />
+    <result column="sysuser_id" property="sysuserId" jdbcType="VARCHAR" />
+    <result column="sysuser_name" property="sysuserName" jdbcType="VARCHAR" />
+    <result column="Info_audit" property="infoAudit" jdbcType="INTEGER" />
+    <result column="use_car_approved" property="useCarApproved" jdbcType="INTEGER" />
+    <result column="buy_approved" property="buyApproved" jdbcType="INTEGER" />
+    <result column="sure_name" property="sureName" jdbcType="VARCHAR" />
+    <result column="nationality" property="nationality" jdbcType="VARCHAR" />
+    <result column="nationality_id" property="nationalityId" jdbcType="BIGINT" />
+    <result column="idcard" property="idcard" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="member_type" property="memberType" jdbcType="INTEGER" />
+    <result column="is_sales_manager" property="isSalesManager" jdbcType="INTEGER" />
+    <result column="is_customer_manager" property="isCustomerManager" jdbcType="INTEGER" />
+    <result column="is_customer" property="isCustomer" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="channel_id" property="channelId" jdbcType="BIGINT" />
+    <result column="card_id" property="cardId" jdbcType="BIGINT" />
+    <result column="is_sales_support" property="isSalesSupport" jdbcType="INTEGER" />
+
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Member" >
+       select  <include refid="Base_Column_List" />
+    from td_member  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "name != null and name != '' ">
+        and name = #{name,jdbcType=VARCHAR}      
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+        and mobile  LIKE CONCAT(CONCAT('%', #{mobile,jdbcType=VARCHAR}), '%')
+      </if>
+      <if test= "openid != null and openid != '' ">
+        and openid = #{openid,jdbcType=VARCHAR}      
+      </if>
+      <if test= "sex != null ">
+        and sex = #{sex,jdbcType=INTEGER}      
+      </if>
+      <if test= "fromMember != null ">
+        and from_member = #{fromMember,jdbcType=INTEGER}      
+      </if>
+      <if test= "marketingId != null ">
+        and marketing_id = #{marketingId,jdbcType=BIGINT}      
+      </if>
+      <if test= "marketingName != null and marketingName != '' ">
+        and marketing_name = #{marketingName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "recommendId != null ">
+        and recommend_id = #{recommendId,jdbcType=BIGINT}      
+      </if>
+      <if test= "recommendName != null and recommendName != '' ">
+        and recommend_name = #{recommendName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "statuts != null ">
+        and statuts = #{statuts,jdbcType=INTEGER}      
+      </if>
+      <if test= "isSelles != null ">
+        and is_selles = #{isSelles,jdbcType=INTEGER}      
+      </if>
+      <if test= "isButler != null ">
+        and is_butler = #{isButler,jdbcType=INTEGER}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "focusType != null ">
+        and focus_type = #{focusType,jdbcType=INTEGER}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+        and city_id = #{cityId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+        and city_code = #{cityCode,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+        and city_name = #{cityName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+        and image_url = #{imageUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "isTestDriver != null ">
+        and is_test_driver = #{isTestDriver,jdbcType=INTEGER}      
+      </if>
+      <if test= "imageQrcode != null and imageQrcode != '' ">
+        and image_qrcode = #{imageQrcode,jdbcType=VARCHAR}      
+      </if>
+      <if test= "orgId != null and orgId != '' ">
+        and org_id = #{orgId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "orgName != null and orgName != '' ">
+        and org_name = #{orgName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "orgTel != null and orgTel != '' ">
+        and org_tel = #{orgTel,jdbcType=VARCHAR}      
+      </if>
+      <if test= "sysuserId != null and sysuserId != '' ">
+        and sysuser_id = #{sysuserId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "sysuserName != null and sysuserName != '' ">
+        and sysuser_name = #{sysuserName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "infoAudit != null ">
+        and Info_audit = #{infoAudit,jdbcType=INTEGER}      
+      </if>
+      <if test= "useCarApproved != null ">
+          and use_car_approved = #{useCarApproved,jdbcType=INTEGER}
+      </if>
+       <if test= "buyApproved != null ">
+          and buy_approved = #{buyApproved,jdbcType=INTEGER}
+      </if>
+      <if test= "sureName != null and sureName != '' ">
+        and sure_name = #{sureName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "nationality != null and nationality != '' ">
+        and nationality = #{nationality,jdbcType=VARCHAR}      
+      </if>
+      <if test= "nationalityId != null ">
+        and nationality_id = #{nationalityId,jdbcType=BIGINT}      
+      </if>
+      <if test= "idcard != null ">
+        and idcard = #{idcard,jdbcType=VARCHAR}
+      </if>
+      <if test= "addtime != null ">
+        and addtime = #{addtime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "memberType != null ">
+        and member_type = #{memberType,jdbcType=INTEGER}      
+      </if>
+      <if test= "isSalesManager != null ">
+        and is_sales_manager = #{isSalesManager,jdbcType=INTEGER}      
+      </if>
+      <if test= "isCustomerManager != null ">
+        and is_customer_manager = #{isCustomerManager,jdbcType=INTEGER}      
+      </if>
+      <if test= "isCustomer != null ">
+        and is_customer = #{isCustomer,jdbcType=INTEGER}      
+      </if>
+      <if test= "birthday != null ">
+        and birthday = #{birthday,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "channelId != null ">
+        and channel_id = #{channelId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cardId != null ">
+        and card_id = #{cardId,jdbcType=BIGINT}      
+      </if>
+      <if test= "isSalesSupport != null ">
+        and is_sales_support = #{isSalesSupport,jdbcType=INTEGER}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, name, mobile, 
+      openid, sex, from_member, 
+      marketing_id, marketing_name, recommend_id, 
+      recommend_name, created, statuts, 
+      is_selles, is_butler, type, 
+      focus_type, modifier_id, modifier, 
+      lasttime_modify, city_id, city_code, 
+      city_name, image_url, is_test_driver, 
+      image_qrcode, org_id, org_name, 
+      org_tel, sysuser_id, sysuser_name, 
+      Info_audit,use_car_approved,buy_approved, sure_name, 
+      nationality, nationality_id, idcard, 
+      addtime, member_type, is_sales_manager, 
+      is_customer_manager, is_customer, birthday, 
+      channel_id, card_id,is_sales_support
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Member" >
+    select
+      <include refid="Base_Column_List" />
+    from td_member where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+   <!-- 根绝会员姓名或手机号码进行模糊搜索 -->
+  <select id="findMemberListByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Member" >
+    select
+      <include refid="Base_Column_List" />
+    from td_member
+    <where>
+		(name like CONCAT('%',CONCAT(#{name,jdbcType=VARCHAR},'%')) or mobile like CONCAT('%',CONCAT(#{mobile,jdbcType=VARCHAR},'%')))
+		<if test= "isButler != null ">
+        	 and is_butler = #{isButler,jdbcType=INTEGER}
+      </if>
+	</where>
+  </select>
+
+	<!-- 按表sysuserId查询-->
+  <select id="selectBySysUserId" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Member" >
+    select <include refid="Base_Column_List" /> 
+    from td_member 
+    where  sysuser_id = #{sysuserId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.Member" >
+    delete from td_member where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_member where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.gcar.entity.Member" useGeneratedKeys="true" keyProperty="id">
+    insert into td_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "name != null and name != '' ">
+         name,
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+         mobile,
+      </if>
+      <if test= "openid != null and openid != '' ">
+         openid,
+      </if>
+      <if test= "sex != null ">
+         sex,
+      </if>
+      <if test= "fromMember != null ">
+         from_member,
+      </if>
+      <if test= "marketingId != null ">
+         marketing_id,
+      </if>
+      <if test= "marketingName != null and marketingName != '' ">
+         marketing_name,
+      </if>
+      <if test= "recommendId != null ">
+         recommend_id,
+      </if>
+      <if test= "recommendName != null and recommendName != '' ">
+         recommend_name,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "statuts != null ">
+         statuts,
+      </if>
+      <if test= "isSelles != null ">
+         is_selles,
+      </if>
+      <if test= "isButler != null ">
+         is_butler,
+      </if>
+      <if test= "type != null ">
+         type,
+      </if>
+      <if test= "focusType != null ">
+         focus_type,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+         city_id,
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         city_code,
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         city_name,
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+         image_url,
+      </if>
+      <if test= "isTestDriver != null ">
+         is_test_driver,
+      </if>
+      <if test= "imageQrcode != null and imageQrcode != '' ">
+         image_qrcode,
+      </if>
+      <if test= "orgId != null and orgId != '' ">
+         org_id,
+      </if>
+      <if test= "orgName != null and orgName != '' ">
+         org_name,
+      </if>
+      <if test= "orgTel != null and orgTel != '' ">
+         org_tel,
+      </if>
+      <if test= "sysuserId != null and sysuserId != '' ">
+         sysuser_id,
+      </if>
+      <if test= "sysuserName != null and sysuserName != '' ">
+         sysuser_name,
+      </if>
+      <if test= "infoAudit != null ">
+         Info_audit,
+      </if>
+      <if test= "useCarApproved != null ">
+         use_car_approved,
+      </if>
+      <if test= "buyApproved != null ">
+         buy_approved,
+      </if>
+      <if test= "sureName != null and sureName != '' ">
+         sure_name,
+      </if>
+      <if test= "nationality != null and nationality != '' ">
+         nationality,
+      </if>
+      <if test= "nationalityId != null ">
+         nationality_id,
+      </if>
+      <if test= "idcard != null ">
+         idcard,
+      </if>
+      <if test= "addtime != null ">
+         addtime,
+      </if>
+      <if test= "memberType != null ">
+         member_type,
+      </if>
+      <if test= "isSalesManager != null ">
+         is_sales_manager,
+      </if>
+      <if test= "isCustomerManager != null ">
+         is_customer_manager,
+      </if>
+      <if test= "isCustomer != null ">
+         is_customer,
+      </if>
+      <if test= "birthday != null ">
+         birthday,
+      </if>
+      <if test= "channelId != null ">
+         channel_id,
+      </if>
+      <if test= "cardId != null ">
+         card_id,
+      </if>
+      <if test= "isSalesSupport != null ">
+         is_sales_support,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+         #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "openid != null and openid != '' ">
+         #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test= "sex != null ">
+         #{sex,jdbcType=INTEGER},
+      </if>
+      <if test= "fromMember != null ">
+         #{fromMember,jdbcType=INTEGER},
+      </if>
+      <if test= "marketingId != null ">
+         #{marketingId,jdbcType=BIGINT},
+      </if>
+      <if test= "marketingName != null and marketingName != '' ">
+         #{marketingName,jdbcType=VARCHAR},
+      </if>
+      <if test= "recommendId != null ">
+         #{recommendId,jdbcType=BIGINT},
+      </if>
+      <if test= "recommendName != null and recommendName != '' ">
+         #{recommendName,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "statuts != null ">
+         #{statuts,jdbcType=INTEGER},
+      </if>
+      <if test= "isSelles != null ">
+         #{isSelles,jdbcType=INTEGER},
+      </if>
+      <if test= "isButler != null ">
+         #{isButler,jdbcType=INTEGER},
+      </if>
+      <if test= "type != null ">
+         #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "focusType != null ">
+         #{focusType,jdbcType=INTEGER},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+         #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+         #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "isTestDriver != null ">
+         #{isTestDriver,jdbcType=INTEGER},
+      </if>
+      <if test= "imageQrcode != null and imageQrcode != '' ">
+         #{imageQrcode,jdbcType=VARCHAR},
+      </if>
+      <if test= "orgId != null and orgId != '' ">
+         #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test= "orgName != null and orgName != '' ">
+         #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test= "orgTel != null and orgTel != '' ">
+         #{orgTel,jdbcType=VARCHAR},
+      </if>
+      <if test= "sysuserId != null and sysuserId != '' ">
+         #{sysuserId,jdbcType=VARCHAR},
+      </if>
+      <if test= "sysuserName != null and sysuserName != '' ">
+         #{sysuserName,jdbcType=VARCHAR},
+      </if>
+      <if test= "infoAudit != null ">
+         #{infoAudit,jdbcType=INTEGER},
+      </if>
+      <if test="useCarApproved != null">
+          #{useCarApproved,jdbcType=INTEGER},
+      </if>
+       <if test="buyApproved != null">
+          #{buyApproved,jdbcType=INTEGER}
+      </if>
+      <if test= "sureName != null and sureName != '' ">
+         #{sureName,jdbcType=VARCHAR},
+      </if>
+      <if test= "nationality != null and nationality != '' ">
+         #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test= "nationalityId != null ">
+         #{nationalityId,jdbcType=BIGINT},
+      </if>
+      <if test= "idcard != null ">
+         #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test= "addtime != null ">
+         #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "memberType != null ">
+         #{memberType,jdbcType=INTEGER},
+      </if>
+      <if test= "isSalesManager != null ">
+         #{isSalesManager,jdbcType=INTEGER},
+      </if>
+      <if test= "isCustomerManager != null ">
+         #{isCustomerManager,jdbcType=INTEGER},
+      </if>
+      <if test= "isCustomer != null ">
+         #{isCustomer,jdbcType=INTEGER},
+      </if>
+      <if test= "birthday != null ">
+         #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "channelId != null ">
+         #{channelId,jdbcType=BIGINT},
+      </if>
+      <if test= "cardId != null ">
+         #{cardId,jdbcType=BIGINT},
+      </if>
+      <if test= "isSalesSupport != null ">
+         #{isSalesSupport,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_member (
+         id,
+         name,
+         mobile,
+         openid,
+         sex,
+         from_member,
+         marketing_id,
+         marketing_name,
+         recommend_id,
+         recommend_name,
+         created,
+         statuts,
+         is_selles,
+         is_butler,
+         type,
+         focus_type,
+         modifier_id,
+         modifier,
+         lasttime_modify,
+         city_id,
+         city_code,
+         city_name,
+         image_url,
+         is_test_driver,
+         image_qrcode,
+         org_id,
+         org_name,
+         org_tel,
+         sysuser_id,
+         sysuser_name,
+         Info_audit,
+         use_car_approved,
+         buy_approved,
+         sure_name,
+         nationality,
+         nationality_id,
+         idcard,
+         addtime,
+         member_type,
+         is_sales_manager,
+         is_customer_manager,
+         is_customer,
+         birthday,
+         channel_id,
+         card_id,
+         is_sales_support)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.name,jdbcType=VARCHAR},
+         #{item.mobile,jdbcType=VARCHAR},
+         #{item.openid,jdbcType=VARCHAR},
+         #{item.sex,jdbcType=INTEGER},
+         #{item.fromMember,jdbcType=INTEGER},
+         #{item.marketingId,jdbcType=BIGINT},
+         #{item.marketingName,jdbcType=VARCHAR},
+         #{item.recommendId,jdbcType=BIGINT},
+         #{item.recommendName,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.statuts,jdbcType=INTEGER},
+         #{item.isSelles,jdbcType=INTEGER},
+         #{item.isButler,jdbcType=INTEGER},
+         #{item.type,jdbcType=INTEGER},
+         #{item.focusType,jdbcType=INTEGER},
+         #{item.modifierId,jdbcType=VARCHAR},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.cityId,jdbcType=VARCHAR},
+         #{item.cityCode,jdbcType=VARCHAR},
+         #{item.cityName,jdbcType=VARCHAR},
+         #{item.imageUrl,jdbcType=VARCHAR},
+         #{item.isTestDriver,jdbcType=INTEGER},
+         #{item.imageQrcode,jdbcType=VARCHAR},
+         #{item.orgId,jdbcType=VARCHAR},
+         #{item.orgName,jdbcType=VARCHAR},
+         #{item.orgTel,jdbcType=VARCHAR},
+         #{item.sysuserId,jdbcType=VARCHAR},
+         #{item.sysuserName,jdbcType=VARCHAR},
+         #{item.infoAudit,jdbcType=INTEGER},
+         #{item.useCarApproved,jdbcType=INTEGER},
+         #{item.buyApproved,jdbcType=INTEGER},
+         #{item.sureName,jdbcType=VARCHAR},
+         #{item.nationality,jdbcType=VARCHAR},
+         #{item.nationalityId,jdbcType=BIGINT},
+         #{item.idcard,jdbcType=VARCHAR},
+         #{item.addtime,jdbcType=TIMESTAMP},
+         #{item.memberType,jdbcType=INTEGER},
+         #{item.isSalesManager,jdbcType=INTEGER},
+         #{item.isCustomerManager,jdbcType=INTEGER},
+         #{item.isCustomer,jdbcType=INTEGER},
+         #{item.birthday,jdbcType=TIMESTAMP},
+         #{item.channelId,jdbcType=BIGINT},
+         #{item.cardId,jdbcType=BIGINT},
+         #{item.isSalesSupport,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.Member" >
+    update td_member
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+      name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+      mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "openid != null and openid != '' ">
+      openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test= "sex != null ">
+      sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test= "fromMember != null ">
+      from_member = #{fromMember,jdbcType=INTEGER},
+      </if>
+      <if test= "marketingId != null ">
+      marketing_id = #{marketingId,jdbcType=BIGINT},
+      </if>
+      <if test= "marketingName != null and marketingName != '' ">
+      marketing_name = #{marketingName,jdbcType=VARCHAR},
+      </if>
+      <if test= "recommendId != null ">
+      recommend_id = #{recommendId,jdbcType=BIGINT},
+      </if>
+      <if test= "recommendName != null and recommendName != '' ">
+      recommend_name = #{recommendName,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "statuts != null ">
+      statuts = #{statuts,jdbcType=INTEGER},
+      </if>
+      <if test= "isSelles != null ">
+      is_selles = #{isSelles,jdbcType=INTEGER},
+      </if>
+      <if test= "isButler != null ">
+      is_butler = #{isButler,jdbcType=INTEGER},
+      </if>
+      <if test= "type != null ">
+      type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "focusType != null ">
+      focus_type = #{focusType,jdbcType=INTEGER},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+      city_id = #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+      city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "isTestDriver != null ">
+      is_test_driver = #{isTestDriver,jdbcType=INTEGER},
+      </if>
+      <if test= "imageQrcode != null and imageQrcode != '' ">
+      image_qrcode = #{imageQrcode,jdbcType=VARCHAR},
+      </if>
+      <if test= "orgId != null and orgId != '' ">
+      org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test= "orgName != null and orgName != '' ">
+      org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test= "orgTel != null and orgTel != '' ">
+      org_tel = #{orgTel,jdbcType=VARCHAR},
+      </if>
+      <if test= "sysuserId != null and sysuserId != '' ">
+      sysuser_id = #{sysuserId,jdbcType=VARCHAR},
+      </if>
+      <if test= "sysuserName != null and sysuserName != '' ">
+      sysuser_name = #{sysuserName,jdbcType=VARCHAR},
+      </if>
+      <if test= "infoAudit != null ">
+      Info_audit = #{infoAudit,jdbcType=INTEGER},
+      </if>
+      <if test="useCarApproved != null">
+      use_car_approved = #{useCarApproved,jdbcType=INTEGER},
+     </if>
+      <if test="buyApproved != null">
+      buy_approved = #{buyApproved,jdbcType=INTEGER},
+     </if>
+     <if test= "sureName != null and sureName != '' ">
+      sure_name = #{sureName,jdbcType=VARCHAR},
+      </if>
+      <if test= "nationality != null and nationality != '' ">
+      nationality = #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test= "nationalityId != null ">
+      nationality_id = #{nationalityId,jdbcType=BIGINT},
+      </if>
+      <if test= "idcard != null ">
+      idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test= "addtime != null ">
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "memberType != null ">
+      member_type = #{memberType,jdbcType=INTEGER},
+      </if>
+      <if test= "isSalesManager != null ">
+      is_sales_manager = #{isSalesManager,jdbcType=INTEGER},
+      </if>
+      <if test= "isCustomerManager != null ">
+      is_customer_manager = #{isCustomerManager,jdbcType=INTEGER},
+      </if>
+      <if test= "isCustomer != null ">
+      is_customer = #{isCustomer,jdbcType=INTEGER},
+      </if>
+      <if test= "birthday != null ">
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "channelId != null ">
+      channel_id = #{channelId,jdbcType=BIGINT},
+      </if>
+      <if test= "cardId != null ">
+      card_id = #{cardId,jdbcType=BIGINT},
+      </if>
+      <if test= "isSalesSupport != null ">
+      is_sales_support = #{isSalesSupport,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,68 @@
+package cn.cuco.service.basic.business;
+
+
+import java.util.List;
+
+import cn.cuco.entity.Parking;
+import cn.cuco.page.PageResult;
+
+/**
+* @ClassName: ParkingService 
+* @Description: 停车场接口
+* @author huanghua
+* @date 2017年2月21日 下午2:21:39
+ */
+public interface ParkingService {
+	
+    /**
+    * @Title: createParking 
+    * @Description: 创建停车场
+    * @param @param parking
+    * @return Parking
+     */
+    public Parking createParking(Parking parking);
+
+    /**
+    * @Title: updateParking 
+    * @Description: 修改停车场信息
+    * @param @param parking
+    * @return Parking
+     */
+     public Parking updateParking(Parking parking);
+
+     /**
+     * @Title: getParkingById 
+     * @Description: 取停车场信息
+     * @param @param parking
+     * @param @return
+     * @return Parking
+      */
+     public Parking getParkingById(Parking parking);
+
+     /**
+     * @Title: getParkingByCondition 
+     * @Description: 分页查询停车场
+     * @param @param parking
+     * @param @return
+     * @return PageResult<Parking>
+      */
+     public PageResult<Parking> getParkingByCondition(Parking parking);
+
+     /**
+     * @Title: getParkingList 
+     * @Description:  取停车场集合
+     * @param @param parking
+     * @param @return
+     * @return List<Parking>
+      */
+     public List<Parking> getParkingList(Parking parking);
+    
+     /**
+     * @Title: deleteParkingById 
+     * @Description: 删除停车场
+     * @param @param parking
+     * @return void
+      */
+     public void deleteParkingById(Parking parking);
+
+}

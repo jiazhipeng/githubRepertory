@@ -1,0 +1,30 @@
+package cn.cuco.service.basic.dictionary;
+
+
+import cn.cuco.entity.Countries;
+import java.util.List;
+
+/**
+* @ClassName: CountriesService 
+* @Description: 字典国家接口
+* @author huanghua
+* @date 2017年2月21日 下午2:40:13
+ */
+public interface CountriesService {
+
+	/**
+	* @Title: getCountriesList 
+	* @Description: 查询国家名称列表的基础方法
+	* @param countries
+	* @return List<Countries>
+	 */
+	public List<Countries> getCountriesList(Countries countries);
+	
+	/**
+	* @Title: getCountriesById 
+	* @Description: 根据ID查询国家名称
+	* @param countries
+	* @return Countries
+	 */
+	public Countries getCountriesById(Countries countries);
+}

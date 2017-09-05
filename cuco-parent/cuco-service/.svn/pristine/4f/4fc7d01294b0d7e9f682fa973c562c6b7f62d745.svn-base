@@ -1,0 +1,43 @@
+package cn.cuco.dao;
+
+import java.util.List;
+
+import cn.cuco.entity.Car;
+
+public interface CarMapper<T> extends BaseDao<T> {
+
+	/**   
+	 * @Title: getCarListByCarVinAndEngineNum   
+	 * @Description: 通过车架号，发动机号查询车辆  
+	 * @param: Car
+	 * @param: @return      
+	 * @return: List<Car>      
+	 */
+	public List<Car> getCarListByCarVinAndEngineNum(Car car);
+	
+	/**   
+	 * @Title: selectByConditionOrderByCreatedDesc   
+	 * @Description: 查询车辆列表根据创建时间倒叙
+	 * @param: Car
+	 * @param: @return      
+	 * @return: List<Car>      
+	 */
+	public List<Car> selectByConditionOrderByCreatedDesc(Car car);
+	
+	/**   
+	 * @Title: selectCarList   
+	 * @Description: 查询得到状态是整备中，并且X个小时没有整备完成的车辆列表  
+	 * @param: car
+	 * @return: List<Car>      
+	 */
+	public List<Car> selectCarListByNeedReorganized(Car car);
+	
+	/**   
+	 * @Title: getCarTotalByCartype   
+	 * @Description: 根据车型获取车辆数量
+	 * @param: car
+	 * @return: int      
+	 */
+	public int getCarTotalByCartype(Car car);
+	
+}

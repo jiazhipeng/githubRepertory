@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarMapper" >
+
+<!-- 分条件查询sql 语句 -->
+  <select id="getCarListByCarVinAndEngineNum" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Car" >
+       select  <include refid="Base_Column_List" />
+    from td_car  
+  <where>
+      <if test= "carVin != null and carVin != '' ">
+        or car_vin = #{carVin,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carEngineNum != null and carEngineNum != '' ">
+        or car_engine_num = #{carEngineNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "id != null ">
+        and id != #{id,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+  
+<!-- 查询车辆列表根据创建时间倒叙 -->
+<select id="selectByConditionOrderByCreatedDesc" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Car" >
+       select  <include refid="Base_Column_List" />
+    from td_car  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carBrandId != null ">
+        and car_brand_id = #{carBrandId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carBrand != null and carBrand != '' ">
+        and car_brand = #{carBrand,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carTypeId != null ">
+        and car_type_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carType != null and carType != '' ">
+        and car_type = #{carType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carVin != null and carVin != '' ">
+        and car_vin = #{carVin,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carEngineNum != null and carEngineNum != '' ">
+        and car_engine_num = #{carEngineNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carColor != null and carColor != '' ">
+        and car_color = #{carColor,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "logType != null ">
+        and log_type = #{logType,jdbcType=INTEGER}      
+      </if>
+      <if test= "cityId != null ">
+        and city_id = #{cityId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+        and city_name = #{cityName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carSupplierId != null ">
+        and car_supplier_id = #{carSupplierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carSupplierName != null and carSupplierName != '' ">
+        and car_supplier_name = #{carSupplierName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carSupplyPrice != null ">
+        and car_supply_price = #{carSupplyPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "manufactureTime != null ">
+        and manufacture_time = #{manufactureTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "drivingMileage != null ">
+        and driving_mileage = #{drivingMileage,jdbcType=DECIMAL}      
+      </if>
+      <if test= "totalMileage != null ">
+        and total_mileage = #{totalMileage,jdbcType=DECIMAL}      
+      </if>
+      <if test= "travelLicenseUrl != null and travelLicenseUrl != '' ">
+        and travel_license_url = #{travelLicenseUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "gpsStatus != null ">
+        and gps_status = #{gpsStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "gpsNum != null and gpsNum != '' ">
+        and gps_num = #{gpsNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "currentParkingId != null ">
+        and current_parking_id = #{currentParkingId,jdbcType=BIGINT}      
+      </if>
+      <if test= "currentParkingName != null and currentParkingName != '' ">
+        and current_parking_name = #{currentParkingName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "currentParkingSpace != null and currentParkingSpace != '' ">
+        and current_parking_space = #{currentParkingSpace,jdbcType=VARCHAR}      
+      </if>
+      <if test= "inspectionTime != null ">
+        and inspection_time = #{inspectionTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "losedTime != null ">
+        and losed_time = #{losedTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "losedBackTime != null ">
+        and losed_back_time = #{losedBackTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "repairdStartTime != null ">
+        and repaird_start_time = #{repairdStartTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "repairedEndTime != null ">
+        and repaired_end_time = #{repairedEndTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+      <if test= "allocated != null ">
+        and allocated = #{allocated,jdbcType=INTEGER}      
+      </if>
+      <if test= "preAuthorizationMoney != null ">
+        and pre_authorization_money = #{preAuthorizationMoney,jdbcType=DECIMAL}      
+      </if>
+      <if test= "startTime != null ">
+      <![CDATA[
+        and created >= #{startTime,jdbcType=TIMESTAMP} 
+        ]]>      
+      </if>
+      <if test= "endTime != null ">
+      <![CDATA[
+        and created <= #{endTime,jdbcType=TIMESTAMP} 
+        ]]>      
+      </if>
+  </where>
+  order by created desc
+  </select>
+  
+ <!-- 查询得到状态是整备中，并且4个小时没有整备完成的车辆列表   -->
+  <select id="selectCarListByNeedReorganized" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Car" >
+       select  <include refid="Base_Column_List" />
+    from td_car where status = #{status,jdbcType=INTEGER} and lasttime_modify &lt;= DATE_ADD(now(),interval -4 hour)
+  </select>
+  
+  <!-- 查询车库下面全部车辆数量 -->
+  <select id="getCarTotalByCarPort" resultType="INTEGER" parameterType="cn.cuco.entity.Car" >
+       select  count(1) 
+    from td_car 
+    <where>
+   	<if test= "carPortId != null ">
+       	and car_type_id in (select car_type_id from tr_carport_cartype where carport_id = #{carPortId,jdbcType=BIGINT})
+    </if>
+    <if test= "startTime != null ">
+    	<![CDATA[ and created <= #{startTime,jdbcType=TIMESTAMP} ]]>
+    </if>
+    </where>
+  </select>
+  
+  <!-- 根据车型查询可用车辆数量排除失联维修 -->
+  <select id="getAbleCarTotalByCarTypeId" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Car" >
+       select  <include refid="Base_Column_List" />
+    from td_car  where car_type_id = #{carTypeId,jdbcType=BIGINT} and status not in (4,7)
+    
+  </select>
+  
+   <!-- 查询车库下面不可使用车辆数量 -->
+  <select id="getUnableCarTotalByCarPort" resultType="INTEGER" parameterType="cn.cuco.entity.Car" >
+       select  count(1) 
+    from td_car  
+    <where>
+    status in (4,7)
+   	<if test= "carPortId != null ">
+       	and car_type_id in (select car_type_id from tr_carport_cartype where carport_id = #{carPortId,jdbcType=BIGINT})
+    </if>
+    <if test= "startTime != null ">
+    	<![CDATA[ and created <= #{startTime,jdbcType=TIMESTAMP} ]]>
+    </if>
+    </where>
+  </select>
+  
+  <!-- 查询全部车辆数量有车型根据车型，没车型根据车库查，有车型根据车型查询 -->
+  <select id="getTotalByCarPortOrCarType" resultType="INTEGER" parameterType="cn.cuco.entity.Car" >
+       select  count(1) from td_car 
+       <where>
+        <![CDATA[ and created <= #{startTime,jdbcType=TIMESTAMP} ]]>
+        <if test= "carSupplierId != null ">
+        	and car_supplier_id = #{carSupplierId,jdbcType=BIGINT}      
+      	</if>
+       	<if test= "carTypeId != null ">
+        	and car_type_id = #{carTypeId,jdbcType=BIGINT} 
+      	</if>
+      	<if test= "carPortId != null and carTypeId = null">
+        	and car_type_id in (select car_type_id from tr_carport_cartype where carport_id = #{carPortId,jdbcType=BIGINT})
+      	</if>
+       </where>
+  </select>
+  
+  <!-- 根据车型查询全部车辆数量不考虑限号 -->
+  <select id="getCarTotalByCarType" resultType="INTEGER" parameterType="cn.cuco.entity.Car" >
+       select  count(1) 
+    from td_car 
+    <where>
+    <if test= "startTime != null ">
+    	<![CDATA[ and created <= #{startTime,jdbcType=TIMESTAMP} ]]>
+    </if>
+   	<if test= "carTypeId != null ">
+       	and car_type_id = #{carTypeId,jdbcType=BIGINT} 
+    </if>
+    </where>
+  </select>
+  
+   <!-- 根据车型查询不可使用车辆数量 -->
+  <select id="getUnableCarTotalBycarType" resultType="INTEGER" parameterType="cn.cuco.entity.Car" >
+       select  count(1) 
+    from td_car
+    <where>
+    status in (4,7)
+   	<if test= "carTypeId != null ">
+       	and car_type_id = #{carTypeId,jdbcType=BIGINT} 
+    </if>
+    <if test= "startTime != null ">
+    	 <![CDATA[and created <= #{startTime,jdbcType=TIMESTAMP} and (losed_time <= #{startTime,jdbcType=TIMESTAMP}  or repaird_start_time <= #{startTime,jdbcType=TIMESTAMP} )]]>
+    </if>
+    </where>
+  </select>
+  
+  <!-- 根据车型ID查询待分配的车辆列表-->
+  <select id="selectCarListByCarType" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Car" >
+       select <include refid="Base_Column_List" /> 
+    from td_car where car_type_id = #{carTypeId,jdbcType=BIGINT} and status = 0
+   
+  </select>
+</mapper>

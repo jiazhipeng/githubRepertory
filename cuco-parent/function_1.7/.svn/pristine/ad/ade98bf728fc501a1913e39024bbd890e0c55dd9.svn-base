@@ -1,0 +1,144 @@
+.aditBox .name {
+            width: 65px;
+        }
+        .aditBox input[type="text"], .aditBox input[type="tel"] {
+            width: 60%;
+            text-align: right;
+            float: right;
+        }
+        .icons {
+            width: 11px;
+            height: 20px;
+            background: url("../images/arrow_right_3.png") no-repeat;
+            display: inline-block;
+            vertical-align: middle;
+            float: right;
+            background-size: 75%;
+            position: absolute;
+            right: 0;
+            top: 14px;
+        }
+        .name-right {
+            text-align: right;
+            display: inline-block;
+            width: 100%;
+            margin-left: -8px;
+        }
+        .per {
+            color: #ccc;
+        }
+        .section-info {
+            background: #fff;
+            margin-top: 10px;
+            border-top: 1px #ccc solid;
+            border-bottom: 1px #ccc solid;
+        }
+        .section-info .aditBox li:last-child {
+            border-bottom: 0;
+        }
+        .aditBox .info-head {
+            height: 100px;
+            line-height: 100px;
+        }
+        /*.info-img {*/
+            /*width: 70px;*/
+            /*height: 70px;*/
+        /*}*/
+        .user-info .userInfo {
+            background: #fff;
+            border-bottom: 1px #ccc solid;
+            border-top: 1px #ccc solid;
+            margin-top: 10px;
+            height: 100px;
+            line-height: 100px;
+        }
+        .user-info .userInfo .name {
+            line-height: 100px;
+            color: #666;
+        }
+        .user-info .userInfo .icons {
+            top: 70px;
+        }
+        .info-head {
+            width: 70px;
+            height: 70px;
+            float: right;
+            margin-right: 20px;
+        }
+
+        .fixed-head,.fixed-select,.update-name {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.7);
+        }
+        .fixed-head img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .select-cen {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        .select-cen li {
+            background: #fff;
+            border-bottom: 1px #ccc solid;
+            text-align: center;
+            font-size: 1.4rem;
+            line-height: 40px;
+            height: 40px;
+        }
+        .select-cen li:last-child {
+            border-bottom: 0;
+            margin-top: 5px;
+        }
+        .update-con {
+            background: #fff;
+            width: 300px;
+            height: auto;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            margin: auto;
+            border-radius: 3px;
+        }
+        .popup-head {
+            position: relative;
+        }
+        .popup-head h3 {
+            text-align: center;
+            font-size: 1.4rem;
+            margin-top: 10px;
+        }
+        .update-con {
+            text-align: center;
+        }
+        .ipn-text {
+            border: 1px #ccc solid;
+            border-radius: 2px;
+            font-size: 1.4rem;
+            padding: 5px 0;
+            text-indent: 1rem;
+        }
+        .popup-body {
+            padding: 20px 0;
+        }
+        .popup-foot {
+            border-top: 1px #ccc solid;
+            padding: 10px 0;
+        }
+        .popup-foot a {
+            color: #0c91e5;
+        }
+        .close {
+            position: absolute;
+            right: 10px;
+            top: -2px;
+        }

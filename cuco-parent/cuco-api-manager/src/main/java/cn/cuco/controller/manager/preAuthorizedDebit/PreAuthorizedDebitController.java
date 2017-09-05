@@ -1,0 +1,119 @@
+package cn.cuco.controller.manager.preAuthorizedDebit;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hy.common.utils.JsonUtil;
+
+import cn.cuco.annotation.API;
+import cn.cuco.common.httpservice.HttpServiceContext;
+import cn.cuco.common.utils.PrePersistUtils;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.PreAuthorizedDebit;
+import cn.cuco.httpservice.ResponseUtil;
+import cn.cuco.service.payment.preAuthorizedDebit.PreAuthorizedDebitService;
+
+/**
+ * @ClassName: PreAuthorizedDebitController 
+ * @Description: 押金（预授权）
+ * @author: wangchuntao 
+ * @date: 2017年3月7日 上午10:35:52
+ */
+@RestController
+public class PreAuthorizedDebitController {
+	
+	protected Logger logger = Logger.getLogger(this.getClass());
+	
+	@Autowired
+	PreAuthorizedDebitService preAuthorizedDebitService;
+	/**
+	 * @Title: getRepertoryByDay 
+	 * @Description: 押金列表
+	 * @author: wangchuntao 
+	 * @param preAuthorizedDebit
+	 * @return Object
+	 * @date: 2017年3月7日 上午10:40:16
+	 */
+	@API(value="押金列表")
+	@RequestMapping( value="/preAuthorizedDebit/getPreAuthorizedDebitListByPage" ,method=RequestMethod.POST)
+	public Object getPreAuthorizedDebitListByPage(@RequestBody PreAuthorizedDebit preAuthorizedDebit){
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit);
+		return preAuthorizedDebitService.getPreAuthorizedDebitListByPage(preAuthorizedDebit);
+	}
+	
+	
+	/**
+	 * @Title: getPreAuthorizedDebitById 
+	 * @Description: 押金详情
+	 * @author: wangchuntao 
+	 * @param id
+	 * @return Object
+	 * @date: 2017年3月7日 上午11:04:23
+	 */
+	@API(value="押金详情")
+	@RequestMapping( value="/preAuthorizedDebit/getPreAuthorizedDebitById" ,method=RequestMethod.GET)
+	public Object getPreAuthorizedDebitById(Long id){
+		ParamVerifyUtils.paramNotNull(id);
+		return preAuthorizedDebitService.getPreAuthorizedDebitById(id);
+	}
+	/**
+	 * @Title: getOperateLogListByPage 
+	 * @Description: 押金日志
+	 * @author: wangchuntao 
+	 * @param id
+	 * @return Object
+	 * @date: 2017年3月7日 上午11:17:39
+	 */
+	@API(value="押金日志")
+	@RequestMapping( value="/preAuthorizedDebit/getOperateLogListByPage" ,method=RequestMethod.GET)
+	public Object getOperateLogListByPage(Long id){
+		ParamVerifyUtils.paramNotNull(id);
+		OperateLog operateLog = new OperateLog();
+		operateLog.setOperationId(id);
+		return preAuthorizedDebitService.getOperateLogListByPage(operateLog );
+	}
+	/**
+	 * @Title: createOperateLogForPreAuthorizedDebit 
+	 * @Description: 添加押金备注
+	 * @author: wangchuntao 
+	 * @param preAuthorizedDebit
+	 * @return Object
+	 * @date: 2017年3月7日 上午11:20:46
+	 */
+	@API(value="添加押金备注")
+	@RequestMapping( value="/preAuthorizedDebit/createOperateLogForPreAuthorizedDebit" ,method=RequestMethod.POST)
+	public Object createOperateLogForPreAuthorizedDebit(@RequestBody PreAuthorizedDebit preAuthorizedDebit){
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit);
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getRemark(),"备注不能为空");
+		PrePersistUtils.onCreate(preAuthorizedDebit, HttpServiceContext.getCurrentUserId(), HttpServiceContext.getCurrentUserName());
+		preAuthorizedDebitService.createOperateLogForPreAuthorizedDebit(preAuthorizedDebit );
+		return ResponseUtil.toSuccessBody(null);
+	}
+	
+	/**
+	 * @Title: updatePreAuthorizedDebitUnfreeze 
+	 * @Description: 解冻押金
+	 * @author: wangchuntao 
+	 * @param preAuthorizedDebit
+	 * @return Object
+	 * @date: 2017年3月7日 上午11:24:51
+	 */
+	@API(value="解冻押金")
+	@RequestMapping( value="/preAuthorizedDebit/updatePreAuthorizedDebitUnfreeze" ,method=RequestMethod.POST)
+	public Object updatePreAuthorizedDebitUnfreeze(@RequestBody PreAuthorizedDebit preAuthorizedDebit){
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit);
+		PrePersistUtils.onModify(preAuthorizedDebit, HttpServiceContext.getCurrentUserId(), HttpServiceContext.getCurrentUserName());
+		preAuthorizedDebitService.updatePreAuthorizedDebitUnfreeze(preAuthorizedDebit);
+		return ResponseUtil.toSuccessBody(null);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(JsonUtil.extractJson(new PreAuthorizedDebit()));
+	}
+	
+}

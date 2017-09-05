@@ -1,0 +1,36 @@
+package cn.cuco.service.basic.dictionary;
+
+
+import cn.cuco.entity.Insurance;
+import java.util.List;
+
+/**
+* @ClassName: InsuranceService 
+* @Description: 保险公司接口
+* @author huanghua
+* @date 2017年2月21日 下午2:41:53
+ */
+public interface InsuranceService {
+   
+
+
+    /**
+    * @Title: getInsuranceById 
+    * @Description: 取保险公司详情
+    * @param insurance
+    * @return Insurance
+    * @throws
+     */
+    public Insurance getInsuranceById(Insurance insurance);
+
+    /**
+    * @Title: getInsuranceList 
+    * @Description: 取保险公司集合
+    * @param insurance
+    * @return List<Insurance>
+    * @throws
+     */
+    public List<Insurance> getInsuranceList(Insurance insurance);
+
+
+}

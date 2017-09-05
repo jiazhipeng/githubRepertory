@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.CarOperatePlanMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.CarOperatePlan" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="operate_num" property="operateNum" jdbcType="VARCHAR" />
+    <result column="car_plate_num" property="carPlateNum" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="started" property="started" jdbcType="TIMESTAMP" />
+    <result column="ended" property="ended" jdbcType="TIMESTAMP" />
+    <result column="operate_type" property="operateType" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="operate_to" property="operateTo" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="repair_manufacturer" property="repairManufacturer" jdbcType="VARCHAR" />
+    <result column="failure_time" property="failureTime" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="finish_time" property="finishTime" jdbcType="TIMESTAMP" />
+    <result column="maintenance_costs" property="maintenanceCosts" jdbcType="DECIMAL" />
+    <result column="handle" property="handle" jdbcType="INTEGER" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_mobile" property="memberMobile" jdbcType="VARCHAR" />
+    <result column="car_used_address" property="carUsedAddress" jdbcType="VARCHAR" />
+    <result column="expected_return" property="expectedReturn" jdbcType="VARCHAR" />
+     <result column="operate_status" property="operateStatus" jdbcType="INTEGER" />
+     <result column="operate_id" property="operateId" jdbcType="BIGINT" />
+     <result column="butlerId" property="butlerId" jdbcType="BIGINT" />
+     <result column="butlerName" property="butlerName" jdbcType="BIGINT" />
+     <result column="isStock" property="isStock" jdbcType="INTEGER" />
+     <result column="car_type_id" property="carTypeId" jdbcType="BIGINT" />
+     <result column="power_used_id" property="powerUsedId" jdbcType="BIGINT" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+       select  count(1) 
+    from td_car_operate_plan  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+        and operate_num = #{operateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "started != null ">
+        and started = #{started,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "ended != null ">
+        and ended = #{ended,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "operateType != null and operateType != '' ">
+        and operate_type = #{operateType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "money != null ">
+        and money = #{money,jdbcType=DECIMAL}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "operateTo != null and operateTo != '' ">
+        and operate_to = #{operateTo,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "reason != null and reason != '' ">
+        and reason = #{reason,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairManufacturer != null and repairManufacturer != '' ">
+        and repair_manufacturer = #{repairManufacturer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "failureTime != null ">
+        and failure_time = #{failureTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+        and car_used_address = #{carUsedAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "expectedReturn != null and expectedReturn != '' ">
+        and expected_return = #{expectedReturn,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operateStatus != null">
+        and operate_status = #{operateStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "operateId != null">
+        and operate_id = #{operateId,jdbcType=BIGINT}      
+      </if>
+       <if test= "isStock != null">
+        and isStock = #{isStock,jdbcType=INTEGER}      
+      </if>
+      <if test= "carTypeId != null">
+        and car_type_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "powerUsedId != null">
+        and power_used_id = #{powerUsedId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+       select  <include refid="Base_Column_List" />
+    from td_car_operate_plan  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+        and operate_num = #{operateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "started != null ">
+        and started = #{started,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "ended != null ">
+        and ended = #{ended,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "operateType != null and operateType != '' ">
+        and operate_type = #{operateType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "money != null ">
+        and money = #{money,jdbcType=DECIMAL}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "operateTo != null and operateTo != '' ">
+        and operate_to = #{operateTo,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "reason != null and reason != '' ">
+        and reason = #{reason,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairManufacturer != null and repairManufacturer != '' ">
+        and repair_manufacturer = #{repairManufacturer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "failureTime != null ">
+        and failure_time = #{failureTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+       <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+        and car_used_address = #{carUsedAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "expectedReturn != null and expectedReturn != '' ">
+        and expected_return = #{expectedReturn,jdbcType=VARCHAR}      
+      </if>
+       <if test= "operateStatus != null">
+        and operate_status = #{operateStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "operateId != null">
+        and operate_id = #{operateId,jdbcType=BIGINT}      
+      </if>
+       <if test= "isStock != null">
+        and isStock = #{isStock,jdbcType=INTEGER}      
+      </if>
+      <if test= "carTypeId != null">
+        and car_type_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "powerUsedId != null">
+        and power_used_id = #{powerUsedId,jdbcType=BIGINT}      
+      </if>
+      <if test="statusList != null and statusList.size() > 0">
+        and status in
+        <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+           #{status}
+        </foreach>
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, operate_num, car_plate_num, 
+      created, started, ended, 
+      operate_type, money, status, 
+      operate_to, member_id, remark, 
+      reason, repair_manufacturer, failure_time, 
+      modifier_id, modifier,finish_time,maintenance_costs,handle,
+      member_name,member_mobile,car_used_address,expected_return,
+      operate_id,operate_status,butlerId,butlerName,isStock,car_type_id,power_used_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    select 
+      id, operate_num, car_plate_num, 
+      created, started, ended, 
+      operate_type, money, status, 
+      operate_to, member_id, remark, 
+      reason, repair_manufacturer, failure_time, 
+      modifier_id, modifier,finish_time,maintenance_costs,handle,
+      member_name,member_mobile,car_used_address,expected_return,
+      operate_id,operate_status,butlerId,butlerName,isStock,car_type_id,power_used_id
+    from td_car_operate_plan where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    delete from td_car_operate_plan where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_car_operate_plan where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    insert into td_car_operate_plan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+         operate_num,
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         car_plate_num,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "started != null ">
+         started,
+      </if>
+      <if test= "ended != null ">
+         ended,
+      </if>
+      <if test= "operateType != null and operateType != '' ">
+         operate_type,
+      </if>
+      <if test= "money != null ">
+         money,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "operateTo != null and operateTo != '' ">
+         operate_to,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "remark != null and remark != '' ">
+         remark,
+      </if>
+      <if test= "reason != null and reason != '' ">
+         reason,
+      </if>
+      <if test= "repairManufacturer != null and repairManufacturer != '' ">
+         repair_manufacturer,
+      </if>
+      <if test= "failureTime != null ">
+         failure_time,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "finishTime != null">
+         finish_time,
+      </if>
+      <if test= "maintenanceCosts != null">
+         maintenance_costs,
+      </if>
+      <if test= "handle != null">
+         handle,
+      </if>
+       <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         member_mobile,
+      </if>
+       <if test= "carUsedAddress != null and carUsedAddress != '' ">
+         car_used_address,
+      </if>
+      <if test= "expectedReturn != null and expectedReturn != '' ">
+         expected_return,
+      </if>
+      <if test= "operateStatus != null">
+        operate_status,    
+      </if>
+      <if test= "operateId != null">
+        operate_id,
+      </if>
+       <if test= "butlerId != null">
+        butlerId,
+      </if>
+       <if test= "butlerName != null and butlerName != ''">
+        butlerName,
+      </if>
+      <if test= "isStock != null">
+        isStock,
+      </if>
+      <if test= "carTypeId != null">
+        car_type_id,
+      </if>
+      <if test= "powerUsedId != null">
+        power_used_id  
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+         #{operateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "started != null ">
+         #{started,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "ended != null ">
+         #{ended,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "operateType != null and operateType != '' ">
+         #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test= "money != null ">
+         #{money,jdbcType=DECIMAL},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "operateTo != null and operateTo != '' ">
+         #{operateTo,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "remark != null and remark != '' ">
+         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "reason != null and reason != '' ">
+         #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test= "repairManufacturer != null and repairManufacturer != '' ">
+         #{repairManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test= "failureTime != null ">
+         #{failureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+       <if test= "finishTime != null ">
+         #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "maintenanceCosts != null ">
+         #{maintenanceCosts,jdbcType=DECIMAL},
+      </if>
+      <if test= "handle != null ">
+         #{handle,jdbcType=INTEGER},
+      </if>
+       <if test= "memberName != null and memberName != '' ">
+        #{memberName,jdbcType=VARCHAR},      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        #{memberMobile,jdbcType=VARCHAR},      
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+       #{carUsedAddress,jdbcType=VARCHAR},      
+      </if>
+      <if test= "expectedReturn != null and expectedReturn != '' ">
+        #{expectedReturn,jdbcType=VARCHAR},      
+      </if>
+      <if test= "operateStatus != null">
+        #{operateStatus,jdbcType=INTEGER},     
+      </if>
+      <if test= "operateId != null">
+        #{operateId,jdbcType=BIGINT},      
+      </if>
+       <if test= "butlerId != null">
+        #{butlerId,jdbcType=BIGINT},      
+      </if>
+       <if test= "butlerName != null and butlerName != '' ">
+        #{butlerName,jdbcType=VARCHAR},      
+      </if>
+       <if test= "isStock != null">
+       	#{isStock,jdbcType=INTEGER},
+      </if>
+      <if test= "carTypeId != null">
+        #{carTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "powerUsedId != null">
+        #{powerUsedId,jdbcType=BIGINT}
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_car_operate_plan (
+         id,
+         operate_num,
+         car_plate_num,
+         created,
+         started,
+         ended,
+         operate_type,
+         money,
+         status,
+         operate_to,
+         member_id,
+         remark,
+         reason,
+         repair_manufacturer,
+         failure_time,
+         modifier_id,
+         modifier,
+         finish_time,
+         maintenance_costs,
+         handle,
+         member_name,
+         member_mobile,
+         car_used_address,
+         expected_return,
+         operate_status,
+         operate_id,
+         butlerId,
+         butlerName,
+         isStock,
+         car_type_id,
+         power_used_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.operateNum,jdbcType=VARCHAR},
+         #{item.carPlateNum,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.started,jdbcType=TIMESTAMP},
+         #{item.ended,jdbcType=TIMESTAMP},
+         #{item.operateType,jdbcType=VARCHAR},
+         #{item.money,jdbcType=DECIMAL},
+         #{item.status,jdbcType=INTEGER},
+         #{item.operateTo,jdbcType=VARCHAR},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.remark,jdbcType=VARCHAR},
+         #{item.reason,jdbcType=VARCHAR},
+         #{item.repairManufacturer,jdbcType=VARCHAR},
+         #{item.failureTime,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=VARCHAR},
+         #{item.modifier,jdbcType=VARCHAR})
+         #{item.finishTime,jdbcType=TIMESTAMP},
+         #{item.maintenanceCosts,jdbcType=DECIMAL},
+         #{item.handle,jdbcType=INTEGER},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.memberMobile,jdbcType=VARCHAR},
+         #{item.carUsedAddress,jdbcType=VARCHAR},
+         #{item.expectedReturn,jdbcType=VARCHAR},
+         #{item.operateStatus,jdbcType=INTEGER},
+         #{item.operateId,jdbcType=BIGINT},
+         #{item.butlerId,jdbcType=BIGINT},
+         #{item.butlerName,jdbcType=BIGINT},
+         #{item.isStock,jdbcType=INTEGER},
+         #{item.carTypeId,jdbcType=BIGINT},
+         #{item.powerUsedId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    update td_car_operate_plan
+    <set>
+      <if test= "operateNum != null and operateNum != '' ">
+      operate_num = #{operateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+      car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "started != null ">
+      started = #{started,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "ended != null ">
+      ended = #{ended,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "operateType != null and operateType != '' ">
+      operate_type = #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test= "money != null ">
+      money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "operateTo != null and operateTo != '' ">
+      operate_to = #{operateTo,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "remark != null and remark != '' ">
+      remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "reason != null and reason != '' ">
+      reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test= "repairManufacturer != null and repairManufacturer != '' ">
+      repair_manufacturer = #{repairManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test= "failureTime != null ">
+      failure_time = #{failureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR}
+      </if>
+      <if test= "finishTime != null ">
+      finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "maintenanceCosts != null ">
+      maintenance_costs = #{maintenanceCosts,jdbcType=DECIMAL},
+      </if>
+      <if test= "handle != null ">
+      handle = #{handle,jdbcType=INTEGER},
+      </if>
+       <if test= "memberName != null and memberName != '' ">
+        member_name = #{memberName,jdbcType=VARCHAR},      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        member_mobile = #{memberMobile,jdbcType=VARCHAR},      
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+        car_used_address = #{carUsedAddress,jdbcType=VARCHAR},      
+      </if>
+      <if test= "expectedReturn != null and expectedReturn != '' ">
+        expected_return = #{expectedReturn,jdbcType=VARCHAR},      
+      </if>
+      <if test= "operateStatus != null">
+       operate_status = #{operateStatus,jdbcType=INTEGER},     
+      </if>
+      <if test= "operateId != null">
+       operate_id = #{operateId,jdbcType=BIGINT},      
+      </if>
+       <if test= "butlerId != null">
+       butlerId = #{butlerId,jdbcType=BIGINT},      
+      </if>
+       <if test= "butlerName != null and butlerName != ''">
+       butlerName = #{butlerName,jdbcType=VARCHAR},      
+      </if>
+       <if test= "isStock != null">
+         isStock = #{isStock,jdbcType=INTEGER},      
+      </if>
+      <if test= "carTypeId != null">
+        car_type_id = #{carTypeId,jdbcType=BIGINT},      
+      </if>
+      <if test="powerUsedId != null">
+      	power_used_id = #{powerUsedId,jdbcType=BIGINT}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+
+
+    <update id="updateCarOperatePlanByPowerPowerUsedId" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        update td_car_operate_plan
+        <set>
+            <if test= "operateNum != null and operateNum != '' ">
+                operate_num = #{operateNum,jdbcType=VARCHAR},
+            </if>
+            <if test= "carPlateNum != null and carPlateNum != '' ">
+                car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+            </if>
+            <if test= "created != null ">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test= "started != null ">
+                started = #{started,jdbcType=TIMESTAMP},
+            </if>
+            <if test= "ended != null ">
+                ended = #{ended,jdbcType=TIMESTAMP},
+            </if>
+            <if test= "operateType != null and operateType != '' ">
+                operate_type = #{operateType,jdbcType=VARCHAR},
+            </if>
+            <if test= "money != null ">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test= "status != null ">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test= "operateTo != null and operateTo != '' ">
+                operate_to = #{operateTo,jdbcType=VARCHAR},
+            </if>
+            <if test= "memberId != null ">
+                member_id = #{memberId,jdbcType=BIGINT},
+            </if>
+            <if test= "remark != null and remark != '' ">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test= "reason != null and reason != '' ">
+                reason = #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test= "repairManufacturer != null and repairManufacturer != '' ">
+                repair_manufacturer = #{repairManufacturer,jdbcType=VARCHAR},
+            </if>
+            <if test= "failureTime != null ">
+                failure_time = #{failureTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test= "modifierId != null and modifierId != '' ">
+                modifier_id = #{modifierId,jdbcType=VARCHAR},
+            </if>
+            <if test= "modifier != null and modifier != '' ">
+                modifier = #{modifier,jdbcType=VARCHAR}
+            </if>
+            <if test= "finishTime != null ">
+                finish_time = #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test= "maintenanceCosts != null ">
+                maintenance_costs = #{maintenanceCosts,jdbcType=DECIMAL},
+            </if>
+            <if test= "handle != null ">
+                handle = #{handle,jdbcType=INTEGER},
+            </if>
+            <if test= "memberName != null and memberName != '' ">
+                member_name = #{memberName,jdbcType=VARCHAR},
+            </if>
+            <if test= "memberMobile != null and memberMobile != '' ">
+                member_mobile = #{memberMobile,jdbcType=VARCHAR},
+            </if>
+            <if test= "carUsedAddress != null and carUsedAddress != '' ">
+                car_used_address = #{carUsedAddress,jdbcType=VARCHAR},
+            </if>
+            <if test= "expectedReturn != null and expectedReturn != '' ">
+                expected_return = #{expectedReturn,jdbcType=VARCHAR},
+            </if>
+            <if test= "operateStatus != null">
+                operate_status = #{operateStatus,jdbcType=INTEGER},
+            </if>
+            <if test= "operateId != null">
+                operate_id = #{operateId,jdbcType=BIGINT},
+            </if>
+            <if test= "butlerId != null">
+                butlerId = #{butlerId,jdbcType=BIGINT},
+            </if>
+            <if test= "butlerName != null and butlerName != ''">
+                butlerName = #{butlerName,jdbcType=VARCHAR},
+            </if>
+            <if test= "isStock != null">
+                isStock = #{isStock,jdbcType=INTEGER},
+            </if>
+            <if test= "carTypeId != null">
+                car_type_id = #{carTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="powerUsedId != null">
+                power_used_id = #{powerUsedId,jdbcType=BIGINT}
+            </if>
+        </set>
+        where power_used_id = #{powerUsedId,jdbcType=BIGINT}
+        and status in (1,2)
+    </update>
+
+
+
+
+    <select id="selectListByStatus" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select id,started,ended,DATE_FORMAT(started, '%Y/%m/%d') begin,DATE_FORMAT(ended, '%Y/%m/%d') end from td_car_operate_plan p where (p.status=#{status,jdbcType=INTEGER} or p.status=#{statusIng,jdbcType=INTEGER}) and <![CDATA[p.started<=#{maxDate,jdbcType=TIMESTAMP} and p.ended>=#{miniDate,jdbcType=TIMESTAMP}]]> 
+         <if test= "type == 2">
+          and member_id != 0
+         </if>
+         <if test= "type == 3">
+          and member_id = 0 
+         </if>  
+    </select>
+    
+     <select id="selectListByPlateNum" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+       select  p.id,p.ended,p.started,DATE_FORMAT(p.started, '%Y/%m/%d') begin,DATE_FORMAT(p.ended, '%Y/%m/%d') end,o.status operateStatus,p.status from td_car_operate_plan p left join td_car_operate o on p.operate_num=o.operate_num and  
+       (p.status=#{status,jdbcType=INTEGER} or p.status=#{statusIng,jdbcType=INTEGER}) where p.car_plate_num=#{carPlateNum,jdbcType=VARCHAR} and (p.status=#{status,jdbcType=INTEGER} or p.status=#{statusIng,jdbcType=INTEGER})
+   and ((<![CDATA[p.started<=#{maxDate,jdbcType=TIMESTAMP} and p.started>=#{miniDate,jdbcType=TIMESTAMP}) or (p.ended>=#{miniDate,jdbcType=TIMESTAMP} and p.started<=#{maxDate,jdbcType=TIMESTAMP}]]>)) 
+    </select>
+    
+    <select id="selectListByOperateNum" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" /> from td_car_operate_plan p where p.operate_num=#{operateNum,jdbcType=VARCHAR} and (p.status=1 or p.status=2) and <![CDATA[p.started>=#{miniDate,jdbcType=TIMESTAMP}]]> order by started;
+    </select>
+    
+    <select id="selectByOperateNum" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" /> from td_car_operate_plan p where p.operate_num=#{operateNum,jdbcType=VARCHAR} and <![CDATA[p.ended<=#{date,jdbcType=TIMESTAMP}]]> order by ended desc limit 1;
+    </select>
+    
+    <select id="selectByOperateNumAndStarted" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" /> from td_car_operate_plan p where p.operate_num=#{operateNum,jdbcType=VARCHAR} and <![CDATA[p.started=#{started,jdbcType=TIMESTAMP}]]> limit 1;
+    </select>
+    
+    <select id="selectByCarPlateNumAndStartedEnded" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" /> from td_car_operate_plan  where car_plate_num=#{carPlateNum,jdbcType=VARCHAR} 
+        and (<![CDATA[ started<=#{started,jdbcType=TIMESTAMP} and ended >=#{ended,jdbcType=TIMESTAMP}]]>) and (status=1 or status=2) limit 1; 
+    </select>
+    
+     <select id="selectListByOperateNumAndStarted" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" /> from td_car_operate_plan p where (p.`status`=#{status,jdbcType=INTEGER} or p.`status`=#{statusIng,jdbcType=INTEGER}) and <![CDATA[( p.started<#{ended,jdbcType=TIMESTAMP}) and 
+ (p.ended>#{started,jdbcType=TIMESTAMP})]]>  and p.operate_num=#{operateNum,jdbcType=VARCHAR};
+    </select>
+        
+    <select id="selectListBystatusAndNow" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" /> from td_car_operate_plan where (status=#{stay,jdbcType=INTEGER} or status=#{useing,jdbcType=INTEGER}) and <![CDATA[started<=#{nowDate,jdbcType=TIMESTAMP}
+   and ended>=#{nowDate,jdbcType=TIMESTAMP}]]> and isStock = 1;
+    </select>
+    
+     <select id="selectByOperateIdAndStartedEnded" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" /> from td_car_operate_plan p where p.operate_id=#{operateId,jdbcType=INTEGER} and status=2  order by failure_time desc limit 1;
+    </select>
+    
+    <select id="selectoutofcontactByOperateIdAndStartedEnded" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" /> from td_car_operate_plan p where p.operate_id=#{operateId,jdbcType=INTEGER} and status=4 order by created desc limit 1;
+    </select>
+    
+    <select id="selectAppointmentByOperateId" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" /> from td_car_operate_plan p where p.operate_id=#{operateId,jdbcType=INTEGER} and status=1 and member_id=-1 order by created desc limit 1;
+    </select>
+    
+     <!-- 修改此时间之后的运营计划的id为null,针对会员用车-->
+  <update id="updateStatusByOperateIdAndStarted" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    update td_car_operate_plan set operate_id = null,operate_num = null,car_plate_num=null
+    where car_plate_num = #{carPlateNum,jdbcType=VARCHAR} <![CDATA[ and started >= #{started,jdbcType=TIMESTAMP}]]> and power_used_id is not null;
+  </update>
+  
+  <!-- 修改此时间之后的运营计划的id为null,针对平台使用-->
+  <update id="updateStatusByOperateIdAndStartedForPlatform" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    update td_car_operate_plan set status = #{status,jdbcType=INTEGER},failure_time=#{started,jdbcType=TIMESTAMP} 
+    where car_plate_num = #{carPlateNum,jdbcType=VARCHAR} <![CDATA[ and started >= #{started,jdbcType=TIMESTAMP}]]> and power_used_id is null and status !=4;
+  </update>
+  
+       <!--修改此时间之前的所有待执行的状态运营计划的id为null,针对会员用车-->
+  <update id="updateStatusByOperateIdAndEnded" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    update td_car_operate_plan set operate_id = null,operate_num = null,car_plate_num=null
+    where car_plate_num = #{carPlateNum,jdbcType=VARCHAR} and status=1 <![CDATA[ and started <= #{started,jdbcType=TIMESTAMP}]]> and power_used_id is not null;
+  </update>
+  
+       <!--修改此时间之前的所有待执行的状态状态改为已取消,针对平台使用-->
+  <update id="updateStatusByOperateIdAndEndedForPlatform" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    update td_car_operate_plan set status = #{status,jdbcType=INTEGER},failure_time=#{started,jdbcType=TIMESTAMP} 
+    where car_plate_num = #{carPlateNum,jdbcType=VARCHAR} and status=1 <![CDATA[ and started <= #{started,jdbcType=TIMESTAMP}]]> and power_used_id is null;
+  </update>
+  
+  <!--修改两个时间段的状态运营计划的状态改为已取消,针对平台运营-->
+  <update id="updateStatusByOperateIdStartedAndEndForPlatform" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    update td_car_operate_plan set status = #{status,jdbcType=INTEGER},failure_time=#{started,jdbcType=TIMESTAMP} 
+    where car_plate_num = #{carPlateNum,jdbcType=VARCHAR} <![CDATA[ and ((started >= #{started,jdbcType=TIMESTAMP}  and started <#{ended,jdbcType=TIMESTAMP}) or (started < #{started,jdbcType=TIMESTAMP}  and ended >#{started,jdbcType=TIMESTAMP}) ) ]]>  and status !=4 and power_used_id is null;
+  </update>
+  
+  <!--修改两个时间段的状态运营计划的id为null,针对会员使用,针对会员使用-->
+  <update id="updateStatusByOperateIdStartedAndEnd" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    update td_car_operate_plan set operate_id = null,operate_num = null,car_plate_num=null
+    where car_plate_num = #{carPlateNum,jdbcType=VARCHAR} <![CDATA[  and ((started >= #{started,jdbcType=TIMESTAMP}  and started <#{ended,jdbcType=TIMESTAMP}) or (started < #{started,jdbcType=TIMESTAMP}  and ended >#{started,jdbcType=TIMESTAMP}) ) ]]> and power_used_id is not null and power_used_id != #{powerUsedId,jdbcType=BIGINT};
+  </update>
+  
+    <!--修改两个时间段的状态运营计划的状态改为已取消 排除当前计划,针对平台运营-->
+  <update id="updateStatusByOperateIdStartedAndEndForPlatformNotById" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    update td_car_operate_plan set status = #{status,jdbcType=INTEGER},failure_time=#{started,jdbcType=TIMESTAMP} 
+    where car_plate_num = #{carPlateNum,jdbcType=VARCHAR} <![CDATA[ and ((started >= #{started,jdbcType=TIMESTAMP}  and started <#{ended,jdbcType=TIMESTAMP}) or (started < #{started,jdbcType=TIMESTAMP}  and ended >#{started,jdbcType=TIMESTAMP}) ) ]]> and power_used_id is null  and status !=4 and id != #{id,jdbcType=BIGINT};
+  </update>
+  
+  <!--修改两个时间段的状态运营计划的id为null,针对会员使用 排除当前计划,针对会员使用-->
+  <update id="updateStatusByOperateIdStartedAndEndNotById" parameterType="com.hy.gcar.entity.CarOperatePlan" >
+    update td_car_operate_plan set operate_id = null,operate_num = null,car_plate_num=null
+    where car_plate_num = #{carPlateNum,jdbcType=VARCHAR} <![CDATA[  and ((started >= #{started,jdbcType=TIMESTAMP}  and started <#{ended,jdbcType=TIMESTAMP}) or (started < #{started,jdbcType=TIMESTAMP}  and ended >#{started,jdbcType=TIMESTAMP}) ) ]]> and power_used_id is not null and id != #{id,jdbcType=BIGINT};
+  </update>
+  
+   <select id="selectCarStatus" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" /> from td_car_operate_plan p where 
+        <if test = "operateId != null">
+        	p.operate_id=#{operateId,jdbcType=BIGINT}
+        </if>
+        <if test = "operateId == null">
+       	 p.car_plate_num=#{carPlateNum,jdbcType=BIGINT}
+        </if>
+         and p.`status`=#{status,jdbcType=INTEGER}
+        <if test= "memberId != 0">
+        	and p.member_id !=0 limit 1;
+        </if>
+         <if test= "memberId == 0">
+        	and p.member_id =0 limit 1;
+        </if>
+    </select>
+
+
+    <select id="selectPlanTimeGreaterThanEndTime" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" />
+        from td_car_operate_plan p
+        where  #{ended,jdbcType=TIMESTAMP} > ended  and p.status in (1,2)
+    </select>
+
+    <select id="selectPlanTimeLessThanEndTime" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" />
+        from td_car_operate_plan p
+        where  #{ended,jdbcType=TIMESTAMP} &lt; ended  and p.status in (1,2)
+    </select>
+
+    <select id="selectNotAvailableCar" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" />
+        from td_car_operate_plan 
+        where (
+        		started &lt;= #{started,jdbcType=TIMESTAMP} 
+        		<!--  and DATE_ADD(ended,interval ${readyTime} hour) > #{started,jdbcType=TIMESTAMP} -->
+        		and ended > #{started,jdbcType=TIMESTAMP}<!-- 例如   2016-11-01 10:00 <= (2016-11-02 10:00)  and 2016-11-03 10:00 > (2016-11-02 10:00)  -->
+        		and status in (1,2)<!-- 运营状态 1:待执行；2:执行中 -->
+        		and isStock = 1  <!-- 占用库存的车 -->
+        		)
+        or
+        	  (
+	        	started >= #{started,jdbcType=TIMESTAMP}
+	        	<!-- and  started &lt;= DATE_ADD(#{ended,jdbcType=TIMESTAMP},interval 1 hour)-->
+	        	and  started &lt;= #{ended,jdbcType=TIMESTAMP}
+	        	and  status = 2
+	        	and isStock = 1<!-- 占用库存的车辆 -->
+        	   )
+
+    </select>
+    
+    <select id="selectCountByCarTypeIdAndStartedEnded" resultType="INTEGER" parameterType="com.hy.gcar.entity.CarOperatePlan">
+       SELECT count(id)  FROM td_car_operate_plan t
+		WHERE t.car_type_id=#{carTypeId,jdbcType=BIGINT} AND t.`status` in(1,2) AND t.isStock=1 
+
+	 	<![CDATA[ 
+		AND ((#{started,jdbcType=TIMESTAMP} >= t.started AND #{started,jdbcType=TIMESTAMP} < t.ended)
+		OR (#{ended,jdbcType=TIMESTAMP} > t.started AND #{ended,jdbcType=TIMESTAMP} <= t.ended)
+		 OR (t.started  >= #{started,jdbcType=TIMESTAMP} AND t.ended <= #{ended,jdbcType=TIMESTAMP}));
+		]]> 
+    </select>
+    
+    
+	<select id="selectCarOperatePlanByStarted" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+		select <include refid="Base_Column_List" />
+        from td_car_operate_plan p
+        where #{started,jdbcType=TIMESTAMP} &lt;started  and DATE_ADD(#{ended,jdbcType=TIMESTAMP},interval ${readyTime} hour) >= started 
+        and p.status in (1,2)
+        and p.operate_id = #{operateId,jdbcType=BIGINT}
+	</select>
+	
+	<update id="updateCarOperatePlanByCancel" parameterType="java.util.List">
+		update td_car_operate_plan set status = 4 
+		where status = 1 
+		and id in 
+		<foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+	            #{id}
+	 	</foreach>
+	</update>
+
+    <update id="updateClearCarOperateId" parameterType="java.util.List">
+        update td_car_operate_plan set operate_id = null,operate_num = null,car_plate_num = null
+        where power_used_id is not null
+        and isStock = 1
+        and status = 1
+        and id in
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+
+    </update>
+
+	
+	
+	<select id="selectCarOperateStateByNow" parameterType="java.util.List" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" />
+		from td_car_operate_plan p
+		where DATE_FORMAT(p.started,'%Y-%m-%d') &lt;= DATE_FORMAT(now(),'%Y-%m-%d')  and DATE_FORMAT(p.ended,'%Y-%m-%d') >= DATE_FORMAT(now(),'%Y-%m-%d')
+	    and p.`status` in (1,2)
+		and operate_id in 
+		<foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+		            #{id}
+		 </foreach>
+	
+	</select>
+	
+	<select id="selectCarPlanNumAndpowerUsedId" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" />
+        from td_car_operate_plan 
+        where car_plate_num = #{carPlateNum,jdbcType=VARCHAR} <![CDATA[ and failure_time >= #{started,jdbcType=TIMESTAMP}]]> and status=4 and power_used_id is null;
+    </select>
+    
+    <select id="selectCarPlanByOperateIdStartedAndEndForPlatform" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" />
+        from td_car_operate_plan 
+        where car_plate_num = #{carPlateNum,jdbcType=VARCHAR} <![CDATA[ and ((started >= #{started,jdbcType=TIMESTAMP}  and started <#{ended,jdbcType=TIMESTAMP}) or (started < #{started,jdbcType=TIMESTAMP}  and ended >#{started,jdbcType=TIMESTAMP}) ) ]]> and power_used_id is null;
+    </select>
+</mapper>

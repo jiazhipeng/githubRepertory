@@ -1,0 +1,83 @@
+header,
+section.date {
+    padding: 0 1.5rem;
+}
+
+header {
+    height: 4rem;
+    background: #191919;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+header i {
+    flex: 1;
+}
+
+.tip {
+    font-size: 1.2rem;
+    background: rgba(100, 100, 100, .8);
+    color: #fff;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    padding-left: 1.3rem;
+    /*position: fixed;*/
+}
+
+.tip i {
+    padding-right: 1rem;
+    float: right;
+}
+
+.date .date-title {
+    font-size: 1.5rem;
+    color: #86bfbe;
+    text-align: center;
+    margin: 2.5rem;
+}
+
+.first-date .date-title {
+    margin-top: 0;
+}
+
+.date-r {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 4rem;
+}
+
+.date-r span {
+    flex: 1;
+    text-align: center;
+    font-size: 2rem;
+    position: relative;
+}
+
+.date-r span.disabled {
+    color: #dcdcdb;
+}
+
+.date-r span i {
+    font-size: 1rem;
+    position: absolute;
+    top: -.7rem;
+    left: 0rem;
+    color: #86bfbe;
+}
+
+.loading {
+    text-align: center;
+    width: 100%;
+    margin: 0px auto;
+    display: none;
+    border-radius: .2rem;
+    position: fixed;
+    font-size: 2rem;
+    background: rgba(100, 100, 100, .8);
+    color: #fff;
+    bottom:0;
+}

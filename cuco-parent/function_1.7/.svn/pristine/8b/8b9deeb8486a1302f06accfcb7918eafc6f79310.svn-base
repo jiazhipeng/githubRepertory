@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>优惠券</title>
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />    
+    <link href="../../css/2v.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="greyBg">
+    <div class="p-info-page">
+        <div class="p-info-sec">
+            优惠券 <span>1</span>张
+        </div>
+
+        <div class="title">优惠券明细</div>
+        <ul class="coup-list">
+            <li>
+                <div class="l-site">
+                    <p>100元产品劵</p>
+                    <p class="date">有效期2016-08-09至2016-06-06</p>
+                </div>
+                <div class="coup-line"></div>
+                <div class="r-site">
+                    待使用
+                </div>
+            </li>
+            <li class="err">
+                <div class="l-site">
+                    <p>100元产品劵</p>
+                    <p class="date">有效期2016-08-09至2016-06-06</p>
+                </div>
+                <div class="coup-line"></div>
+                <div class="r-site">
+                    待使用
+                </div>
+            </li>
+            <li class="err">
+                <div class="l-site">
+                    <p>100元产品劵</p>
+                    <p class="date">有效期2016-08-09至2016-06-06</p>
+                </div>
+                <div class="coup-line"></div>
+                <div class="r-site">
+                    待使用
+                </div>
+            </li>
+            <li class="err">
+                <div class="l-site">
+                    <p>100元产品劵</p>
+                    <p class="date">有效期2016-08-09至2016-06-06</p>
+                </div>
+                <div class="coup-line"></div>
+                <div class="r-site">
+                    待使用
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

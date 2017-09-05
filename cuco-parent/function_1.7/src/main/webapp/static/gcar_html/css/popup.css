@@ -1,0 +1,120 @@
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    z-index:99999;
+}
+
+.popup-con {
+    width: 200px;
+    /*height: 120px;*/
+    background: #c1c1c1;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+}
+
+.popup-head h3 {
+    text-align: center;
+    color: #3c3c3c;
+    padding: 10px 0;
+    font-weight: bold;
+    font-size:1.5rem;
+}
+
+.popup-foot {
+    text-align: center;
+    border-top: 1px #949494 solid;
+    line-height: 30px;
+    margin-top: 18px;
+    background: #c3c4c4;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.popup-foot a {
+    color: #3c3c3c;
+    font-weight: bold;
+    font-size:1.5rem;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+}
+
+.popup-body {}
+
+.popup-body p {
+    text-align: center;
+    color: #3c3c3c;
+    padding: 4% 10px;
+}
+
+
+.confirm {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    z-index:99999;
+}
+
+.confirm-con {
+    width: 200px;
+    /*height: 120px;*/
+    background: #c1c1c1;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+}
+
+.confirm-head h3 {
+    text-align: center;
+    color: #3c3c3c;
+    padding: 10px 0;
+    font-weight: bold;
+    font-size:1.5rem;
+}
+
+.confirm-foot {
+    text-align: center;
+    border-top: 1px #949494 solid;
+    line-height: 30px;
+    margin-top: 18px;
+    background: #c3c4c4;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.confirm-foot a {
+    color: #3c3c3c;
+    font-weight: bold;
+    font-size:1.5rem;
+    float: left;
+}
+.confirm-foot a.sure{
+    width: 49%;
+    height: 100%;
+    border-right: 1px solid #949494;
+}
+.confirm-foot a.cancel{
+    width: 49%;
+    height: 100%;
+}
+
+.confirm-body {}
+
+.confirm-body p {
+    text-align: center;
+    color: #3c3c3c;
+    padding: 0 10px;
+    line-height: 1.5rem;
+}

@@ -1,0 +1,106 @@
+package cn.cuco.service.order;
+
+
+import java.util.List;
+
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.page.PageResult;
+
+/**
+ * 续费订单相关接口
+ * @author zc.du
+ */
+public interface OrderRenewalService {
+	/** 
+    * @Description: 创建续费订单基础方法
+    * @param orderRenewal
+    * @return OrderRenewal
+    */
+    public OrderRenewal createOrderRenewal(OrderRenewal orderRenewal);
+    
+    /** 
+    * @Description: 修改续费订单基础方法
+    * @param orderRenewal
+    * @return OrderRenewal
+    */
+    public OrderRenewal updateOrderRenewal(OrderRenewal orderRenewal);
+    
+    /** 
+    * @Description: 删除续费订单基础方法
+    * @param orderRenewal
+    * @return Integer
+    */
+    public Integer deleteOrderRenewal(OrderRenewal orderRenewal);
+    
+    /** 
+     * @Description: 查询续费订单基础方法
+     * @param orderRenewal
+     * @return OrderRenewal
+     */
+    public OrderRenewal getOrderRenewal(OrderRenewal orderRenewal); 
+    
+    /** 
+     * @Description: 查询续费订单列表基础方法
+     * @param orderRenewal
+     * @return List<OrderRenewal>
+     */
+    public List<OrderRenewal> getOrderRenewalList(OrderRenewal orderRenewal);
+    
+    /** 
+     * @Description: 分页查询续费订单列表基础方法
+     * @param orderRenewal
+     * @return PageResult<OrderRenewal>
+     */
+    public PageResult<OrderRenewal> getOrderRenewalListByPage(OrderRenewal orderRenewal);
+
+    /** 
+     * @Description: 查询续费订单数量基础方法
+     * @param orderRenewal
+     * @return Integer
+     */
+    public Integer getOrderRenewalCount(OrderRenewal orderRenewal);
+    
+    /** 
+     * @Description: app端发起续费订单
+     * @param orderRenewal
+     * @return OrderRenewal
+     */
+    public OrderRenewal createOrderForApp(OrderRenewal orderRenewal);
+    
+    /** 
+     * @Description: app端修改续费订单状态为"已取消"
+     * @param orderRenewal
+     * @return OrderRenewal
+     */
+    public OrderRenewal updateOrderRenewalStatusByCancelForApp(OrderRenewal orderRenewal);
+    
+    /** 
+     * @Description: 修改续费订单状态为"已取消"
+     * @param orderRenewal
+     * @return OrderRenewal
+     */
+    public OrderRenewal updateOrderRenewalStatusByCancel(OrderRenewal orderRenewal);
+    
+    /** 
+     * @Description: 修改续费订单状态为"支付中"
+     * @param orderRenewal
+     * @return OrderRenewal
+     */
+    public OrderRenewal updateOrderRenewalStatusByPaying(OrderRenewal orderRenewal);
+    
+    /** 
+     * @Description: 修改续费订单状态为"部分付款"
+     * @param orderRenewal
+     * @return OrderRenewal
+     */
+    public OrderRenewal updateOrderRenewalStatusByPartPay(OrderRenewal orderRenewal);
+    
+    /** 
+     * @Description: 修改续费订单状态为"已付款"
+     * @param orderRenewal
+     * @return OrderRenewal
+     */
+    public OrderRenewal updateOrderRenewalStatusByCompletePay(OrderRenewal orderRenewal);
+
+
+}

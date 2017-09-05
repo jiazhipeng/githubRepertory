@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>车库-详情</title>
+    <link href="../../css/user.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+    <style>
+
+        .car-banner {
+            position: relative;
+        }
+        .car-detail li {
+            position: relative;
+            background: #fff;
+            padding: 3% 4%;
+            margin-bottom: 10px;
+        }
+        .video-icon {
+            width: 55px;
+            height: 55px;
+            display: inline-block;
+            vertical-align: middle;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .plays {
+            background: url("../../images/play.png") no-repeat;
+            background-size: 100%;
+
+        }
+        .pause {
+            background: url("../../images/pause.png") no-repeat;
+            background-size: 100%;
+
+        }
+        .car-pres {
+        }
+        .car-titles {
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .brife {
+            color: #666;
+            font-size: 1.6rem;
+            line-height: 20px;
+        }
+        .arrow-icons {
+            width: 22px;
+            height: 15px;
+            background: url("../../images/arrow_down.png") no-repeat;
+            background-size: 100%;
+            display: inline-block;
+            vertical-align: middle;
+            position: absolute;
+            bottom: 6px;
+            right: 20px;
+        }
+        .car-info-icon {
+            width: 14.5%;
+            display: inline-block;
+            text-align: center;
+        }
+        .car-info-icon img {
+            width: 20px;
+            height: 28px;
+        }
+        .car-info-icon span {
+            font-size: 1rem;
+            display: block;
+            width: 48px;
+            margin: 8px auto;
+            transform: scale(0.8);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .type-font a{
+            font-size: 1.2rem;
+            vertical-align: middle;
+        }
+        .car_fix {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            border-top: 1px #ccc solid;
+            display: flex;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+        }
+        .car_money {
+            color: #333;
+            font-size: 1.4rem;
+            background: #eee;
+            flex:1.5
+
+        }
+        .car_money span {
+            color: #f51305;
+            font-size: 1.8rem;
+        }
+        .car-use {
+            background: #161616;
+            color: #fff;
+            display: block;
+            flex:1;
+            font-size: 1.8rem;
+
+        }
+        .car-intr {
+            padding-bottom: 50px;
+        }
+    </style>
+</head>
+<body class="greyBg car-detail">
+<div class="car-banner">
+    <img src="../../images/about_1.jpg"/>
+    <a href="javascript:;" class="video-icon plays"></a>
+    <a href="javascript:;" class="video-icon pause"></a>
+</div>
+    <ul class="car-intr">
+        <li>
+            <div class="car-pres">
+                <h3 class="car-titles">车型介绍</h3>
+                <p class="brife">Model X 是一款高性能、安全、智能的全尺寸 SUV 。标配全轮驱动，以及可提供 489 公里续航里。</p>
+                <i class="arrow-icons"></i>
+            </div>
+        </li>
+        <li>
+            <div class="car-pres">
+                <h3 class="car-titles">车辆信息</h3>
+                <div>
+                    <a href="javascript:" class="car-info-icon"><img src="../../images/car_info_icon1.png" /><span>涡轮增压</span></a>
+                    <a href="javascript:" class="car-info-icon"><img src="../../images/car_info_icon1.png" /><span>涡轮增压</span></a>
+                    <a href="javascript:" class="car-info-icon"><img src="../../images/car_info_icon1.png" /><span>涡轮增压</span></a>
+                    <a href="javascript:" class="car-info-icon"><img src="../../images/car_info_icon1.png" /><span>涡轮增压</span></a>
+                    <a href="javascript:" class="car-info-icon"><img src="../../images/car_info_icon1.png" /><span>涡轮增压</span></a>
+                    <a href="javascript:" class="car-info-icon"><img src="../../images/car_info_icon1.png" /><span>涡轮增压</span></a>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="car-pres">
+                <h3 class="car-titles">用车服务</h3>
+                <div class="type-font">
+                    <a href="javascript:">上门取还</a>
+                    <a href="javascript:">清洁养护</a>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="car-pres">
+                <h3 class="car-titles">所属套餐</h3>
+                <div class="type-font">
+                    <a href="javascript:">标准套餐</a>
+                    <a href="javascript:">尊享套餐</a>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="car-pres">
+                <h3 class="car-titles">用车事宜</h3>
+                <div class="type-font">
+                    <a href="javascript:">管家交接车时间8:00至22:00</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="car_fix">
+        <div class="car_money">
+            <span>700元</span>/日起
+        </div>
+        <a href="javascript:" class="car-use">用车</a>
+    </div>
+</body>
+</html>

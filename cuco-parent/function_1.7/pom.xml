@@ -1,0 +1,174 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.hy</groupId>
+		<artifactId>hy-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../hy-parent</relativePath>
+	</parent>
+
+	<artifactId>hy-gcar</artifactId>
+	<packaging>war</packaging>
+	<name>hy::gcar-wapp</name>
+	
+ 	<properties>
+		<package.environment>test</package.environment>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>product</id>
+			<properties>
+				<package.environment>product</package.environment>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<package.environment>dev</package.environment>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<package.environment>test</package.environment>
+			</properties>
+		</profile>
+		<profile>
+			<id>pre</id>
+			<properties>
+				<package.environment>pre</package.environment>
+			</properties>
+		</profile>
+		<profile>
+			<id>prebug</id>
+			<properties>
+				<package.environment>pre</package.environment>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.hy</groupId>
+			<artifactId>hy-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.hycx</groupId> -->
+<!-- 			<artifactId>hycx-util</artifactId> -->
+<!-- 			<version>0.0.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<!-- 数据库操作 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>org.mybatis</groupId>
+		  <artifactId>mybatis</artifactId>
+		  <version>3.4.1</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.mybatis.generator</groupId>
+		  <artifactId>mybatis-generator-core</artifactId>
+		  <version>1.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.jsqlparser</groupId>
+			<artifactId>jsqlparser</artifactId>
+			<version>0.9.4</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.tomcat</groupId>
+		  <artifactId>tomcat-jdbc</artifactId>
+		  <version>7.0.47</version>
+		</dependency>
+		<dependency>
+		  <groupId>mysql</groupId>
+		  <artifactId>mysql-connector-java</artifactId>
+		  <version>5.1.39</version>
+		</dependency>
+		
+		<!--websocket begin  -->
+		<dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+       <!--  <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency> -->
+        <dependency>  
+		   <groupId>org.springframework</groupId>  
+		   <artifactId>spring-websocket</artifactId>  
+		   <version>4.1.4.RELEASE</version>  
+		</dependency>  
+		<dependency>  
+		   <groupId>org.springframework</groupId>  
+		   <artifactId>spring-messaging</artifactId>  
+		   <version>4.1.4.RELEASE</version>  
+		</dependency>  
+       <!--websocket end  -->
+		
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<port>8080</port>
+					<systemProperties>
+						<JAVA_OPTS>-Xms1024m -Xmx1024m -XX:MaxPermSize=1024m</JAVA_OPTS>
+					</systemProperties>
+					<path>/</path>
+				</configuration>
+			</plugin>
+			<!-- 忽略单元测试 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+ 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+					<webResources>
+						<resource>
+							<directory>src/main/resources/${package.environment}</directory>
+							<targetPath>WEB-INF/classes</targetPath>
+							<filtering>true</filtering>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

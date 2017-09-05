@@ -1,0 +1,119 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import cn.cuco.page.PageQuery;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-22 14:30:41
+ */
+public class MemberCarUsedAddress extends PageQuery<MemberCarUsedAddress> implements Serializable {
+
+    private static final long serialVersionUID = 7819765847625813L;
+
+    private Long id;//主键
+
+    private Long memberId;//用户ID
+
+    private String memberName;//用户姓名
+
+    private Integer type;//用户类型 0:用车;1:还车;默认0
+
+    private String address;//所在地址
+
+    private String longitudeLatitude;//经纬度
+
+    private Integer count;//使用次数 默认0
+
+    private Integer valid;//数据状态 0:无效;1:有效;默认1
+
+    private Date created;//创建时间
+    
+    public MemberCarUsedAddress(){}
+    
+    public MemberCarUsedAddress(Long memberId, String memberName, Integer type, String address, String longitudeLatitude, Integer count, Date created) {
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.type = type;
+		this.address = address;
+		this.longitudeLatitude = longitudeLatitude;
+		this.count = count;
+		this.created = created;
+	}
+
+	public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getMemberId() {
+        return this.memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getMemberName() {
+        return this.memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getLongitudeLatitude() {
+        return this.longitudeLatitude;
+    }
+
+    public void setLongitudeLatitude(String longitudeLatitude) {
+        this.longitudeLatitude = longitudeLatitude;
+    }
+
+    public Integer getCount() {
+        return this.count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Integer getValid() {
+        return this.valid;
+    }
+
+    public void setValid(Integer valid) {
+        this.valid = valid;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+}

@@ -1,0 +1,35 @@
+package cn.cuco.service.basic.carport.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarportCartypeMapper;
+import cn.cuco.entity.CarportCartype;
+import cn.cuco.service.basic.carport.CarportCartypeService;
+
+@Service(value = "carportCartypeService")
+public class CarportCartypeServiceImpl implements CarportCartypeService {
+
+    @Autowired
+    private CarportCartypeMapper<CarportCartype> carportCartypeMapper;
+
+	@Override
+	public void createCarportCartypeBatch(List<CarportCartype> carportCartype) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void deleteCarportCartypeByCarprotId(CarportCartype carportCartype) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<CarportCartype> getCarportCartypesByCarportId(CarportCartype carportCartype) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+}

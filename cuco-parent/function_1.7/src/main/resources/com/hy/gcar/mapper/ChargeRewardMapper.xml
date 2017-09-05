@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.ChargeRewardMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.ChargeReward" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="percent" property="percent" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.ChargeReward" >
+       select  count(1) 
+    from tc_charge_reward  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "startTime != null ">
+        and start_time = #{startTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "endTime != null ">
+        and end_time = #{endTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "percent != null ">
+        and percent = #{percent,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ChargeReward" >
+       select  <include refid="Base_Column_List" />
+    from tc_charge_reward  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "startTime != null ">
+        and start_time = #{startTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "endTime != null ">
+        and end_time = #{endTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "percent != null ">
+        and percent = #{percent,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, start_time, end_time, 
+      percent, created
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ChargeReward" >
+    select 
+      id, start_time, end_time, 
+      percent, created
+    from tc_charge_reward where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.ChargeReward" >
+    delete from tc_charge_reward where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tc_charge_reward where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.ChargeReward" >
+    insert into tc_charge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "startTime != null ">
+         start_time,
+      </if>
+      <if test= "endTime != null ">
+         end_time,
+      </if>
+      <if test= "percent != null ">
+         percent,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "startTime != null ">
+         #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "endTime != null ">
+         #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "percent != null ">
+         #{percent,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tc_charge_reward (
+         id,
+         start_time,
+         end_time,
+         percent,
+         created)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.startTime,jdbcType=TIMESTAMP},
+         #{item.endTime,jdbcType=TIMESTAMP},
+         #{item.percent,jdbcType=DECIMAL},
+         #{item.created,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.ChargeReward" >
+    update tc_charge_reward
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "startTime != null ">
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "endTime != null ">
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "percent != null ">
+      percent = #{percent,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

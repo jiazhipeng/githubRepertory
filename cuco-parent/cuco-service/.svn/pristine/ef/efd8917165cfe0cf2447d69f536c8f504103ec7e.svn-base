@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface CarportMapper<T> extends BaseDao<T> {
+
+}

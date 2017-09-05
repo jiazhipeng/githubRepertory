@@ -1,0 +1,65 @@
+package cn.cuco.service.member.carUsed;
+
+
+import java.util.List;
+
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户车库相关接口
+ * @author zc.du
+ */
+public interface MemberCarportService {
+	/** 
+    * @Description: 创建用户车库基础方法
+    * @param memberCarport
+    * @return MemberCarport
+    */
+    public MemberCarport createMemberCarport(MemberCarport memberCarport);
+    
+    /** 
+    * @Description: 修改用户车库基础方法
+    * @param memberCarport
+    * @return MemberCarport
+    */
+    public MemberCarport updateMemberCarport(MemberCarport memberCarport);
+    
+    /** 
+    * @Description: 删除用户车库基础方法
+    * @param memberCarport
+    * @return Integer
+    */
+    public Integer deleteMemberCarport(MemberCarport memberCarport);
+    
+    /** 
+     * @Description: 查询用户车库基础方法
+     * @param memberCarport
+     * @return MemberCarport
+     */
+    public MemberCarport getMemberCarport(MemberCarport memberCarport); 
+    
+    /** 
+     * @Description: 查询用户车库列表基础方法
+     * @param memberCarport
+     * @return List<MemberCarport>
+     */
+    public List<MemberCarport> getMemberCarportList(MemberCarport memberCarport);
+    
+    /** 
+     * @Description: 分页查询用户车库列表基础方法
+     * @param memberCarport
+     * @return PageResult<MemberCarport>
+     */
+    public PageResult<MemberCarport> getMemberCarportListByPage(MemberCarport memberCarport);
+
+    /** 
+     * @Description: 查询用户车库数量基础方法
+     * @param memberCarport
+     * @return Integer
+     */
+    public Integer getMemberCarportCount(MemberCarport memberCarport);
+
+
+
+}

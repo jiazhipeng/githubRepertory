@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>单车查询</title>
+    <link rel="stylesheet" href="../../css/css.css">
+    <link rel="stylesheet" href="../../css/gjd/jcgs_two.css">
+    
+</head>
+
+<body class="greyBg">
+        
+    <!--单车-->
+        <div class="searc-sec">
+            <div class="searchBox_black">
+                <div class="searc-in-sec">
+                    <a href="javascript:;" class="searchBtn"></a>
+                    <input type="search" placeholder="京A·F">
+                </div>
+                <a href="javascript:;" class="cencle-search">取消</a>
+            </div>
+            <ul class="search-list s-car-list">
+                <li>
+                    京A·FR265
+                </li>
+                <li>
+                    京A·FR265
+                </li>
+            </ul>
+
+
+            <div class="btns">
+                <a href="javscript:;" class="button cencle">取消</a>
+                <a href="javscript:;" class="button">确定</a>
+            </div>
+        </div>
+</body>
+
+</html>

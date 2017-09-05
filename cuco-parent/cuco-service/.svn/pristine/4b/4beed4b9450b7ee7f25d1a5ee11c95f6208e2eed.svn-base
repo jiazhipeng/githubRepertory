@@ -1,0 +1,57 @@
+package cn.cuco.service.basic.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.InsuranceMapper;
+import cn.cuco.entity.Insurance;
+import cn.cuco.service.basic.InsuranceService;
+
+@Service(value = "insuranceService")
+public class InsuranceServiceImpl implements InsuranceService {
+
+    @Autowired
+    private InsuranceMapper<Insurance> insuranceMapper;
+    
+    @Override
+    public Integer insertSelective(Insurance insurance) throws Exception {
+           return this.insuranceMapper.insertSelective(insurance);
+        }
+
+    @Override
+    public Integer insertBatch(List<Insurance> insurance) throws Exception {
+           return this.insuranceMapper.insertBatch(insurance) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.insuranceMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.insuranceMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(Insurance insurance) {
+           return this.insuranceMapper.updateByPrimaryKeySelective(insurance);
+    }
+
+    @Override
+    public Insurance findById(Object id) {
+           return (Insurance) this.insuranceMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Insurance> selectByCondition(Insurance insurance) {
+           return (List<Insurance>) this.insuranceMapper.selectByCondition(insurance);
+    }
+
+    @Override
+    public Integer selectCountByCondition(Insurance insurance) {
+           return  this.insuranceMapper.selectCountByCondition(insurance);
+    }
+
+}

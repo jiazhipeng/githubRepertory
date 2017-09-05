@@ -1,0 +1,64 @@
+package cn.cuco.service.payment;
+
+
+import java.util.List;
+
+import cn.cuco.entity.PaymentLog;
+import cn.cuco.page.PageResult;
+
+/**
+ * 支付记录相关接口
+ * @author zc.du
+ */
+public interface PaymentLogService {
+	/** 
+    * @Description: 创建支付记录基础方法
+    * @param paymentLog
+    * @return PaymentLog
+    */
+    public PaymentLog createPaymentLog(PaymentLog paymentLog);
+    
+    /** 
+    * @Description: 修改支付记录基础方法
+    * @param paymentLog
+    * @return PaymentLog
+    */
+    public PaymentLog updatePaymentLog(PaymentLog paymentLog);
+    
+    /** 
+    * @Description: 删除支付记录基础方法
+    * @param paymentLog
+    * @return Integer
+    */
+    public Integer deletePaymentLog(PaymentLog paymentLog);
+    
+    /** 
+     * @Description: 查询支付记录基础方法
+     * @param paymentLog
+     * @return PaymentLog
+     */
+    public PaymentLog getPaymentLog(PaymentLog paymentLog); 
+    
+    /** 
+     * @Description: 查询支付记录列表基础方法
+     * @param paymentLog
+     * @return List<PaymentLog>
+     */
+    public List<PaymentLog> getPaymentLogList(PaymentLog paymentLog);
+    
+    /** 
+     * @Description: 分页查询支付记录列表基础方法
+     * @param paymentLog
+     * @return PageResult<PaymentLog>
+     */
+    public PageResult<PaymentLog> getPaymentLogListByPage(PaymentLog paymentLog);
+
+    /** 
+     * @Description: 查询支付记录数量基础方法
+     * @param paymentLog
+     * @return Integer
+     */
+    public Integer getPaymentLogCount(PaymentLog paymentLog);
+
+
+}

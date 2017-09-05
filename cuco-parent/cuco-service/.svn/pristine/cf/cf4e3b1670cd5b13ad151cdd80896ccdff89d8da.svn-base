@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.BasicServicecityMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.BasicServicecity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="modifer" property="modifer" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.BasicServicecity" >
+       select  count(1) 
+    from tc_basic_servicecity  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+        and city_name = #{cityName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+        and city_code = #{cityCode,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityId != null ">
+        and city_id = #{cityId,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.BasicServicecity" >
+       select  <include refid="Base_Column_List" />
+    from tc_basic_servicecity  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+        and city_name = #{cityName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+        and city_code = #{cityCode,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityId != null ">
+        and city_id = #{cityId,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, city_name, city_code, 
+      city_id, created, lasttime_modify, 
+      modifier_id, modifer
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.BasicServicecity" >
+    select 
+      id, city_name, city_code, 
+      city_id, created, lasttime_modify, 
+      modifier_id, modifer
+    from tc_basic_servicecity where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.BasicServicecity" >
+    delete from tc_basic_servicecity where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tc_basic_servicecity where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.BasicServicecity" >
+    insert into tc_basic_servicecity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         city_name,
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         city_code,
+      </if>
+      <if test= "cityId != null ">
+         city_id,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+         modifer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityId != null ">
+         #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+         #{modifer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tc_basic_servicecity (
+         id,
+         city_name,
+         city_code,
+         city_id,
+         created,
+         lasttime_modify,
+         modifier_id,
+         modifer)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.cityName,jdbcType=VARCHAR},
+         #{item.cityCode,jdbcType=VARCHAR},
+         #{item.cityId,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=VARCHAR},
+         #{item.modifer,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.BasicServicecity" >
+    update tc_basic_servicecity
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+      city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityId != null ">
+      city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+      modifer = #{modifer,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

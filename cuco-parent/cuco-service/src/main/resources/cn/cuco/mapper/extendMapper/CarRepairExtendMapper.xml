@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarRepairMapper" >
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByConditionByPage" resultType="INTEGER" parameterType="cn.cuco.entity.CarRepair" >
+       select  count(1) 
+    from td_car_repair  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+       and car_plate_num like  CONCAT('%',CONCAT(#{carPlateNum,jdbcType=VARCHAR},'%'))   
+      </if>
+      <if test= "carBrand != null and carBrand != '' ">
+        and car_brand = #{carBrand,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carType != null and carType != '' ">
+        and car_type = #{carType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carSupplierId != null ">
+        and car_supplier_id = #{carSupplierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "repairReason != null and repairReason != '' ">
+        and repair_reason = #{repairReason,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairTimeStart != null ">
+        and repair_time_start = #{repairTimeStart,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "repairTimeEnd != null ">
+        and repair_time_end = #{repairTimeEnd,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "repairCompany != null and repairCompany != '' ">
+        and repair_company = #{repairCompany,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairPlace != null and repairPlace != '' ">
+        and repair_place = #{repairPlace,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairPrice != null ">
+        and repair_price = #{repairPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "creater != null and creater != '' ">
+        and creater = #{creater,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByConditionByPage" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarRepair" >
+       select  <include refid="Base_Column_List" />
+    from td_car_repair  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num like  CONCAT('%',CONCAT(#{carPlateNum,jdbcType=VARCHAR},'%'))   
+      </if>
+      <if test= "carBrand != null and carBrand != '' ">
+        and car_brand = #{carBrand,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carType != null and carType != '' ">
+        and car_type = #{carType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carSupplierId != null ">
+        and car_supplier_id = #{carSupplierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "repairReason != null and repairReason != '' ">
+        and repair_reason = #{repairReason,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairTimeStart != null ">
+        and repair_time_start = #{repairTimeStart,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "repairTimeEnd != null ">
+        and repair_time_end = #{repairTimeEnd,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "repairCompany != null and repairCompany != '' ">
+        and repair_company = #{repairCompany,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairPlace != null and repairPlace != '' ">
+        and repair_place = #{repairPlace,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairPrice != null ">
+        and repair_price = #{repairPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "creater != null and creater != '' ">
+        and creater = #{creater,jdbcType=VARCHAR}      
+      </if>
+  </where>
+    	order by created desc
+  </select>
+
+</mapper>

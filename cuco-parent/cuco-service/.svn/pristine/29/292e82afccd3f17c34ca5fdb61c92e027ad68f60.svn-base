@@ -1,0 +1,54 @@
+package cn.cuco.service.payment.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.PaymentMapper;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.Payment;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.payment.PaymentService;
+
+/** 
+* @ClassName: PaymentServiceImpl 
+* @Description: 支付记录相关接口的实现
+* @author zc.du
+* @date 2017年2月23日 上午10:58:02  
+*/
+@Service(value = "paymentService")
+public class PaymentServiceImpl implements PaymentService {
+
+    @Autowired
+    private PaymentMapper<Payment> paymentMapper;
+
+	@Override
+	public Payment createPayment(Payment payment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Payment updatePaymentStatusByCancel(Payment payment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Payment updatePaymentStatusByCompletePay(Payment payment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<Payment> getPaymentListByPage(Payment payment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OperateLog> getPaymentLogListByPage(Payment payment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

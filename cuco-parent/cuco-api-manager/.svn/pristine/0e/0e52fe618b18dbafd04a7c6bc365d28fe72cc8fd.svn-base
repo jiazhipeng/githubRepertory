@@ -1,0 +1,50 @@
+package cn.cuco.controller.manager.car.accident;
+
+import org.springframework.web.bind.annotation.RestController;
+import cn.cuco.annotation.API;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+/**
+ * @ClassName:
+ * @Description：
+ * @author：WangShuai
+ * @date：2017年02月24 18:42:00
+ */
+@RestController
+public class CarAccidentController {
+
+    @API(value = "出险-分页")
+    @RequestMapping(value = "/carAccident/getCarAccidentListByPage",method = RequestMethod.POST)
+    private Object getCarAccidentListByPage(){
+
+        return null;
+    }
+
+    @API(value = "出险-详情")
+    @RequestMapping(value = "/carAccident/getCarAccidentById",method = RequestMethod.GET)
+    private Object getCarAccidentById(){
+
+        return null;
+    }
+
+    @API(value = "出险-创建")
+    @RequestMapping(value = "/carAccident/createCarAccident",method = RequestMethod.POST)
+    private Object createCarAccident(){
+
+        return null;
+    }
+
+    @API(value = "出险-状态修改")
+    @RequestMapping(value = "/carAccident/updateStatus",method = RequestMethod.POST)
+    private Object updateStatus(){
+
+        return null;
+    }
+
+    @API(value = "出险-操作日志-分页")
+    @RequestMapping(value = "/carAccident/getCarAccidentLogListByPage",method = RequestMethod.POST)
+    private Object getCarAccidentLogListByPage(){
+
+        return null;
+    }
+}

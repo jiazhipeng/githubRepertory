@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.ChargeOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.ChargeOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="charge_order_no" property="chargeOrderNo" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="DECIMAL" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="deposit" property="deposit" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="charge_source" property="chargeSource" jdbcType="INTEGER" />
+    <result column="charge_no" property="chargeNo" jdbcType="VARCHAR" />
+    <result column="completed_time" property="completedTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="member_item_id" property="memberItemId" jdbcType="BIGINT" />
+    <result column="member_item_name" property="memberItemName" jdbcType="VARCHAR" />
+    <result column="member_item_owner_id" property="memberItemOwnerId" jdbcType="BIGINT" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="created_source" property="createdSource" jdbcType="INTEGER" />
+    <result column="account_type" property="accountType" jdbcType="INTEGER" />
+    <result column="member_share_type" property="memberShareType" jdbcType="INTEGER" />
+    <result column="created_member_id" property="createdMemberId" jdbcType="VARCHAR" />
+    <result column="created_member_name" property="createdMemberName" jdbcType="VARCHAR" />
+    <result column="created_member_mobile" property="createdMemberMobile" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="gift_amount" property="giftAmount" jdbcType="DECIMAL" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.ChargeOrder" >
+       select  count(1) 
+    from td_charge_order  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "chargeOrderNo != null and chargeOrderNo != '' ">
+        and charge_order_no = #{chargeOrderNo,jdbcType=VARCHAR}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "balance != null ">
+        and balance = #{balance,jdbcType=DECIMAL}      
+      </if>
+      <if test= "deposit != null ">
+        and deposit = #{deposit,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "chargeSource != null ">
+        and charge_source = #{chargeSource,jdbcType=INTEGER}      
+      </if>
+      <if test= "chargeNo != null and chargeNo != '' ">
+        and charge_no = #{chargeNo,jdbcType=VARCHAR}      
+      </if>
+      <if test= "completedTime != null ">
+        and completed_time = #{completedTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+        and member_item_name = #{memberItemName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberItemOwnerId != null ">
+        and member_item_owner_id = #{memberItemOwnerId,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "createdSource != null ">
+        and created_source = #{createdSource,jdbcType=INTEGER}      
+      </if>
+      <if test= "accountType != null ">
+        and account_type = #{accountType,jdbcType=INTEGER}      
+      </if>
+      <if test= "memberShareType != null ">
+        and member_share_type = #{memberShareType,jdbcType=INTEGER}      
+      </if>
+      <if test= "createdMemberId != null and createdMemberId != '' ">
+        and created_member_id = #{createdMemberId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "createdMemberName != null and createdMemberName != '' ">
+        and created_member_name = #{createdMemberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "createdMemberMobile != null and createdMemberMobile != '' ">
+        and created_member_mobile = #{createdMemberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "bank != null and bank != '' ">
+        and bank = #{bank,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ChargeOrder" >
+       select  <include refid="Base_Column_List" />
+    from td_charge_order  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "chargeOrderNo != null and chargeOrderNo != '' ">
+        and charge_order_no = #{chargeOrderNo,jdbcType=VARCHAR}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "balance != null ">
+        and balance = #{balance,jdbcType=DECIMAL}      
+      </if>
+      <if test= "deposit != null ">
+        and deposit = #{deposit,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "chargeSource != null ">
+        and charge_source = #{chargeSource,jdbcType=INTEGER}      
+      </if>
+      <if test= "chargeNo != null and chargeNo != '' ">
+        and charge_no = #{chargeNo,jdbcType=VARCHAR}      
+      </if>
+      <if test= "completedTime != null ">
+        and completed_time = #{completedTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+        and member_item_name = #{memberItemName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberItemOwnerId != null ">
+        and member_item_owner_id = #{memberItemOwnerId,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "createdSource != null ">
+        and created_source = #{createdSource,jdbcType=INTEGER}      
+      </if>
+      <if test= "accountType != null ">
+        and account_type = #{accountType,jdbcType=INTEGER}      
+      </if>
+      <if test= "memberShareType != null ">
+        and member_share_type = #{memberShareType,jdbcType=INTEGER}      
+      </if>
+      <if test= "createdMemberId != null and createdMemberId != '' ">
+        and created_member_id = #{createdMemberId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "createdMemberName != null and createdMemberName != '' ">
+        and created_member_name = #{createdMemberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "createdMemberMobile != null and createdMemberMobile != '' ">
+        and created_member_mobile = #{createdMemberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "bank != null and bank != '' ">
+        and bank = #{bank,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, charge_order_no, total, 
+      balance, deposit, created, 
+      status, charge_source, charge_no, 
+      completed_time, remark, member_item_id, 
+      member_item_name, member_item_owner_id, modifier_id, 
+      modifier, lasttime_modify, created_source, 
+      account_type, member_share_type, created_member_id, 
+      created_member_name, created_member_mobile, 
+      bank,gift_amount
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ChargeOrder" >
+    select 
+      id, charge_order_no, total, 
+      balance, deposit, created, 
+      status, charge_source, charge_no, 
+      completed_time, remark, member_item_id, 
+      member_item_name, member_item_owner_id, modifier_id, 
+      modifier, lasttime_modify, created_source, 
+      account_type, member_share_type, created_member_id, 
+      created_member_name, created_member_mobile, 
+      bank,gift_amount
+    from td_charge_order where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.ChargeOrder" >
+    delete from td_charge_order where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_charge_order where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.ChargeOrder" >
+    insert into td_charge_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "chargeOrderNo != null and chargeOrderNo != '' ">
+         charge_order_no,
+      </if>
+      <if test= "total != null ">
+         total,
+      </if>
+      <if test= "balance != null ">
+         balance,
+      </if>
+      <if test= "deposit != null ">
+         deposit,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "chargeSource != null ">
+         charge_source,
+      </if>
+      <if test= "chargeNo != null and chargeNo != '' ">
+         charge_no,
+      </if>
+      <if test= "completedTime != null ">
+         completed_time,
+      </if>
+      <if test= "remark != null and remark != '' ">
+         remark,
+      </if>
+      <if test= "memberItemId != null ">
+         member_item_id,
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+         member_item_name,
+      </if>
+      <if test= "memberItemOwnerId != null ">
+         member_item_owner_id,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "createdSource != null ">
+         created_source,
+      </if>
+      <if test= "accountType != null ">
+         account_type,
+      </if>
+      <if test= "memberShareType != null ">
+         member_share_type,
+      </if>
+      <if test= "createdMemberId != null and createdMemberId != '' ">
+         created_member_id,
+      </if>
+      <if test= "createdMemberName != null and createdMemberName != '' ">
+         created_member_name,
+      </if>
+      <if test= "createdMemberMobile != null and createdMemberMobile != '' ">
+         created_member_mobile,
+      </if>
+      <if test= "bank != null and bank != '' ">
+         bank,
+      </if>
+       <if test= "giftAmount != null ">
+      	gift_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "chargeOrderNo != null and chargeOrderNo != '' ">
+         #{chargeOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test= "total != null ">
+         #{total,jdbcType=DECIMAL},
+      </if>
+      <if test= "balance != null ">
+         #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test= "deposit != null ">
+         #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "chargeSource != null ">
+         #{chargeSource,jdbcType=INTEGER},
+      </if>
+      <if test= "chargeNo != null and chargeNo != '' ">
+         #{chargeNo,jdbcType=VARCHAR},
+      </if>
+      <if test= "completedTime != null ">
+         #{completedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remark != null and remark != '' ">
+         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberItemId != null ">
+         #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+         #{memberItemName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberItemOwnerId != null ">
+         #{memberItemOwnerId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "createdSource != null ">
+         #{createdSource,jdbcType=INTEGER},
+      </if>
+      <if test= "accountType != null ">
+         #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test= "memberShareType != null ">
+         #{memberShareType,jdbcType=INTEGER},
+      </if>
+      <if test= "createdMemberId != null and createdMemberId != '' ">
+         #{createdMemberId,jdbcType=VARCHAR},
+      </if>
+      <if test= "createdMemberName != null and createdMemberName != '' ">
+         #{createdMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "createdMemberMobile != null and createdMemberMobile != '' ">
+         #{createdMemberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "bank != null and bank != '' ">
+         #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test= "giftAmount != null ">
+      	#{giftAmount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_charge_order (
+         id,
+         charge_order_no,
+         total,
+         balance,
+         deposit,
+         created,
+         status,
+         charge_source,
+         charge_no,
+         completed_time,
+         remark,
+         member_item_id,
+         member_item_name,
+         member_item_owner_id,
+         modifier_id,
+         modifier,
+         lasttime_modify,
+         created_source,
+         account_type,
+         member_share_type,
+         created_member_id,
+         created_member_name,
+         created_member_mobile,
+         bank)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.chargeOrderNo,jdbcType=VARCHAR},
+         #{item.total,jdbcType=DECIMAL},
+         #{item.balance,jdbcType=DECIMAL},
+         #{item.deposit,jdbcType=DECIMAL},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.status,jdbcType=INTEGER},
+         #{item.chargeSource,jdbcType=INTEGER},
+         #{item.chargeNo,jdbcType=VARCHAR},
+         #{item.completedTime,jdbcType=TIMESTAMP},
+         #{item.remark,jdbcType=VARCHAR},
+         #{item.memberItemId,jdbcType=BIGINT},
+         #{item.memberItemName,jdbcType=VARCHAR},
+         #{item.memberItemOwnerId,jdbcType=BIGINT},
+         #{item.modifierId,jdbcType=VARCHAR},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.createdSource,jdbcType=INTEGER},
+         #{item.accountType,jdbcType=INTEGER},
+         #{item.memberShareType,jdbcType=INTEGER},
+         #{item.createdMemberId,jdbcType=VARCHAR},
+         #{item.createdMemberName,jdbcType=VARCHAR},
+         #{item.createdMemberMobile,jdbcType=VARCHAR},
+         #{item.bank,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.ChargeOrder" >
+    update td_charge_order
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "chargeOrderNo != null and chargeOrderNo != '' ">
+      charge_order_no = #{chargeOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test= "total != null ">
+      total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test= "balance != null ">
+      balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test= "deposit != null ">
+      deposit = #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "chargeSource != null ">
+      charge_source = #{chargeSource,jdbcType=INTEGER},
+      </if>
+      <if test= "chargeNo != null and chargeNo != '' ">
+      charge_no = #{chargeNo,jdbcType=VARCHAR},
+      </if>
+      <if test= "completedTime != null ">
+      completed_time = #{completedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remark != null and remark != '' ">
+      remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberItemId != null ">
+      member_item_id = #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+      member_item_name = #{memberItemName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberItemOwnerId != null ">
+      member_item_owner_id = #{memberItemOwnerId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "createdSource != null ">
+      created_source = #{createdSource,jdbcType=INTEGER},
+      </if>
+      <if test= "accountType != null ">
+      account_type = #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test= "memberShareType != null ">
+      member_share_type = #{memberShareType,jdbcType=INTEGER},
+      </if>
+      <if test= "createdMemberId != null and createdMemberId != '' ">
+      created_member_id = #{createdMemberId,jdbcType=VARCHAR},
+      </if>
+      <if test= "createdMemberName != null and createdMemberName != '' ">
+      created_member_name = #{createdMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "createdMemberMobile != null and createdMemberMobile != '' ">
+      created_member_mobile = #{createdMemberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "bank != null and bank != '' ">
+      bank = #{bank,jdbcType=VARCHAR}
+      </if>
+      <if test= "giftAmount != null ">
+      gift_amount = #{giftAmount,jdbcType=DECIMAL},
+      </if>
+    </set>
+      <where>
+          <if test= "id != null ">
+              AND id = #{id,jdbcType=BIGINT}
+          </if>
+          <if test= "chargeOrderNo != null and chargeOrderNo != '' ">
+              AND charge_order_no = #{chargeOrderNo,jdbcType=VARCHAR}
+          </if>
+      </where>
+  </update>
+
+</mapper>

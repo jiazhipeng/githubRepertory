@@ -1,0 +1,57 @@
+package cn.cuco.enums;
+
+/**
+* @ClassName: TaskStatus 
+* @Description: 任务状态枚举
+* @author huanghua
+* @date 2017年2月21日 下午4:28:50
+ */
+//1：待处理 2：待接单；3:待送车；4:送车中；5:待取车；6:取车中；7:已到达；8:待入库；9:已完成；10:已取消；',
+public enum TaskStatus {
+	TASKSTATUS_PROCESSED(1,"待处理"),
+	TASKSTATUS_WAITACCEPT(2,"待接单"),
+	TASKSTATUS_WAITSENDCAR(3,"待送车"),
+	TASKSTATUS_SENDCAR(4,"送车中"),
+	TASKSTATUS_WAITTASKCAR(5,"待取车"),
+	TASKSTATUS_TASKCAR(6,"取车中"),
+	TASKSTATUS_ARRIVE(7,"已到达"),
+	TASKSTATUS_STORAGE(8,"待入库"),
+	TASKSTATUS_COMPLETE(9,"已完成"),
+	TASKSTATUS_CANCEL(10,"已取消");
+
+	private Integer index;
+	
+	private String name;
+
+	private TaskStatus(Integer index, String name) {
+		this.index = index;
+		this.name = name;
+	}
+	
+	public static  String getName(Integer targetIndex){
+		if(null == targetIndex)
+			return "";
+		for(TaskStatus status: TaskStatus.values()){
+			if(status.getIndex().intValue() == targetIndex.intValue()){
+				return status.getName();
+			}
+		}
+		return "";
+	}
+
+	public Integer getIndex() {
+		return index;
+	}
+
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+}

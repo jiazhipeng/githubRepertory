@@ -1,0 +1,105 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-21 11:08:15
+ */
+public class MemberAttachment implements Serializable {
+
+    private static final long serialVersionUID = 1036269020377653L;
+
+    private Long id;//主键
+
+    private String certificateName;//证件名称
+
+    private Integer certificateType;//证件类型 1:身份证正面;2:身份证反面;3:驾驶证正本;4:驾驶证副本;5:银行卡(信用卡或储蓄卡)
+
+    private String certificateUrl;//证件图片路径
+
+    private Long memberId;//用户ID
+
+    private Date created;//创建时间
+
+    private String modifer;//修改人
+
+    private Long modifierId;//修改人ID
+
+    private Date lasttimeModify;//最后修改时间
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCertificateName() {
+        return this.certificateName;
+    }
+
+    public void setCertificateName(String certificateName) {
+        this.certificateName = certificateName;
+    }
+
+    public Integer getCertificateType() {
+        return this.certificateType;
+    }
+
+    public void setCertificateType(Integer certificateType) {
+        this.certificateType = certificateType;
+    }
+
+    public String getCertificateUrl() {
+        return this.certificateUrl;
+    }
+
+    public void setCertificateUrl(String certificateUrl) {
+        this.certificateUrl = certificateUrl;
+    }
+
+    public Long getMemberId() {
+        return this.memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getModifer() {
+        return this.modifer;
+    }
+
+    public void setModifer(String modifer) {
+        this.modifer = modifer;
+    }
+
+    public Long getModifierId() {
+        return this.modifierId;
+    }
+
+    public void setModifierId(Long modifierId) {
+        this.modifierId = modifierId;
+    }
+
+    public Date getLasttimeModify() {
+        return this.lasttimeModify;
+    }
+
+    public void setLasttimeModify(Date lasttimeModify) {
+        this.lasttimeModify = lasttimeModify;
+    }
+
+}

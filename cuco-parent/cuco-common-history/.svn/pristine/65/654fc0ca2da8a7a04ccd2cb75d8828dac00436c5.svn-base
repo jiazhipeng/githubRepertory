@@ -1,0 +1,533 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>cuco-common-history</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>cn.cuco</groupId>
+		<artifactId>cuco-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../cuco-parent</relativePath>
+	</parent>
+	
+ 	<properties>
+		<package.environment>test</package.environment>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>product</id>
+			<properties>
+				<package.environment>product</package.environment>
+			    <PUSH_IS_TEST_MODE>false</PUSH_IS_TEST_MODE>
+			    <BINDING_NOTIFICATION>{"data":{"keyword1":{"color":"#000000","value":"显示会员手机号"},"keyword2":{"color":"#000000","value":"您已成为XXX（会员名称）的共用人，可共同享用XXX（套餐名称）权益。   "},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"共用人添加通知"}},"template_id":"cSL_9Tl0X-oFcOSTRW4OUDtwa0S3Zae8SX16LY0vNCY","topcolor":"#000000","touser":"","url":""}</BINDING_NOTIFICATION>
+			    <SERVICE_ACCEPTANCE>{"data":{"keyword1":{"color":"#000000","value":"标题"},"keyword2":{"color":"#000000","value":"2016-01-08 15:26"},"first":{"color":"#000000","value":""}},"template_id":"NIU-5j7uiBViUCKAp3GgHh4YHva3EqeHqRgMdmxnQ3s","topcolor":"#000000","touser":"","url":""}</SERVICE_ACCEPTANCE>
+			    <PING_AN_INFORMATION_NOTICE>{"data":{"keyword1":{"color":"#000000","value":""},"keyword2":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"平安行消息通知"}},"template_id":"3wdreO1Hc2XpH3BTMU-dslIMmc017xihMaRf7tmMxiM","topcolor":"#000000","touser":"","url":""}</PING_AN_INFORMATION_NOTICE>
+			    <BASICS_ORDER_TEMPLATE>{"data":{"keyword3":{"color":"#000000","value":"入会申请/升级申请"},"keyword1":{"color":"#000000","value":"基础套餐"},"keyword2":{"color":"#000000","value":"8000"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您的申请未通过，需完善资料"}},"template_id":"zWdwkvl34yOewaM0wXt-y532gGESRQxUTW6jOF1ybYg","topcolor":"#000000","touser":"","url":""}</BASICS_ORDER_TEMPLATE>
+				
+				<SERVICE_HANDLE>{"data":{"keyword1":{"color":"#000000","value":"任务名称(会员名称)"},"keyword2":{"color":"#000000","value":"任务状态"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您有新的任务，请尽快处理"}},"template_id":"0E9_E__9BKjSMvtdsScoTUw6Bjj8RyW1LSnbmCp6BJs","topcolor":"#000000","touser":"","url":""}</SERVICE_HANDLE>
+				<CONSUM_SUCCESS>{"data":{"keyword1":{"color":"#000000","value":"扣费时间"},"keyword2":{"color":"#000000","value":"扣费金额XXX元"},"keyword3":{"color":"#000000","value":"余额XXX元"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您好,系统已扣除您的XXX费用"}},"template_id":"M0Dn3ZhApq_h3hNGdlT_M_6b-CnWQ6beVB-OozBx5BU","topcolor":"#000000","touser":"","url":""}</CONSUM_SUCCESS>
+				<SERVICE_NOTIFICATION>{"data":{"keyword1":{"color":"#000000","value":"服务类型"},"keyword2":{"color":"#000000","value":"受理时间"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"极车管家已出发，请您保持电话畅通"}},"template_id":"NIU-5j7uiBViUCKAp3GgHh4YHva3EqeHqRgMdmxnQ3s","topcolor":"#000000","touser":"","url":""}</SERVICE_NOTIFICATION>
+				<MEMBER_RECHARGE>{"data":{"amount":{"color":"#000000","value":"余额"},"result":{"color":"#000000","value":"充值状态"},"accountType":{"color":"#000000","value":""},"account":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您好，系统已为您充值成功"}},"template_id":"J4cF3PAly-AawvkBoIjFEg-lTtyUzhRNI3gzjpv2i2U","topcolor":"#000000","touser":"","url":""}</MEMBER_RECHARGE>
+				<BALANCE_LACKS>{"data":{"keyword1":{"color":"#000000","value":"账号"},"keyword2":{"color":"#000000","value":"当前余额"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"XXX会员的余额不足2000元，请及时跟进"}},"template_id":"EOLsCDKEQeQJrDD5aqJD_t0nJoyvGQi2OMOAsb9wW2Y","topcolor":"#000000","touser":"","url":""}</BALANCE_LACKS>
+				<AUDIT_NOTIFY>{"data":{"keyword1":{"color":"#000000","value":"会员姓名(会员手机号)"},"keyword2":{"color":"#000000","value":"状态"},"keyword3":{"color":"#000000","value":"内容"},"keyword4":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"用车审核通知"}},"template_id":"As3mdZYKHKmRcDffIGcYeOImJ-s2QMSQVAN058ui5Ms","topcolor":"#000000","touser":"","url":""}</AUDIT_NOTIFY>
+				<UPGRADE_NOTIFY>{"data":{"keyword1":{"color":"#000000","value":"会员姓名"},"keyword2":{"color":"#000000","value":"XX积分"},"keyword3":{"color":"#000000","value":"时间"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"恭喜您成功升级为XXX(子等级名称)此次升级您获得:"}},"template_id":"mGUIxNgtfpn_M0-KmiEJ8KLlaqZQx-sQ9zkSK7ZOBVI","topcolor":"#000000","touser":"","url":""}</UPGRADE_NOTIFY>
+				<VEHICLE_RESTRICTIONS>{"data":{"keyword1":{"color":"#000000","value":"类型"},"keyword2":{"color":"#000000","value":"车辆"},"keyword3":{"color":"#000000","value":"时间"},"keyword4":{"color":"#000000","value":"详情"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您当前使用的车辆明天将会限行，请合理安排出行计划"}},"template_id":"hCELcE4zpW9mxPgMGzOLCrlUetXOq1FetjFYKOZS_xk","topcolor":"#000000","touser":"","url":""}</VEHICLE_RESTRICTIONS>
+				
+				<!-- 微信公众号的独特biz -->
+				<biz>MzI4MDAwODYwOA</biz>
+				<!-- weChatPay -->
+				<appidPay>wx77b567355ce87b40</appidPay>
+				<appid>wxb9cbb99c39a74651</appid>
+				<appsecret>f463fb7042ac2fc8a7910dc6d8f9c226</appsecret>
+				<token>test156</token>
+				<url_prefix>http://app.gcarclub.com/</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>http://app.gcarclub.com/</domain>
+				<mchid>1314892501</mchid>
+				<key>hycx0001pay1mobility000111222333</key>
+				<!-- JDPay -->
+				<v_mid>110230759002</v_mid>
+				<v_url>http://app.gcarclub.com/jd/pay/synchronizationCallBack</v_url>
+				<JDKey>fv9tvf1iYAZvqLAxvzTaug0zCuvmbsgx</JDKey>
+				<remark2>http://app.gcarclub.com/jd/pay/asynchronousCallBack</remark2>
+				<submitUrl>https://tmapi.jdpay.com/PayGate</submitUrl>
+				<paymentUrl>http://pay.gcarclub.com/</paymentUrl>
+				<DEPOSIT_THRESHOLD>10000</DEPOSIT_THRESHOLD>
+				<LARGE_PAYMENT_MONEY>20000</LARGE_PAYMENT_MONEY>
+				<jd_callBack_success_url>http://pay.gcarclub.com/success.html</jd_callBack_success_url>
+				<jd_callBack_fail_url>http://pay.gcarclub.com/fail.html</jd_callBack_fail_url>
+				<IS_CONTACT_CUSTOMER>1</IS_CONTACT_CUSTOMER>
+				<solrurl>http://localhost:8080/solr/admin.html#/collection/</solrurl>
+				<solrswitch>false</solrswitch>
+				<username>xian</username>
+				<password>7758521</password>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<package.environment>dev</package.environment>
+			    <BINDING_NOTIFICATION>{"data":{"keyword1":{"color":"#000000","value":"显示会员手机号"},"keyword2":{"color":"#000000","value":"您已成为XXX（会员名称）的共用人，可共同享用XXX（套餐名称）权益。   "},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"共用人添加通知"}},"template_id":"TbPNnSIUJFEa5dgV4xXxsEiFXXcGyS6rAIRsz3e_00I","topcolor":"#000000","touser":"","url":""}</BINDING_NOTIFICATION>
+			    <SERVICE_ACCEPTANCE>{"data":{"keyword1":{"color":"#000000","value":"标题"},"keyword2":{"color":"#000000","value":"2016-01-08 15:26"},"first":{"color":"#000000","value":""}},"template_id":"xvklA_de7pwKOhdc_8y_HErl7BnkZ0MlAzg5DbqX3mg","topcolor":"#000000","touser":"","url":""}</SERVICE_ACCEPTANCE>
+			    <PING_AN_INFORMATION_NOTICE>{"data":{"keyword1":{"color":"#000000","value":""},"keyword2":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"平安行消息通知"}},"template_id":"AtzUMrKrND41TDG6nl-Gg2dguU6WhfGjrDj4hcwBrOQ","topcolor":"#000000","touser":"","url":""}</PING_AN_INFORMATION_NOTICE>
+			    <BASICS_ORDER_TEMPLATE>{"data":{"keyword3":{"color":"#000000","value":"入会申请/升级申请"},"keyword1":{"color":"#000000","value":"基础套餐"},"keyword2":{"color":"#000000","value":"8000"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您的申请未通过，需完善资料"}},"template_id":"EEuwIb8DgxCadQGAl3Usks_R3J6p7lhCqfjjPc_Nw8M","topcolor":"#000000","touser":"","url":""}</BASICS_ORDER_TEMPLATE>
+			    <PUSH_IS_TEST_MODE>true</PUSH_IS_TEST_MODE>
+				
+				<SERVICE_HANDLE>{"data":{"keyword1":{"color":"#000000","value":"任务名称(会员名称)"},"keyword2":{"color":"#000000","value":"任务状态"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您有新的任务，请尽快处理"}},"template_id":"pseNdvvKkik7rdfuDicq9sBlRa5dNeJKn5U86XL6_o8","topcolor":"#000000","touser":"","url":""}</SERVICE_HANDLE>
+				<CONSUM_SUCCESS>{"data":{"keyword1":{"color":"#000000","value":"扣费时间"},"keyword2":{"color":"#000000","value":"扣费金额XXX元"},"keyword3":{"color":"#000000","value":"余额XXX元"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您好，系统已扣除您的延时取消用车费用"}},"template_id":"6aVr1xOikOvO2SlDCRYQsjMLY-oe4SHkSKiilTvtObw","topcolor":"#000000","touser":"","url":""}</CONSUM_SUCCESS>
+				<SERVICE_NOTIFICATION>{"data":{"keyword1":{"color":"#000000","value":"服务类型"},"keyword2":{"color":"#000000","value":"受理时间"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"极车管家已出发，请您保持电话畅通"}},"template_id":"xvklA_de7pwKOhdc_8y_HErl7BnkZ0MlAzg5DbqX3mg","topcolor":"#000000","touser":"","url":""}</SERVICE_NOTIFICATION>
+				<MEMBER_RECHARGE>{"data":{"amount":{"color":"#000000","value":"余额"},"result":{"color":"#000000","value":"充值状态"},"accountType":{"color":"#000000","value":""},"account":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您好，系统已为您充值成功"}},"template_id":"s1sZt6mFIqiKocBDrxQb8ngyfg7v7c5MRiODNO9ODrQ","topcolor":"#000000","touser":"","url":""}</MEMBER_RECHARGE>
+				<BALANCE_LACKS>{"data":{"keyword1":{"color":"#000000","value":"账号"},"keyword2":{"color":"#000000","value":"当前余额"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"XXX会员的余额不足2000元，请及时跟进"}},"template_id":"c4Uz-r-3aXifLw1wqc4zAbF2jzUSL5gg_IHLz8hfYzw","topcolor":"#000000","touser":"","url":""}</BALANCE_LACKS>
+				<AUDIT_NOTIFY>{"data":{"keyword1":{"color":"#000000","value":"会员姓名(会员手机号)"},"keyword2":{"color":"#000000","value":"状态"},"keyword3":{"color":"#000000","value":"内容"},"keyword4":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"用车审核通知"}},"template_id":"OFZAge4NslnIlTaZBBwHNonB1XN2NfTi_fmWDwFL2NQ","topcolor":"#000000","touser":"","url":""}</AUDIT_NOTIFY>
+				<UPGRADE_NOTIFY>{"data":{"keyword1":{"color":"#000000","value":"会员姓名"},"keyword2":{"color":"#000000","value":"XX积分"},"keyword3":{"color":"#000000","value":"时间"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"恭喜您成功升级为XXX(子等级名称)此次升级您获得:"}},"template_id":"UEICWkLAWSMzmNh55pzDHLt8ycxogqoFqQ1zvl4hXtY","topcolor":"#000000","touser":"","url":""}</UPGRADE_NOTIFY>
+				<VEHICLE_RESTRICTIONS>{"data":{"keyword1":{"color":"#000000","value":"类型"},"keyword2":{"color":"#000000","value":"车辆"},"keyword3":{"color":"#000000","value":"时间"},"keyword4":{"color":"#000000","value":"详情"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您当前使用的车辆明天将会限行，请合理安排出行计划"}},"template_id":"Oxd2UxkHEQgUmxkA3lUjZha1HSf8LBeNjo7d9BwuoS4","topcolor":"#000000","touser":"","url":""}</VEHICLE_RESTRICTIONS>
+				
+				<!-- 微信公众号的独特biz -->
+				<biz>MzIyOTM2MzIyMA</biz>
+				<!-- weChatPay -->
+				<appidPay>wx77b567355ce87b40</appidPay>
+				<appid>wxb9cbb99c39a74651</appid>
+				<appsecret>fee3c3964bee58b5ecbd76b4dee12577</appsecret>
+				<token>test224224</token>
+				<url_prefix>test224224.1mobility.cn/</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>test224224.1mobility.cn/</domain>
+				<mchid>1314892501</mchid>
+				<key>hycx0001pay1mobility000111222333</key>
+				<!-- JDPay -->
+				<v_mid>1001</v_mid>
+				<v_url>http://test224224.1mobility.cn/jd/pay/synchronizationCallBack</v_url>
+				<JDKey>test</JDKey>
+				<remark2>http://test224224.1mobility.cn/jd/pay/asynchronousCallBack</remark2>
+				<submitUrl>https://tmapi.jdpay.com/PayGate</submitUrl>
+				<paymentUrl>http://192.168.1.247:9005/</paymentUrl>
+				<DEPOSIT_THRESHOLD>10000</DEPOSIT_THRESHOLD>
+				<LARGE_PAYMENT_MONEY>20000</LARGE_PAYMENT_MONEY>
+				<jd_callBack_success_url>http://192.168.1.247:9005/success.html</jd_callBack_success_url>
+				<jd_callBack_fail_url>http://192.168.1.247:9005/fail.html</jd_callBack_fail_url>
+				<IS_CONTACT_CUSTOMER>0</IS_CONTACT_CUSTOMER>
+				<solrurl>http://localhost:8080/solr/admin.html#/collection/</solrurl>
+				<solrswitch>false</solrswitch>
+				<username>xian</username>
+				<password>7758521</password>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<activation>  
+                    <activeByDefault>true</activeByDefault>  
+            </activation>
+			<properties>
+				<package.environment>test</package.environment>
+			    <BINDING_NOTIFICATION>{"data":{"keyword1":{"color":"#000000","value":"显示会员手机号"},"keyword2":{"color":"#000000","value":"您已成为XXX（会员名称）的共用人，可共同享用XXX（套餐名称）权益。   "},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"共用人添加通知"}},"template_id":"TbPNnSIUJFEa5dgV4xXxsEiFXXcGyS6rAIRsz3e_00I","topcolor":"#000000","touser":"","url":""}</BINDING_NOTIFICATION>
+			    <SERVICE_ACCEPTANCE>{"data":{"keyword1":{"color":"#000000","value":"标题"},"keyword2":{"color":"#000000","value":"2016-01-08 15:26"},"first":{"color":"#000000","value":""}},"template_id":"xvklA_de7pwKOhdc_8y_HErl7BnkZ0MlAzg5DbqX3mg","topcolor":"#000000","touser":"","url":""}</SERVICE_ACCEPTANCE>
+			    <PING_AN_INFORMATION_NOTICE>{"data":{"keyword1":{"color":"#000000","value":""},"keyword2":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"平安行消息通知"}},"template_id":"AtzUMrKrND41TDG6nl-Gg2dguU6WhfGjrDj4hcwBrOQ","topcolor":"#000000","touser":"","url":""}</PING_AN_INFORMATION_NOTICE>
+			    <BASICS_ORDER_TEMPLATE>{"data":{"keyword3":{"color":"#000000","value":"入会申请/升级申请"},"keyword1":{"color":"#000000","value":"基础套餐"},"keyword2":{"color":"#000000","value":"8000"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您的申请未通过，需完善资料"}},"template_id":"EEuwIb8DgxCadQGAl3Usks_R3J6p7lhCqfjjPc_Nw8M","topcolor":"#000000","touser":"","url":""}</BASICS_ORDER_TEMPLATE>
+			    <PUSH_IS_TEST_MODE>true</PUSH_IS_TEST_MODE>
+				
+				<SERVICE_HANDLE>{"data":{"keyword1":{"color":"#000000","value":"任务名称(会员名称)"},"keyword2":{"color":"#000000","value":"任务状态"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您有新的任务，请尽快处理"}},"template_id":"pseNdvvKkik7rdfuDicq9sBlRa5dNeJKn5U86XL6_o8","topcolor":"#000000","touser":"","url":""}</SERVICE_HANDLE>
+				<CONSUM_SUCCESS>{"data":{"keyword1":{"color":"#000000","value":"扣费时间"},"keyword2":{"color":"#000000","value":"扣费金额XXX元"},"keyword3":{"color":"#000000","value":"余额XXX元"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您好，系统已扣除您的延时取消用车费用"}},"template_id":"6aVr1xOikOvO2SlDCRYQsjMLY-oe4SHkSKiilTvtObw","topcolor":"#000000","touser":"","url":""}</CONSUM_SUCCESS>
+				<SERVICE_NOTIFICATION>{"data":{"keyword1":{"color":"#000000","value":"服务类型"},"keyword2":{"color":"#000000","value":"受理时间"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"极车管家已出发，请您保持电话畅通"}},"template_id":"xvklA_de7pwKOhdc_8y_HErl7BnkZ0MlAzg5DbqX3mg","topcolor":"#000000","touser":"","url":""}</SERVICE_NOTIFICATION>
+				<MEMBER_RECHARGE>{"data":{"amount":{"color":"#000000","value":"余额"},"result":{"color":"#000000","value":"充值状态"},"accountType":{"color":"#000000","value":""},"account":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您好，系统已为您充值成功"}},"template_id":"s1sZt6mFIqiKocBDrxQb8ngyfg7v7c5MRiODNO9ODrQ","topcolor":"#000000","touser":"","url":""}</MEMBER_RECHARGE>
+				<BALANCE_LACKS>{"data":{"keyword1":{"color":"#000000","value":"账号"},"keyword2":{"color":"#000000","value":"当前余额"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"XXX会员的余额不足2000元，请及时跟进"}},"template_id":"c4Uz-r-3aXifLw1wqc4zAbF2jzUSL5gg_IHLz8hfYzw","topcolor":"#000000","touser":"","url":""}</BALANCE_LACKS>
+				<AUDIT_NOTIFY>{"data":{"keyword1":{"color":"#000000","value":"会员姓名(会员手机号)"},"keyword2":{"color":"#000000","value":"状态"},"keyword3":{"color":"#000000","value":"内容"},"keyword4":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"用车审核通知"}},"template_id":"OFZAge4NslnIlTaZBBwHNonB1XN2NfTi_fmWDwFL2NQ","topcolor":"#000000","touser":"","url":""}</AUDIT_NOTIFY>
+				<UPGRADE_NOTIFY>{"data":{"keyword1":{"color":"#000000","value":"会员姓名"},"keyword2":{"color":"#000000","value":"XX积分"},"keyword3":{"color":"#000000","value":"时间"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"恭喜您成功升级为XXX(子等级名称)此次升级您获得:"}},"template_id":"UEICWkLAWSMzmNh55pzDHLt8ycxogqoFqQ1zvl4hXtY","topcolor":"#000000","touser":"","url":""}</UPGRADE_NOTIFY>
+				<VEHICLE_RESTRICTIONS>{"data":{"keyword1":{"color":"#000000","value":"类型"},"keyword2":{"color":"#000000","value":"车辆"},"keyword3":{"color":"#000000","value":"时间"},"keyword4":{"color":"#000000","value":"详情"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您当前使用的车辆明天将会限行，请合理安排出行计划"}},"template_id":"Oxd2UxkHEQgUmxkA3lUjZha1HSf8LBeNjo7d9BwuoS4","topcolor":"#000000","touser":"","url":""}</VEHICLE_RESTRICTIONS>
+
+				<!-- 微信公众号的独特biz -->
+				<biz>MzIyOTM2MzIyMA</biz>
+				<!-- <appid>wx60a4abe71b2961e3</appid>
+				<appsecret>fee3c3964bee58b5ecbd76b4dee12577</appsecret>
+				<token>test224224</token>
+				<url_prefix>http://test191.1mobility.cn</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>http://apppre.gcarclub.com/</domain>
+				<mchid>1356203002</mchid>
+				<key>hycx0001pay1mobility000111222333</key> -->
+				<!-- weChatPay -->
+				<appidPay>wx77b567355ce87b40</appidPay>
+				<appid>wx60a4abe71b2961e3</appid>
+				<appsecret>fee3c3964bee58b5ecbd76b4dee12577</appsecret>
+				<token>test224224</token>
+				<url_prefix>test224224.1mobility.cn/</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>test224224.1mobility.cn/</domain>
+				<mchid>1314892501</mchid>
+				<key>hycx0001pay1mobility000111222333</key>
+				<!-- JDPay -->
+				<v_mid>1001</v_mid>
+				<v_url>http://test224224.1mobility.cn/jd/pay/synchronizationCallBack</v_url>
+				<JDKey>test</JDKey>
+				<remark2>http://test224224.1mobility.cn/jd/pay/asynchronousCallBack</remark2>
+				<submitUrl>https://tmapi.jdpay.com/PayGate</submitUrl>
+				<paymentUrl>http://192.168.1.247:9005/</paymentUrl>
+				<DEPOSIT_THRESHOLD>10000</DEPOSIT_THRESHOLD>
+				<LARGE_PAYMENT_MONEY>20000</LARGE_PAYMENT_MONEY>
+				<jd_callBack_success_url>http://192.168.1.247:9005/success.html</jd_callBack_success_url>
+				<jd_callBack_fail_url>http://192.168.1.247:9005/fail.html</jd_callBack_fail_url>
+				<IS_CONTACT_CUSTOMER>0</IS_CONTACT_CUSTOMER>
+				<solrurl>http://localhost:8080/solr/collection</solrurl>
+				<solrswitch>false</solrswitch>
+				<username>xian</username>
+				<password>7758521</password>
+			</properties>
+		</profile>
+		<profile>
+			<id>pre</id>
+			<properties>
+				<package.environment>pre</package.environment>
+			    <BINDING_NOTIFICATION>{"data":{"keyword1":{"color":"#000000","value":"显示会员手机号"},"keyword2":{"color":"#000000","value":"您已成为XXX（会员名称）的共用人，可共同享用XXX（套餐名称）权益。   "},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"共用人添加通知"}},"template_id":"TbPNnSIUJFEa5dgV4xXxsEiFXXcGyS6rAIRsz3e_00I","topcolor":"#000000","touser":"","url":""}</BINDING_NOTIFICATION>
+			    <SERVICE_ACCEPTANCE>{"data":{"keyword1":{"color":"#000000","value":"标题"},"keyword2":{"color":"#000000","value":"2016-01-08 15:26"},"first":{"color":"#000000","value":""}},"template_id":"xvklA_de7pwKOhdc_8y_HErl7BnkZ0MlAzg5DbqX3mg","topcolor":"#000000","touser":"","url":""}</SERVICE_ACCEPTANCE>
+			    <PING_AN_INFORMATION_NOTICE>{"data":{"keyword1":{"color":"#000000","value":""},"keyword2":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"平安行消息通知"}},"template_id":"AtzUMrKrND41TDG6nl-Gg2dguU6WhfGjrDj4hcwBrOQ","topcolor":"#000000","touser":"","url":""}</PING_AN_INFORMATION_NOTICE>
+			    <BASICS_ORDER_TEMPLATE>{"data":{"keyword3":{"color":"#000000","value":"入会申请/升级申请"},"keyword1":{"color":"#000000","value":"基础套餐"},"keyword2":{"color":"#000000","value":"8000"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您的申请未通过，需完善资料"}},"template_id":"EEuwIb8DgxCadQGAl3Usks_R3J6p7lhCqfjjPc_Nw8M","topcolor":"#000000","touser":"","url":""}</BASICS_ORDER_TEMPLATE>
+			    <PUSH_IS_TEST_MODE>true</PUSH_IS_TEST_MODE>
+				
+				<SERVICE_HANDLE>{"data":{"keyword1":{"color":"#000000","value":"任务名称(会员名称)"},"keyword2":{"color":"#000000","value":"任务状态"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您有新的任务，请尽快处理"}},"template_id":"pseNdvvKkik7rdfuDicq9sBlRa5dNeJKn5U86XL6_o8","topcolor":"#000000","touser":"","url":""}</SERVICE_HANDLE>
+				<CONSUM_SUCCESS>{"data":{"keyword1":{"color":"#000000","value":"扣费时间"},"keyword2":{"color":"#000000","value":"扣费金额XXX元"},"keyword3":{"color":"#000000","value":"余额XXX元"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您好，系统已扣除您的延时取消用车费用"}},"template_id":"6aVr1xOikOvO2SlDCRYQsjMLY-oe4SHkSKiilTvtObw","topcolor":"#000000","touser":"","url":""}</CONSUM_SUCCESS>
+				<SERVICE_NOTIFICATION>{"data":{"keyword1":{"color":"#000000","value":"服务类型"},"keyword2":{"color":"#000000","value":"受理时间"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"极车管家已出发，请您保持电话畅通"}},"template_id":"xvklA_de7pwKOhdc_8y_HErl7BnkZ0MlAzg5DbqX3mg","topcolor":"#000000","touser":"","url":""}</SERVICE_NOTIFICATION>
+				<MEMBER_RECHARGE>{"data":{"amount":{"color":"#000000","value":"余额"},"result":{"color":"#000000","value":"充值状态"},"accountType":{"color":"#000000","value":""},"account":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您好，系统已为您充值成功"}},"template_id":"s1sZt6mFIqiKocBDrxQb8ngyfg7v7c5MRiODNO9ODrQ","topcolor":"#000000","touser":"","url":""}</MEMBER_RECHARGE>
+				<BALANCE_LACKS>{"data":{"keyword1":{"color":"#000000","value":"账号"},"keyword2":{"color":"#000000","value":"当前余额"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"XXX会员的余额不足2000元，请及时跟进"}},"template_id":"c4Uz-r-3aXifLw1wqc4zAbF2jzUSL5gg_IHLz8hfYzw","topcolor":"#000000","touser":"","url":""}</BALANCE_LACKS>
+				<AUDIT_NOTIFY>{"data":{"keyword1":{"color":"#000000","value":"会员姓名(会员手机号)"},"keyword2":{"color":"#000000","value":"状态"},"keyword3":{"color":"#000000","value":"内容"},"keyword4":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"用车审核通知"}},"template_id":"OFZAge4NslnIlTaZBBwHNonB1XN2NfTi_fmWDwFL2NQ","topcolor":"#000000","touser":"","url":""}</AUDIT_NOTIFY>
+				<UPGRADE_NOTIFY>{"data":{"keyword1":{"color":"#000000","value":"会员姓名"},"keyword2":{"color":"#000000","value":"XX积分"},"keyword3":{"color":"#000000","value":"时间"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"恭喜您成功升级为XXX(子等级名称)此次升级您获得:"}},"template_id":"UEICWkLAWSMzmNh55pzDHLt8ycxogqoFqQ1zvl4hXtY","topcolor":"#000000","touser":"","url":""}</UPGRADE_NOTIFY>
+				<VEHICLE_RESTRICTIONS>{"data":{"keyword1":{"color":"#000000","value":"类型"},"keyword2":{"color":"#000000","value":"车辆"},"keyword3":{"color":"#000000","value":"时间"},"keyword4":{"color":"#000000","value":"详情"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您当前使用的车辆明天将会限行，请合理安排出行计划"}},"template_id":"Oxd2UxkHEQgUmxkA3lUjZha1HSf8LBeNjo7d9BwuoS4","topcolor":"#000000","touser":"","url":""}</VEHICLE_RESTRICTIONS>
+				
+				<!-- 微信公众号的独特biz -->
+				<biz>MzIyOTM2MzIyMA</biz>
+				<!-- <appid>wx60a4abe71b2961e3</appid>
+				<appsecret>fee3c3964bee58b5ecbd76b4dee12577</appsecret>
+				<token>test224224</token>
+				<url_prefix>http://test191.1mobility.cn</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>http://apppre.gcarclub.com/</domain>
+				<mchid>1356203002</mchid>
+				<key>hycx0001pay1mobility000111222333</key> -->
+				<!-- weChatPay -->
+				<appidPay>wx77b567355ce87b40</appidPay>
+				<appid>wx60a4abe71b2961e3</appid>
+				<appsecret>fee3c3964bee58b5ecbd76b4dee12577</appsecret>
+				<token>test224224</token>
+				<url_prefix>http://apppre2.gcarclub.com/</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>http://apppre2.gcarclub.com/</domain>
+				<mchid>1314892501</mchid>
+				<key>hycx0001pay1mobility000111222333</key>
+				<!-- JDPay -->
+				<v_mid>110230759002</v_mid>
+				<v_url>http://apppre2.gcarclub.com/jd/pay/synchronizationCallBack</v_url>
+				<JDKey>fv9tvf1iYAZvqLAxvzTaug0zCuvmbsgx</JDKey>
+				<remark2>http://apppre2.gcarclub.com/jd/pay/asynchronousCallBack</remark2>
+				<submitUrl>https://tmapi.jdpay.com/PayGate</submitUrl>
+				<paymentUrl>http://paypre.gcarclub.com/</paymentUrl>
+				<DEPOSIT_THRESHOLD>10000</DEPOSIT_THRESHOLD>
+				<LARGE_PAYMENT_MONEY>20000</LARGE_PAYMENT_MONEY>
+				<jd_callBack_success_url>http://paypre.gcarclub.com/success.html</jd_callBack_success_url>
+				<jd_callBack_fail_url>http://paypre.gcarclub.com/fail.html</jd_callBack_fail_url>
+				<IS_CONTACT_CUSTOMER>1</IS_CONTACT_CUSTOMER>
+				<solrurl>http://localhost:8080/solr/admin.html#/collection/</solrurl>
+				<solrswitch>false</solrswitch>
+				<username>xian</username>
+				<password>7758521</password>
+			</properties>
+		</profile>
+		<profile>
+			<id>prebug</id>
+			<properties>
+				<package.environment>prebug</package.environment>
+			    <BINDING_NOTIFICATION>{"data":{"keyword1":{"color":"#000000","value":"显示会员手机号"},"keyword2":{"color":"#000000","value":"您已成为XXX（会员名称）的共用人，可共同享用XXX（套餐名称）权益。   "},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"共用人添加通知"}},"template_id":"TbPNnSIUJFEa5dgV4xXxsEiFXXcGyS6rAIRsz3e_00I","topcolor":"#000000","touser":"","url":""}</BINDING_NOTIFICATION>
+			    <SERVICE_ACCEPTANCE>{"data":{"keyword1":{"color":"#000000","value":"标题"},"keyword2":{"color":"#000000","value":"2016-01-08 15:26"},"first":{"color":"#000000","value":""}},"template_id":"xvklA_de7pwKOhdc_8y_HErl7BnkZ0MlAzg5DbqX3mg","topcolor":"#000000","touser":"","url":""}</SERVICE_ACCEPTANCE>
+			    <PING_AN_INFORMATION_NOTICE>{"data":{"keyword1":{"color":"#000000","value":""},"keyword2":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"平安行消息通知"}},"template_id":"AtzUMrKrND41TDG6nl-Gg2dguU6WhfGjrDj4hcwBrOQ","topcolor":"#000000","touser":"","url":""}</PING_AN_INFORMATION_NOTICE>
+			    <BASICS_ORDER_TEMPLATE>{"data":{"keyword3":{"color":"#000000","value":"入会申请/升级申请"},"keyword1":{"color":"#000000","value":"基础套餐"},"keyword2":{"color":"#000000","value":"8000"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您的申请未通过，需完善资料"}},"template_id":"EEuwIb8DgxCadQGAl3Usks_R3J6p7lhCqfjjPc_Nw8M","topcolor":"#000000","touser":"","url":""}</BASICS_ORDER_TEMPLATE>
+			    <PUSH_IS_TEST_MODE>true</PUSH_IS_TEST_MODE>
+				
+				<SERVICE_HANDLE>{"data":{"keyword1":{"color":"#000000","value":"任务名称(会员名称)"},"keyword2":{"color":"#000000","value":"任务状态"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您有新的任务，请尽快处理"}},"template_id":"pseNdvvKkik7rdfuDicq9sBlRa5dNeJKn5U86XL6_o8","topcolor":"#000000","touser":"","url":""}</SERVICE_HANDLE>
+				<CONSUM_SUCCESS>{"data":{"keyword1":{"color":"#000000","value":"扣费时间"},"keyword2":{"color":"#000000","value":"扣费金额XXX元"},"keyword3":{"color":"#000000","value":"余额XXX元"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您好，系统已扣除您的延时取消用车费用"}},"template_id":"6aVr1xOikOvO2SlDCRYQsjMLY-oe4SHkSKiilTvtObw","topcolor":"#000000","touser":"","url":""}</CONSUM_SUCCESS>
+				<SERVICE_NOTIFICATION>{"data":{"keyword1":{"color":"#000000","value":"服务类型"},"keyword2":{"color":"#000000","value":"受理时间"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"极车管家已出发，请您保持电话畅通"}},"template_id":"xvklA_de7pwKOhdc_8y_HErl7BnkZ0MlAzg5DbqX3mg","topcolor":"#000000","touser":"","url":""}</SERVICE_NOTIFICATION>
+				<MEMBER_RECHARGE>{"data":{"amount":{"color":"#000000","value":"余额"},"result":{"color":"#000000","value":"充值状态"},"accountType":{"color":"#000000","value":""},"account":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您好，系统已为您充值成功"}},"template_id":"s1sZt6mFIqiKocBDrxQb8ngyfg7v7c5MRiODNO9ODrQ","topcolor":"#000000","touser":"","url":""}</MEMBER_RECHARGE>
+				<BALANCE_LACKS>{"data":{"keyword1":{"color":"#000000","value":"账号"},"keyword2":{"color":"#000000","value":"当前余额"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"XXX会员的余额不足2000元，请及时跟进"}},"template_id":"c4Uz-r-3aXifLw1wqc4zAbF2jzUSL5gg_IHLz8hfYzw","topcolor":"#000000","touser":"","url":""}</BALANCE_LACKS>
+				<AUDIT_NOTIFY>{"data":{"keyword1":{"color":"#000000","value":"会员姓名(会员手机号)"},"keyword2":{"color":"#000000","value":"状态"},"keyword3":{"color":"#000000","value":"内容"},"keyword4":{"color":"#000000","value":""},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"用车审核通知"}},"template_id":"OFZAge4NslnIlTaZBBwHNonB1XN2NfTi_fmWDwFL2NQ","topcolor":"#000000","touser":"","url":""}</AUDIT_NOTIFY>
+				<UPGRADE_NOTIFY>{"data":{"keyword1":{"color":"#000000","value":"会员姓名"},"keyword2":{"color":"#000000","value":"XX积分"},"keyword3":{"color":"#000000","value":"时间"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"恭喜您成功升级为XXX(子等级名称)此次升级您获得:"}},"template_id":"UEICWkLAWSMzmNh55pzDHLt8ycxogqoFqQ1zvl4hXtY","topcolor":"#000000","touser":"","url":""}</UPGRADE_NOTIFY>
+				<VEHICLE_RESTRICTIONS>{"data":{"keyword1":{"color":"#000000","value":"类型"},"keyword2":{"color":"#000000","value":"车辆"},"keyword3":{"color":"#000000","value":"时间"},"keyword4":{"color":"#000000","value":"详情"},"remark":{"color":"#000000","value":""},"first":{"color":"#000000","value":"您当前使用的车辆明天将会限行，请合理安排出行计划"}},"template_id":"Oxd2UxkHEQgUmxkA3lUjZha1HSf8LBeNjo7d9BwuoS4","topcolor":"#000000","touser":"","url":""}</VEHICLE_RESTRICTIONS>
+				<!-- 微信公众号的独特biz -->
+				<biz>MzIyOTM2MzIyMA</biz>
+				<!-- <appid>wx60a4abe71b2961e3</appid>
+				<appsecret>fee3c3964bee58b5ecbd76b4dee12577</appsecret>
+				<token>test224224</token>
+				<url_prefix>http://test191.1mobility.cn</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>http://apppre.gcarclub.com/</domain>
+				<mchid>1356203002</mchid>
+				<key>hycx0001pay1mobility000111222333</key> -->
+				<!-- weChatPay -->
+				<appidPay>wx77b567355ce87b40</appidPay>
+				<appid>wx60a4abe71b2961e3</appid>
+				<appsecret>fee3c3964bee58b5ecbd76b4dee12577</appsecret>
+				<token>test224224</token>
+				<url_prefix>http://apppre.gcarclub.com/</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>http://appprebug.gcarclub.com/</domain>
+				<mchid>1314892501</mchid>
+				<key>hycx0001pay1mobility000111222333</key>
+				<!-- JDPay -->
+				<v_mid>1001</v_mid>
+				<v_url>http://appprebug.gcarclub.com/jd/pay/synchronizationCallBack</v_url>
+				<JDKey>test</JDKey>
+				<remark2>http://appprebug.gcarclub.com/jd/pay/asynchronousCallBack</remark2>
+				<submitUrl>https://tmapi.jdpay.com/PayGate</submitUrl>
+				<paymentUrl>http://paypre.gcarclub.com/</paymentUrl>
+				<DEPOSIT_THRESHOLD>10000</DEPOSIT_THRESHOLD>
+				<LARGE_PAYMENT_MONEY>20000</LARGE_PAYMENT_MONEY>
+				<jd_callBack_success_url>http://paypre.gcarclub.com/success.html</jd_callBack_success_url>
+				<jd_callBack_fail_url>http://paypre.gcarclub.com/fail.html</jd_callBack_fail_url>
+				<IS_CONTACT_CUSTOMER>0</IS_CONTACT_CUSTOMER>
+				<solrurl>http://localhost:8080/solr/admin.html#/collection/</solrurl>
+				<solrswitch>false</solrswitch>
+				<username>xian</username>
+				<password>7758521</password>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+		  <groupId>org.apache.poi</groupId>
+		  <artifactId>poi</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<!-- spring jar 开始 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+		<!-- spring jar 结束 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>asm</groupId>
+			<artifactId>asm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+
+		<!-- JSON begin -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jaxb-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+		<!-- JSON end -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+		<!-- commons 开始 -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+		<!-- commons 结束 -->
+
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.tencent</groupId>
+			<artifactId>libammsdk</artifactId>
+			<version>3.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.8</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>com.hynnet</groupId>
+		  <artifactId>solr-solrj</artifactId>
+		  <version>5.3.1</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpmime</artifactId>
+		  <version>4.5.2</version>
+		</dependency>
+
+	</dependencies>
+	
+	
+	<build>
+     	<resources>  
+           <resource>  
+               <directory>src/main/resources/</directory>  
+               <filtering>true</filtering>  
+               <includes>  
+                   <include>**/*.properties</include>  
+                   <include>**/*.xml</include>  
+               </includes>  
+           </resource>  
+       </resources>  
+	</build>	
+</project>

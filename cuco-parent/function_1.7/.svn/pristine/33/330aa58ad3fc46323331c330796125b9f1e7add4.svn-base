@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>送车-创建任务</title>
+    <link rel="stylesheet" href="date/sm.css">
+    <link rel="stylesheet" href="date/sm-extend.css">
+    <link rel="stylesheet" href="date/demos.css">
+    <script src="../../jquery/jquery-1.10.2.min.js"></script>
+    <script>jQuery.noConflict()</script>
+    <script src="date/zepto.js"></script>
+
+    <link rel="stylesheet" href="../../css/css.css">
+    <link rel="stylesheet" href="../../css/gjd/jcgs_two.css">
+</head>
+
+<body class="greyBg">
+    <div class="charge-page">
+        <ul class="charge-info-list">
+            <li class="list-row">
+                <span class="info-name">
+                    会员名称：
+                </span>
+                <span class="info-val">
+                    张谁
+                </span>
+            </li>
+            <li class="list-row">
+                <span class="info-name">
+                    联系电话：
+                </span>
+                <span class="info-val">
+                    15323025230
+                </span>
+            </li>
+
+        </ul>
+        <ul class="charge-info-list marginBottom">
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        用车时间
+                    </span>
+                    <span class="info-val page-current" id="page-datetime-picker">
+                        <input type="text" placeholder="" id="datetime-picker" readonly="">
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        用车地点：
+                    </span>
+                    <span class="info-val">
+                        北辰世纪中心
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        还车时间
+                    </span>
+                    <span class="info-val page-current" id="page-datetime-picker-2">
+                        <input type="text" placeholder="" id="datetime-picker-2" readonly="">
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        还车地点：
+                    </span>
+                    <span class="info-val">
+                        北辰世纪中心
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="info-name">
+                        启用车型
+                    </span>
+                    <span class="info-val">
+                        Tesla Model S 75D
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <div class="btns">
+            <a href="javscript:;" class="button cencle">取消</a>
+            <a href="javscript:;" class="button">确定</a>
+        </div>
+    </div>
+
+    <script src="date/sm.js"></script>
+    <script>
+       $(document).on("pageInit", "#page-datetime-picker", function(e) {
+        $("#datetime-picker").datetimePicker({
+          toolbarTemplate: '<header class="bar bar-nav">\
+          <button class="button button-link pull-right close-picker">确定</button>\
+          <h1 class="title">选择时间</h1>\
+          </header>',
+          value: ['2016', '09', '04', '9', '34']
+        });
+      });
+       $(document).on("pageInit", "#page-datetime-picker-2", function(e) {
+        $("#datetime-picker-2").datetimePicker({
+          toolbarTemplate: '<header class="bar bar-nav">\
+          <button class="button button-link pull-right close-picker">确定</button>\
+          <h1 class="title">选择时间</h1>\
+          </header>',
+          value: ['2016', '09', '04', '9', '34']
+        });
+      });
+      $.init();
+    </script>
+</body>
+
+</html>

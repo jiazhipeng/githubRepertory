@@ -1,0 +1,334 @@
+package cn.cuco.service.payment.preAuthorizedDebit.impl;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.PreAuthorizedDebitMapper;
+import cn.cuco.dao.TransferListMapper;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarType;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberAccountLog;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.PreAuthorizedDebit;
+import cn.cuco.entity.TransferList;
+import cn.cuco.enums.AccountOperateType;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.enums.PreAuthorizedDebitType;
+import cn.cuco.enums.TransferType;
+import cn.cuco.enums.Valid;
+import cn.cuco.exception.RuntimeExceptionWarn;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.carport.CarTypeService;
+import cn.cuco.service.car.carInfo.CarService;
+import cn.cuco.service.log.OperateLogService;
+import cn.cuco.service.member.account.MemberAccountService;
+import cn.cuco.service.member.info.MemberService;
+import cn.cuco.service.payment.preAuthorizedDebit.PreAuthorizedDebitService;
+
+/** 
+* @ClassName: PreAuthorizedDebitServiceImpl 
+* @Description: 预授权实现
+* @author huanghua
+* @date 2017年3月6日 下午4:27:12
+ */
+@Service(value = "preAuthorizedDebitService")
+public class PreAuthorizedDebitServiceImpl implements PreAuthorizedDebitService {
+
+    @Autowired
+    private PreAuthorizedDebitMapper<PreAuthorizedDebit> preAuthorizedDebitMapper;
+    @Autowired
+    private TransferListMapper<TransferList> transferListMapper;
+    @Autowired
+    private OperateLogService operateLogService;
+    @Autowired
+    private CarService carService;
+    @Autowired
+    private CarTypeService carTypeService;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private MemberAccountService memberAccountService;
+    /**
+     * 新建用车预授权
+     */
+	@Override
+	public PreAuthorizedDebit createUseCarPreAuthorizedDebit(PreAuthorizedDebit preAuthorizedDebit) {
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit);
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getMemberId(), "创建预授权，会员Id不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getCarId(), "创建预授权，车辆Id不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getSource(), "创建预授权，金额来源不能为空");
+//		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getFrozenTime(), "创建预授权，冻结时间不能为空不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getModifierId(), "创建预授权，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getModifier(), "创建预授权，操作ID不能为空");
+		
+		//用户信息
+		Member member = memberService.getMemberById(preAuthorizedDebit.getMemberId());
+		if(member!=null){
+			preAuthorizedDebit.setMemberName(member.getName());
+			preAuthorizedDebit.setMemberMobile(member.getMobile());
+		}
+		
+		preAuthorizedDebit.setType(PreAuthorizedDebitType.USEVOUCHER.getIndex());
+		preAuthorizedDebit.setCreated(new Date());
+		preAuthorizedDebit.setStatus(Valid.DOWN.getValue());
+		preAuthorizedDebit.setFrozenTime(new Date());
+		preAuthorizedDebit.setLasttimeModify(new Date());
+		Car car = carService.getCarById(preAuthorizedDebit.getCarId());
+		if(car!=null){
+			preAuthorizedDebit.setCarPlateNum(car.getCarPlateNum());
+			CarType carType = carTypeService.getCarTypeById(car.getCarTypeId());
+			//预授权金额（车型押金）
+			preAuthorizedDebit.setFrozenAmount(carType.getBasicCost());
+			preAuthorizedDebit.setCarPlateNum(car.getCarPlateNum());
+		}
+		//创建预授权
+		this.preAuthorizedDebitMapper.insertSelective(preAuthorizedDebit);
+		//创建日志
+		operateLogService.createeOperateLogForPreAuthorizedDebit(preAuthorizedDebit);
+		return null;
+	}
+	
+	 /**
+     * 新建违章预授权
+     */
+	public PreAuthorizedDebit createViolationPreAuthorizedDebit(PreAuthorizedDebit preAuthorizedDebit) {
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit);
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getMemberId(), "创建预授权，会员Id不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getCarId(), "创建预授权，车辆Id不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getSource(), "创建预授权，金额来源不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getFrozenTime(), "创建预授权，冻结时间不能为空不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getModifierId(), "创建预授权，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getModifier(), "创建预授权，操作ID不能为空");
+		//用户信息
+		Member member = memberService.getMemberById(preAuthorizedDebit.getMemberId());
+		if(member!=null){
+			preAuthorizedDebit.setMemberName(member.getName());
+			preAuthorizedDebit.setMemberMobile(member.getMobile());
+		}
+		preAuthorizedDebit.setType(PreAuthorizedDebitType.VIOLATIONVOUCHER.getIndex());
+		preAuthorizedDebit.setCreated(new Date());
+		preAuthorizedDebit.setStatus(Valid.DOWN.getValue());
+		preAuthorizedDebit.setFrozenTime(new Date());
+		preAuthorizedDebit.setLasttimeModify(new Date());
+		preAuthorizedDebit.setActualUnfreezeTime(new Date());
+		
+		Car car = carService.getCarById(preAuthorizedDebit.getCarId());
+		if(car!=null){
+			preAuthorizedDebit.setCarPlateNum(car.getCarPlateNum());
+		}
+		//预授权金额（违章押金额度）
+		preAuthorizedDebit.setFrozenAmount(new BigDecimal("2000"));
+		//创建预授权
+		this.preAuthorizedDebitMapper.insertSelective(preAuthorizedDebit);
+		//创建日志
+		operateLogService.createeOperateLogForPreAuthorizedDebit(preAuthorizedDebit);
+		return preAuthorizedDebit;
+	}
+	
+	/**
+	 * 查询预授权详情
+	 */
+	@Override
+	public PreAuthorizedDebit getPreAuthorizedDebitById(Long id) {
+		ParamVerifyUtils.paramNotNull(id, "查询预授权详情，Id不能为空");
+		
+		PreAuthorizedDebit preAuthorizedDebit = this.preAuthorizedDebitMapper.selectByPrimaryKey(id);
+		if(preAuthorizedDebit!=null){
+			TransferList transferList = new TransferList();
+			//预授权用车押金凭证
+			transferList.setTaskId(id);
+			transferList.setType(TransferType.AUTHORIZED_USE_VOUCHER.getIndex());
+			List<TransferList> useVoucherList =  this.getPreAuthorizedDebitTransferList(transferList);
+			preAuthorizedDebit.setUseVoucher(useVoucherList);
+			//预授权违章押金凭证
+			transferList.setType(TransferType.AUTHORIZED_VIOLATION_VOUCHER.getIndex());
+			List<TransferList> violationVoucherList =  this.getPreAuthorizedDebitTransferList(transferList);
+			preAuthorizedDebit.setViolationVoucher(violationVoucherList);
+		}
+		
+		return preAuthorizedDebit;
+	}
+	/**
+	 * 查询用车冻结押金记录
+	 */
+	public PreAuthorizedDebit getPreAuthorizedDebitByUsed(PreAuthorizedDebit preAuthorizedDebit){
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit);
+    	ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getCarUsedId(), "新增预授权附件，预授权id不能为空");
+    	preAuthorizedDebit.setType(Valid.DOWN.getValue());
+    	preAuthorizedDebit.setStatus(Valid.DOWN.getValue());
+		List<PreAuthorizedDebit> preAuthorizedDebits = this.preAuthorizedDebitMapper.selectByCondition(preAuthorizedDebit);
+		if(CollectionUtils.isNotEmpty(preAuthorizedDebits)){
+			return preAuthorizedDebits.get(0);
+		}
+		return null;
+	}
+	
+	/**
+	 * 创建预授权附件
+	 */
+	@Override
+	public TransferList createPreAuthorizedDebitTransfer(TransferList transferList) {
+		ParamVerifyUtils.paramNotNull(transferList);
+    	ParamVerifyUtils.paramNotNull(transferList.getTaskId(), "新增预授权附件，预授权id不能为空");
+    	ParamVerifyUtils.paramNotNull(transferList.getType(), "新增预授权附件，附件类型不能为空");
+    	ParamVerifyUtils.paramNotNull(transferList.getImageUrl(), "新增预授权附件，附件路径不能为空");
+    	ParamVerifyUtils.paramNotNull(transferList.getCarUsedId(), "新增预授权附件，用车记录ID不能为空");
+    	TransferList transferListView = new TransferList(); 
+    	transferListView.setTaskId(transferList.getTaskId());
+    	if(transferList.getType()==TransferType.AUTHORIZED_USE_VOUCHER.getIndex()){
+    		transferListView.setType(TransferType.AUTHORIZED_USE_VOUCHER.getIndex());
+    		if(transferListMapper.selectCountByCondition(transferListView)>=10){
+    			throw new RuntimeExceptionWarn("预授权押金凭证不得大于10张");
+    		}
+    	}
+    	if(transferList.getType()==TransferType.AUTHORIZED_VIOLATION_VOUCHER.getIndex()){
+    		transferListView.setType(TransferType.AUTHORIZED_VIOLATION_VOUCHER.getIndex());
+    		if(transferListMapper.selectCountByCondition(transferListView)>=10){
+    			throw new RuntimeExceptionWarn("预授权违章押金凭证不得大于10张");
+    		}
+    	}
+    	transferListMapper.insertSelective(transferList);
+		return transferList;
+	}
+	
+	/**
+	* @Title: getPreAuthorizedDebitTransferList 
+	* @Description: 取预授权附件列表
+	* @author huanghua
+	* @param transferList
+	* @return
+	* @return List<TransferList>
+	 */
+	private List<TransferList> getPreAuthorizedDebitTransferList(TransferList transferList){
+		ParamVerifyUtils.paramNotNull(transferList);
+		ParamVerifyUtils.paramNotNull(transferList.getType(), "查询附件，附件类型不能为空");
+		ParamVerifyUtils.paramNotNull(transferList.getTaskId(), "查询附件，任务Id不能为空");
+		return  this.transferListMapper.selectByCondition(transferList);
+	}
+	
+	/**
+	 * 预授权信息解冻
+	 */
+	@Override
+	public void updatePreAuthorizedDebitUnfreeze(PreAuthorizedDebit preAuthorizedDebit) {
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit);
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getId(), "修改预授权，预授权Id不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getDeductionAmount(), "修改预授权，扣款金额不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getModifierId(), "修改预授权，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(preAuthorizedDebit.getModifier(), "修改预授权，操作ID不能为空");
+		
+		//状态
+		preAuthorizedDebit.setStatus(Valid.UP.getValue());
+		PreAuthorizedDebit old = this.getPreAuthorizedDebitById(preAuthorizedDebit.getId());
+		if(old == null){
+			throw new RuntimeExceptionWarn("预授权记录不存在");
+		}
+		//扣款金额大于冻结金额
+		if(preAuthorizedDebit.getDeductionAmount().compareTo(old.getFrozenAmount()) == 1 ){
+			preAuthorizedDebit.setUnfreezeAmount(new BigDecimal("0"));
+			//扣除用户余额
+			BigDecimal bigDecimal = new BigDecimal(preAuthorizedDebit.getDeductionAmount().subtract(old.getFrozenAmount()).toString());
+			MemberAccountLog memberAccountLog = new MemberAccountLog();
+			memberAccountLog.setModifer(preAuthorizedDebit.getModifier());
+			memberAccountLog.setModifierId(preAuthorizedDebit.getModifierId());
+			memberAccountLog.setTransformType(1);
+			memberAccountLog.setMemberId(old.getMemberId());
+			memberAccountLog.setTotal(bigDecimal);
+			memberAccountLog.setOperateType(AccountOperateType.FROZEN_DEPOSIT.getIndex());
+			memberAccountLog.setRemark("预授权补扣用车押金");
+			memberAccountService.updateMemberAccountBalance(memberAccountLog);
+		}
+		//扣款金额等于冻结金额
+		if(preAuthorizedDebit.getDeductionAmount().compareTo(old.getFrozenAmount()) == 0 ){
+			preAuthorizedDebit.setUnfreezeAmount(new BigDecimal("0"));
+		}
+		//扣款金额小于冻结金额
+		if(old.getFrozenAmount().compareTo(preAuthorizedDebit.getDeductionAmount()) == -1 ){
+			preAuthorizedDebit.setUnfreezeAmount(old.getFrozenAmount().subtract(preAuthorizedDebit.getDeductionAmount()));
+		}
+		preAuthorizedDebit.setActualUnfreezeTime(new Date());
+		this.preAuthorizedDebitMapper.updateByPrimaryKeySelective(preAuthorizedDebit);
+		//创建日志
+		operateLogService.createeOperateLogForPreAuthorizedDebit(preAuthorizedDebit);
+	}
+
+	/**
+	 * 分页
+	 */
+	@Override
+	public PageResult<PreAuthorizedDebit> getPreAuthorizedDebitListByPage(PreAuthorizedDebit preAuthorizedDebit) {
+		Integer page = preAuthorizedDebit.getPage();
+	    Integer pageSize = preAuthorizedDebit.getPageSize();
+	     /*搜索条件*/
+	    PreAuthorizedDebit preAuthorizedDebitSearch = new PreAuthorizedDebit();
+        if(StringUtils.isNotBlank(preAuthorizedDebit.getMemberName())){
+        	preAuthorizedDebitSearch.setMemberName(preAuthorizedDebit.getMemberName());
+        }
+        if(StringUtils.isNotBlank(preAuthorizedDebit.getMemberMobile())){
+        	preAuthorizedDebitSearch.setMemberMobile(preAuthorizedDebit.getMemberMobile());
+        }
+        if(StringUtils.isNotBlank(preAuthorizedDebit.getCarPlateNum())){
+        	preAuthorizedDebitSearch.setCarPlateNum(preAuthorizedDebit.getCarPlateNum());
+        }
+        if(null != preAuthorizedDebit.getStatus()){
+        	preAuthorizedDebitSearch.setStatus(preAuthorizedDebit.getStatus());
+        }
+        if(null != preAuthorizedDebit.getMemberId()){
+        	preAuthorizedDebitSearch.setMemberId(preAuthorizedDebit.getMemberId());
+        }
+        //创建查询
+        if(preAuthorizedDebit.getCreatedStart() != null &&preAuthorizedDebit.getCreatedEnd() != null){
+        	preAuthorizedDebitSearch.setCreatedStart(preAuthorizedDebit.getCreatedStart());
+        	preAuthorizedDebitSearch.setCreatedEnd(preAuthorizedDebit.getCreatedEnd());
+        }
+	    List<PreAuthorizedDebit> preAuthorizedDebits = null;
+	    /*总记录数*/
+	    Integer totalSize = this.preAuthorizedDebitMapper.selectCountByConditionByPage(preAuthorizedDebitSearch);
+	    /*分页信息*/
+	    PageHelper.startPage(page,pageSize);
+	    preAuthorizedDebits = this.preAuthorizedDebitMapper.selectByConditionByPage(preAuthorizedDebitSearch);
+        PageResult<PreAuthorizedDebit> pageResult = new PageResult<PreAuthorizedDebit>(page,pageSize,totalSize,preAuthorizedDebits);
+		return pageResult;
+	}
+
+	/**
+	 * 日志分页
+	 */
+	@Override
+	public PageResult<OperateLog> getOperateLogListByPage(OperateLog operateLog) {
+		ParamVerifyUtils.paramNotNull(operateLog);
+		ParamVerifyUtils.paramNotNull(operateLog.getOperationId(), "查询预授权ID不能为空");
+		operateLog.setType(OperateLogEnum.PRE_AUTHORIZED_DEBIT.getValue());
+		return operateLogService.getOperateLogByPage(operateLog);
+	}
+
+	/**
+	 * 创建日志
+	 */
+	@Override
+	public void createOperateLogForPreAuthorizedDebit(PreAuthorizedDebit preAuthorizedDebit) {
+		operateLogService.createeOperateLogForPreAuthorizedDebit(preAuthorizedDebit);
+	}
+
+	@Override
+	public BigDecimal getTotalFrozenMoneyByMemberId(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId, "根据用户ID获取冻结金额总和时，用户ID不能为空");
+		return this.preAuthorizedDebitMapper.getTotalFrozenMoneyByMemberId(memberId);
+	}
+
+	@Override
+	public List<PreAuthorizedDebit> getPreAuthorizedDebitsOver15Days() {
+		return this.getPreAuthorizedDebitsOver15Days();
+	}
+
+}

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.MemeberItemMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.MemberItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="item_id" property="itemId" jdbcType="BIGINT" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="deposit" property="deposit" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+    <result column="level_url" property="levelUrl" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberItem" >
+       select  <include refid="Base_Column_List" />
+    from td_memeber_item  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "itemId != null ">
+        and item_id = #{itemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "balance != null ">
+        and balance = #{balance,jdbcType=DECIMAL}      
+      </if>
+      <if test= "deposit != null ">
+        and deposit = #{deposit,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "orderId != null ">
+        and order_id = #{orderId,jdbcType=BIGINT}      
+      </if>
+      <if test= "itemName != null and itemName != '' ">
+        and item_name = #{itemName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "levelUrl != null and levelUrl != '' ">
+        and level_url = #{levelUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER} 
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, member_id, item_id, 
+      balance, deposit, created, 
+      modifier_id, modifier, lasttime_modify, 
+      order_id, item_name, level_url, status
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberItem" >
+    select 
+      id, member_id, item_id, 
+      balance, deposit, created, 
+      modifier_id, modifier, lasttime_modify, 
+      order_id, item_name, level_url, status
+    from td_memeber_item where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.MemberItem" >
+    delete from td_memeber_item where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_memeber_item where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.gcar.entity.MemberItem" useGeneratedKeys="true" keyProperty="id">
+    insert into td_memeber_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "itemId != null ">
+         item_id,
+      </if>
+      <if test= "balance != null ">
+         balance,
+      </if>
+      <if test= "deposit != null ">
+         deposit,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "orderId != null ">
+         order_id,
+      </if>
+      <if test= "itemName != null and itemName != '' ">
+         item_name,
+      </if>
+      <if test= "levelUrl != null and levelUrl != '' ">
+         level_url,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "itemId != null ">
+         #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test= "balance != null ">
+         #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test= "deposit != null ">
+         #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "orderId != null ">
+         #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test= "itemName != null and itemName != '' ">
+         #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test= "levelUrl != null and levelUrl != '' ">
+         #{levelUrl,jdbcType=VARCHAR},
+      </if>
+       <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_memeber_item (
+         id,
+         member_id,
+         item_id,
+         balance,
+         deposit,
+         created,
+         modifier_id,
+         modifier,
+         lasttime_modify,
+         order_id,
+         item_name,
+         level_url,
+         status)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.itemId,jdbcType=BIGINT},
+         #{item.balance,jdbcType=DECIMAL},
+         #{item.deposit,jdbcType=DECIMAL},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=VARCHAR},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.orderId,jdbcType=BIGINT},
+         #{item.itemName,jdbcType=VARCHAR},
+         #{item.levelUrl,jdbcType=VARCHAR},
+         #{item.status,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.MemberItem" useGeneratedKeys="true" keyProperty="id">
+    update td_memeber_item
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "itemId != null ">
+      item_id = #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test= "balance != null ">
+      balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test= "deposit != null ">
+      deposit = #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "orderId != null ">
+      order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test= "itemName != null and itemName != '' ">
+      item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test= "levelUrl != null and levelUrl != '' ">
+      level_url = #{levelUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

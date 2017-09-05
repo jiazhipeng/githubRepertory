@@ -1,0 +1,162 @@
+.textarea,select,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"],.uneditable-input,.fileupload-new .input-append .btn-file
+	{
+	border: 1px solid #009e86;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.17) inset;
+	transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+	border-radius: 0 !important;
+	-moz-border-radius: 0 !important;
+	-webkit-border-radius: 0 !important;
+	font-family: '微软雅黑', '宋体', '新宋体', 'Arial' !important;
+	font-size: 14px !important;
+}
+
+.font_modify {
+	font-family: '微软雅黑', '宋体', '新宋体', 'Arial' !important;
+}
+
+.btn {
+	background: none repeat scroll 0 0 #009E86;
+	font-family: '微软雅黑', '宋体', '新宋体', 'Arial' !important;
+}
+
+.btnnew {
+	font-size: 16px !important;
+	height: 30px;
+	padding: 0px 12px 1px 12px !important;
+}
+
+.row-fluid {
+	margin-top: 5px;
+	width: auto !important;
+}
+
+.block-fluid .row-form .span12 {
+	margin-top: 5px;
+}
+
+.block-fluid .row-form .span6 {
+	margin-top: 5px;
+}
+
+.ui-tabs .ui-tabs-panel {
+	padding: 1em 0.4em;
+}
+
+.select_width {
+	width: 150px;
+}
+
+.input_width {
+	width: 135px;
+}
+
+.input_width2 {
+	width: 150px;
+}
+
+.input_width3 {
+	width: 85px;
+}
+
+.div_center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.modify_style {
+	font-family: '微软雅黑', '宋体', '新宋体', 'Arial';
+	font-size: 1em;
+}
+
+.ztree li {
+	line-height: 20px !important;
+}
+
+input[type="text"]::-ms-clear {
+	display: none;
+}
+
+.diaplayShow {
+	background-color: #EEFFFF !important;
+}
+
+.diaplayShow2 {
+	background-color: #EEFFFF !important;
+	cursor: pointer !important;
+}
+
+.unifyTextareaHeight {
+	height: 60px;
+}
+
+.fileStyle {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display: inline-block;
+	vertical-align: bottom;
+}
+
+.rowbtn {
+	margin: 2px 1px 2px 2px;
+	width: 56px;
+	height: 20px;
+	border-radius: 0px;
+	padding: 2px 12px 2px 12px !important;
+	background: none repeat scroll 0 0 #4aa8a8;
+	line-height: 10px;
+	font-size: 13px !important;
+}
+
+.pagetitle {
+	color: #7e7e7e;
+	font-size: 18px;
+	vertical-align: center;
+}
+
+.pagetitle2 {
+	color: #015d55;
+	font-size: 18px;
+	vertical-align: middle;
+	font-family: '微软雅黑', '宋体', '新宋体', 'Arial' !important;
+}
+
+.pagetitle3 {
+	color: #014137;
+	font-size: 16px;
+	font-family: '微软雅黑', '宋体', '新宋体', 'Arial' !important;
+}
+
+.altclass {
+	background: #f3f7f8;
+}
+
+/*表格标题*/
+.ui-jqgrid .ui-jqgrid-htable th div { /*height: 20px;*/
+	padding-left: 0.3em;
+	font-weight: bold;
+	color: #0c4137;
+	font-size: 14px;
+}
+
+.requiredtag {
+	width: 11px;
+	height: 11px;
+	margin-bottom: 2px;
+}
+
+.btn-s {
+	background: #dc7f24;
+	color: #FFF;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btn-s:hover {
+	background-color: #70BB2E;
+	color: #FFF;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.form-horizontal .control-label {
+	font-size: 14px;
+}

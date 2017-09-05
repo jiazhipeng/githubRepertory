@@ -1,0 +1,75 @@
+package cn.cuco.service.order;
+
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderMemberCarUsed;
+import cn.cuco.page.PageResult;
+
+/**
+ * @ClassName: OrderMemberCarUsedService
+ * @Description: 用户用车订单相关接口
+ * @author zc.du
+ * @date 2017年2月23日 上午10:44:02
+ */
+public interface OrderMemberCarUsedService {
+	/**
+	 * @Title: createOrderMemberCarUsed
+	 * @Description: 创建用车订单
+	 * @author zc.du
+	 * @param orderMemberCarUsed
+	 * @return OrderMemberCarUsed
+	 */
+	public OrderMemberCarUsed createOrderMemberCarUsed(OrderMemberCarUsed orderMemberCarUsed);
+	
+	/**
+	 * @Title: getOrderMemberCarUsed
+	 * @Description: 查询用车订单
+	 * @author zc.du
+	 * @param orderMemberCarUsed
+	 * @return OrderMemberCarUsed
+	 */
+	public OrderMemberCarUsed getOrderMemberCarUsed(OrderMemberCarUsed orderMemberCarUsed);
+
+	/**
+	 * @Title: getOrderMemberCarUsedListByPage
+	 * @Description: 分页查询用车订单列表
+	 * @author zc.du
+	 * @param orderMemberCarUsed
+	 * @return PageResult<OrderMemberCarUsed>
+	 */
+	public PageResult<OrderMemberCarUsed> getOrderMemberCarUsedListByPage(OrderMemberCarUsed orderMemberCarUsed);
+
+	/**
+	 * @Title: updateOrderMemberCarUsedStatusByCancelForTask
+	 * @Description: 定时任务取消订单
+	 * @author zc.du
+	 * @return void
+	 */
+	public void updateOrderMemberCarUsedStatusByCancelForTask();
+
+	/**
+	 * @Title: updateOrderMemberCarUsedStatusByPartPay
+	 * @Description: 修改用车订单状态为"部分付款"
+	 * @author zc.du
+	 * @param orderMemberCarUsed
+	 * @return OrderMemberCarUsed
+	 */
+	public OrderMemberCarUsed updateOrderMemberCarUsedStatusByPartPay(OrderMemberCarUsed orderMemberCarUsed);
+
+	/**
+	 * @Title: updateOrderMemberCarUsedStatusByCompletePay
+	 * @Description: 修改用车订单状态为"已付款"
+	 * @author zc.du
+	 * @param orderMemberCarUsed
+	 * @return OrderMemberCarUsed
+	 */
+	public OrderMemberCarUsed updateOrderMemberCarUsedStatusByCompletePay(OrderMemberCarUsed orderMemberCarUsed);
+
+	/**
+	 * @Title: getOrderMemberCarUsedLogListByPage
+	 * @Description: 分页查询用车订单日志列表
+	 * @author zc.du
+	 * @param orderMemberCarUsed
+	 * @return PageResult<OperateLog>
+	 */
+	public PageResult<OperateLog> getOrderMemberCarUsedLogListByPage(OrderMemberCarUsed orderMemberCarUsed);
+}

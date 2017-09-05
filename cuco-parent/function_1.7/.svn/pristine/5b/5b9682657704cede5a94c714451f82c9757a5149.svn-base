@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>销售详情</title>
+    <link rel="stylesheet" href="../../css/css.css">
+    <style>
+        body {
+            background: #fff;
+            font-size: 1.4rem;
+            overflow-x: hidden;
+        }
+        
+        .sales {}
+        
+        .sales table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .sales table thead {
+            background: #1e1e1e;
+            color: #fff;
+            line-height: 2.7rem;
+        }
+        
+        .sales table tbody tr {
+            border-bottom: 1px solid #e2e2e2;
+        }
+        
+        .sales table tbody td {
+            padding: 1.3rem 0;
+        }
+        
+        .sales table tbody td span.phone {
+            line-height: 2.2rem;
+        }
+        
+        .sales table tbody tr td:first-child {
+            padding: 1rem;
+            width: 1.2rem;
+        }
+        
+        .sales table tbody td i {
+            background: url(../../images/arrow_right_grey.png) 0 0 no-repeat;
+            width: 15px;
+            height: 1.2rem;
+            background-size: contain;
+            background-position: center center;
+            display: inline-block;
+        }
+        
+        .poper {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, .6);
+        }
+        
+        .poper .search {
+            width: 100%;
+            background: #fff;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        
+        .poper .input {
+            margin: 6rem 1.2rem;
+            line-height: 4rem;
+            background: #f7f7f7;
+            border-radius: 5px;
+        }
+        
+        .poper .input i {
+            background: url(../../images/search.png) 0 0 no-repeat;
+            width: 1.4rem;
+            height: 1.4rem;
+            background-size: cover;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: .5rem;
+        }
+        
+        .poper .input input {
+            margin-left: 1.3rem;
+            height: 4rem;
+            background: #f7f7f7;
+            width: 18rem;
+        }
+        
+        .poper .form .row {
+            line-height: 4rem;
+            border-bottom: 1px solid #e2e2e2;
+        }
+        
+        .poper .form .row:last-child {
+            border-bottom: none;
+        }
+        
+        .poper .form .row span {
+            margin-left: 1.5rem;
+            text-align: justify;
+            text-align-last: justify;
+            display: inline-block;
+            height: 4rem;
+            overflow: hidden;
+            width: 6rem;
+            float: left;
+        }
+        
+        .poper .form .row span:after {
+            width: 100%;
+            content: '';
+            display: inline-block;
+        }
+        
+        .poper .form .row input {
+            margin-left: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .btns {
+            width: 100%;
+            display: flex;
+            border-top: 1px solid #e2e2e2;
+            background: #fff;
+        }
+        
+        .btn {
+            flex: 1;
+            text-align: center;
+            align-self: center;
+            line-height: 4.5rem;
+            border-right: 1px solid #e2e2e2;
+        }
+        
+        .btn:last-child {
+            border-right: none;
+        }
+        
+        .cancel {
+            color: #a8a8a8;
+        }
+        
+        .sure {
+            color: #1a1a1a;
+        }
+        
+        .searchBox {
+            width: 101%;
+            background: #fff;
+            margin: 0;
+            overflow: hidden;
+            padding: 10px 4%;
+            box-sizing:border-box;
+            margin:-1px;
+        }
+        
+        .searchSec {
+            background: #f7f7f7;
+            border: 1px solid #e8e8e8;
+            border-radius: 4px;
+            overflow:hidden;
+        }
+        
+        .searchBox input {
+            width: 87%;
+            height: 34px;
+            float: left;
+            box-sizing: border-box;
+            background: none;
+        }
+        
+        .searchBtn {
+            width: 12%;
+            height: 34px;
+            display: block;
+            float: left;
+            box-sizing: border-box;
+            background: url("../../images/search.png") no-repeat center center;
+            background-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="sales">
+        <table>
+            <thead>
+                <tr>
+                    <th>联系人</th>
+                    <th>状态</th>
+                    <th>负责人</th>
+                    <th>时间</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th colspan="5">
+                        <div class="searchBox">
+                            <div class="searchSec">
+                                <a href="javascript:;" class="searchBtn"></a>
+                                <input type="search" placeholder="请输入用户名或手机号">
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>吴国邦<span class="phone">15313119144</span></td>
+                    <td>销售意向</td>
+                    <td>康楠</td>
+                    <td>06-05 16：05</td>
+                    <td><i></i></td>
+                </tr>
+                <tr>
+                    <td>吴国邦<span class="phone">15313119144</span></td>
+                    <td>销售意向</td>
+                    <td>康楠</td>
+                    <td>06-05 16：05</td>
+                    <td><i></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section class="poper">
+        <section class="search">
+            <!--<div class="input">
+                <i></i>
+                <input type="text" placeholder="请输入会员手机号或者企业名称">
+            </div>-->
+            <div class="form">
+                <div class="row">
+                    <span>会员类型</span>
+                    <input type="radio" name="vip" id="p" /><label for="p">个人会员</label>
+                    <input type="radio" name="vip" id="c" /><label for="c">企业会员</label>
+                </div>
+                <div class="row">
+                    <span>姓名</span>
+                    <input type="text" placeholder="请输入姓名">
+                </div>
+                <div class="row">
+                    <span>手机号码</span>
+                    <input type="phone" placeholder="请输入手机号">
+                </div>
+                <div class="row">
+                    <span>性别</span>
+                    <input type="radio" name="gender" id="m" /><label for="m">男</label>
+                    <input type="radio" name="gender" id="f" /><label for="f">女</label>
+                </div>
+                <div class="row">
+                    <span>城市</span>
+                    <input type="text" placeholder="请输入城市">
+                </div>
+            </div>
+
+            <section class="btns">
+                <div class="btn cancel">取消</div>
+                <div class="btn sure">确定</div>
+            </section>
+        </section>
+
+    </section>
+    <script src="../../js/zepto.js"></script>
+</body>
+
+</html>

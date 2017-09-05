@@ -1,0 +1,51 @@
+package cn.cuco.service.member.carUsed;
+
+
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.page.PageResult;
+
+/** 
+* @ClassName: MemberCarportService 
+* @Description: 用户车库相关接口
+* @author zc.du
+* @date 2017年2月23日 上午10:33:07  
+*/
+public interface MemberCarportService {
+    /** 
+    * @Title: createMemberCarport 
+    * @Description: 创建用户车库
+    * @author zc.du
+    * @param memberCarport
+    * @return MemberCarport
+    */
+    public MemberCarport createMemberCarport(MemberCarport memberCarport);
+    
+    /** 
+    * @Title: getMemberCarportById 
+    * @Description: 根据车库ID获取用户车库
+    * @author zc.du
+    * @param id
+    * @return
+    * @return MemberCarport
+    */
+    public MemberCarport getMemberCarportById(Long id);
+    
+    /** 
+    * @Title: updateMemberCarport 
+    * @Description: 修改用户车库
+    * @author zc.du
+    * @param memberCarport
+    * @return MemberCarport
+    */
+    public MemberCarport updateMemberCarport(MemberCarport memberCarport);
+    
+    /** 
+    * @Title: getMemberCarportListByPage 
+    * @Description: 根据用户ID分页查询用户车库列表
+    * @author zc.du
+    * @param memberCarport
+    * @return PageResult<MemberCarport>
+    */
+    public PageResult<MemberCarport> getMemberCarportListByPage(MemberCarport memberCarport);
+
+}

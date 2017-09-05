@@ -1,0 +1,149 @@
+.title{
+    font-size:1.5rem;
+    background: #191919;
+    color: #fff;
+}
+
+.date-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #191919;
+    color: #fff;
+    height:3.5rem;
+    position: absolute;
+    top:4.5rem;
+    width:100%;
+}
+
+.content.infinite-scroll{
+    top:8rem !important;
+    z-index: 99999999;
+}
+
+.date-label i {
+    flex: 1;
+}
+
+.list-block ul {
+    background: #efeff4;
+}
+
+.date {
+    margin-top: 1rem;
+    background: #fff;
+    padding-bottom: 2rem;
+}
+
+.date .date-title {
+    font-size: 2rem;
+    color: #86bfbe;
+    text-align: center;
+    margin: 2.5rem;
+    padding-top:2rem;
+}
+
+
+/*.first-date .date-title {
+    margin-top: 0;
+}*/
+
+.date-r {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 4rem;
+}
+.date-r p {
+    flex: 1;
+    text-align: center;
+    font-size: 1rem;
+    position: relative;
+}
+
+.date-r p.disabled {
+    color: #dcdcdb;
+}
+
+.date-r p i:nth-of-type(1) {
+    font-size: .8rem;
+    position: absolute;
+    top: -.3rem;
+    left: .4rem;
+    color: #86bfbe;
+}
+
+.date-r p i:nth-of-type(2) {
+    font-size: .2rem;
+    position: absolute;
+    bottom: -1.5rem;
+    left:calc(50% - .4rem) ;
+    color: #86bfbe;
+    font-weight:bold;
+}
+
+.date-r p.active   label {
+    border-radius: 50%;
+    background:#191919;
+    padding:.2rem;
+    color:#9c4d15;
+    font-weight: bold;
+}
+
+
+.list-block {
+    position: relative;
+}
+
+.tooltip.top {
+    padding: 5px 0;
+    margin-top: -3px;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 1070;
+    display: none;
+    font-size: 12px;
+    line-height: 1.4;
+    visibility: visible;
+    /*filter: alpha(opacity=0);*/
+    opacity: .8;
+}
+
+.tooltip.top .tooltip-arrow {
+    bottom: 0;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px 5px 0;
+    border-top-color: #191919;
+}
+
+.tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+
+.tooltip-inner {
+    max-width: 200px;
+    padding: 3px 8px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    background-color:#191919;
+    border-radius: 4px;
+}
+#completeButton{
+    position: fixed;
+    width:100%;
+    background:#abc;
+    color: #fff;
+    font-size:1.5rem;
+    bottom:0;
+    left:0;
+    z-index: 9999999;
+}

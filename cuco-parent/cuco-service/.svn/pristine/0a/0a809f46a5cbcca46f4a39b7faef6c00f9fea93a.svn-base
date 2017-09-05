@@ -1,0 +1,25 @@
+package cn.cuco.dao;
+
+import java.util.List;
+
+import cn.cuco.entity.OrderRenewal;
+
+public interface OrderRenewalMapper<T> extends BaseDao<T> {
+	
+	/** 
+	* @Title: getOrderRenewalListWithSort 
+	* @Description: 查询续费订单列表(带排序)
+	* @author zc.du
+	* @param orderRenewal
+	* @return List<OrderRenewal>
+	*/
+	public List<OrderRenewal> getOrderRenewalListWithSort(OrderRenewal orderRenewal);
+	
+	/** 
+	* @Title: getOrderRenewalListForCancelForTask 
+	* @Description: 查询需要进行“定时取消”的订单列表
+	* @author zc.du
+	* @return List<OrderRenewal>
+	*/
+	public List<OrderRenewal> getOrderRenewalListForCancelForTask();
+}

@@ -1,0 +1,271 @@
+package cn.cuco.service.basic.carport.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.CarBrandMapper;
+import cn.cuco.dao.CarTypeMapper;
+import cn.cuco.dao.CarTypePriceMapper;
+import cn.cuco.entity.CarBrand;
+import cn.cuco.entity.CarType;
+import cn.cuco.entity.CarTypePrice;
+import cn.cuco.entity.City;
+import cn.cuco.enums.Validate;
+import cn.cuco.exception.RuntimeExceptionWarn;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.carport.CarTypeService;
+import cn.cuco.service.basic.dictionary.CityService;
+import cn.cuco.service.log.OperateLogService;
+
+@Service(value = "carTypeService")
+public class CarTypeServiceImpl implements CarTypeService {
+
+    @Autowired
+    private CarTypeMapper<CarType> carTypeMapper;
+    @Autowired
+    private CarTypePriceMapper<CarTypePrice> carTypePriceMapper;
+    @Autowired
+    private CarBrandMapper<CarBrand> carBrandMapper;
+    @Autowired
+    private CityService cityService;
+    @Autowired
+    private OperateLogService operateLogService;
+    
+    /**
+     * 创建车型
+     */
+	@Override
+	public CarType createCarType(CarType carType) {
+		ParamVerifyUtils.paramNotNull(carType);
+		ParamVerifyUtils.paramNotNull(carType.getBrand(), "创建车型，车型品牌不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getCarType(), "创建车型，车型型号不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getTankVolume(), "创建车型，油箱体积不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getImageUrl(), "创建车型，车型图片不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getInsuranceUnlock(), "创建车型，解锁保险费不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getInsuranceNotUnlock(), "创建车型，非解锁保险费不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getBasicCost(), "创建车型，基础费用不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getModifierId(), "创建车型，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getModifier(), "创建车型，操作人不能为空");
+		carType.setValidate(Validate.THE_SHELVES.getValue());
+		carType.setLasttimeModify(new Date());
+		carType.setCreated(new Date());
+		//创建车型
+		this.carTypeMapper.insertSelective(carType);
+		//创建城市运营定价
+		this.createCarTypePrice(carType);
+		//创建车型日志
+		operateLogService.createOperateLogForCartype(carType);
+		return carType;
+	}
+
+	/**
+	 * 修改车型
+	 */
+	@Override
+	public CarType updateCarType(CarType carType) {
+		ParamVerifyUtils.paramNotNull(carType);
+		ParamVerifyUtils.paramNotNull(carType.getId(), "修改车型ID不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getModifierId(), "修改车型，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getModifier(), "修改车型，操作人不能为空");
+		carType.setLasttimeModify(new Date());
+		//修改车型
+		this.carTypeMapper.updateByPrimaryKeySelective(carType);
+		//修改城市运营定价
+		this.updateCarTypePrice(carType);
+		
+		return this.getCarTypeById(carType.getId());
+	}
+
+	/**
+	 * 根据id取车型信息
+	 */
+	@Override
+	public CarType getCarTypeById(Long id) {
+		ParamVerifyUtils.paramNotNull(id, "取车型详情ID不能为空");
+		CarType carType = this.carTypeMapper.selectByPrimaryKey(id);
+		if(carType!=null){
+			CarTypePrice carTypePrice = new CarTypePrice();
+			carTypePrice.setCarTypeId(id);
+			carType.setCarTypePrices(this.carTypePriceMapper.selectByCondition(carTypePrice));
+		}
+		return carType;
+	}
+
+	/**
+	 * 分页取车型数据
+	 */
+	@Override
+	public PageResult<CarType> getCarTypeByPage(CarType carType) {
+		
+		Integer page = carType.getPage();
+	    Integer pageSize = carType.getPageSize();
+	     /*搜索条件*/
+	    CarType carTypeSearch = new CarType();
+        if(StringUtils.isNotBlank(carType.getBrand())){
+        	carTypeSearch.setBrand(carType.getBrand());
+        }
+        if(StringUtils.isNotBlank(carType.getCarType())){
+        	carTypeSearch.setCarType(carType.getCarType());
+        }
+	    List<CarType> operateSettings = null;
+	    /*总记录数*/
+	    Integer totalSize = this.carTypeMapper.selectCountByConditionByPage(carTypeSearch);
+	    /*分页信息*/
+	    PageHelper.startPage(page,pageSize);
+	    operateSettings = this.carTypeMapper.selectByConditionByPage(carTypeSearch);
+	    
+        PageResult<CarType> pageResult = new PageResult<CarType>(page,pageSize,totalSize,operateSettings);
+		return pageResult;
+	}
+
+	/**
+	 * 上架
+	 */
+	@Override
+	public void updateCarTypeShelves(CarType carType) {
+		ParamVerifyUtils.paramNotNull(carType);
+		ParamVerifyUtils.paramNotNull(carType.getId(), "车型上架，ID不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getModifierId(), "车型上架，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getModifier(), "车型上架，操作人不能为空");
+		carType.setValidate(Validate.SHELVES.getValue());
+		carType.setLasttimeModify(new Date());
+		//修改车型状态
+		this.carTypeMapper.updateByPrimaryKeySelective(carType);
+		//创建车型日志
+		operateLogService.createOperateLogForCartype(carType);
+	}
+
+	/**
+	 * 下架
+	 */
+	@Override
+	public void updateCarTypeTheShelves(CarType carType) {
+		ParamVerifyUtils.paramNotNull(carType);
+		ParamVerifyUtils.paramNotNull(carType.getId(), "车型下架，ID不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getModifierId(), "车型下架，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(carType.getModifier(), "车型下架，操作人不能为空");
+		carType.setValidate(Validate.THE_SHELVES.getValue());
+		carType.setLasttimeModify(new Date());
+		//修改车型状态
+		this.carTypeMapper.updateByPrimaryKeySelective(carType);
+		//创建车型日志
+		operateLogService.createOperateLogForCartype(carType);
+	}
+
+	/**
+	 * 根据车型和城市Id查询运营公里计费规则
+	 */
+	@Override
+	public List<CarTypePrice> getCarTypePriceList(CarTypePrice carTypePrice) {
+		return this.carTypePriceMapper.selectByCondition(carTypePrice);
+	}
+
+	@Override
+	public List<CarTypePrice> getAllCarTypeCityAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 去重查询所有品牌
+	 */
+	@Override
+	public List<String> getCarBrandForAll() {
+		return this.carBrandMapper.selectCarBrandForAll();
+	}
+
+	/**
+	 * 根据车品牌查询所有车型
+	 */
+	@Override
+	public List<CarBrand> getCartypeByBrand(CarBrand carBrand) {
+		ParamVerifyUtils.paramNotNull(carBrand);
+		ParamVerifyUtils.paramNotNull(carBrand.getBrand(), "根据品牌查询车型，品牌不能为空");
+		return this.carBrandMapper.selectCartypeByBrand(carBrand);
+	}
+
+	/**
+	* @Title: createCarTypePrice 
+	* @Description: 创建车型公里定价
+	* @param @param carTypePrice
+	* @return CarTypePrice
+	 */
+	private void createCarTypePrice(CarType carType) {
+		if(carType.getCarTypePrices().isEmpty()){
+			throw new RuntimeExceptionWarn("创建车型，城市运营定价数据不能为空");
+		}
+		List<CarTypePrice> lists = carType.getCarTypePrices();
+		for (CarTypePrice carTypePriceView : lists) {
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getCityId(), "创建车型，城市ID不能为空");
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getKmOne(), "创建车型，>50KM ≤100KM定价不能为空");
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getKmTwo(), "创建车型，>100KM ≤200KM定价不能为空");
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getKmThree(), "创建车型，>200KM ≤300KM定价不能为空");
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getKmFour(), "创建车型，>300KM ≤500KM定价不能为空");
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getKmFive(), "创建车型，>500KM定价不能为空");
+			CarTypePrice carTypePrice = new CarTypePrice();
+			City city = cityService.getCityById(carTypePriceView.getCityId()); 
+			if(city==null){
+				throw new RuntimeExceptionWarn("创建车型，城市不存在");
+			}
+			carTypePrice.setCarTypeId(carType.getId());
+			carTypePrice.setCityId(city.getId());
+			carTypePrice.setCityName(city.getName());
+			carTypePrice.setCityCode(city.getCode());
+		}
+		this.carTypePriceMapper.insertBatch(lists);
+	}
+	
+	/**
+	* @Title: updateCarTypePrice 
+	* @Description: 修改城市运营定价
+	* @author huanghua
+	* @param carType
+	* @return void
+	 */
+	private void updateCarTypePrice(CarType carType) {
+		if(carType.getCarTypePrices().isEmpty()){
+			throw new RuntimeExceptionWarn("修改车型，城市运营定价数据不能为空");
+		}
+		//删除旧的运营定价
+		this.deleteCarTypePrice(carType);
+		//添加新的运营定价
+		List<CarTypePrice> lists = carType.getCarTypePrices();
+		for (CarTypePrice carTypePriceView : lists) {
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getCityId(), "修改车型，城市ID不能为空");
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getKmOne(), "修改车型，>50KM ≤100KM定价不能为空");
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getKmTwo(), "修改车型，>100KM ≤200KM定价不能为空");
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getKmThree(), "修改车型，>200KM ≤300KM定价不能为空");
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getKmFour(), "修改车型，>300KM ≤500KM定价不能为空");
+			ParamVerifyUtils.paramNotNull(carTypePriceView.getKmFive(), "修改车型，>500KM定价不能为空");
+			CarTypePrice carTypePrice = new CarTypePrice();
+			City city = cityService.getCityById(carTypePriceView.getCityId()); 
+			if(city==null){
+				throw new RuntimeExceptionWarn("修改车型，城市不存在");
+			}
+			carTypePrice.setCarTypeId(carType.getId());
+			carTypePrice.setCityId(city.getId());
+			carTypePrice.setCityName(city.getName());
+			carTypePrice.setCityCode(city.getCode());
+		}
+		this.carTypePriceMapper.insertBatch(lists);
+	}
+	
+	/**
+	* @Title: deleteCarTypePrice 
+	* @Description: 删除城市运营定价
+	* @author huanghua
+	* @param carType
+	* @return void
+	 */
+	private void deleteCarTypePrice(CarType carType) {
+		this.carTypePriceMapper.deleteCarTypePriceByCarTypeId(carType.getId());
+	}
+	
+}

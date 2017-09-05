@@ -1,0 +1,43 @@
+#dataSource base config
+databasePlatform=org.hibernate.dialect.MySQL5InnoDBDialect
+jdbc.type=mysql
+jdbc.driver=com.mysql.jdbc.Driver
+
+jdbc.url=jdbc:mysql://rm-2zeee63utfya99538.mysql.rds.aliyuncs.com:3306/zc-security?useUnicode=true&characterEncoding=utf-8
+jdbc.username=haiyiuser
+jdbc.password=Haiyiuser000
+
+#pool settings
+jdbc.pool.init=5
+jdbc.pool.minIdle=5
+jdbc.pool.maxIdle=20
+jdbc.pool.maxActive=20
+
+#jdbc.testSql=SELECT 'x'
+jdbc.testSql=SELECT 'x' FROM DUAL
+
+#product sttings
+productName=\u6d77\u6613\u51fa\u884c
+copyrightYear=2016
+
+#redis
+#redis.keyPrefix=hycx-gcar-service
+redis.host=10.44.170.72
+redis.port=6379
+redis.password=df@367*&g877845ti
+redis.timeout=600
+
+#upload
+upload.statics.independence.path=/hycx/image/resources/manager
+upload.statics.request.root.path=http://img.gcarclub.com/resources/manager/
+
+#export/sell
+#export.sell.path
+export.sell.path=/hycx/image/resources/manager/excel/sell
+#export.sell.root.path=D:/
+export.sell.root.path=http://img.gcarclub.com/resources/manager/excel/sell/
+
+#qrcode
+qrcode.logo.path=/hycx/image/resources/manager/marketing/logo_marketing.png
+qrcode.save.path=/hycx/image/resources/manager/marketing
+qrcode.image.path=http://img.gcarclub.com/resources/manager/marketing/

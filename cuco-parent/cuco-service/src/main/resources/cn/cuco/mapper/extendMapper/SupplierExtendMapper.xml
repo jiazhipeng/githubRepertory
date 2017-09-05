@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.SupplierMapper" >
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByConditionByPage" resultType="INTEGER" parameterType="cn.cuco.entity.Supplier" >
+       select  count(1) 
+    from td_supplier  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "supplierName != null and supplierName != '' ">
+        and supplier_name like  CONCAT('%',CONCAT(#{supplierName,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "supplierReferred != null and supplierReferred != '' ">
+        and supplier_referred = #{supplierReferred,jdbcType=VARCHAR}      
+      </if>
+      <if test= "firstContactName != null and firstContactName != '' ">
+        and first_contact_name = #{firstContactName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "firstContactMobile != null and firstContactMobile != '' ">
+        and first_contact_mobile = #{firstContactMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "secondContactName != null and secondContactName != '' ">
+        and second_contact_name = #{secondContactName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "secondContactMobile != null and secondContactMobile != '' ">
+        and second_contact_mobile = #{secondContactMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "email != null and email != '' ">
+        and email = #{email,jdbcType=VARCHAR}      
+      </if>
+      <if test= "insuranceId != null ">
+        and insurance_id = #{insuranceId,jdbcType=BIGINT}      
+      </if>
+      <if test= "insuranceName != null and insuranceName != '' ">
+        and insurance_name = #{insuranceName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "outDangerName != null and outDangerName != '' ">
+        and out_danger_name = #{outDangerName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "outDangerMobile != null and outDangerMobile != '' ">
+        and out_danger_mobile = #{outDangerMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairShops != null and repairShops != '' ">
+        and repair_shops = #{repairShops,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairShopsMobile != null and repairShopsMobile != '' ">
+        and repair_shops_mobile = #{repairShopsMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByConditionByPage" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Supplier" >
+       select  <include refid="Base_Column_List" />
+    from td_supplier  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "supplierName != null and supplierName != '' ">
+        and supplier_name like  CONCAT('%',CONCAT(#{supplierName,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "supplierReferred != null and supplierReferred != '' ">
+        and supplier_referred = #{supplierReferred,jdbcType=VARCHAR}      
+      </if>
+      <if test= "firstContactName != null and firstContactName != '' ">
+        and first_contact_name = #{firstContactName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "firstContactMobile != null and firstContactMobile != '' ">
+        and first_contact_mobile = #{firstContactMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "secondContactName != null and secondContactName != '' ">
+        and second_contact_name = #{secondContactName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "secondContactMobile != null and secondContactMobile != '' ">
+        and second_contact_mobile = #{secondContactMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "email != null and email != '' ">
+        and email = #{email,jdbcType=VARCHAR}      
+      </if>
+      <if test= "insuranceId != null ">
+        and insurance_id = #{insuranceId,jdbcType=BIGINT}      
+      </if>
+      <if test= "insuranceName != null and insuranceName != '' ">
+        and insurance_name = #{insuranceName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "outDangerName != null and outDangerName != '' ">
+        and out_danger_name = #{outDangerName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "outDangerMobile != null and outDangerMobile != '' ">
+        and out_danger_mobile = #{outDangerMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairShops != null and repairShops != '' ">
+        and repair_shops = #{repairShops,jdbcType=VARCHAR}      
+      </if>
+      <if test= "repairShopsMobile != null and repairShopsMobile != '' ">
+        and repair_shops_mobile = #{repairShopsMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+  </where>
+    	order by created desc
+  </select>
+</mapper>

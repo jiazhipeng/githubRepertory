@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.RestrictionMapper" >
+
+<select id="selectByRestrictionsDate" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Restriction">
+  		SELECT <include refid="Base_Column_List" /> 
+  		from tc_restriction 
+  		where city_id = #{cityId,jdbcType=INTEGER} 
+  		and DATE_FORMAT(restrictions_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{searchBeginDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+  		and DATE_FORMAT(restrictions_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{searchEndDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+  </select>
+  
+  <select id="selectByDate" resultMap="BaseResultMap" parameterType="cn.cuco.entity.Restriction">
+  		SELECT <include refid="Base_Column_List" /> 
+  		from tc_restriction 
+  		where city_id = #{cityId,jdbcType=INTEGER} 
+  		and DATE_FORMAT(restrictions_date,'%Y-%m-%d') = DATE_FORMAT(#{restrictionsDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+  </select>
+  
+</mapper>

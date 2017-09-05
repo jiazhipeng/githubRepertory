@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>用车记录</title>
+    <link href="../../css/service.css" rel="stylesheet" type="text/css" />
+    <title></title>
+</head>
+<body class="useCar">
+<ul class="useInfo">
+    <li class="title">
+        车辆信息：
+        <span>特斯拉 MODEL S 90D</span>
+    </li>
+    <li>
+        用车时间：
+        <span>2016-06-19 — 2016-06-25</span>
+    </li>
+    <li>
+        用车天数：
+        <span>10天</span>
+    </li>
+    <li>
+        额外扣减：
+        <span>2天(加急用车)</span>
+    </li>
+    <li>
+        总扣减天数：
+        <span>12天</span>
+    </li>
+</ul>
+</body>
+</html>

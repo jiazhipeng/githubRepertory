@@ -1,0 +1,65 @@
+package cn.cuco.service.member.info.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberLoginLogMapper;
+import cn.cuco.entity.MemberLoginLog;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.info.MemberLoginLogService;
+
+@Service(value = "memberLoginLogService")
+public class MemberLoginLogServiceImpl implements MemberLoginLogService {
+
+    @Autowired
+    private MemberLoginLogMapper<MemberLoginLog> memberLoginLogMapper;
+
+	@Override
+	public MemberLoginLog createMemberLoginLog(MemberLoginLog memberLoginLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberLoginLog updateMemberLoginLog(MemberLoginLog memberLoginLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteMemberLoginLog(MemberLoginLog memberLoginLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberLoginLog getMemberLoginLog(MemberLoginLog memberLoginLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemberLoginLog> getMemberLoginLogList(
+			MemberLoginLog memberLoginLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberLoginLog> getMemberLoginLogListByPage(
+			MemberLoginLog memberLoginLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMemberLoginLogCount(MemberLoginLog memberLoginLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+}

@@ -1,0 +1,58 @@
+package cn.cuco.service.basic.business;
+
+
+import java.util.List;
+
+import cn.cuco.entity.Supplier;
+import cn.cuco.page.PageResult;
+
+/**
+* @ClassName: SupplierService 
+* @Description: 供应商接口
+* @author huanghua
+* @date 2017年2月21日 下午2:32:06
+ */
+public interface SupplierService {
+   
+	/**
+	* @Title: createSupplier 
+	* @Description: 创建供应商
+	* @param supplier
+	* @return Supplier
+	 */
+    public Supplier createSupplier(Supplier supplier);
+
+    /**
+    * @Title: updateSupplier 
+    * @Description: 修改供应商信息
+    * @param supplier
+    * @return Supplier
+     */
+    public Supplier updateSupplier(Supplier supplier);
+
+    /**
+    * @Title: getSupplierById 
+    * @Description: 取供应商详情
+    * @param supplier
+    * @return Supplier
+     */
+    public Supplier getSupplierById(Supplier supplier);
+
+    /**
+    * @Title: getSupplierByCondition 
+    * @Description: 分页取供应商
+    * @param supplier
+    * @return List<Supplier>
+     */
+    public PageResult<Supplier> getSupplierByCondition(Supplier supplier);
+
+    /**
+    * @Title: getSupplierList 
+    * @Description: 取供应商集合
+    * @param supplier
+    * @return List<Supplier>
+     */
+    public List<Supplier> getSupplierList(Supplier supplier);
+
+
+}

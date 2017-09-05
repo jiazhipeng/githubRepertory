@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.security.dao.OrganizationMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.security.entity.Organization" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="is_value" property="isValue" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+  </resultMap>
+  <!--按父级code查询组织机构-->
+  <select id="selectOrganizationByCode" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Organization" >
+		SELECT o.id, o.name, o.description, o.parent_id,
+		      o.code, o.is_value, o.created, 
+		      o.modifier_id, o.modifier, o.lasttime_modify FROM td_organization o WHERE o.code LIKE CONCAT( #{parentCode,jdbcType=VARCHAR},'__')
+		      order by o.code asc
+  </select>
+  
+    <!--按code查询组织机构-->
+  <select id="selectOrganizationByUserCode" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Organization" >
+		SELECT o.id, o.name, o.description, o.parent_id,
+		      o.code, o.is_value, o.created, 
+		      o.modifier_id, o.modifier, o.lasttime_modify FROM td_organization o WHERE o.code = #{code,jdbcType=VARCHAR}
+		      order by o.code asc
+  </select>
+    <!--查询一级部门-->
+  <select id="selectOrganizationByOne" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Organization" >
+		SELECT o.id, o.name, o.description, o.parent_id,
+		      o.code, o.is_value, o.created, 
+		      o.modifier_id, o.modifier, o.lasttime_modify FROM td_organization o WHERE o.code LIKE CONCAT( '','__')
+		      order by o.code asc
+  </select>
+  
+  <!-- 按用户id、系统ID为查询条件 查找组织机构-->
+  <select id="selectByOrganization" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Organization" >
+		SELECT
+		 DISTINCT	
+		     o.id, o.name, o.description, o.parent_id,
+		      o.code, o.is_value, o.created, 
+		      o.modifier_id, o.modifier, o.lasttime_modify
+		FROM
+			td_organization o
+		JOIN td_role r ON r.organization_id = o.id
+		JOIN tr_user_role ur ON ur.role_id = r.id
+		<where>
+	 	 <if test= "userId != null ">
+	        and ur.user_id =#{userId,jdbcType=BIGINT}
+	      </if>
+	      <if test= "systemId != null ">
+			AND r.system_id = #{systemId,jdbcType=BIGINT}
+		 </if>
+		 AND  r.code = o.code
+	  </where>
+  </select>
+
+
+  <!-- 按用户id、系统ID为查询条件 查找组织机构 (包括子结构)-->
+  <select id="selectByUserIdAndSystemId" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Organization" >
+		SELECT distinct
+		a.id, a.name, a.description, a.parent_id,
+		      a.code, a.is_value, a.created, 
+		      a.modifier_id, a.modifier, a.lasttime_modify
+		FROM	td_organization a join (
+		SELECT
+		 DISTINCT	
+		      o.code
+		FROM
+			td_organization o
+		JOIN td_role r ON r.organization_id = o.id
+		JOIN tr_user_role ur ON ur.role_id = r.id
+		 <where>
+		 	 <if test= "userId != null ">
+		        and ur.user_id =#{userId,jdbcType=BIGINT}
+		      </if>
+		      <if test= "systemId != null ">
+				AND r.system_id = #{systemId,jdbcType=BIGINT}
+			 </if>
+			AND  r.organization_id = o.id
+		 </where>
+		) b  on a.code = b.code OR a.code LIKE CONCAT(b.code,'%')
+		 <where>
+		 	 <if test= "name != null and name != '' ">
+		        and a.name like CONCAT('%',CONCAT(#{name,jdbcType=VARCHAR},'%')) 
+		        
+		      </if>
+		 </where>
+		
+		order by a.created desc
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Organization" >
+       select  <include refid="Base_Column_List" />
+    from td_organization  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test= "name != null and name != '' ">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test= "description != null and description != '' ">
+        and description = #{description,jdbcType=VARCHAR}
+      </if>
+      <if test= "code != null and code != '' ">
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test= "isValue != null ">
+        and is_value = #{isValue,jdbcType=INTEGER}
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+       <if test= "parentId != null ">
+        and parent_id = #{parentId,jdbcType=INTEGER}
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, name, description, parent_id,
+      code, is_value, created, 
+      modifier_id, modifier, lasttime_modify
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Organization" >
+    select 
+      id, name, description, parent_id,
+      code, is_value, created, 
+      modifier_id, modifier, lasttime_modify
+    from td_organization where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.security.entity.Organization" >
+    delete from td_organization where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_organization where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.security.entity.Organization" useGeneratedKeys="true" keyProperty="id">
+    insert into td_organization
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "name != null and name != '' ">
+         name,
+      </if>
+      <if test= "description != null and description != '' ">
+         description,
+      </if>
+      <if test= "code != null and code != '' ">
+         code,
+      </if>
+      <if test= "isValue != null ">
+         is_value,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+       <if test= "parentId != null ">
+         parent_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "description != null and description != '' ">
+         #{description,jdbcType=VARCHAR},
+      </if>
+      <if test= "code != null and code != '' ">
+         #{code,jdbcType=VARCHAR},
+      </if>
+      <if test= "isValue != null ">
+         #{isValue,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+       <if test= "parentId != null ">
+         #{parentId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_organization (
+         id,
+         name,
+         description,
+         code,
+         is_value,
+         created,
+         modifier_id,
+         modifier,
+         lasttime_modify,
+         parent_id
+         )
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.name,jdbcType=VARCHAR},
+         #{item.description,jdbcType=VARCHAR},
+         #{item.code,jdbcType=VARCHAR},
+         #{item.isValue,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=BIGINT},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+          #{item.parentId,jdbcType=INTEGER}
+         )
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.security.entity.Organization" >
+    update td_organization
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+      name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "description != null and description != '' ">
+      description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test= "code != null and code != '' ">
+      code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test= "isValue != null ">
+      is_value = #{isValue,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+       <if test= "parentId != null ">
+      parent_Id = #{parentId,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

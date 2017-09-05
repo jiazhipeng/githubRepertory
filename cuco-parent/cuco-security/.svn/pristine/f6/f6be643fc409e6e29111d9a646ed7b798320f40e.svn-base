@@ -1,0 +1,7 @@
+#============================#
+#===== weixin sttings =====#
+#============================#
+#\u8ba2\u5355\u8be6\u60c5
+order_detail=http://test224224.1mobility.cn/wechat/order/detail
+#\u9500\u552e\u8f6c\u53d1
+market_Task=http://test224224.1mobility.cn/wechat/order/detail?id={id}&loginId={loginId}

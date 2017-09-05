@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarOperatePlanMapper" >
+
+<!-- 根据车库查询会员占用的车辆总数 -->
+<select id="getCarPlanTotalByMember" resultMap="INTEGER" parameterType="cn.cuco.entity.CarOperatePlan" >
+    select  count(1) 
+    from td_car_operate_plan t where t.status in (0,1) and type = 1
+	 <if test= "carportId != null ">
+       and t.carport_id = #{carportId,jdbcType=BIGINT}      
+     </if> 
+    <![CDATA[ 
+		AND ((#{startTime,jdbcType=TIMESTAMP} >= t.start_time AND #{startTime,jdbcType=TIMESTAMP} < t.end_time)
+		OR (#{endTime,jdbcType=TIMESTAMP} > t.start_time AND #{endTime,jdbcType=TIMESTAMP} <= t.end_time)
+		 OR (t.start_time  >= #{startTime,jdbcType=TIMESTAMP} AND t.end_time <= #{endTime,jdbcType=TIMESTAMP}));
+	]]> 
+    
+  </select>
+  
+ <!-- 根据车库查询非会员占用的车辆总数 -->
+<select id="getCarPlanTotalByUnMember" resultMap="INTEGER" parameterType="cn.cuco.entity.CarOperatePlan" >
+    select  count(1) 
+    from td_car_operate_plan t where t.status in (0,1) and type = 0
+	 <if test= "carportId != null ">
+       and t.carport_id = #{carportId,jdbcType=BIGINT}      
+     </if> 
+    <![CDATA[ 
+		AND ((#{startTime,jdbcType=TIMESTAMP} >= t.start_time AND #{startTime,jdbcType=TIMESTAMP} < t.end_time)
+		OR (#{endTime,jdbcType=TIMESTAMP} > t.start_time AND #{endTime,jdbcType=TIMESTAMP} <= t.end_time)
+		 OR (t.start_time  >= #{startTime,jdbcType=TIMESTAMP} AND t.end_time <= #{endTime,jdbcType=TIMESTAMP}));
+	]]> 
+    
+  </select>   
+  
+<!-- 根据车型ID查询已经占用的车辆总数 -->
+<select id="getCarPlanTotalByCarTypeId" resultMap="INTEGER" parameterType="cn.cuco.entity.CarOperatePlan" >
+    select  count(1) 
+    from td_car_operate_plan t where t.status in (0,1) and t.carType_id=#{carTypeId,jdbcType=BIGINT}
+    <![CDATA[ 
+		AND ((t.start_time >= #{startTime,jdbcType=TIMESTAMP} and t.start_time < #{endTime,jdbcType=TIMESTAMP})
+		      or(t.end_time > #{startTime,jdbcType=TIMESTAMP} and  t.end_time <= #{endTime,jdbcType=TIMESTAMP}));
+	]]> 
+    
+  </select> 
+  
+  <!-- 根据用车记录ID修改车辆运营计划  -->
+  <update id="updateOperatePlanByCarUsedId" parameterType="cn.cuco.entity.CarOperatePlan">
+    update td_car_operate_plan
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carId != null ">
+      car_id = #{carId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+      car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "carportId != null ">
+      carport_id = #{carportId,jdbcType=BIGINT},
+      </if>
+      <if test= "carTypeId != null ">
+      carType_id = #{carTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+      member_mobile = #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "type != null ">
+      type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "startTime != null ">
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "endTime != null ">
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where member_usecar_id = #{memberUsecarId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

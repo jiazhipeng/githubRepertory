@@ -1,0 +1,57 @@
+package cn.cuco.service.basic.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.BasicParkingMapper;
+import cn.cuco.entity.BasicParking;
+import cn.cuco.service.basic.BasicParkingService;
+
+@Service(value = "basicParkingService")
+public class BasicParkingServiceImpl implements BasicParkingService {
+
+    @Autowired
+    private BasicParkingMapper<BasicParking> basicParkingMapper;
+    
+    @Override
+    public Integer insertSelective(BasicParking basicParking) throws Exception {
+           return this.basicParkingMapper.insertSelective(basicParking);
+        }
+
+    @Override
+    public Integer insertBatch(List<BasicParking> basicParking) throws Exception {
+           return this.basicParkingMapper.insertBatch(basicParking) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.basicParkingMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.basicParkingMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(BasicParking basicParking) {
+           return this.basicParkingMapper.updateByPrimaryKeySelective(basicParking);
+    }
+
+    @Override
+    public BasicParking findById(Object id) {
+           return (BasicParking) this.basicParkingMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<BasicParking> selectByCondition(BasicParking basicParking) {
+           return (List<BasicParking>) this.basicParkingMapper.selectByCondition(basicParking);
+    }
+
+    @Override
+    public Integer selectCountByCondition(BasicParking basicParking) {
+           return  this.basicParkingMapper.selectCountByCondition(basicParking);
+    }
+
+}

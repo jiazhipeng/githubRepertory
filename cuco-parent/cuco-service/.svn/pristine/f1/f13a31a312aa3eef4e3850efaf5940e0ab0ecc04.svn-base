@@ -1,0 +1,60 @@
+package cn.cuco.service.member.credit.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import cn.cuco.entity.CreditAudit;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.credit.CreditAuditService;
+
+/** 
+* @ClassName: CreditAuditServiceImpl 
+* @Description: 风控审核相关接口实现
+* @author zc.du
+* @date 2017年2月23日 上午10:31:56  
+*/
+@Service
+public class CreditAuditServiceImpl implements CreditAuditService {
+
+	@Override
+	public CreditAudit createCreditAudit(CreditAudit creditAudit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CreditAudit getCreditAudit(CreditAudit creditAudit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CreditAudit> getCreditAuditList(CreditAudit creditAudit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<CreditAudit> getCreditAuditListByPage(
+			CreditAudit creditAudit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OperateLog> getCreditAuditLogList(CreditAudit creditAudit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OperateLog> getCreditAuditLogListByPage(
+			CreditAudit creditAudit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

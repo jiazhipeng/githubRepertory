@@ -1,0 +1,358 @@
+package cn.cuco.service.member.info.impl;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.MemberInfoMapper;
+import cn.cuco.dao.MemberLoginLogMapper;
+import cn.cuco.dao.MemberMapper;
+import cn.cuco.entity.CarType;
+import cn.cuco.entity.Carport;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberAccount;
+import cn.cuco.entity.MemberCarUsed;
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.entity.MemberInfo;
+import cn.cuco.entity.MemberLoginLog;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.enums.MemberStatus;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.enums.OrderRenewalStatus;
+import cn.cuco.enums.RiskAuditStatus;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.carport.CarTypeService;
+import cn.cuco.service.basic.carport.CarportService;
+import cn.cuco.service.log.OperateLogService;
+import cn.cuco.service.member.account.MemberAccountService;
+import cn.cuco.service.member.carUsed.MemberCarUsedService;
+import cn.cuco.service.member.carUsed.MemberCarportService;
+import cn.cuco.service.member.info.MemberService;
+import cn.cuco.service.order.OrderRenewalService;
+
+/**
+ * @ClassName: MemberServiceImpl
+ * @Description: 用户模块接口
+ * @author zc.du
+ * @date 2017年2月23日 上午10:32:27
+ */
+@Service(value = "memberService")
+public class MemberServiceImpl implements MemberService {
+
+	@Autowired
+	private MemberMapper<Member> memberMapper;
+	@Autowired
+	private MemberInfoMapper<MemberInfo> memberInfoMapper;
+	@Autowired
+	private MemberLoginLogMapper<MemberLoginLog> memberLoginLogMapper;
+	@Autowired
+	private OperateLogService logService;
+	@Autowired
+	private MemberCarportService memberCarportService;
+	@Autowired
+	private MemberAccountService memberAccountService;
+	@Autowired
+	private MemberCarUsedService memberCarUsedService;
+	@Autowired
+	private OrderRenewalService orderRenewalService;
+	@Autowired
+	private CarTypeService carTypeService;
+	@Autowired
+	private CarportService carPortService;
+
+	@Override
+	public Member updateMember(Member member) {
+		ParamVerifyUtils.paramNotNull(member);
+		Member old = this.getMemberById(member.getId());
+		ParamVerifyUtils.paramNotNull(old, "用户不存在,无法进行修改操作");
+		this.memberMapper.updateByPrimaryKeySelective(member);
+		return this.memberMapper.selectByPrimaryKey(member.getId());
+	}
+
+	@Override
+	public Member updateMemberInfo(MemberInfo memberInfo) {
+		ParamVerifyUtils.paramNotNull(memberInfo);
+		ParamVerifyUtils.paramNotNull(memberInfo.getMemberId(), "更新用户证件信息时，用户ID不能为空");
+		Member member = this.getMember(memberInfo.getMemberId());
+		Integer riskStatus = member.getRiskAuditStatus();
+		if (RiskAuditStatus.SYSTEM_PASS.getIndex().equals(riskStatus) || RiskAuditStatus.WAIT_MANUAL.getIndex().equals(riskStatus) || RiskAuditStatus.SYSTEM_FAILURE.getIndex().equals(riskStatus)
+				|| RiskAuditStatus.MANUAL_PASS.getIndex().equals(riskStatus)) {
+			ExceptionUtil.throwWarn("当前状态不能更新用户证件信息");
+		}
+		// 查询用户信息是否存在，如果不存在，则创建
+		MemberInfo info = this.memberInfoMapper.getMemberInfoByMemberId(memberInfo.getMemberId());
+		if (null == info) {
+			// 创建
+			memberInfo.setCreated(new Date());
+			this.memberInfoMapper.insertSelective(memberInfo);
+		} else {
+			// 修改
+			this.memberInfoMapper.updateByPrimaryKeySelective(memberInfo);
+		}
+		info = this.memberInfoMapper.getMemberInfoByMemberId(memberInfo.getMemberId());
+		member.setMemberInfo(info);
+		return member;
+	}
+
+	@Override
+	public PageResult<Member> getMemberListByPage(Member member) {
+		ParamVerifyUtils.paramNotNull(member);
+		Integer page = member.getPage();
+		Integer pageSize = member.getPageSize();
+		Integer totalSize = this.memberMapper.selectCountByCondition(member);
+		PageHelper.startPage(page, pageSize);
+		List<Member> list = this.memberMapper.selectByCondition(member);
+		PageResult<Member> pageResult = new PageResult<Member>(page, pageSize, totalSize, list);
+		return pageResult;
+	}
+
+	@Override
+	public Member updateMemberByFreeze(Member member) {
+		Long modifierId = member.getModifierId();
+		String modifier = member.getModifier();
+		String remark = StringUtils.trim(member.getRemark());
+		ParamVerifyUtils.paramNotNull(member.getId(), "冻结用户时，用户ID不能为空");
+		ParamVerifyUtils.paramNotEmpty(remark, "冻结用户时，冻结原因不能为空");
+		ParamVerifyUtils.paramNotNull(modifierId, "冻结用户时，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(modifier, "冻结用户时，操作人姓名不能为空");
+		member = this.getMemberById(member.getId());
+		ParamVerifyUtils.paramNotNull(member, "用户不存在,无法进行冻结操作");
+		if (MemberStatus.FROZEN.getIndex().equals(member.getStatuts())) {
+			return member;
+		}
+		Date date = new Date();
+		Member target = new Member();
+		target.setId(member.getId());
+		target.setStatuts(MemberStatus.FROZEN.getIndex());
+		target.setLasttimeModify(date);
+		this.memberMapper.updateByPrimaryKeySelective(target);
+		member.setStatuts(MemberStatus.FROZEN.getIndex());
+		// 创建冻结日志
+		OperateLog log = new OperateLog();
+		log.setCreated(date);
+		log.setModifier(modifier);
+		log.setModifierId(modifierId);
+		log.setOperationId(member.getId());
+		log.setStatus(MemberStatus.FROZEN.getIndex());
+		log.setType(OperateLogEnum.USER.getValue());
+		log.setRemark(modifier+":"+remark);
+		logService.createOperateLog(log);
+		return member;
+	}
+
+	@Override
+	public Member updateMemberByUnfreeze(Member member) {
+		Long modifierId = member.getModifierId();
+		String modifier = member.getModifier();
+		String remark = StringUtils.trim(member.getRemark());
+		ParamVerifyUtils.paramNotNull(member.getId(), "解冻用户时，用户ID不能为空");
+		ParamVerifyUtils.paramNotEmpty(remark, "解冻用户时，解冻原因不能为空");
+		ParamVerifyUtils.paramNotNull(modifierId, "解冻用户时，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(modifier, "解冻用户时，操作人姓名不能为空");
+		member = this.getMemberById(member.getId());
+		ParamVerifyUtils.paramNotNull(member, "用户不存在,无法进行解冻操作");
+		if (MemberStatus.NORMAL.getIndex().equals(member.getStatuts())) {
+			return member;
+		}
+		Date date = new Date();
+		Member target = new Member();
+		target.setId(member.getId());
+		target.setStatuts(MemberStatus.NORMAL.getIndex());
+		target.setLasttimeModify(date);
+		this.memberMapper.updateByPrimaryKeySelective(target);
+		member.setStatuts(MemberStatus.NORMAL.getIndex());
+		// 创建冻结日志
+		OperateLog log = new OperateLog();
+		log.setCreated(date);
+		log.setModifier(modifier);
+		log.setModifierId(modifierId);
+		log.setOperationId(member.getId());
+		log.setStatus(MemberStatus.NORMAL.getIndex());
+		log.setType(OperateLogEnum.USER.getValue());
+		log.setRemark(modifier+":"+remark);
+		logService.createOperateLog(log);
+		return member;
+	}
+
+	@Override
+	public Member getMemberById(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId, "用户ID不能为空");
+		return this.memberMapper.selectByPrimaryKey(memberId);
+	}
+
+	@Override
+	public Member getMemberByMobile(String mobile) {
+		ParamVerifyUtils.paramNotNull(mobile, "用户手机号不能为空");
+		Member search = new Member();
+		search.setMobile(mobile);
+		return this.getMember(search);
+	}
+
+	@Override
+	public Member getMemberByOpenId(String openId) {
+		ParamVerifyUtils.paramNotNull(openId, "用户openid不能为空");
+		Member search = new Member();
+		search.setOpenid(openId);
+		return this.getMember(search);
+	}
+
+	private Member getMember(Member member) {
+		List<Member> list = this.memberMapper.selectByCondition(member);
+		if (CollectionUtils.isEmpty(list)) {
+			return null;
+		}
+		return list.get(0);
+	}
+
+	@Override
+	public Member updateMemberLoginForWechat(Member member, MemberLoginLog memberLoginLog) {
+		ParamVerifyUtils.paramNotNull(member);
+		Date date = new Date();
+		// 判断用户是否存在
+		
+		// 插入登录日志
+		memberLoginLog.setId(member.getId());
+		memberLoginLog.setCreated(date);
+		createMemberLoginLog(memberLoginLog);
+		return null;
+	}
+
+	@Override
+	public Member updateMemberLoginForApp(Member member, MemberLoginLog memberLoginLog) {
+		ParamVerifyUtils.paramNotNull(member);
+		ParamVerifyUtils.paramNotNull(member.getMobile(), "用户手机号不能为空");
+		Member curMember = this.getMemberByMobile(member.getMobile());
+		Date date = new Date();
+		if(null == curMember){
+			//创建用户
+			this.memberMapper.insertSelective(member);
+			//创建帐户
+			MemberAccount account = new MemberAccount();
+			account.setCreated(date);
+			account.setMemberId(member.getId());
+			this.memberAccountService.createMemberAccount(account);
+		}
+		//创建登陆日志
+		MemberLoginLog target = new MemberLoginLog();
+		target.setAddress(memberLoginLog.getAddress());
+		target.setCreated(date);
+		target.setIp(memberLoginLog.getIp());
+		target.setLongitudeLatitude(memberLoginLog.getLongitudeLatitude());
+		target.setMemberId(member.getId());
+		this.createMemberLoginLog(memberLoginLog);
+		return this.getMemberInfoById(member.getId());
+	}
+
+	@Override
+	public Member getMemberInfoById(Long memberId) {
+		Member member = this.getMemberById(memberId);
+		MemberInfo info = this.getMemberInfoByMemberId(memberId);
+		member.setMemberInfo(info);
+		return member;
+	}
+
+	@Override
+	public PageResult<Member> getMemberListByPageForBackstage(Member member) {
+		ParamVerifyUtils.paramNotNull(member);
+		Integer page = member.getPage();
+		Integer pageSize = member.getPageSize();
+		Integer totalSize;
+		List<Member> list;
+		PageResult<Member> pageResult;
+		if(member.getUseCarStartDate() != null || member.getUseCarEndDate() != null){
+			totalSize = this.memberMapper.getMemberCountWithUseCarTimeByFuzzy(member);
+			PageHelper.startPage(page, pageSize);
+			list = this.memberMapper.getMemberListWithUseCarTimeByFuzzy(member);
+			pageResult = new PageResult<Member>(page, pageSize, totalSize, list);
+		}else{
+			totalSize = this.memberMapper.getMemberCountByFuzzy(member);
+			PageHelper.startPage(page, pageSize);
+			list = this.memberMapper.getMemberListByFuzzy(member);
+			pageResult = new PageResult<Member>(page, pageSize, totalSize, list);
+		}
+		if(CollectionUtils.isNotEmpty(pageResult.getItems())){
+			//封装数据
+			for(Member cur : pageResult.getItems()){
+				//1.封装车库信息
+				this.setMemberCarportList(cur);
+				//2.封装账户信息
+				this.setMemberAccountInfo(cur);
+				//3.封装用车信息
+				this.setMemberCarUsedInfo(member,cur);
+			}
+		}
+		return pageResult;
+	}
+	
+	private void createMemberLoginLog(MemberLoginLog memberLoginLog) {
+		this.memberLoginLogMapper.insertSelective(memberLoginLog);
+	}
+
+	private Member getMember(Long id) {
+		return this.memberMapper.selectByPrimaryKey(id);
+	}
+
+	private MemberInfo getMemberInfoByMemberId(Long id) {
+		return this.memberInfoMapper.getMemberInfoByMemberId(id);
+	}
+	
+	private void setMemberCarportList(Member member){
+		MemberCarport memberCarport = new MemberCarport();
+		memberCarport.setMemberId(member.getId());
+		memberCarport.setPage(1);
+		memberCarport.setPageSize(100);
+		PageResult<MemberCarport> pageResult = this.memberCarportService.getMemberCarportListByPage(memberCarport);
+		if(CollectionUtils.isNotEmpty(pageResult.getItems())){
+			for (MemberCarport port : pageResult.getItems()) {
+				if(null != port.getCartypeId()){
+					Carport carport = this.carPortService.getCarportById(port.getCarportId());
+					port.setCarportName(carport.getCarportName());
+					CarType type = this.carTypeService.getCarTypeById(port.getCartypeId());
+					port.setFavoriteCarType(type);
+				}
+			}
+		}
+		member.setCarportList(pageResult.getItems());
+	}
+	
+	private void setMemberAccountInfo(Member member){
+		MemberAccount account = this.memberAccountService.getMemberAccountByMemberId(member.getId());
+		member.setBalane(account.getBalance());
+		//续费次数
+		Integer count = this.orderRenewalService.getOrderRenewalCount(member.getId());
+		if(null != count){
+			member.setRenewalCount(count.intValue());
+		}
+	}
+	
+	private void setMemberCarUsedInfo(Member search,Member member){
+		//用车次数
+		Integer count = this.memberCarUsedService.getMemberCarUsedCountByMemberId(member.getId());
+		if(null != count){
+			member.setUseCarCount(count.intValue());
+		}
+		//累计消费
+		BigDecimal cost = this.memberAccountService.getALlCostByMemberId(member.getId());
+		member.setCostTotal(cost);
+		//最后用车时间
+		MemberCarUsed used = new MemberCarUsed();
+		used.setMemberId(member.getId());
+		used.setStartDate(search.getUseCarStartDate());
+		used.setEndDate(search.getUseCarEndDate());
+		used = this.memberCarUsedService.getLastMemberCarUsedByMemberId(used);
+		if(null != used){
+			member.setLastUseCarDate(used.getActualCarUsedTime());
+		}
+	}
+
+}

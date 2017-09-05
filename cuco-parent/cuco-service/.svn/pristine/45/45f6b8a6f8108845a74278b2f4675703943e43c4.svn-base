@@ -1,0 +1,33 @@
+package cn.cuco.service.statistics.impl;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.MemberMapper;
+import cn.cuco.entity.Member;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.service.statistics.MemberStatisticsService;
+
+@Service
+public class MemberStatisticsServiceImpl implements MemberStatisticsService {
+
+	@Autowired
+	private MemberMapper<Member> memberMapper;
+	@Override
+	public Map<String, Integer> getAddMemberStatistics(Date startTime, Date endTime) {
+		ParamVerifyUtils.paramNotNull(startTime,"统计新增用户时，开始时间不能为空");
+		ParamVerifyUtils.paramNotNull(endTime,"统计新增用户时，结束时间不能为空");
+		if(startTime.after(endTime)){
+			ExceptionUtil.throwWarn("统计新增用户时，开始是时间不能大于结束时间");
+		}
+		Map<String,Integer> result = new HashMap<String,Integer>();
+		
+		return result;
+	}
+
+}

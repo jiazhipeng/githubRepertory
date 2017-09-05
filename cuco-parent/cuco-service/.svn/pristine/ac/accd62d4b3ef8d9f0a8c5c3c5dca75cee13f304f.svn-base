@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.PreAuthorizedDebitMapper" >
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByConditionByPage" resultType="INTEGER" parameterType="cn.cuco.entity.PreAuthorizedDebit" >
+       select  count(1) 
+    from td_pre_authorized_debit  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name like  CONCAT('%',CONCAT(#{memberName,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile like  CONCAT('%',CONCAT(#{memberMobile,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num like  CONCAT('%',CONCAT(#{carPlateNum,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "source != null ">
+        and source = #{source,jdbcType=INTEGER}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "frozenAmount != null ">
+        and frozen_amount = #{frozenAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "frozenTime != null ">
+        and frozen_time = #{frozenTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "expectUnfreezeTime != null ">
+        and expect_unfreeze_time = #{expectUnfreezeTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "unfreezeAmount != null ">
+        and unfreeze_amount = #{unfreezeAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "actualUnfreezeTime != null ">
+        and actual_unfreeze_time = #{actualUnfreezeTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "createdStart != null and createdEnd != null">
+        and created between #{createdStart,jdbcType=TIMESTAMP} AND #{createdEnd,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByConditionByPage" resultMap="BaseResultMap" parameterType="cn.cuco.entity.PreAuthorizedDebit" >
+       select  <include refid="Base_Column_List" />
+    from td_pre_authorized_debit  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name like  CONCAT('%',CONCAT(#{memberName,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile like  CONCAT('%',CONCAT(#{memberMobile,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "carId != null ">
+        and car_id = #{carId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num like  CONCAT('%',CONCAT(#{carPlateNum,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "source != null ">
+        and source = #{source,jdbcType=INTEGER}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "frozenAmount != null ">
+        and frozen_amount = #{frozenAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "frozenTime != null ">
+        and frozen_time = #{frozenTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "expectUnfreezeTime != null ">
+        and expect_unfreeze_time = #{expectUnfreezeTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "unfreezeAmount != null ">
+        and unfreeze_amount = #{unfreezeAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "actualUnfreezeTime != null ">
+        and actual_unfreeze_time = #{actualUnfreezeTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+  <!-- 根据用户ID获取冻结金额总和 -->
+  <select id="getTotalFrozenMoneyByMemberId" resultType="BigDecimal">
+    select 
+      sum(frozen_amount)
+    from td_pre_authorized_debit where status = 0 and member_id = #{member_id,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 查询15日还没有解冻的类型为违章押金的预授权记录 -->
+  <select id="getPreAuthorizedDebitsOver15Days" resultMap="BaseResultMap" parameterType="cn.cuco.entity.PreAuthorizedDebit">
+   select <include refid="Base_Column_List" />
+    from td_pre_authorized_debit  where type = 1 and status = 0 and frozen_time &lt;= DATE_ADD(now(),INTERVAL -15 DAY)
+  </select>
+  
+</mapper>

@@ -1,0 +1,165 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-21 11:08:15
+ */
+public class MemberCarused implements Serializable {
+
+    private static final long serialVersionUID = 4366234543431844L;
+
+    private Long id;//主键ID
+
+    private Long memberId;//用车发起人ID
+
+    private Long carportId;//车库ID
+
+    private Long orderCartypeId;//预约车型ID
+
+    private Date carUsedTime;//用车时间
+
+    private Integer carUsedDay;//用车天数
+
+    private String carUsedAddress;//用车地址
+
+    private Date carReturnTime;//还车时间
+
+    private String carReturnAddress;//还车地点
+
+    private Long caroperateId;//运营车辆ID
+
+    private Integer changeStatus;//是否临时换车：0：无换车；1：有换车
+
+    private Integer usedStatus;//用车的状态0：待送车 1:已出发送车; 2:已到达; 3:送车完成 4:已出发取车; 5:管家已到达; 6:取车完成; 7:已取消
+
+    private String cityCode;//用车城市code
+
+    private Date created;//创建时间
+
+    private Date lasttimeModify;//最后修改时间
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getMemberId() {
+        return this.memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    public Long getCarportId() {
+        return this.carportId;
+    }
+
+    public void setCarportId(Long carportId) {
+        this.carportId = carportId;
+    }
+
+    public Long getOrderCartypeId() {
+        return this.orderCartypeId;
+    }
+
+    public void setOrderCartypeId(Long orderCartypeId) {
+        this.orderCartypeId = orderCartypeId;
+    }
+
+    public Date getCarUsedTime() {
+        return this.carUsedTime;
+    }
+
+    public void setCarUsedTime(Date carUsedTime) {
+        this.carUsedTime = carUsedTime;
+    }
+
+    public Integer getCarUsedDay() {
+        return this.carUsedDay;
+    }
+
+    public void setCarUsedDay(Integer carUsedDay) {
+        this.carUsedDay = carUsedDay;
+    }
+
+    public String getCarUsedAddress() {
+        return this.carUsedAddress;
+    }
+
+    public void setCarUsedAddress(String carUsedAddress) {
+        this.carUsedAddress = carUsedAddress;
+    }
+
+    public Date getCarReturnTime() {
+        return this.carReturnTime;
+    }
+
+    public void setCarReturnTime(Date carReturnTime) {
+        this.carReturnTime = carReturnTime;
+    }
+
+    public String getCarReturnAddress() {
+        return this.carReturnAddress;
+    }
+
+    public void setCarReturnAddress(String carReturnAddress) {
+        this.carReturnAddress = carReturnAddress;
+    }
+
+    public Long getCaroperateId() {
+        return this.caroperateId;
+    }
+
+    public void setCaroperateId(Long caroperateId) {
+        this.caroperateId = caroperateId;
+    }
+
+    public Integer getChangeStatus() {
+        return this.changeStatus;
+    }
+
+    public void setChangeStatus(Integer changeStatus) {
+        this.changeStatus = changeStatus;
+    }
+
+    public Integer getUsedStatus() {
+        return this.usedStatus;
+    }
+
+    public void setUsedStatus(Integer usedStatus) {
+        this.usedStatus = usedStatus;
+    }
+
+    public String getCityCode() {
+        return this.cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getLasttimeModify() {
+        return this.lasttimeModify;
+    }
+
+    public void setLasttimeModify(Date lasttimeModify) {
+        this.lasttimeModify = lasttimeModify;
+    }
+
+}

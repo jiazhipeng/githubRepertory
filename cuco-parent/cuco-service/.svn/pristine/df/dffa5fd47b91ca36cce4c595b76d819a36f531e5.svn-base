@@ -1,0 +1,37 @@
+package cn.cuco.service.car.repertory;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import cn.cuco.entity.CarType;
+
+/** 
+* @ClassName: Repertory 
+* @Description: 库存service层 
+* @author gongbw
+* @date 2017年2月21日 下午1:30:52  
+*/
+public interface RepertoryService {
+
+	/**   
+     * @Title: getRepertoryByDay   
+     * @Description: 获取一个月每天的库存分布情况  
+     * @param: carTypeId
+     * @param: useCarStartDay
+     * @param: useCarEndDay
+     * @return: List<Map<String, Object>>      
+     */
+	public List<Map<String, Object>> getRepertoryByDay(Long carTypeId, Date useCarStartDay, Date useCarEndDay);
+	
+	/**   
+     * @Title: getRepertoryByDay   
+     * @Description: 根据用户所选车库以及所选时间得到可用车型  
+     * @param: carportId
+     * @param: MemberId
+     * @param: useCarStartTime
+     * @param: useCarEndTime
+     * @return: List<CarType>     
+     */
+	public List<CarType> getUsableCarType(Long carportId, Long MemberId, Date useCarStartTime, Date useCarEndTime);
+}

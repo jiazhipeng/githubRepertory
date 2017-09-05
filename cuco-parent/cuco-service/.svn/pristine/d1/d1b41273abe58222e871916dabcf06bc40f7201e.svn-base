@@ -1,0 +1,48 @@
+package cn.cuco.service.basic.business;
+
+
+import java.util.List;
+
+import cn.cuco.entity.Restriction;
+
+/**
+* @ClassName: RestrictionService 
+* @Description: 限号接口
+* @author huanghua
+* @date 2017年2月21日 下午2:26:27
+ */
+public interface RestrictionService {
+	
+	/**
+	* @Title: createRestriction 
+	* @Description: 创建基础设置—限号设置基础方法
+	* @param restriction
+	* @return Restriction
+	 */
+	public Restriction createRestriction(Restriction restriction);
+	
+	/**
+	* @Title: getMouthRestriction 
+	* @Description: 获取各月的限号记录
+	* @param restriction
+	* @return List<Restriction>
+	 */
+	public List<Restriction> getMouthRestriction(Restriction restriction);
+	
+	/**
+	* @Title: getRestriction 
+	* @Description:  根据条件获取限号城市列表基础方法
+	* @param restriction
+	* @return List<Restriction>
+	 */
+	public List<Restriction> getRestriction(Restriction restriction);
+	
+	/**
+	* @Title: getRestrictionByDate 
+	* @Description: 根据年月日查询限号
+	* @param restriction
+	* @return List<Restriction>
+	 */
+	public List<Restriction> getRestrictionByDate(Restriction restriction);
+
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>用车记录</title>
+    <link href="../../css/usedcar.css" rel="stylesheet" type="text/css" />
+    <title></title>
+</head>
+<body class="greyBg">
+<dl class="usedDl">
+    <dt>特斯拉MODEL S 90D(京A-00001)</dt>
+    <dd>
+        <p>用车时间：</p>
+        <p>2016-06-19——2016-06-25</p>
+    </dd>
+    <dd>
+        <p>用车天数：</p>
+        <p>10天</p>
+    </dd>
+    <dd>
+        <p>额外扣减：</p>
+        <p>2天<span class="small">（加急用车）</span></p>
+    </dd>
+    <dd>
+        <p>总扣减天数：</p>
+        <p>9天</p>
+    </dd>
+    <dd class="usedDate">
+        <a href="usedinfo.html">
+            <p>用车日志</p>
+            <p></p>
+        </a>
+    </dd>
+</dl>
+
+<dl class="usedDl">
+    <dt>司机服务</dt>
+    <dd>
+        <p>服务时间：</p>
+        <p>2016-06-19——2016-06-25</p>
+    </dd>
+    <dd>
+        <p>司机人数：</p>
+        <p>2人</p>
+    </dd>
+    <dd>
+        <p>扣除天数：</p>
+        <p>2天</p>
+    </dd>
+</dl>
+
+<dl class="usedDl">
+    <dt>特斯拉MODEL S 90D(京A-00001)</dt>
+    <dd>
+        <p>用车时间：</p>
+        <p>2016-06-19——2016-06-25</p>
+    </dd>
+    <dd>
+        <p>用车天数：</p>
+        <p>10天</p>
+    </dd>
+    <dd>
+        <p>额外扣减：</p>
+        <p>2天<span class="small">（加急用车）</span></p>
+    </dd>
+    <dd>
+        <p>总扣减天数：</p>
+        <p>9天</p>
+    </dd>
+    <dd class="usedDate">
+        <a href="usedinfo.html">
+            <p>用车日志</p>
+            <p></p>
+        </a>
+    </dd>
+</dl>
+</body>
+</html>

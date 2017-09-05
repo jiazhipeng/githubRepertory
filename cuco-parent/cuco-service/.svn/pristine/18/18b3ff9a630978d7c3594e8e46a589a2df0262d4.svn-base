@@ -1,0 +1,40 @@
+package cn.cuco.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import cn.cuco.entity.OrderCarUsed;
+
+public interface OrderCarUsedMapper<T> extends BaseDao<T> {
+	
+	/** 
+	* @Title: getOrderCarUsedCountByFuzzy 
+	* @Description: 模糊查询用车结算
+	* @author zc.du
+	* @param orderCarUsed
+	* @return Integer
+	*/
+	public Integer getOrderCarUsedCountByFuzzy(OrderCarUsed orderCarUsed);
+
+	/** 
+	* @Title: getMemberListByFuzzy 
+	* @Description: 模糊查询用车结算
+	* @author zc.du
+	* @param orderCarUsed
+	* @return List<OrderCarUsed>
+	*/
+	public List<OrderCarUsed> getOrderCarUsedListByFuzzy(OrderCarUsed orderCarUsed);
+	
+	/** 
+	* @Title: getMemberDriveCountByMileage 
+	* @Description: 根据公里数统计用户用车结算次数
+	* @author zc.du
+	* @param memberId 用户ID
+	* @param min 最小公里数
+	* @param max 最大公里数
+	* @return Integer
+	*/
+	public Integer getMemberDriveCountByMileage(@Param("memberId") Long memberId,@Param("min") Integer min,@Param("max") Integer max);
+
+}

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.InsuranceSubjectsMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.InsuranceSubjects" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="subject_num" property="subjectNum" jdbcType="VARCHAR" />
+    <result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+    <result column="subject_price" property="subjectPrice" jdbcType="DECIMAL" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.InsuranceSubjects" >
+       select  count(1) 
+    from tc_insurance_subjects  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "subjectNum != null and subjectNum != '' ">
+        and subject_num = #{subjectNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "subjectName != null and subjectName != '' ">
+        and subject_name = #{subjectName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "subjectPrice != null ">
+        and subject_price = #{subjectPrice,jdbcType=DECIMAL}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.InsuranceSubjects" >
+       select  <include refid="Base_Column_List" />
+    from tc_insurance_subjects  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "subjectNum != null and subjectNum != '' ">
+        and subject_num = #{subjectNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "subjectName != null and subjectName != '' ">
+        and subject_name = #{subjectName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "subjectPrice != null ">
+        and subject_price = #{subjectPrice,jdbcType=DECIMAL}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, subject_num, subject_name, 
+      subject_price
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.InsuranceSubjects" >
+    select 
+      id, subject_num, subject_name, 
+      subject_price
+    from tc_insurance_subjects where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.InsuranceSubjects" >
+    delete from tc_insurance_subjects where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tc_insurance_subjects where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.InsuranceSubjects" >
+    insert into tc_insurance_subjects
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "subjectNum != null and subjectNum != '' ">
+         subject_num,
+      </if>
+      <if test= "subjectName != null and subjectName != '' ">
+         subject_name,
+      </if>
+      <if test= "subjectPrice != null ">
+         subject_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "subjectNum != null and subjectNum != '' ">
+         #{subjectNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "subjectName != null and subjectName != '' ">
+         #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test= "subjectPrice != null ">
+         #{subjectPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tc_insurance_subjects (
+         id,
+         subject_num,
+         subject_name,
+         subject_price)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.subjectNum,jdbcType=VARCHAR},
+         #{item.subjectName,jdbcType=VARCHAR},
+         #{item.subjectPrice,jdbcType=DECIMAL})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.InsuranceSubjects" >
+    update tc_insurance_subjects
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "subjectNum != null and subjectNum != '' ">
+      subject_num = #{subjectNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "subjectName != null and subjectName != '' ">
+      subject_name = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test= "subjectPrice != null ">
+      subject_price = #{subjectPrice,jdbcType=DECIMAL}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

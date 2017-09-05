@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarUsedLogMapper" >
+  
+<!-- 根据车辆ID获取车辆使用日志 -->
+  <select id="selectCarUsedLogByCarId" resultMap="BaseResultMap" parameterType="cn.cuco.entity.CarUsedLog" >
+       select  <include refid="Base_Column_List" />
+    from td_car_used_log where car_id = #{carId,jdbcType=BIGINT} order by created desc
+  </select>
+
+
+
+</mapper>

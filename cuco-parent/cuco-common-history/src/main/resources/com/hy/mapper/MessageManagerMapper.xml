@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.umeng.push.dao.MessageUmengMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.umeng.push.entity.MessageUmeng" >
+    <id column="message_id" property="messageId" jdbcType="INTEGER" />
+    <result column="application_type" property="applicationType" jdbcType="INTEGER" />
+    <result column="message_content" property="messageContent" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="transmission_types" property="transmissionTypes" jdbcType="INTEGER" />
+    <result column="begin_time" property="beginTime" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" /> 
+    <result column="create_user" property="createUser" jdbcType="VARCHAR"/>  
+    <result column="receiving_equipment" property="receivingEquipment" jdbcType="INTEGER"/>
+    <result column="return_message" property="returnMessage" jdbcType="VARCHAR"/>
+ 	<result column="title" property="title" jdbcType="VARCHAR"/>      
+	<result column="ticker" property="ticker" jdbcType="VARCHAR" />
+    <result column="read_status" property="readStatus" jdbcType="INTEGER" />
+    <result column="extend_content" property="extendContent" jdbcType="VARCHAR" />
+    <result column="alias" property="alias" jdbcType="VARCHAR" />
+	
+  </resultMap>
+
+
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      message_id, application_type, title, 
+      message_content, user_type, transmission_types, 
+      begin_time,date_format(create_time,'%Y年%c月%d日 %H:%i:%s') as create_time, status,
+      create_user, receiving_equipment, return_message, 
+      ticker, read_status, extend_content, 
+      alias
+  </sql>
+
+ 
+<select id="selectByList" parameterType="com.hy.umeng.push.entity.MessageUmeng" resultMap="BaseResultMap">
+	select <include refid="Base_Column_List"/> from td_message
+	
+	<where>
+		<if test="beginTime!=null and beginTime !=''">
+		   and begin_time between CONCAT(#{beginTime,jdbcType=VARCHAR},' 00:00:00') and CONCAT(#{beginTime,jdbcType=VARCHAR},' 23:59:59')
+		</if>
+		<if test="applicationType!=-1 and applicationType!=null">
+			and application_type = #{applicationType,jdbcType=INTEGER}
+		</if>
+		<if test="userType!=-1 and userType!=null">
+			and user_type = #{userType,jdbcType=INTEGER}
+		</if>
+        <if test="receivingEquipment > 0">
+            and receiving_equipment = #{receivingEquipment,jdbcType=INTEGER}
+        </if>
+        <if test="alias!=null and alias!=''">
+            and alias = #{alias,jdbcType=VARCHAR}
+        </if>
+	
+	</where>
+	 order by message_id desc
+	 limit ${beginPage} , ${pageSize}
+</select>
+
+
+<select id="selectByListCount" parameterType="com.hy.umeng.push.entity.MessageUmeng" resultType="INTEGER">
+	select count(1) from td_message
+	
+	<where>
+		<if test="beginTime!=null and beginTime !=''">
+		   and begin_time between CONCAT(#{beginTime,jdbcType=VARCHAR},' 00:00:00') and CONCAT(#{beginTime,jdbcType=VARCHAR},' 23:59:59')
+		</if>
+		<if test="applicationType!=-1 and applicationType!=null">
+			and application_type = #{applicationType,jdbcType=INTEGER}
+		</if>
+		<if test="userType!=-1 and userType!=null">
+			and user_type = #{userType,jdbcType=INTEGER}
+		</if>
+        <if test="receivingEquipment > 0">
+            and receiving_equipment = #{receivingEquipment,jdbcType=INTEGER}
+        </if>
+        <if test="alias!=null and alias!=''">
+            and alias = #{alias,jdbcType=VARCHAR}
+        </if>
+	
+	</where>
+
+</select>
+ 
+   <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="messageId" parameterType="com.hy.umeng.push.entity.MessageUmeng" >
+    insert into td_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "messageId != null">
+         message_id,
+      </if>
+      <if test= "applicationType != null">
+         application_type,
+      </if>
+      <if test= "title != null">
+         title,
+      </if>
+      <if test= "messageContent != null">
+         message_content,
+      </if>
+      <if test= "userType != null">
+         user_type,
+      </if>
+      <if test= "transmissionTypes != null">
+         transmission_types,
+      </if>
+      <if test= "beginTime != null">
+         begin_time,
+      </if>
+      <if test= "createTime != null">
+         create_time,
+      </if>
+      <if test= "status != null">
+         status,
+      </if>
+      <if test= "createUser != null">
+         create_user,
+      </if>
+      <if test= "receivingEquipment != null">
+         receiving_equipment,
+      </if>
+      <if test= "returnMessage != null">
+         return_message,
+      </if>
+      <if test= "ticker != null">
+         ticker,
+      </if>
+      <if test= "readStatus != null">
+         read_status,
+      </if>
+      <if test= "extendContent != null">
+         extend_content,
+      </if>
+      <if test= "alias != null">
+         alias,
+      </if>
+      <if test= "createTime == null">
+         create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "messageId != null">
+         #{messageId,jdbcType=INTEGER},
+      </if>
+      <if test= "applicationType != null">
+         #{applicationType,jdbcType=INTEGER},
+      </if>
+      <if test= "title != null">
+         #{title,jdbcType=VARCHAR},
+      </if>
+      <if test= "messageContent != null">
+         #{messageContent,jdbcType=VARCHAR},
+      </if>
+      <if test= "userType != null">
+         #{userType,jdbcType=INTEGER},
+      </if>
+      <if test= "transmissionTypes != null">
+         #{transmissionTypes,jdbcType=INTEGER},
+      </if>
+      <if test= "beginTime != null">
+         #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "createTime != null">
+         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "status != null">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "createUser != null">
+         #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test= "receivingEquipment != null">
+         #{receivingEquipment,jdbcType=INTEGER},
+      </if>
+      <if test= "returnMessage != null">
+         #{returnMessage,jdbcType=VARCHAR},
+      </if>
+      <if test= "ticker != null">
+         #{ticker,jdbcType=VARCHAR},
+      </if>
+      <if test= "readStatus != null">
+         #{readStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "extendContent != null">
+         #{extendContent,jdbcType=VARCHAR},
+      </if>
+      <if test= "alias != null">
+         #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test= "createTime == null">
+         CURRENT_TIMESTAMP(),
+      </if>
+    </trim>
+  </insert>
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.umeng.push.entity.MessageUmeng" >
+   update td_message
+    <set>
+      <if test="messageId !=null">
+      message_id = #{messageId,jdbcType=INTEGER},
+      </if>
+      <if test="applicationType !=null">
+      application_type = #{applicationType,jdbcType=INTEGER},
+      </if>
+      <if test="title !=null">
+      title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="messageContent !=null">
+      message_content = #{messageContent,jdbcType=VARCHAR},
+      </if>
+      <if test="userType !=null">
+      user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="transmissionTypes !=null">
+      transmission_types = #{transmissionTypes,jdbcType=INTEGER},
+      </if>
+      <if test="beginTime !=null">
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime !=null">
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status !=null">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createUser !=null">
+      create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingEquipment !=null">
+      receiving_equipment = #{receivingEquipment,jdbcType=INTEGER},
+      </if>
+      <if test="returnMessage !=null">
+      return_message = #{returnMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="ticker !=null">
+      ticker = #{ticker,jdbcType=VARCHAR},
+      </if>
+      <if test="readStatus !=null">
+      read_status = #{readStatus,jdbcType=INTEGER},
+      </if>
+      <if test="extendContent !=null">
+      extend_content = #{extendContent,jdbcType=VARCHAR},
+      </if>
+      <if test="alias !=null">
+      alias = #{alias,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </update>
+  
+  
+    <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.umeng.push.entity.MessageUmeng" >
+    select 
+     <include refid="Base_Column_List"/>
+    from td_message where message_id = #{messageId,jdbcType=INTEGER}
+  </select>
+  
+  
+    <delete id="deleteByPrimaryKey"  parameterType="com.hy.umeng.push.entity.MessageUmeng" >
+    	delete from td_message where message_id = #{messageId,jdbcType=INTEGER}
+  	</delete>
+</mapper>

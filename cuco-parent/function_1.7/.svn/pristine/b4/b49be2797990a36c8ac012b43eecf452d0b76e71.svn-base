@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>待分配</title>
+
+    <link rel="stylesheet" href="../../css/css.css">
+
+    <style>
+        header {
+            height: 4rem;
+            background: #191919;
+            padding: 0 1.3rem;
+        }
+        
+        header .date {
+            color: #fff;
+            line-height: 4rem;
+        }
+        
+        section.content {}
+        
+        .content .list .title {
+            padding: 0 1.3rem;
+            background: #f2f2f2;
+            height: 3rem;
+            line-height: 3rem;
+            display: flex;
+            border-bottom:1px solid #e6e6e6;
+        }
+        
+        .content .list .title span {
+            flex: 1;
+            display: inline-block;
+        }
+        
+        .content .list .title span.mid {
+            flex: 2;
+            text-align:center;
+        }
+        
+        .list-body {
+            padding: 0 1.3rem;
+        }
+        
+        .list-body li {
+            display: flex;
+            line-height: 2rem;
+            align-items:center;
+            border-bottom:1px solid #e6e6e6;
+        }
+        
+        .list-body span {
+            flex: 1;
+            font-size: 1.4rem;
+        }
+        
+        .list-body span.mid {
+            flex: 2;
+            text-align:center;
+        }
+        
+        .list-body span i {
+            display: block;
+        }
+        .list-body label{
+            background:url(../../images/arrow_right_2.png) 0 0 no-repeat;
+            background-size:contain;
+            width:1.2rem;
+            height:1.2rem;
+            display:inline-block;
+            vertical-align:middle;
+            margin-left:.4rem;
+        }
+        
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4.5rem;
+            background: #1a1a1a;
+            width: 100%;
+            text-align: center;
+        }
+        
+        footer .back {
+            line-height: 4.5rem;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body >
+
+    <header>
+        <span class="date">9月1日</span>
+    </header>
+    <section class="content">
+        <div class="list">
+            <div class="title">
+                <span>车辆信息</span>
+                <span class="mid">车牌号</span>
+                <span>入库时间</span>
+            </div>
+            <ul class="list-body">
+                <li>
+                    <span>
+                        特斯拉
+                        <i>Model S 75D</i>
+                    </span>
+                    <span class="mid">
+                        京P·A87D9（红）
+                    </span>
+                    <span>
+                        7月25号<label class="icon"></label>
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        特斯拉
+                        <i>Model S 75D</i>
+                    </span>
+                    <span class="mid">
+                        京P·A87D9（红）
+                    </span>
+                    <span>
+                        7月25号
+                        <label class="icon"></label>
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        特斯拉
+                        <i>Model S 75D</i>
+                    </span>
+                    <span class="mid">
+                        京P·A87D9（红）
+                    </span>
+                    <span>
+                        7月25号
+                        <label class="icon"></label>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <footer>
+        <label class="back">返回</label>
+    </footer>
+</body>
+
+</html>

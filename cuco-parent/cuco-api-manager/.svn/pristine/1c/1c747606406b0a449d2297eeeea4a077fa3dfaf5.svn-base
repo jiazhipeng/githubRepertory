@@ -1,0 +1,61 @@
+package cn.cuco.controller.manager.member;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.cuco.service.member.info.MemberService;
+
+
+@RestController
+@RequestMapping(value = "/member")
+public class MemberController {
+	
+	@Autowired
+	private MemberService memberService;
+	
+	@RequestMapping(value = "getMemberListByPage", method = RequestMethod.POST)
+	public Object getMemberListByPage(){
+		
+		return "";
+	} 
+	
+	@RequestMapping(value = "getMemberById", method = RequestMethod.GET)
+	public Object getMemberById(){
+		
+		return "";
+	}
+	
+	@RequestMapping(value = "getAccountByMemberId", method = RequestMethod.GET)
+	public Object getAccountByMemberId(){
+		
+		return "";
+	}
+	
+	@RequestMapping(value = "getRiskByMemberId", method = RequestMethod.GET)
+	public Object getRiskByMemberId(){
+		
+		return "";
+	}
+	
+	@RequestMapping(value = "updateAccount", method = RequestMethod.POST)
+	public Object updateAccount(){
+		
+		return "";
+	}
+	
+	@RequestMapping(value = "updateStatus", method = RequestMethod.POST)
+	public Object updateStatus(){
+		
+		return "";
+	}
+	
+	@RequestMapping(value = "getAccountLogByMemberId", method = RequestMethod.GET)
+	public Object getAccountLogByMemberId(){
+		
+		return "";
+	}
+	
+	
+}

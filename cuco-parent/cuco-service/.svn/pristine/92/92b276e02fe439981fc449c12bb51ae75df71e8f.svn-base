@@ -1,0 +1,38 @@
+package cn.cuco.dao;
+
+import cn.cuco.entity.CarOperatePlan;
+
+public interface CarOperatePlanMapper<T> extends BaseDao<T> {
+
+	/**   
+	 * @Title: getCarPlanTotalByMember   
+	 * @Description: 根据车库查询会员占用的车辆总数
+	 * @param: @return      
+	 * @return: int      
+	 */
+	public int getCarPlanTotalByMember();
+	
+	/**   
+	 * @Title: getCarPlanTotalByMember   
+	 * @Description: 根据车库查询会员占用的车辆总数
+	 * @param: @return      
+	 * @return: int      
+	 */
+	public int getCarPlanTotalByUnMember();
+	
+	/**   
+	 * @Title: updateOperatePlanByCarUsedId   
+	 * @Description: 根据用车记录ID修改车辆运营计划 
+	 * @param: carOperatePlan
+	 * @return: CarOperatePlan      
+	 */
+	public CarOperatePlan updateOperatePlanByCarUsedId(CarOperatePlan carOperatePlan);
+	
+	/**   
+	 * @Title: getCarPlanTotalByCarTypeId   
+	 * @Description: 根据车型ID查询一个时间段内的运营计划数量
+	 * @param: @return      
+	 * @return: int      
+	 */
+	public int getCarPlanTotalByCarTypeId(CarOperatePlan carOperatePlan);
+}

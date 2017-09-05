@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.MemberMapper">
+	<!-- 分条件查询sql 语句 -->
+	<select id="getMemberCountByFuzzy" resultType="INTEGER"
+		parameterType="cn.cuco.entity.Member">
+		select count(1)
+		from td_member  
+		<where>
+			<if test="id != null ">
+				and id = #{id,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != '' ">
+				and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')   
+			</if>
+			<if test="mobile != null and mobile != '' ">
+				and mobile like CONCAT('%',#{mobile,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="source != null ">
+				and source = #{source,jdbcType=INTEGER}
+			</if>
+			<if test="sourceId != null ">
+				and source_id = #{sourceId,jdbcType=BIGINT}
+			</if>
+			<if test="sourceName != null and sourceName != '' ">
+				and source_name = #{sourceName,jdbcType=VARCHAR}
+			</if>
+			<if test="statuts != null ">
+				and statuts = #{statuts,jdbcType=INTEGER}
+			</if>
+			<if test="type != null ">
+				and type = #{type,jdbcType=INTEGER}
+			</if>
+			<if test="focusStatus != null ">
+				and focus_status = #{focusStatus,jdbcType=INTEGER}
+			</if>
+			<if test="cityId != null ">
+				and city_id = #{cityId,jdbcType=BIGINT}
+			</if>
+			<if test="cityCode != null and cityCode != '' ">
+				and city_code = #{cityCode,jdbcType=VARCHAR}
+			</if>
+			<if test="cityName != null and cityName != '' ">
+				and city_name = #{cityName,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditNum != null and riskAuditNum != '' ">
+				and risk_audit_num = #{riskAuditNum,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditStatus != null ">
+				and risk_audit_status = #{riskAuditStatus,jdbcType=INTEGER}
+			</if>
+			<if test="nationality != null and nationality != '' ">
+				and nationality = #{nationality,jdbcType=VARCHAR}
+			</if>
+			<if test="nationalityId != null ">
+				and nationality_id = #{nationalityId,jdbcType=BIGINT}
+			</if>
+			<if test="idcard != null and idcard != '' ">
+				and idcard = #{idcard,jdbcType=VARCHAR}
+			</if>
+			<if test= "registerStartDate != null and  registerEndDate != null">
+        		and created between #{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test= "registerStartDate != null and  registerEndDate == null">
+      			and created >= #{registerStartDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test= "registerStartDate == null and  registerEndDate != null">
+      			and created <![CDATA[<= ]]> #{registerStartDate,jdbcType=TIMESTAMP}
+      		</if>
+		</where>
+	</select>
+
+	<!-- 分条件查询sql 语句 -->
+	<select id="getMemberListByFuzzy" resultMap="BaseResultMap"
+		parameterType="cn.cuco.entity.Member">
+		select
+		<include refid="Base_Column_List" />
+		from td_member
+		<where>
+			<if test="id != null ">
+				and id = #{id,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != '' ">
+				and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')   
+			</if>
+			<if test="mobile != null and mobile != '' ">
+				and mobile like CONCAT('%',#{mobile,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="source != null ">
+				and source = #{source,jdbcType=INTEGER}
+			</if>
+			<if test="sourceId != null ">
+				and source_id = #{sourceId,jdbcType=BIGINT}
+			</if>
+			<if test="sourceName != null and sourceName != '' ">
+				and source_name = #{sourceName,jdbcType=VARCHAR}
+			</if>
+			<if test="statuts != null ">
+				and statuts = #{statuts,jdbcType=INTEGER}
+			</if>
+			<if test="type != null ">
+				and type = #{type,jdbcType=INTEGER}
+			</if>
+			<if test="focusStatus != null ">
+				and focus_status = #{focusStatus,jdbcType=INTEGER}
+			</if>
+			<if test="cityId != null ">
+				and city_id = #{cityId,jdbcType=BIGINT}
+			</if>
+			<if test="cityCode != null and cityCode != '' ">
+				and city_code = #{cityCode,jdbcType=VARCHAR}
+			</if>
+			<if test="cityName != null and cityName != '' ">
+				and city_name = #{cityName,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditNum != null and riskAuditNum != '' ">
+				and risk_audit_num = #{riskAuditNum,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditStatus != null ">
+				and risk_audit_status = #{riskAuditStatus,jdbcType=INTEGER}
+			</if>
+			<if test="nationality != null and nationality != '' ">
+				and nationality = #{nationality,jdbcType=VARCHAR}
+			</if>
+			<if test="nationalityId != null ">
+				and nationality_id = #{nationalityId,jdbcType=BIGINT}
+			</if>
+			<if test="idcard != null and idcard != '' ">
+				and idcard = #{idcard,jdbcType=VARCHAR}
+			</if>
+			<if test= "registerStartDate != null and  registerEndDate != null">
+        		and created between #{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test= "registerStartDate != null and  registerEndDate == null">
+      			and created >= #{registerStartDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test= "registerStartDate == null and  registerEndDate != null">
+      			and created <![CDATA[<= ]]> #{registerStartDate,jdbcType=TIMESTAMP}
+      		</if>
+		</where>
+		order by created desc
+	</select>
+
+	<select id="getMemberCountWithUseCarTimeByFuzzy" resultType="INTEGER"
+		parameterType="cn.cuco.entity.Member">
+		select count(1) from td_member m,
+			(
+				SELECT
+					c.member_id,c.actual_car_used_time
+				FROM
+					td_member_car_used c,
+					(
+						SELECT
+							a.member_id,
+							max(a.actual_car_used_time) max_time
+						FROM
+							td_member_car_used a
+						WHERE
+							a.used_status != 3
+							<if test= "useCarStartDate != null and useCarEndDate != null">
+				       			and a.actual_car_used_time between #{useCarStartDate,jdbcType=TIMESTAMP} AND #{useCarEndDate,jdbcType=TIMESTAMP}
+				      		</if>
+				      		<if test= "useCarStartDate != null and useCarEndDate == null">
+				      			and a.actual_car_used_time >= #{useCarStartDate,jdbcType=TIMESTAMP}
+				      		</if>
+				      		<if test= "useCarStartDate == null and useCarEndDate != null">
+				      			and a.actual_car_used_time <![CDATA[<= ]]> #{useCarEndDate,jdbcType=TIMESTAMP}
+				      		</if>
+						GROUP BY
+							a.member_id
+					) b
+				WHERE
+					c.member_id = b.member_id
+				AND c.actual_car_used_time = b.max_time
+			) d
+		<where>
+			m.id = d.member_id
+			<if test="id != null ">
+				and m.id = #{id,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != '' ">
+				and m.name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')   
+			</if>
+			<if test="mobile != null and mobile != '' ">
+				and m.mobile like CONCAT('%',#{mobile,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="source != null ">
+				and m.source = #{source,jdbcType=INTEGER}
+			</if>
+			<if test="sourceId != null ">
+				and m.source_id = #{sourceId,jdbcType=BIGINT}
+			</if>
+			<if test="sourceName != null and sourceName != '' ">
+				and m.source_name = #{sourceName,jdbcType=VARCHAR}
+			</if>
+			<if test="statuts != null ">
+				and m.statuts = #{statuts,jdbcType=INTEGER}
+			</if>
+			<if test="type != null ">
+				and m.type = #{type,jdbcType=INTEGER}
+			</if>
+			<if test="focusStatus != null ">
+				and m.focus_status = #{focusStatus,jdbcType=INTEGER}
+			</if>
+			<if test="cityId != null ">
+				and m.city_id = #{cityId,jdbcType=BIGINT}
+			</if>
+			<if test="cityCode != null and cityCode != '' ">
+				and m.city_code = #{cityCode,jdbcType=VARCHAR}
+			</if>
+			<if test="cityName != null and cityName != '' ">
+				and m.city_name = #{cityName,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditNum != null and riskAuditNum != '' ">
+				and m.risk_audit_num = #{riskAuditNum,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditStatus != null ">
+				and m.risk_audit_status = #{riskAuditStatus,jdbcType=INTEGER}
+			</if>
+			<if test="nationality != null and nationality != '' ">
+				and m.nationality = #{nationality,jdbcType=VARCHAR}
+			</if>
+			<if test="nationalityId != null ">
+				and m.nationality_id = #{nationalityId,jdbcType=BIGINT}
+			</if>
+			<if test="idcard != null and idcard != '' ">
+				and m.idcard = #{idcard,jdbcType=VARCHAR}
+			</if>
+			<if test= "registerStartDate != null and  registerEndDate != null">
+        		and m.created between #{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test= "registerStartDate != null and  registerEndDate == null">
+      			and m.created >= #{registerStartDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test= "registerStartDate == null and  registerEndDate != null">
+      			and m.created <![CDATA[<= ]]> #{registerStartDate,jdbcType=TIMESTAMP}
+      		</if>
+		</where>
+	</select>
+	
+	<select id="getMemberListWithUseCarTimeByFuzzy" resultMap="BaseResultMap"
+		parameterType="cn.cuco.entity.Member">
+		select <include refid="Base_Column_List" /> from td_member m,
+			(
+				SELECT
+					c.member_id,c.actual_car_used_time
+				FROM
+					td_member_car_used c,
+					(
+						SELECT
+							a.member_id,
+							max(a.actual_car_used_time) max_time
+						FROM
+							td_member_car_used a
+						WHERE
+							a.used_status != 3
+							<if test= "useCarStartDate != null and useCarEndDate != null">
+				       			and a.actual_car_used_time between #{useCarStartDate,jdbcType=TIMESTAMP} AND #{useCarEndDate,jdbcType=TIMESTAMP}
+				      		</if>
+				      		<if test= "useCarStartDate != null and useCarEndDate == null">
+				      			and a.actual_car_used_time >= #{useCarStartDate,jdbcType=TIMESTAMP}
+				      		</if>
+				      		<if test= "useCarStartDate == null and useCarEndDate != null">
+				      			and a.actual_car_used_time <![CDATA[<= ]]> #{useCarEndDate,jdbcType=TIMESTAMP}
+				      		</if>
+						GROUP BY
+							a.member_id
+					) b
+				WHERE
+					c.member_id = b.member_id
+				AND c.actual_car_used_time = b.max_time
+			) d
+		<where>
+			m.id = d.member_id
+			<if test="id != null ">
+				and m.id = #{id,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != '' ">
+				and m.name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')   
+			</if>
+			<if test="mobile != null and mobile != '' ">
+				and m.mobile like CONCAT('%',#{mobile,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="source != null ">
+				and m.source = #{source,jdbcType=INTEGER}
+			</if>
+			<if test="sourceId != null ">
+				and m.source_id = #{sourceId,jdbcType=BIGINT}
+			</if>
+			<if test="sourceName != null and sourceName != '' ">
+				and m.source_name = #{sourceName,jdbcType=VARCHAR}
+			</if>
+			<if test="statuts != null ">
+				and m.statuts = #{statuts,jdbcType=INTEGER}
+			</if>
+			<if test="type != null ">
+				and m.type = #{type,jdbcType=INTEGER}
+			</if>
+			<if test="focusStatus != null ">
+				and m.focus_status = #{focusStatus,jdbcType=INTEGER}
+			</if>
+			<if test="cityId != null ">
+				and m.city_id = #{cityId,jdbcType=BIGINT}
+			</if>
+			<if test="cityCode != null and cityCode != '' ">
+				and m.city_code = #{cityCode,jdbcType=VARCHAR}
+			</if>
+			<if test="cityName != null and cityName != '' ">
+				and m.city_name = #{cityName,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditNum != null and riskAuditNum != '' ">
+				and m.risk_audit_num = #{riskAuditNum,jdbcType=VARCHAR}
+			</if>
+			<if test="riskAuditStatus != null ">
+				and m.risk_audit_status = #{riskAuditStatus,jdbcType=INTEGER}
+			</if>
+			<if test="nationality != null and nationality != '' ">
+				and m.nationality = #{nationality,jdbcType=VARCHAR}
+			</if>
+			<if test="nationalityId != null ">
+				and m.nationality_id = #{nationalityId,jdbcType=BIGINT}
+			</if>
+			<if test="idcard != null and idcard != '' ">
+				and m.idcard = #{idcard,jdbcType=VARCHAR}
+			</if>
+			<if test= "registerStartDate != null and  registerEndDate != null">
+        		and m.created between #{beginDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test= "registerStartDate != null and  registerEndDate == null">
+      			and m.created >= #{registerStartDate,jdbcType=TIMESTAMP}
+      		</if>
+      		<if test= "registerStartDate == null and  registerEndDate != null">
+      			and m.created <![CDATA[<= ]]> #{registerStartDate,jdbcType=TIMESTAMP}
+      		</if>
+		</where>
+		order by m.created desc
+	</select>
+</mapper>

@@ -1,0 +1,26 @@
+package cn.cuco.dao;
+
+import java.util.List;
+
+import cn.cuco.entity.OrderCarUsed;
+
+public interface OrderCarUsedMapper<T> extends BaseDao<T> {
+	
+	/** 
+	* @Title: getOrderCarUsedCountByFuzzy 
+	* @Description: 模糊查询用车结算
+	* @author zc.du
+	* @param orderCarUsed
+	* @return Integer
+	*/
+	public Integer getOrderCarUsedCountByFuzzy(OrderCarUsed orderCarUsed);
+
+	/** 
+	* @Title: getMemberListByFuzzy 
+	* @Description: 模糊查询用车结算
+	* @author zc.du
+	* @param orderCarUsed
+	* @return List<OrderCarUsed>
+	*/
+	public List<OrderCarUsed> getOrderCarUsedListByFuzzy(OrderCarUsed orderCarUsed);
+}

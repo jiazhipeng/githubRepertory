@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.PowerUsedTimelogMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.PowerUsedTimelog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="power_used_id" property="powerUsedId" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="startime" property="startime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.PowerUsedTimelog" >
+       select  count(1) 
+    from td_power_used_timelog  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "powerUsedId != null ">
+        and power_used_id = #{powerUsedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "endtime != null ">
+        and endtime = #{endtime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "startime != null ">
+        and startime = #{startime,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.PowerUsedTimelog" >
+       select  <include refid="Base_Column_List" />
+    from td_power_used_timelog  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "powerUsedId != null ">
+        and power_used_id = #{powerUsedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "endtime != null ">
+        and endtime = #{endtime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "startime != null ">
+        and startime = #{startime,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, power_used_id, created, 
+      endtime, startime
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.PowerUsedTimelog" >
+    select 
+      id, power_used_id, created, 
+      endtime, startime
+    from td_power_used_timelog where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.PowerUsedTimelog" >
+    delete from td_power_used_timelog where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_power_used_timelog where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.PowerUsedTimelog" >
+    insert into td_power_used_timelog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "powerUsedId != null ">
+         power_used_id,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "endtime != null ">
+         endtime,
+      </if>
+      <if test= "startime != null ">
+         startime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "powerUsedId != null ">
+         #{powerUsedId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "endtime != null ">
+         #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "startime != null ">
+         #{startime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_power_used_timelog (
+         id,
+         power_used_id,
+         created,
+         endtime,
+         startime)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.powerUsedId,jdbcType=BIGINT},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.endtime,jdbcType=TIMESTAMP},
+         #{item.startime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.PowerUsedTimelog" >
+    update td_power_used_timelog
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "powerUsedId != null ">
+      power_used_id = #{powerUsedId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "endtime != null ">
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "startime != null ">
+      startime = #{startime,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

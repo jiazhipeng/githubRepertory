@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>权益金额</title>
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/2v.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="greyBg">
+    <div class="p-info-page">
+        <div class="p-info-sec">
+            积分：400分
+        </div>
+        <div class="title">积分明细</div>
+        <ul class="p-info-list integral-list">
+            <li>
+                <div class="date">2016-7-8</div>
+                <div>增加</div>
+                <div class="num red">+200分</div>
+            </li>
+            <li>
+                <div class="date">2016-7-8</div>
+                <div>增加</div>
+                <div class="num red">+200分</div>
+            </li>
+            <li>
+                <div class="date">2016-7-8</div>
+                <div>增加</div>
+                <div class="num red">+200分</div>
+            </li>
+            <li>
+                <div class="date">2016-7-8</div>
+                <div>增加</div>
+                <div class="num red">+200分</div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

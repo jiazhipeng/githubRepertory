@@ -1,0 +1,73 @@
+package cn.cuco.service.member.credit;
+
+import java.util.List;
+
+import cn.cuco.entity.CreditAudit;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.page.PageResult;
+
+/** 
+* @ClassName: CreditAuditService 
+* @Description: 风控审核相关接口
+* @author zc.du
+* @date 2017年2月23日 上午9:16:43  
+*/
+public interface CreditAuditService {
+	
+	/** 
+	* @Title: createCreditAudit 
+	* @Description: 提交风控审核
+	* @author zc.du
+	* @param creditAudit
+	* @return CreditAudit
+	*/
+	public CreditAudit createCreditAudit(CreditAudit creditAudit);
+	
+	/** 
+	* @Title: getCreditAudit 
+	* @Description: 查询审核详情
+	* @author zc.du
+	* @param creditAudit
+	* @return CreditAudit
+	*/
+	public CreditAudit getCreditAudit(CreditAudit creditAudit);
+
+	/** 
+	* @Title: getCreditAuditList 
+	* @Description: 查询审核列表
+	* @author zc.du
+	* @param creditAudit
+	* @return
+	* @return List<CreditAudit>
+	*/
+	public List<CreditAudit> getCreditAuditList(CreditAudit creditAudit);
+	
+	/** 
+	* @Title: getCreditAuditListByPage 
+	* @Description: 分页获取审核列表
+	* @author zc.du
+	* @param creditAudit
+	* @return
+	* @return PageResult<CreditAudit>
+	*/
+	public PageResult<CreditAudit> getCreditAuditListByPage(CreditAudit creditAudit); 
+	
+	/** 
+     * @Title: getOrderRenewalLogList 
+     * @Description: 查询审核日志列表
+     * @author zc.du
+     * @param creditAudit
+     * @return List<OperateLog>
+     */
+     public List<OperateLog> getCreditAuditLogList(CreditAudit creditAudit);
+     
+     /** 
+      * @Title: getOrderRenewalLogListByPage 
+      * @Description: 分页查询审核日志列表
+      * @author zc.du
+      * @param creditAudit
+      * @return PageResult<OperateLog>
+      */
+      public PageResult<OperateLog> getCreditAuditLogListByPage(CreditAudit creditAudit);
+}

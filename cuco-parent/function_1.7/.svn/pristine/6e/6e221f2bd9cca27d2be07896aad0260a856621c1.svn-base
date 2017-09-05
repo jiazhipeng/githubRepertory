@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.Order" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_mobile" property="memberMobile" jdbcType="VARCHAR" />
+    <result column="item_id" property="itemId" jdbcType="BIGINT" />
+    <result column="car_type" property="carType" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="operate_num" property="operateNum" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="DECIMAL" />
+    <result column="payment" property="payment" jdbcType="DECIMAL" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="order_from" property="orderFrom" jdbcType="INTEGER" />
+    <result column="car_brand" property="carBrand" jdbcType="VARCHAR" />
+    <result column="apply_intention" property="applyIntention" jdbcType="VARCHAR" />
+    <result column="trial_status" property="trialStatus" jdbcType="INTEGER" />
+    <result column="payment_deposit" property="paymentDeposit" jdbcType="DECIMAL" />
+    <result column="coupon_id" property="couponId" jdbcType="BIGINT" />
+    <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+    <result column="coupon_price" property="couponPrice" jdbcType="DECIMAL" />
+    <result column="emergency_contact" property="emergencyContact" jdbcType="VARCHAR" />
+    <result column="relationship" property="relationship" jdbcType="VARCHAR" />
+    <result column="emergency_mobile" property="emergencyMobile" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="family_status" property="familyStatus" jdbcType="INTEGER" />
+    <result column="marital_status" property="maritalStatus" jdbcType="INTEGER" />
+    <result column="corporate_name" property="corporateName" jdbcType="VARCHAR" />
+    <result column="wechat_num" property="wechatNum" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="qqcode" property="qqcode" jdbcType="VARCHAR" />
+    <result column="clue_type" property="clueType" jdbcType="INTEGER" />
+    <result column="monthly_income" property="monthlyIncome" jdbcType="INTEGER" />
+    <result column="invalid_reason" property="invalidReason" jdbcType="INTEGER" />
+    <result column="communication_time" property="communicationTime" jdbcType="TIMESTAMP" />
+    <result column="next_communication_time" property="nextCommunicationTime" jdbcType="TIMESTAMP" />
+    <result column="payment_type" property="paymentType" jdbcType="INTEGER" />
+    <result column="payment_date" property="paymentDate" jdbcType="TIMESTAMP" />
+    <result column="order_from_id" property="orderFromId" jdbcType="BIGINT" />
+    <result column="sure_name" property="sureName" jdbcType="VARCHAR" />
+  </resultMap>
+
+ <!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Order" >
+       select  <include refid="Base_Column_List" />
+    from td_order  
+  <where>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "orderFrom != null ">
+        and order_from = #{orderFrom,jdbcType=INTEGER}
+      </if>
+      <if test= "orderFromId != null ">
+        and order_from_id = #{orderFromId,jdbcType=BIGINT}
+      </if>
+  </where>
+  	order by created desc
+  </select>
+  
+  <!-- 根据用户ID查看未完成的订单  -->
+  <select id="selectOrderListByNoComplete" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Order" >
+       select  <include refid="Base_Column_List" />
+    from td_order where status not in (6, 11 , 12)
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+  </select>
+  <!-- 根据用户ID查看已完成的订单 -->
+  <select id="selectOrderListByComplete" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Order" >
+       select  <include refid="Base_Column_List" />
+    from td_order where status = 11
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+  </select>
+  <!-- 根据输入的姓名手机号或者联系人号码进行模糊搜索  -->
+  <select id="findOrderListByFuzzySearch" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Order" >
+       select  <include refid="Base_Column_List" />
+       from td_order 
+      <where>
+	    <if test="memberName!=null and memberName!=''">
+			  member_name like CONCAT('%',CONCAT(#{memberName,jdbcType=VARCHAR},'%'))
+		</if>
+		 <if test="memberMobile!=null and memberMobile!=''">
+			  or member_mobile like CONCAT('%',CONCAT(#{memberMobile,jdbcType=VARCHAR},'%'))
+		</if>
+	    </where>
+			order by created desc
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, order_num, member_id, 
+      member_name, member_mobile, item_id, 
+      car_type, created, status, 
+      modifier_id, modifier, lasttime_modify, 
+      remark, operate_num, total, 
+      payment, city_id, city_name, 
+      order_from, car_brand, apply_intention, 
+      trial_status, payment_deposit,coupon_id,coupon_name,coupon_price, emergency_contact, 
+      relationship, emergency_mobile, address, 
+      family_status, marital_status, corporate_name, 
+      wechat_num, position, qqcode, 
+      clue_type,
+      monthly_income, invalid_reason, communication_time, 
+      next_communication_time, payment_type, payment_date, 
+      order_from_id,sure_name
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Order" >
+    select 
+      id, order_num, member_id, 
+      member_name, member_mobile, item_id, 
+      car_type, created, status, 
+      modifier_id, modifier, lasttime_modify, 
+      remark, operate_num, total, 
+      payment, city_id, city_name, 
+      order_from, car_brand, apply_intention, 
+      trial_status, payment_deposit, coupon_id, 
+      coupon_name, coupon_price, emergency_contact, 
+      relationship, emergency_mobile, address, 
+      family_status, marital_status, corporate_name, 
+      wechat_num, position, qqcode, 
+      clue_type,
+      monthly_income, invalid_reason, communication_time, 
+      next_communication_time, payment_type, payment_date, 
+      order_from_id,sure_name
+    from td_order where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.Order" >
+    delete from td_order where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_order where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.gcar.entity.Order" useGeneratedKeys="true" keyProperty="id">
+    insert into td_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "orderNum != null and orderNum != '' ">
+         order_num,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         member_mobile,
+      </if>
+      <if test= "itemId != null ">
+         item_id,
+      </if>
+      <if test= "carType != null and carType != '' ">
+         car_type,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "remark != null and remark != '' ">
+         remark,
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+         operate_num,
+      </if>
+      <if test= "total != null ">
+         total,
+      </if>
+      <if test= "payment != null ">
+         payment,
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+         city_id,
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         city_name,
+      </if>
+      <if test= "orderFrom != null ">
+         order_from,
+      </if>
+      <if test= "carBrand != null and carBrand != '' ">
+         car_brand,
+      </if>
+      <if test= "applyIntention != null and applyIntention != '' ">
+         apply_intention,
+      </if>
+      <if test= "trialStatus != null ">
+         trial_status,
+      </if>
+      <if test= "paymentDeposit != null ">
+         payment_deposit,
+      </if>
+      <if test= "couponId != null ">
+         coupon_id,
+      </if>
+      <if test= "couponName != null and couponName != '' ">
+         coupon_name,
+      </if>
+      <if test= "couponPrice != null ">
+         coupon_price,
+      </if>
+       <if test= "emergencyContact != null and emergencyContact != '' ">
+         emergency_contact,
+      </if>
+      <if test= "relationship != null and relationship != '' ">
+         relationship,
+      </if>
+      <if test= "emergencyMobile != null and emergencyMobile != '' ">
+         emergency_mobile,
+      </if>
+      <if test= "address != null and address != '' ">
+         address,
+      </if>
+      <if test= "familyStatus != null ">
+         family_status,
+      </if>
+      <if test= "maritalStatus != null ">
+         marital_status,
+      </if>
+      <if test= "corporateName != null and corporateName != '' ">
+         corporate_name,
+      </if>
+      <if test= "wechatNum != null and wechatNum != '' ">
+         wechat_num,
+      </if>
+      <if test= "position != null and position != '' ">
+         position,
+      </if>
+      <if test= "qqcode != null and qqcode != '' ">
+         qqcode,
+      </if>
+      <if test= "clueType != null ">
+         clue_type,
+      </if>
+      <if test= "monthlyIncome != null ">
+         monthly_income,
+      </if>
+      <if test= "invalidReason != null ">
+         invalid_reason,
+      </if>
+      <if test= "communicationTime != null ">
+         communication_time,
+      </if>
+      <if test= "nextCommunicationTime != null ">
+         next_communication_time,
+      </if>
+      <if test= "paymentType != null ">
+         payment_type,
+      </if>
+      <if test= "paymentDate != null ">
+         payment_date,
+      </if>
+      <if test= "orderFromId != null ">
+         order_from_id,
+      </if>
+      <if test= "sureName != null and sureName != '' ">
+         sure_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "orderNum != null and orderNum != '' ">
+         #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "itemId != null ">
+         #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test= "carType != null and carType != '' ">
+         #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remark != null and remark != '' ">
+         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+         #{operateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "total != null ">
+         #{total,jdbcType=DECIMAL},
+      </if>
+      <if test= "payment != null ">
+         #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+         #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "orderFrom != null ">
+         #{orderFrom,jdbcType=INTEGER},
+      </if>
+      <if test= "carBrand != null and carBrand != '' ">
+         #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test= "applyIntention != null and applyIntention != '' ">
+         #{applyIntention,jdbcType=VARCHAR},
+      </if>
+      <if test= "trialStatus != null ">
+         #{trialStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "paymentDeposit != null ">
+         #{paymentDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test= "couponId != null ">
+         #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test= "couponName != null and couponName != '' ">
+          #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test= "couponPrice != null ">
+         #{couponPrice,jdbcType=DECIMAL},
+      </if>
+       <if test= "emergencyContact != null and emergencyContact != '' ">
+         #{emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test= "relationship != null and relationship != '' ">
+         #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test= "emergencyMobile != null and emergencyMobile != '' ">
+         #{emergencyMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "address != null and address != '' ">
+         #{address,jdbcType=VARCHAR},
+      </if>
+      <if test= "familyStatus != null ">
+         #{familyStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "maritalStatus != null ">
+         #{maritalStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "corporateName != null and corporateName != '' ">
+         #{corporateName,jdbcType=VARCHAR},
+      </if>
+      <if test= "wechatNum != null and wechatNum != '' ">
+         #{wechatNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "position != null and position != '' ">
+         #{position,jdbcType=VARCHAR},
+      </if>
+      <if test= "qqcode != null and qqcode != '' ">
+         #{qqcode,jdbcType=VARCHAR},
+      </if>
+      <if test= "clueType != null ">
+         #{clueType,jdbcType=INTEGER},
+      </if>
+      <if test= "monthlyIncome != null ">
+         #{monthlyIncome,jdbcType=INTEGER},
+      </if>
+      <if test= "invalidReason != null ">
+         #{invalidReason,jdbcType=INTEGER},
+      </if>
+      <if test= "communicationTime != null ">
+         #{communicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "nextCommunicationTime != null ">
+         #{nextCommunicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "paymentType != null ">
+         #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test= "paymentDate != null ">
+         #{paymentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "orderFromId != null ">
+         #{orderFromId,jdbcType=BIGINT},
+      </if>
+      <if test= "sureName != null and sureName != '' ">
+         #{sureName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_order (
+         id,
+         order_num,
+         member_id,
+         member_name,
+         member_mobile,
+         item_id,
+         car_type,
+         created,
+         status,
+         modifier_id,
+         modifier,
+         lasttime_modify,
+         remark,
+         operate_num,
+         total,
+         payment,
+         city_id,
+         city_name,
+         order_from,
+         car_brand,
+         apply_intention,
+         trial_status,
+         payment_deposit,
+         coupon_id,
+         coupon_name,
+         coupon_price,
+         emergency_contact,
+         relationship,
+         emergency_mobile,
+         address,
+         family_status,
+         marital_status,
+         corporate_name,
+         wechat_num,
+         position,
+         qqcode,
+         clue_type,
+         monthly_income,
+         invalid_reason,
+         communication_time,
+         next_communication_time,
+         payment_type,
+         payment_date,
+         order_from_id,
+         sure_name)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.orderNum,jdbcType=VARCHAR},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.memberMobile,jdbcType=VARCHAR},
+         #{item.itemId,jdbcType=BIGINT},
+         #{item.carType,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.status,jdbcType=INTEGER},
+         #{item.modifierId,jdbcType=VARCHAR},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.remark,jdbcType=VARCHAR},
+         #{item.operateNum,jdbcType=VARCHAR},
+         #{item.total,jdbcType=DECIMAL},
+         #{item.payment,jdbcType=DECIMAL},
+         #{item.cityId,jdbcType=VARCHAR},
+         #{item.cityName,jdbcType=VARCHAR},
+         #{item.orderFrom,jdbcType=INTEGER},
+         #{item.carBrand,jdbcType=VARCHAR},
+         #{item.applyIntention,jdbcType=VARCHAR},
+         #{item.trialStatus,jdbcType=INTEGER},
+         #{item.paymentDeposit,jdbcType=DECIMAL},
+         #{item.couponId,jdbcType=BIGINT},
+         #{item.couponName,jdbcType=VARCHAR},
+         #{item.couponPrice,jdbcType=DECIMAL},
+         #{item.emergencyContact,jdbcType=VARCHAR},
+         #{item.relationship,jdbcType=VARCHAR},
+         #{item.emergencyMobile,jdbcType=VARCHAR},
+         #{item.address,jdbcType=VARCHAR},
+         #{item.familyStatus,jdbcType=INTEGER},
+         #{item.maritalStatus,jdbcType=INTEGER},
+         #{item.corporateName,jdbcType=VARCHAR},
+         #{item.wechatNum,jdbcType=VARCHAR},
+         #{item.position,jdbcType=VARCHAR},
+         #{item.qqcode,jdbcType=VARCHAR},
+         #{item.clueType,jdbcType=INTEGER},
+         #{item.monthlyIncome,jdbcType=INTEGER},
+         #{item.invalidReason,jdbcType=INTEGER},
+         #{item.communicationTime,jdbcType=TIMESTAMP},
+         #{item.nextCommunicationTime,jdbcType=TIMESTAMP},
+         #{item.paymentType,jdbcType=INTEGER},
+         #{item.paymentDate,jdbcType=TIMESTAMP},
+         #{item.orderFromId,jdbcType=BIGINT},
+         #{item.sureName,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.Order" >
+    update td_order
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "orderNum != null and orderNum != '' ">
+      order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+      member_mobile = #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "itemId != null ">
+      item_id = #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test= "carType != null and carType != '' ">
+      car_type = #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remark != null and remark != '' ">
+      remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "remark == '' ">
+      remark = null,
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+      operate_num = #{operateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "total != null ">
+      total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test= "payment != null ">
+      payment = #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+      city_id = #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+      city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "orderFrom != null ">
+      order_from = #{orderFrom,jdbcType=INTEGER},
+      </if>
+      <if test= "carBrand != null and carBrand != '' ">
+      car_brand = #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test= "applyIntention != null and applyIntention != '' ">
+      apply_intention = #{applyIntention,jdbcType=VARCHAR},
+      </if>
+      <if test= "trialStatus != null ">
+      trial_status = #{trialStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "paymentDeposit != null ">
+      payment_deposit = #{paymentDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test= "couponId != null ">
+      coupon_id = #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test= "couponName != null and couponName != '' ">
+      coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test= "couponPrice != null ">
+      coupon_price = #{couponPrice,jdbcType=DECIMAL},
+      </if>
+        <if test= "emergencyContact != null and emergencyContact != '' ">
+      emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test= "relationship != null and relationship != '' ">
+      relationship = #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test= "emergencyMobile != null and emergencyMobile != '' ">
+      emergency_mobile = #{emergencyMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "address != null and address != '' ">
+      address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test= "familyStatus != null ">
+      family_status = #{familyStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "maritalStatus != null ">
+      marital_status = #{maritalStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "corporateName != null and corporateName != '' ">
+      corporate_name = #{corporateName,jdbcType=VARCHAR},
+      </if>
+      <if test= "wechatNum != null and wechatNum != '' ">
+      wechat_num = #{wechatNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "position != null and position != '' ">
+      position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test= "qqcode != null and qqcode != '' ">
+      qqcode = #{qqcode,jdbcType=VARCHAR},
+      </if>
+      <if test= "clueType != null ">
+      clue_type = #{clueType,jdbcType=INTEGER},
+      </if>
+      <if test= "monthlyIncome != null ">
+      monthly_income = #{monthlyIncome,jdbcType=INTEGER},
+      </if>
+      <if test= "invalidReason != null ">
+      invalid_reason = #{invalidReason,jdbcType=INTEGER},
+      </if>
+      <if test= "communicationTime != null ">
+      communication_time = #{communicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "nextCommunicationTime != null ">
+      next_communication_time = #{nextCommunicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "paymentType != null ">
+      payment_type = #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test= "paymentDate != null ">
+      payment_date = #{paymentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "orderFromId != null ">
+      order_from_id = #{orderFromId,jdbcType=BIGINT},
+      </if>
+      <if test= "sureName != null and sureName != '' ">
+      sure_name = #{sureName,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

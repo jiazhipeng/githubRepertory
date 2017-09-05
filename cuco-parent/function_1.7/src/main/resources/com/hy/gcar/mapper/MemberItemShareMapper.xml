@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.MemberItemShareMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.MemberItemShare" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_item_id" property="memberItemId" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="is_main" property="isMain" jdbcType="INTEGER" />
+    <result column="is_share" property="isShare" jdbcType="INTEGER" />
+    <result column="parent_member_id" property="parentMemberId" jdbcType="BIGINT" />
+    <result column="parent_member_type" property="parentMemberType" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.MemberItemShare" >
+       select  count(1) 
+    from tr_member_item_share  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "isMain != null ">
+        and is_main = #{isMain,jdbcType=INTEGER}      
+      </if>
+      <if test= "isShare != null ">
+        and is_share = #{isShare,jdbcType=INTEGER}      
+      </if>
+      <if test= "parentMemberId != null ">
+        and parent_member_id = #{parentMemberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "parentMemberType != null ">
+        and parent_member_type = #{parentMemberType,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberItemShare" >
+       select  <include refid="Base_Column_List" />
+    from tr_member_item_share  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "isMain != null ">
+        and is_main = #{isMain,jdbcType=INTEGER}      
+      </if>
+      <if test= "isShare != null ">
+        and is_share = #{isShare,jdbcType=INTEGER}      
+      </if>
+      <if test= "parentMemberId != null ">
+        and parent_member_id = #{parentMemberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "parentMemberType != null ">
+        and parent_member_type = #{parentMemberType,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, member_item_id, member_id, 
+      is_main, is_share, parent_member_id, 
+      parent_member_type, created, modifier_id, 
+      modifier, lasttime_modify
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberItemShare" >
+    select 
+      id, member_item_id, member_id, 
+      is_main, is_share, parent_member_id, 
+      parent_member_type, created, modifier_id, 
+      modifier, lasttime_modify
+    from tr_member_item_share where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 根据会员ID查询不能创建订单的公用人列表 -->
+  <select id="selectByNoPersonalIsMain" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberItemShare" >
+    select <include refid="Base_Column_List" />
+    from tr_member_item_share where member_id != parent_member_id 
+    <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+    </if>
+  </select>
+  
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.MemberItemShare" >
+    delete from tr_member_item_share where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tr_member_item_share where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.MemberItemShare" >
+    insert into tr_member_item_share
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberItemId != null ">
+         member_item_id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "isMain != null ">
+         is_main,
+      </if>
+      <if test= "isShare != null ">
+         is_share,
+      </if>
+      <if test= "parentMemberId != null ">
+         parent_member_id,
+      </if>
+      <if test= "parentMemberType != null ">
+         parent_member_type,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemId != null ">
+         #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "isMain != null ">
+         #{isMain,jdbcType=INTEGER},
+      </if>
+      <if test= "isShare != null ">
+         #{isShare,jdbcType=INTEGER},
+      </if>
+      <if test= "parentMemberId != null ">
+         #{parentMemberId,jdbcType=BIGINT},
+      </if>
+      <if test= "parentMemberType != null ">
+         #{parentMemberType,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tr_member_item_share (
+         id,
+         member_item_id,
+         member_id,
+         is_main,
+         is_share,
+         parent_member_id,
+         parent_member_type,
+         created,
+         modifier_id,
+         modifier,
+         lasttime_modify)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.memberItemId,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.isMain,jdbcType=INTEGER},
+         #{item.isShare,jdbcType=INTEGER},
+         #{item.parentMemberId,jdbcType=BIGINT},
+         #{item.parentMemberType,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=VARCHAR},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.MemberItemShare" >
+    update tr_member_item_share
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemId != null ">
+      member_item_id = #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "isMain != null ">
+      is_main = #{isMain,jdbcType=INTEGER},
+      </if>
+      <if test= "isShare != null ">
+      is_share = #{isShare,jdbcType=INTEGER},
+      </if>
+      <if test= "parentMemberId != null ">
+      parent_member_id = #{parentMemberId,jdbcType=BIGINT},
+      </if>
+      <if test= "parentMemberType != null ">
+      parent_member_type = #{parentMemberType,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+	<select id="selectByMemberId" parameterType="Long" resultMap="BaseResultMap">
+		  select <include refid="Base_Column_List" />
+    	from tr_member_item_share where member_id = #{memberId,jdbcType=BIGINT}     
+	</select>
+</mapper>

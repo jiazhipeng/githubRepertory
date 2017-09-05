@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.OrderCarUsedMapper" >
+
+<!-- 分条件查询sql 语句 -->
+  <select id="getOrderCarUsedCountByFuzzy" resultType="INTEGER" parameterType="cn.cuco.entity.OrderCarUsed" >
+       select  count(1) 
+    from td_order_car_used  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberCarUsedId != null ">
+        and member_car_used_id = #{memberCarUsedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      	and member_name like CONCAT('%',#{memberName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+      	and mobile like CONCAT('%',#{mobile,jdbcType=VARCHAR},'%')
+      </if>
+      <if test= "carportId != null ">
+        and carport_id = #{carportId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cartypeId != null ">
+        and cartype_id = #{cartypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "caroperateId != null ">
+        and caroperate_id = #{caroperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+     	 and car_plate_num like CONCAT('%',#{carPlateNum,jdbcType=VARCHAR},'%')
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "basicPrice != null ">
+        and basic_price = #{basicPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "mileage != null ">
+        and mileage = #{mileage,jdbcType=DECIMAL}      
+      </if>
+      <if test= "perKilometrePrice != null ">
+        and per_kilometre_price = #{perKilometrePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "gasoline != null ">
+        and gasoline = #{gasoline,jdbcType=DECIMAL}      
+      </if>
+      <if test= "perGasolinePrice != null ">
+        and per_gasoline_price = #{perGasolinePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insurancePrice != null ">
+        and insurance_price = #{insurancePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "servicePrice != null ">
+        and service_price = #{servicePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "limitedBack != null ">
+        and limited_back = #{limitedBack,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "timeStart != null and  timeEnd != null">
+   		and created between #{timeStart,jdbcType=TIMESTAMP} AND #{timeEnd,jdbcType=TIMESTAMP}
+	  </if>
+	  <if test= "timeStart != null and  timeEnd == null">
+		and created >= #{timeStart,jdbcType=TIMESTAMP}
+	  </if>
+	  <if test= "timeStart == null and  timeEnd != null">
+		and created <![CDATA[<= ]]> #{timeEnd,jdbcType=TIMESTAMP}
+	  </if>
+	  <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="getOrderCarUsedListByFuzzy" resultMap="BaseResultMap" parameterType="cn.cuco.entity.OrderCarUsed" >
+       select  <include refid="Base_Column_List" />
+    from td_order_car_used  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberCarUsedId != null ">
+        and member_car_used_id = #{memberCarUsedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      	and member_name like CONCAT('%',#{memberName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+      	and mobile like CONCAT('%',#{mobile,jdbcType=VARCHAR},'%')
+      </if>
+      <if test= "carportId != null ">
+        and carport_id = #{carportId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cartypeId != null ">
+        and cartype_id = #{cartypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "caroperateId != null ">
+        and caroperate_id = #{caroperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+     	 and car_plate_num like CONCAT('%',#{carPlateNum,jdbcType=VARCHAR},'%')
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "basicPrice != null ">
+        and basic_price = #{basicPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "mileage != null ">
+        and mileage = #{mileage,jdbcType=DECIMAL}      
+      </if>
+      <if test= "perKilometrePrice != null ">
+        and per_kilometre_price = #{perKilometrePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "gasoline != null ">
+        and gasoline = #{gasoline,jdbcType=DECIMAL}      
+      </if>
+      <if test= "perGasolinePrice != null ">
+        and per_gasoline_price = #{perGasolinePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insurancePrice != null ">
+        and insurance_price = #{insurancePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "servicePrice != null ">
+        and service_price = #{servicePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "limitedBack != null ">
+        and limited_back = #{limitedBack,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "timeStart != null and  timeEnd != null">
+   		and created between #{timeStart,jdbcType=TIMESTAMP} AND #{timeEnd,jdbcType=TIMESTAMP}
+	  </if>
+	  <if test= "timeStart != null and  timeEnd == null">
+		and created >= #{timeStart,jdbcType=TIMESTAMP}
+	  </if>
+	  <if test= "timeStart == null and  timeEnd != null">
+		and created <![CDATA[<= ]]> #{timeEnd,jdbcType=TIMESTAMP}
+	  </if>
+	  <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+  </where>
+  order by created desc
+  </select>
+  
+  <select id="getCountByMileage" resultType="INTEGER">
+       select  count(1) from td_order_car_used 
+       where member_id = #{memberId,jdbcType=BIGINT}
+       <if test= "min != null">
+        and mileage >= #{min,jdbcType=INTEGER}      
+       </if>
+       <if test= "max != null">
+        and mileage <![CDATA[<= ]]> #{max,jdbcType=INTEGER}      
+       </if>
+  </select>
+
+</mapper>

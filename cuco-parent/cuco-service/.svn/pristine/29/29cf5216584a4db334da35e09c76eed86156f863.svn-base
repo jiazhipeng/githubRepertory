@@ -1,0 +1,15 @@
+package cn.cuco.dao;
+
+
+public interface CarTypePriceMapper<T> extends BaseDao<T> {
+
+	/**
+	* @Title: deleteCarTypePriceByCarTypeId 
+	* @Description: 根据车型ID删除车型运营定价
+	* @author huanghua
+	* @param id
+	* @return
+	* @return Integer
+	 */
+	public Integer deleteCarTypePriceByCarTypeId(Long id);
+}

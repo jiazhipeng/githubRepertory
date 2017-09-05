@@ -1,0 +1,57 @@
+package cn.cuco.service.basic.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.BasicSupplierMapper;
+import cn.cuco.entity.BasicSupplier;
+import cn.cuco.service.basic.BasicSupplierService;
+
+@Service(value = "basicSupplierService")
+public class BasicSupplierServiceImpl implements BasicSupplierService {
+
+    @Autowired
+    private BasicSupplierMapper<BasicSupplier> basicSupplierMapper;
+    
+    @Override
+    public Integer insertSelective(BasicSupplier basicSupplier) throws Exception {
+           return this.basicSupplierMapper.insertSelective(basicSupplier);
+        }
+
+    @Override
+    public Integer insertBatch(List<BasicSupplier> basicSupplier) throws Exception {
+           return this.basicSupplierMapper.insertBatch(basicSupplier) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.basicSupplierMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.basicSupplierMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(BasicSupplier basicSupplier) {
+           return this.basicSupplierMapper.updateByPrimaryKeySelective(basicSupplier);
+    }
+
+    @Override
+    public BasicSupplier findById(Object id) {
+           return (BasicSupplier) this.basicSupplierMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<BasicSupplier> selectByCondition(BasicSupplier basicSupplier) {
+           return (List<BasicSupplier>) this.basicSupplierMapper.selectByCondition(basicSupplier);
+    }
+
+    @Override
+    public Integer selectCountByCondition(BasicSupplier basicSupplier) {
+           return  this.basicSupplierMapper.selectCountByCondition(basicSupplier);
+    }
+
+}

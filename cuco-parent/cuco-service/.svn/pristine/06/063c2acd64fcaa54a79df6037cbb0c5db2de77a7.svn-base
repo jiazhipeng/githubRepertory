@@ -1,0 +1,119 @@
+package cn.cuco.service.car.stock.impl;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.common.utils.date.DateUtils;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.CarMapper;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarOperatePlan;
+import cn.cuco.entity.CarType;
+import cn.cuco.service.car.stock.StockService;
+
+/** 
+* @ClassName: RepertoryServiceImpl 
+* @Description: 库存service层 实现层
+* @author gongbw
+* @date 2017年2月21日 下午1:33:41  
+*/
+@Service
+public class StockServiceImpl implements StockService{
+	
+	@Autowired
+	private CarMapper<Car> carMapper;
+	@Autowired
+	private SqlSessionFactoryBean sqlSessionFactoryBean;
+	
+	protected Logger logger = Logger.getLogger(this.getClass());
+	
+	@Override
+	public List<Map<String, Object>> getRepertoryByDay(Long carportId, Date useCarStartDay, Date useCarEndDay) throws Exception {
+		ParamVerifyUtils.paramNotNull(useCarStartDay,"根据车库查询库存分布情况，开始日期不能为空");
+		ParamVerifyUtils.paramNotNull(useCarEndDay,"根据车库查询库存分布情况，借宿日期不能为空");
+		this.logger.info("查询库存开始日期是----"+useCarStartDay+"结束日期是----"+useCarEndDay);
+		//根据车库ID查询车库下面所有车型的车辆总数
+		int total = this.getCarTotalByCarPort(carportId);
+		//根据车库ID查询车库下面所有车型的不可用车辆总数
+		int unabletotal = this.getUnableCarTotalByCarPort(carportId);
+		//时间格式化
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		useCarStartDay = DateUtils.getDayMiniDate(sdf.format(useCarStartDay));
+		Date useCarStartDayMax = DateUtils.getDayMaxDate(sdf.format(useCarStartDay));
+		useCarEndDay = DateUtils.getDayMaxDate(sdf.format(useCarEndDay));
+		SqlSession session=sqlSessionFactoryBean.getObject().openSession();
+		long count =(useCarEndDay.getTime()-useCarStartDay.getTime()) / (1000 * 60 * 60 * 24) +1;
+		this.logger.info("查询库存的天数----"+count);
+		for(int i = 0; i < count; i++){
+			CarOperatePlan carOperatePlan = new CarOperatePlan();
+			carOperatePlan.setCarportId(carportId);
+			carOperatePlan.setStartTime(useCarStartDay);
+			carOperatePlan.setEndTime(useCarStartDayMax);
+			Integer planSize = session.selectOne("cn.cuco.dao.CarOperatePlanMapper.getCarPlanTotalByMember()", carOperatePlan);
+			this.logger.info(DateUtils.formatDate(useCarStartDay, "yyyy-MM-dd HH:mm:ss")+"至"+DateUtils.formatDate(useCarStartDayMax, "yyyy-MM-dd HH:mm:ss")+"的会员占用数为---"+planSize);
+			//循环结束之后日期都+1
+			useCarStartDay=DateUtils.addDays(useCarStartDay, 1);
+			useCarStartDayMax=DateUtils.addDays(useCarStartDayMax, 1);
+		}
+		//根据车库查询会员占用的车辆总数
+		
+		//根据车库查询非会员占用的车辆总数
+		
+		//得到安全区间数量
+		
+		//计算闲置中的车辆数量
+		
+		return null;
+	}
+	
+	/**   
+	 * @Title: getCarTotalByCarPort   
+	 * @Description: 根据车库ID查询车库下面所有车型的车辆总数  
+	 * @param: carportId
+	 * @return: int      
+	 */
+	private int getCarTotalByCarPort(Long carportId){
+		Car car = new Car();
+		car.setCarPortId(carportId);
+		int total = this.carMapper.getCarTotalByCarPort(car);
+		return total;
+	}
+	
+	/**   
+	 * @Title: getCarTotalByCarPort   
+	 * @Description: 根据车库ID查询车库下面所有车型的不可用车辆总数
+	 * @param: carportId
+	 * @return: int      
+	 */
+	private int getUnableCarTotalByCarPort(Long carportId){
+		Car car = new Car();
+		car.setCarPortId(carportId);
+		int total = this.carMapper.getUnableCarTotalByCarPort(car);
+		return total;
+	}
+
+	@Override
+	public List<CarType> getUsableCarTypeByUnMember(Long carportId, Long MemberId, Date useCarStartTime,
+			Date useCarEndTime) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarType> getUsableCarTypeByMember(Long carportId, Long MemberId, Date useCarStartTime,
+			Date useCarEndTime) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+}

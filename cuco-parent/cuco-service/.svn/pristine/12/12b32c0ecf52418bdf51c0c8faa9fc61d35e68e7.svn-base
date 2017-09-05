@@ -1,0 +1,31 @@
+package cn.cuco.service.basic.carport;
+
+
+import java.util.List;
+
+import cn.cuco.entity.CarBrand;
+
+/**
+* @ClassName: CarBrandService 
+* @Description: 字典品牌接口
+* @author huanghua
+* @date 2017年2月21日 下午2:39:17
+ */
+public interface CarBrandService {
+
+    /**
+    * @Title: selectCarBrandForAll 
+    * @Description: 去重查询所有品牌
+    * @return List<String>
+     */
+	public List<String> getCarBrandForAll();
+
+
+	/**
+	* @Title: selectCartypeByBrand 
+	* @Description: 根据车品牌查询所有车型
+	* @param @param carType
+	* @return List<CarType>
+	 */
+	public List<CarBrand> getCartypeByBrand(CarBrand carBrand);
+}

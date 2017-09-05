@@ -1,0 +1,61 @@
+package cn.cuco.service.car.carOperate.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import cn.cuco.entity.CarOperatePlan;
+import cn.cuco.service.car.carOperate.CarOperatePlanService;
+
+/** 
+* @ClassName: CarOperatePlanServiceImpl 
+* @Description: 车辆运营计划service实现层
+* @author gongbw
+* @date 2017年2月22日 下午3:33:32  
+*/
+@Service
+public class CarOperatePlanServiceImpl implements CarOperatePlanService {
+
+	@Override
+	public CarOperatePlan createCarOperatePlan(CarOperatePlan carOperatePlan) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarOperatePlan updateOperatePlan(CarOperatePlan carOperatePlan) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarOperatePlan> getCarOperatePlanList(CarOperatePlan carOperatePlan) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarOperatePlan updateOperatePlanByWaitExecute(CarOperatePlan carOperatePlan) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarOperatePlan updateOperatePlanByExecuting(CarOperatePlan carOperatePlan) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarOperatePlan updateOperatePlanByCompelete(CarOperatePlan carOperatePlan) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarOperatePlan updateOperatePlanByCancel(CarOperatePlan carOperatePlan) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}

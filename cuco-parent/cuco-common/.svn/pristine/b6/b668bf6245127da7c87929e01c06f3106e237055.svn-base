@@ -1,0 +1,42 @@
+package cn.cuco.exception;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
+
+import com.hy.common.utils.LogUtil;
+
+import cn.cuco.enums.ServerStatus;
+import cn.cuco.httpservice.ResponseBody;
+
+/**
+ * @ClassName: DefaultExceptionHandler 
+ * @Description: 异常处理器
+ * @author: WangShuai
+ * @date: 2017年2月20日 上午11:49:27
+ */
+public class DefaultExceptionHandler implements HandlerExceptionResolver {
+
+    @Override
+    public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
+        ModelAndView modelAndView = new ModelAndView();
+        MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
+        modelAndView.setView(jsonView);
+
+        ResponseBody responseBody = null;
+        if(e instanceof RuntimeExceptionWarn){
+            responseBody = ((RuntimeExceptionWarn) e).getResponseBody();
+            jsonView.setAttributesMap(responseBody.toMap());
+
+            return modelAndView;
+        }
+
+        LogUtil.getLogger().error("服务器异常：",e);
+        responseBody = new ResponseBody(ServerStatus.UNKNOW_ERROR.getCode(),ServerStatus.UNKNOW_ERROR.getMessage());
+        jsonView.setAttributesMap(responseBody.toMap());
+        return modelAndView;
+    }
+}

@@ -1,0 +1,57 @@
+package cn.cuco.service.basic.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.SecurityIntervalMapper;
+import cn.cuco.entity.SecurityInterval;
+import cn.cuco.service.basic.SecurityIntervalService;
+
+@Service(value = "securityIntervalService")
+public class SecurityIntervalServiceImpl implements SecurityIntervalService {
+
+    @Autowired
+    private SecurityIntervalMapper<SecurityInterval> securityIntervalMapper;
+    
+    @Override
+    public Integer insertSelective(SecurityInterval securityInterval) throws Exception {
+           return this.securityIntervalMapper.insertSelective(securityInterval);
+        }
+
+    @Override
+    public Integer insertBatch(List<SecurityInterval> securityInterval) throws Exception {
+           return this.securityIntervalMapper.insertBatch(securityInterval) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.securityIntervalMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.securityIntervalMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(SecurityInterval securityInterval) {
+           return this.securityIntervalMapper.updateByPrimaryKeySelective(securityInterval);
+    }
+
+    @Override
+    public SecurityInterval findById(Object id) {
+           return (SecurityInterval) this.securityIntervalMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<SecurityInterval> selectByCondition(SecurityInterval securityInterval) {
+           return (List<SecurityInterval>) this.securityIntervalMapper.selectByCondition(securityInterval);
+    }
+
+    @Override
+    public Integer selectCountByCondition(SecurityInterval securityInterval) {
+           return  this.securityIntervalMapper.selectCountByCondition(securityInterval);
+    }
+
+}

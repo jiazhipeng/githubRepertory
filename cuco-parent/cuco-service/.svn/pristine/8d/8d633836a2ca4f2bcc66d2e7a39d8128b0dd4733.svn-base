@@ -1,0 +1,57 @@
+package cn.cuco.service.member.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberUsecarAddressMapper;
+import cn.cuco.entity.MemberUsecarAddress;
+import cn.cuco.service.member.MemberUsecarAddressService;
+
+@Service(value = "memberUsecarAddressService")
+public class MemberUsecarAddressServiceImpl implements MemberUsecarAddressService {
+
+    @Autowired
+    private MemberUsecarAddressMapper<MemberUsecarAddress> memberUsecarAddressMapper;
+    
+    @Override
+    public Integer insertSelective(MemberUsecarAddress memberUsecarAddress) throws Exception {
+           return this.memberUsecarAddressMapper.insertSelective(memberUsecarAddress);
+        }
+
+    @Override
+    public Integer insertBatch(List<MemberUsecarAddress> memberUsecarAddress) throws Exception {
+           return this.memberUsecarAddressMapper.insertBatch(memberUsecarAddress) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.memberUsecarAddressMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.memberUsecarAddressMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(MemberUsecarAddress memberUsecarAddress) {
+           return this.memberUsecarAddressMapper.updateByPrimaryKeySelective(memberUsecarAddress);
+    }
+
+    @Override
+    public MemberUsecarAddress findById(Object id) {
+           return (MemberUsecarAddress) this.memberUsecarAddressMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<MemberUsecarAddress> selectByCondition(MemberUsecarAddress memberUsecarAddress) {
+           return (List<MemberUsecarAddress>) this.memberUsecarAddressMapper.selectByCondition(memberUsecarAddress);
+    }
+
+    @Override
+    public Integer selectCountByCondition(MemberUsecarAddress memberUsecarAddress) {
+           return  this.memberUsecarAddressMapper.selectCountByCondition(memberUsecarAddress);
+    }
+
+}

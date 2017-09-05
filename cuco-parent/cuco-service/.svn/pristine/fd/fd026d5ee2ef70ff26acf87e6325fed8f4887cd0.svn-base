@@ -1,0 +1,57 @@
+package cn.cuco.service.car.attachment;
+
+import java.util.List;
+
+import cn.cuco.entity.CarAttachment;
+
+/** 
+* @ClassName: CarAttachmentService 
+* @Description: 车辆相关附件service 
+* @author gongbw
+* @date 2017年3月6日 上午10:36:39  
+*/
+public interface CarAttachmentService {
+
+	/**   
+	 * @Title: createCarInsuranceAttachment   
+	 * @Description: 创建车辆保险附件
+	 * @param: @param carAttachment      
+	 * @return: void       
+	 */
+	public void createCarInsuranceAttachment(CarAttachment carAttachment);
+	
+	/**   
+	 * @Title: createCarInsuranceAttachmenBatch   
+	 * @Description: 创建车辆保险附件
+	 * @param: @param List<CarAttachment>     
+	 * @return: void       
+	 */
+	public void createCarInsuranceAttachmenBatch(List<CarAttachment> carAttachmentList);
+	
+	/**   
+	 * @Title: createCarViolationAttachment   
+	 * @Description: 创建车辆违章凭证
+	 * @param: @param carAttachment      
+	 * @return: void       
+	 */
+	public void createCarViolationAttachment(CarAttachment carAttachment);
+	
+	/**   
+	 * @Title: getCarInsuranceAttachment   
+	 * @Description: 根据主表ID获取附件列表  
+	 * @param: @param carAttachment      
+	 * @return: CarAttachment       
+	 */
+	public List<CarAttachment> getCarAttachmentList(CarAttachment carAttachment);
+	
+	/**
+	 * 删除附件   
+	 * @Title: deleteAttachment   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param carAttachment      
+	 * @return: void       
+	 */
+	public void deleteAttachment(CarAttachment carAttachment);
+	
+	
+}

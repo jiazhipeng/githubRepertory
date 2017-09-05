@@ -1,0 +1,62 @@
+package cn.cuco.service.member.account;
+
+
+import java.util.List;
+
+import cn.cuco.entity.MemberAccount;
+import cn.cuco.entity.MemberAccountLog;
+import cn.cuco.page.PageResult;
+
+/** 
+* @ClassName: MemberAccountService 
+* @Description: 用户账户相关接口
+* @author zc.du
+* @date 2017年2月23日 上午10:33:33  
+*/
+public interface MemberAccountService {
+    /** 
+    * @Title: createMemberAccount 
+    * @Description: 创建用户账户
+    * @author zc.du
+    * @param memberAccount
+    * @return MemberAccount
+    */
+    public MemberAccount createMemberAccount(MemberAccount memberAccount);
+    
+    /** 
+    * @Title: updateMemberAccount 
+    * @Description: 修改用户账户
+    * @author zc.du
+    * @param memberAccount
+    * @return MemberAccount
+    */
+    public MemberAccount updateMemberAccount(MemberAccount memberAccount);
+    
+    /** 
+    * @Title: getMemberAccount 
+    * @Description: 查询用户账户基础方法
+    * @author zc.du
+    * @param memberAccount
+    * @return MemberAccount
+    */
+    public MemberAccount getMemberAccount(MemberAccount memberAccount); 
+    
+    /** 
+    * @Title: getMemberAccountLogList 
+    * @Description: 查询用户账户明细列表
+    * @author zc.du
+    * @param memberAccountLog
+    * @return List<MemberAccountLog>
+    */
+    public List<MemberAccountLog> getMemberAccountLogList(MemberAccountLog memberAccountLog);
+    
+    /** 
+    * @Title: getMemberAccountLogListByPage 
+    * @Description: 分页查询用户账户明细列表
+    * @author zc.du
+    * @param memberAccountLog
+    * @return PageResult<MemberAccountLog>
+    */
+    public PageResult<MemberAccountLog> getMemberAccountLogListByPage(MemberAccountLog memberAccountLog);
+
+}

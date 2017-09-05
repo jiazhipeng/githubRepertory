@@ -1,0 +1,57 @@
+package cn.cuco.service.basic.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.BasicServicecityMapper;
+import cn.cuco.entity.BasicServicecity;
+import cn.cuco.service.basic.BasicServicecityService;
+
+@Service(value = "basicServicecityService")
+public class BasicServicecityServiceImpl implements BasicServicecityService {
+
+    @Autowired
+    private BasicServicecityMapper<BasicServicecity> basicServicecityMapper;
+    
+    @Override
+    public Integer insertSelective(BasicServicecity basicServicecity) throws Exception {
+           return this.basicServicecityMapper.insertSelective(basicServicecity);
+        }
+
+    @Override
+    public Integer insertBatch(List<BasicServicecity> basicServicecity) throws Exception {
+           return this.basicServicecityMapper.insertBatch(basicServicecity) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.basicServicecityMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.basicServicecityMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(BasicServicecity basicServicecity) {
+           return this.basicServicecityMapper.updateByPrimaryKeySelective(basicServicecity);
+    }
+
+    @Override
+    public BasicServicecity findById(Object id) {
+           return (BasicServicecity) this.basicServicecityMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<BasicServicecity> selectByCondition(BasicServicecity basicServicecity) {
+           return (List<BasicServicecity>) this.basicServicecityMapper.selectByCondition(basicServicecity);
+    }
+
+    @Override
+    public Integer selectCountByCondition(BasicServicecity basicServicecity) {
+           return  this.basicServicecityMapper.selectCountByCondition(basicServicecity);
+    }
+
+}

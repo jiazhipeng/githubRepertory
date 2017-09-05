@@ -1,0 +1,99 @@
+package cn.cuco.service.order.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.OrderMapper;
+import cn.cuco.entity.Order;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.order.OrderService;
+
+@Service(value = "orderService")
+public class OrderServiceImpl implements OrderService {
+
+    @Autowired
+    private OrderMapper<Order> orderMapper;
+
+	@Override
+	public Order createOrder(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order updateOrder(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteOrder(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order getOrder(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Order> getOrderList(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<Order> getOrderListByPage(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getOrderCount(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order createOrderForApp(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order updateOrderStatusByCancelForApp(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order updateOrderStatusByCancel(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order updateOrderStatusByPaying(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order updateOrderStatusByPartPay(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Order updateOrderStatusByCompletePay(Order order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+}

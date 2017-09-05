@@ -1,0 +1,57 @@
+package cn.cuco.service.member.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberCarusedCostMapper;
+import cn.cuco.entity.MemberCarusedCost;
+import cn.cuco.service.member.MemberCarusedCostService;
+
+@Service(value = "memberCarusedCostService")
+public class MemberCarusedCostServiceImpl implements MemberCarusedCostService {
+
+    @Autowired
+    private MemberCarusedCostMapper<MemberCarusedCost> memberCarusedCostMapper;
+    
+    @Override
+    public Integer insertSelective(MemberCarusedCost memberCarusedCost) throws Exception {
+           return this.memberCarusedCostMapper.insertSelective(memberCarusedCost);
+        }
+
+    @Override
+    public Integer insertBatch(List<MemberCarusedCost> memberCarusedCost) throws Exception {
+           return this.memberCarusedCostMapper.insertBatch(memberCarusedCost) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.memberCarusedCostMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.memberCarusedCostMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(MemberCarusedCost memberCarusedCost) {
+           return this.memberCarusedCostMapper.updateByPrimaryKeySelective(memberCarusedCost);
+    }
+
+    @Override
+    public MemberCarusedCost findById(Object id) {
+           return (MemberCarusedCost) this.memberCarusedCostMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<MemberCarusedCost> selectByCondition(MemberCarusedCost memberCarusedCost) {
+           return (List<MemberCarusedCost>) this.memberCarusedCostMapper.selectByCondition(memberCarusedCost);
+    }
+
+    @Override
+    public Integer selectCountByCondition(MemberCarusedCost memberCarusedCost) {
+           return  this.memberCarusedCostMapper.selectCountByCondition(memberCarusedCost);
+    }
+
+}

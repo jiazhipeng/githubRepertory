@@ -1,0 +1,28 @@
+package cn.cuco.service.wechatMessage.impl;
+
+import java.util.Map;
+import cn.cuco.push.wechat.template.TestMessage;
+import cn.cuco.push.wechat.template.messageManager.WechatTemplateIDManager;
+
+/**
+ * 
+* @ClassName: WechatMessageFactory 
+* @Description: wechatMessage的工厂制造者   
+* @author jiaxiaoxian
+* @date 2017年2月21日 上午11:48:11
+ */
+public class WechatMessageFactory extends FactoryEngine{
+
+
+	public Map<String, Object> createTestMessage(){
+		this.wechatMsgParent.getRemark();
+		TestMessage testMessage = new TestMessage();
+		testMessage.setMessage("恭喜您以神勇的表现力压群雄,成功拍得宝贝");
+		testMessage.setPrice("2000000.00");
+		testMessage.setProductName("蒙娜丽莎的微笑");
+		testMessage.setTemplateId(WechatTemplateIDManager.TEST_MSG_ID);
+		testMessage.setUrl("www.baidu.com");
+		testMessage.setOpenId(openId);
+		return testMessage.getSendMessage();
+	}
+}

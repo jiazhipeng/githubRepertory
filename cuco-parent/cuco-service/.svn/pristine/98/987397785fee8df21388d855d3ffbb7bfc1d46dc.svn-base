@@ -1,0 +1,57 @@
+package cn.cuco.service.basic.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.NationMapper;
+import cn.cuco.entity.Nation;
+import cn.cuco.service.basic.NationService;
+
+@Service(value = "nationService")
+public class NationServiceImpl implements NationService {
+
+    @Autowired
+    private NationMapper<Nation> nationMapper;
+    
+    @Override
+    public Integer insertSelective(Nation nation) throws Exception {
+           return this.nationMapper.insertSelective(nation);
+        }
+
+    @Override
+    public Integer insertBatch(List<Nation> nation) throws Exception {
+           return this.nationMapper.insertBatch(nation) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.nationMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.nationMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(Nation nation) {
+           return this.nationMapper.updateByPrimaryKeySelective(nation);
+    }
+
+    @Override
+    public Nation findById(Object id) {
+           return (Nation) this.nationMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Nation> selectByCondition(Nation nation) {
+           return (List<Nation>) this.nationMapper.selectByCondition(nation);
+    }
+
+    @Override
+    public Integer selectCountByCondition(Nation nation) {
+           return  this.nationMapper.selectCountByCondition(nation);
+    }
+
+}

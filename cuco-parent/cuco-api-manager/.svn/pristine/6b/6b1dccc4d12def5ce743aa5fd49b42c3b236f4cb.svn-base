@@ -1,0 +1,26 @@
+package cn.cuco.controller.manager.store;
+
+import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.cuco.annotation.API;
+
+/** 
+ * @ClassName: StoreController 
+ * @Description: 库存管理
+ * @author: wangchuntao 
+ * @date: 2017年2月22日 下午6:01:24  
+ */
+@RestController
+public class StoreController {
+	
+	protected Logger logger = Logger.getLogger(this.getClass());
+	
+	@API(value="查询库存")
+	@RequestMapping("/store/searchDateStore")
+	public Object searchDateStore(){
+		return null;
+	}
+	
+}

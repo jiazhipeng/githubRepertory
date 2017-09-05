@@ -1,0 +1,65 @@
+package cn.cuco.service.member.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import cn.cuco.entity.MemberCarusedCost;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.MemberCarusedCostService;
+
+@Service(value = "memberCarusedCostService")
+public class MemberCarusedCostServiceImpl implements MemberCarusedCostService {
+
+	@Override
+	public MemberCarusedCost createMemberCarusedCost(
+			MemberCarusedCost memberCarusedCost) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarusedCost updateMemberCarusedCost(
+			MemberCarusedCost memberCarusedCost) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteMemberCarusedCost(MemberCarusedCost memberCarusedCost)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarusedCost getMemberCarusedCost(
+			MemberCarusedCost memberCarusedCost) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemberCarusedCost> getMemberCarusedCostList(
+			MemberCarusedCost memberCarusedCost) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberCarusedCost> getMemberCarusedCostListByPage(
+			MemberCarusedCost memberCarusedCost) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMemberCarusedCostCount(
+			MemberCarusedCost memberCarusedCost) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    
+
+}

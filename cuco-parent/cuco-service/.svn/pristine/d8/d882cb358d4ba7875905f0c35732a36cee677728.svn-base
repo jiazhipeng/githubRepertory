@@ -1,0 +1,245 @@
+package cn.cuco.service.car.carOperate.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.ButlerTaskMapper;
+import cn.cuco.dao.CarAccidentMapper;
+import cn.cuco.entity.ButlerTask;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarAccident;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.enums.CarAccidentStatus;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.enums.Valid;
+import cn.cuco.exception.RuntimeExceptionWarn;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.car.carInfo.CarService;
+import cn.cuco.service.car.carOperate.CarAccidentService;
+import cn.cuco.service.log.OperateLogService;
+import cn.cuco.service.member.info.MemberService;
+import cn.cuco.service.task.ButlerTaskService;
+
+@Service
+public class CarAccidentServiceImpl implements CarAccidentService {
+
+    @Autowired
+    private CarAccidentMapper<CarAccident> carAccidentMapper;
+    @Autowired
+    private OperateLogService operateLogService;
+    @Autowired
+    private CarService carService;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private ButlerTaskService butlerTaskService;
+    @Autowired
+    private ButlerTaskMapper<ButlerTask> butlerTaskMapper;
+    
+    /**
+     * 分页
+     */
+	@Override
+	public PageResult<CarAccident> getCarAccidentByPage(CarAccident carAccident) {
+		Integer page = carAccident.getPage();
+	    Integer pageSize = carAccident.getPageSize();
+	     /*搜索条件*/
+	    CarAccident carAccidentSearch = new CarAccident();
+        if(StringUtils.isNotBlank(carAccident.getCarPlateNum())){
+        	carAccidentSearch.setCarPlateNum(carAccident.getCarPlateNum());
+        }
+        if(StringUtils.isNotBlank(carAccident.getMemberName())){
+        	carAccidentSearch.setMemberName(carAccident.getMemberName());
+        }
+        if(StringUtils.isNotBlank(carAccident.getMemberMobile())){
+        	carAccidentSearch.setMemberMobile(carAccident.getMemberMobile());
+        }
+        if(carAccident.getStatus()!=null){
+        	carAccidentSearch.setStatus(carAccident.getStatus());
+        }
+	    List<CarAccident> carAccidents = null;
+	    /*总记录数*/
+	    Integer totalSize = this.carAccidentMapper.selectCountByConditionByPage(carAccidentSearch);
+	    /*分页信息*/
+	    PageHelper.startPage(page,pageSize);
+	    carAccidents = this.carAccidentMapper.selectByConditionByPage(carAccidentSearch);
+	    
+        PageResult<CarAccident> pageResult = new PageResult<CarAccident>(page,pageSize,totalSize,carAccidents);
+		return pageResult;
+	}
+    
+	/**
+	 * 创建出险
+	 */
+	@Override
+	public CarAccident createCarAccident(CarAccident carAccident) {
+		ParamVerifyUtils.paramNotNull(carAccident);
+		ParamVerifyUtils.paramNotNull(carAccident.getCarId(), "创建出险，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getMemberId(), "创建出险，用户ID不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getAccidentAddress(), "创建出险，出险地址不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getDrivingDirection(), "创建出险，行驶方向不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getCarDamageLevel(), "创建出险，出险程度不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getCasualtiesLevel(), "创建出险，伤亡程度不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getIsNeedAssistance(), "创建出险，是否需要救援不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getIsCalledPolice(), "创建出险，是否已报警不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getIsRepair(), "创建出险，是否维修不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getTaskProcessing(), "创建出险，任务处理不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifier(), "创建出险，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifierId(), "创建出险，操作人id不能为空");
+		//车辆信息
+		Car car = carService.getCarById(carAccident.getCarId());
+		ParamVerifyUtils.paramNotNull(car, "创建出险，车辆不存在");
+		carAccident.setCarBrand(car.getCarBrand());
+		carAccident.setCarType(car.getCarType());
+		carAccident.setCarPlateNum(car.getCarPlateNum());
+		carAccident.setCreated(new Date());
+		carAccident.setCreater(carAccident.getModifier());
+		carAccident.setStatus(CarAccidentStatus.CARACCIDENT_WAIT.getIndex());
+		//用户信息
+		Member member = memberService.getMemberById(carAccident.getMemberId());
+		ParamVerifyUtils.paramNotNull(member, "创建出险，用户不存在");
+		carAccident.setMemberId(member.getId());
+		carAccident.setMemberName(member.getName());
+		carAccident.setMemberMobile(member.getMobile());
+		//创建出险
+		this.carAccidentMapper.insertSelective(carAccident);
+		//创建日志
+		operateLogService.createOperateLogForCarAccident(carAccident);
+		//维修时，修改车辆状态为维修中
+		if(carAccident.getIsRepair()!= Valid.UP.getValue().intValue()){
+			carService.updateCarByRepairing(car);
+		}
+		//停止用车 取消任务
+		//任务标注保险取消、换车取消
+		if(carAccident.getTaskProcessing()!= Valid.DOWN.getValue().intValue()){
+			ButlerTask  butlerTask = new ButlerTask();
+			butlerTask.setMemberId(carAccident.getMemberId());
+			List<ButlerTask> lists = butlerTaskMapper.selectForNotComplete(butlerTask);
+			if(lists.isEmpty()){
+				throw new RuntimeExceptionWarn("用户没有为完成任务");
+			}
+			butlerTask.setModifier(carAccident.getModifier());
+			butlerTask.setModifierId(carAccident.getModifierId());
+			butlerTask.setId(lists.get(0).getId());
+			butlerTask.setCarOperateId(carAccident.getCarId());
+			butlerTask.setRemark("保险取消");
+			butlerTaskService.updateButlerTaskByCancelled(butlerTask);
+		}
+		return carAccident;
+	}
+
+	/**
+	* @Title: updateCarAccident 
+	* @Description: 修改
+	* @author huanghua
+	* @param carAccident
+	* @return
+	* @return CarAccident
+	 */
+	private void updateCarAccident(CarAccident carAccident) {
+		this.carAccidentMapper.updateByPrimaryKeySelective(carAccident);
+		operateLogService.createOperateLogForCarAccident(carAccident);
+	}
+
+	/**
+	 * 跟进中
+	 */
+	@Override
+	public CarAccident updateCarAccidentByFollowUp(CarAccident carAccident) {
+		ParamVerifyUtils.paramNotNull(carAccident);
+		ParamVerifyUtils.paramNotNull(carAccident.getId(), "修改出险，出险ID不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifier(), "修改出险，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifierId(), "修改出险，操作人id不能为空");
+		carAccident.setStatus(CarAccidentStatus.CARACCIDENT_FOLLOWUP.getIndex());
+		this.updateCarAccident(carAccident);
+		return this.getCarAccidentById(carAccident.getId());
+	}
+
+	/**
+	 * 维修完成
+	 */
+	@Override
+	public CarAccident updateCarAccidentByRepairCompleted(CarAccident carAccident) {
+		ParamVerifyUtils.paramNotNull(carAccident);
+		ParamVerifyUtils.paramNotNull(carAccident.getId(), "修改出险，出险ID不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifier(), "修改出险，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifierId(), "修改出险，操作人id不能为空");
+		//维护状态
+		carAccident.setStatus(CarAccidentStatus.CARACCIDENT_REPAIRCOMPLETED.getIndex());
+		this.updateCarAccident(carAccident);
+		carAccident = this.getCarAccidentById(carAccident.getId());
+		//修改车辆状态
+		Car car = new Car();
+		car.setId(carAccident.getCarId());
+		carService.updateCarByWaitDistribute(car);
+		return carAccident;
+	}
+
+	/**
+	 * 完成
+	 */
+	@Override
+	public CarAccident updateCarAccidentByCompleted(CarAccident carAccident) {
+		ParamVerifyUtils.paramNotNull(carAccident);
+		ParamVerifyUtils.paramNotNull(carAccident.getId(), "修改出险，出险ID不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifier(), "修改出险，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifierId(), "修改出险，操作人id不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getPaymentAmount(), "修改出险，赔付金额不能为空");
+		//维护状态
+		carAccident.setStatus(CarAccidentStatus.CARACCIDENT_COMPLETE.getIndex());
+		this.updateCarAccident(carAccident);
+		return this.getCarAccidentById(carAccident.getId());
+	}
+
+	/**
+	 * 查询出险详情
+	 */
+	@Override
+	public CarAccident getCarAccidentById(Long id) {
+		ParamVerifyUtils.paramNotNull(id, "查询详情，出险ID不能为空");
+		//查看出险详情
+		CarAccident carAccident = this.carAccidentMapper.selectByPrimaryKey(id);
+		//查询用户信息
+		if(carAccident!=null){
+			carAccident.setMember(memberService.getMemberById(carAccident.getMemberId()));
+		}
+		return carAccident;
+	}
+
+	/**
+	 * 日志分页
+	 */
+	@Override
+	public PageResult<OperateLog> getCarAccidentLogByPage(OperateLog operateLog) {
+		ParamVerifyUtils.paramNotNull(operateLog);
+		ParamVerifyUtils.paramNotNull(operateLog.getOperationId(), "查询出险ID不能为空");
+		operateLog.setType(OperateLogEnum.CAR_ACCIDENT.getValue());
+		return operateLogService.getOperateLogByPage(operateLog);
+	}
+
+	/**
+	 * 添加备注
+	 */
+	@Override
+	public CarAccident createCarAccidentRemark(CarAccident carAccident) {
+		ParamVerifyUtils.paramNotNull(carAccident);
+		ParamVerifyUtils.paramNotNull(carAccident.getId(), "添加备注 ，出险ID不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getRemark(), "添加备注，备注ID不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifier(), "添加备注，操作人不能为空");
+		ParamVerifyUtils.paramNotNull(carAccident.getModifierId(), "添加备注，操作人id不能为空");
+		CarAccident carAccidentView = this.getCarAccidentById(carAccident.getId());
+		carAccident.setStatus(carAccidentView.getStatus());
+		operateLogService.createOperateLogForCarAccident(carAccident);
+		return carAccidentView;
+	}
+    
+  
+}

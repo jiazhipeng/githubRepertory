@@ -1,0 +1,18 @@
+package cn.cuco.service.impl;
+
+import cn.cuco.entity.Example;
+import cn.cuco.service.ExampleService;
+
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ExampleServiceImpl implements ExampleService {
+
+	@Override
+	public List<Example> findByCondition() {
+		return null;
+	}
+
+}

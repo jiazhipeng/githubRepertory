@@ -1,0 +1,37 @@
+package cn.cuco.controller.manager.car.insurance;
+
+import org.springframework.web.bind.annotation.RestController;
+import cn.cuco.annotation.API;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+/**
+ * @ClassName:
+ * @Description：
+ * @author：WangShuai
+ * @date：2017年02月24 17:57:00
+ */
+@RestController
+public class CarInsuranceController {
+
+    @API(value = "车辆-保险-详情")
+    @RequestMapping(value = "/car/getCarInsuranceDetailById",method = RequestMethod.GET)
+    private Object getCarInsuranceDetailById(){
+
+        return null;
+    }
+
+    @API(value = "车辆-保险-操作日志-分页")
+    @RequestMapping(value = "/carInsurance/getCarInsuranceLogListByPage",method = RequestMethod.POST)
+    private Object getCarInsuranceLogListByPage(){
+
+        return null;
+    }
+
+    @API(value = "车辆-保险-修改")
+    @RequestMapping(value = "/car/updateCarInsuranceDetail",method = RequestMethod.POST)
+    private Object updateCarInsuranceDetail(){
+
+        return null;
+    }
+}

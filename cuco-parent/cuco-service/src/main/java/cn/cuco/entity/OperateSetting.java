@@ -1,0 +1,117 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import cn.cuco.page.PageQuery;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-22 14:30:41
+ */
+public class OperateSetting extends PageQuery implements Serializable {
+
+    private static final long serialVersionUID = 5937952171680491L;
+
+    private Long id;//主键
+
+    private String parameterName;//配置项名称
+
+    private String parameterNote;//说明
+
+    private String parameterValue;//配置参数
+
+    private String unit;//单位
+
+    private Integer type;//参数类型 1：费用管理；2：参数管理
+
+    private Date created;//创建时间
+
+    private Date lasttimeModify;//最后修改时间
+
+    private String modifier;//操作人姓名
+
+    private Long modifierId;//操作人ID
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getParameterName() {
+        return this.parameterName;
+    }
+
+    public void setParameterName(String parameterName) {
+        this.parameterName = parameterName;
+    }
+
+    public String getParameterNote() {
+        return this.parameterNote;
+    }
+
+    public void setParameterNote(String parameterNote) {
+        this.parameterNote = parameterNote;
+    }
+
+    public String getParameterValue() {
+        return this.parameterValue;
+    }
+
+    public void setParameterValue(String parameterValue) {
+        this.parameterValue = parameterValue;
+    }
+
+    public String getUnit() {
+        return this.unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getLasttimeModify() {
+        return this.lasttimeModify;
+    }
+
+    public void setLasttimeModify(Date lasttimeModify) {
+        this.lasttimeModify = lasttimeModify;
+    }
+
+    public String getModifier() {
+        return this.modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public Long getModifierId() {
+        return this.modifierId;
+    }
+
+    public void setModifierId(Long modifierId) {
+        this.modifierId = modifierId;
+    }
+
+}

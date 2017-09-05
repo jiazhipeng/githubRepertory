@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.WechatMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.WechatMenu" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="has_submenu" property="hasSubmenu" jdbcType="INTEGER" />
+    <result column="submenu" property="subMenu" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="msg_key" property="key" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, has_submenu, submenu, type, msg_key,url, message, created,modifier_id,modifier
+  </sql>
+  <select id="getWechatMenuList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from td_wechat_menu order by id
+  </select>
+  
+  <delete id="deleteAll" parameterType="java.lang.Long" >
+    delete from td_wechat_menu
+  </delete>
+  <insert id="insertSelective" parameterType="com.hy.gcar.entity.WechatMenu" >
+    insert into td_wechat_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="hasSubmenu != null" >
+        has_submenu,
+      </if>
+      <if test="subMenu != null" >
+        submenu,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="key != null" >
+        msg_key,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="modifierId != null" >
+        modifier_id,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	  <if test="id != null" >
+	     #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="hasSubmenu != null" >
+        #{hasSubmenu,jdbcType=INTEGER},
+      </if>
+      <if test="subMenu != null" >
+        #{subMenu,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="key != null" >
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

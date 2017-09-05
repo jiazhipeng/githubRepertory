@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.security.dao.MenuMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.security.entity.Menu" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="is_value" property="isValue" jdbcType="INTEGER" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="system_id" property="systemId" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Menu" >
+       select  <include refid="Base_Column_List" />
+    from td_menu  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test= "name != null and name != '' ">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test= "isValue != null ">
+        and is_value = #{isValue,jdbcType=INTEGER}
+      </if>
+      <if test= "link != null and link != '' ">
+        and link = #{link,jdbcType=VARCHAR}
+      </if>
+      <if test= "parentId != null ">
+        and parent_id = #{parentId,jdbcType=INTEGER}
+      </if>
+      <if test= "systemId != null ">
+        and system_id = #{systemId,jdbcType=BIGINT}
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, name, is_value, 
+      link, parent_id, system_id, 
+      created, modifier_id, modifier, 
+      lasttime_modify
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Menu" >
+    select 
+      id, name, is_value, 
+      link, parent_id, system_id, 
+      created, modifier_id, modifier, 
+      lasttime_modify
+    from td_menu where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.security.entity.Menu" >
+    delete from td_menu where id = #{id,jdbcType=BIGINT} 
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_menu where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.security.entity.Menu" useGeneratedKeys="true" keyProperty="id">
+    insert into td_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "name != null and name != '' ">
+         name,
+      </if>
+      <if test= "isValue != null ">
+         is_value,
+      </if>
+      <if test= "link != null and link != '' ">
+         link,
+      </if>
+      <if test= "parentId != null ">
+         parent_id,
+      </if>
+      <if test= "systemId != null ">
+         system_id,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "isValue != null ">
+         #{isValue,jdbcType=INTEGER},
+      </if>
+      <if test= "link != null and link != '' ">
+         #{link,jdbcType=VARCHAR},
+      </if>
+      <if test= "parentId != null ">
+         #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test= "systemId != null ">
+         #{systemId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_menu (
+         id,
+         name,
+         is_value,
+         link,
+         parent_id,
+         system_id,
+         created,
+         modifier_id,
+         modifier,
+         lasttime_modify)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.name,jdbcType=VARCHAR},
+         #{item.isValue,jdbcType=INTEGER},
+         #{item.link,jdbcType=VARCHAR},
+         #{item.parentId,jdbcType=INTEGER},
+         #{item.systemId,jdbcType=BIGINT},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=BIGINT},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.security.entity.Menu" >
+    update td_menu
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+      name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "isValue != null ">
+      is_value = #{isValue,jdbcType=INTEGER},
+      </if>
+      <if test= "link != null and link != '' ">
+      link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test= "parentId != null ">
+      parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test= "systemId != null ">
+      system_id = #{systemId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+<!-- 根据系统id 查询所有菜单 -->
+  <select id="selectMenuBySystemId" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Menu" >
+       select  <include refid="Base_Column_List" />
+    from td_menu  
+  where system_id = #{systemId,jdbcType=BIGINT}
+  </select>
+<!-- 根据角色 查询所属菜单 -->
+  <select id="findMenuByRole" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Menu" >
+	  SELECT m.* from td_menu m 
+		WHERE m.id in (
+			SELECT t.menu_id from tr_role__menu_operation t WHERE t.role_id =#{roleId,jdbcType=BIGINT}
+		)
+  </select> 
+<!-- 根据角色 查询所属菜单 -->
+  <select id="findMenuOperationId" resultType="com.hy.security.entity.MenuOperation" parameterType="com.hy.security.entity.MenuOperation" >
+	 SELECT m.id ,m.menu_id menuId,m.operation_id operationId ,m.system_id systemId from tr_menu_operation m 
+	  WHERE m.menu_id= #{menuId,jdbcType=BIGINT} and m.operation_id=#{operationId,jdbcType=BIGINT} and m.system_id=#{systemId,jdbcType=BIGINT}
+  </select> 
+  
+	<!-- 根据角色 查询所属菜单 -->
+  <select id="findMenuBySystemIdAndUserId" resultMap="BaseResultMap" parameterType="com.hy.security.entity.User" >
+	 SELECT DISTINCT m.menu_id id from  tr_role__menu_operation m
+		LEFT JOIN tr_user_role r ON m.role_id=r.role_id 
+		LEFT JOIN td_role o ON o.id =m.role_id 
+		LEFT JOIN td_user u on r.user_id = u.id
+		WHERE u.freezing=0 and r.user_id= #{id,jdbcType=BIGINT} AND o.system_id=#{systemId,jdbcType=BIGINT}
+  </select> 
+
+  
+  
+   <!-- 删除菜单同时删除关系表 -->
+  <delete id="deleteMenuOperationByMenu" parameterType="com.hy.security.entity.Menu" >
+    delete from tr_menu_operation where menu_id = #{id,jdbcType=BIGINT} 
+  </delete>
+  
+   <!-- 根据菜单和操作删除关系表 -->
+  <delete id="deleteMenuOperation" parameterType="com.hy.security.entity.MenuOperation" >
+    delete from tr_menu_operation where menu_id = #{menuId,jdbcType=BIGINT} and operation_id=#{operationId,jdbcType=BIGINT}
+  </delete>
+  
+   <!-- 删除菜单下的操作 同时删除角色菜单操作关系表 -->
+  <delete id="deleteRoleMenuOperation" parameterType="com.hy.security.entity.MenuOperation" >
+    delete from tr_role__menu_operation 
+	    <where>
+	      <if test= "menuId != null ">
+	      	menu_id = #{menuId,jdbcType=BIGINT} 
+	      </if>
+	      <if test= "operationId != null ">
+	      	and operation_id=#{operationId,jdbcType=BIGINT}
+	      </if>
+	  </where>
+  </delete>
+  
+</mapper>

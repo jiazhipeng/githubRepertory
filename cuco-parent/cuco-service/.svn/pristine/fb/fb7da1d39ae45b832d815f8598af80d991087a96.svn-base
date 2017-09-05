@@ -1,0 +1,31 @@
+package cn.cuco.service.basic.dictionary.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.InsuranceMapper;
+import cn.cuco.entity.Insurance;
+import cn.cuco.service.basic.dictionary.InsuranceService;
+
+@Service(value = "insuranceService")
+public class InsuranceServiceImpl implements InsuranceService {
+
+    @Autowired
+    private InsuranceMapper<Insurance> insuranceMapper;
+
+	@Override
+	public Insurance getInsuranceById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Insurance> getInsuranceList(Insurance insurance) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+  
+}

@@ -1,0 +1,57 @@
+package cn.cuco.controller.manager.car.repair;
+
+import cn.cuco.entity.CarRepair;
+import cn.cuco.service.car.carOperate.CarRepairService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import cn.cuco.annotation.API;
+
+/**
+ * @ClassName:
+ * @Description：
+ * @author：WangShuai
+ * @date：2017年02月24 18:20:00
+ */
+@RestController
+public class CarRepairController {
+
+    @Autowired
+    private CarRepairService carRepairService;
+
+    @API(value = "维修-分页")
+    @RequestMapping(value = "",method = RequestMethod.POST)
+    private Object getCarRepairListByPage(@RequestBody CarRepair carRepair){
+
+        return carRepairService.getCarRepairByCondition(carRepair);
+    }
+
+    @API(value = "维修-创建")
+    @RequestMapping(value = "/carRepair/createCarRepair",method = RequestMethod.POST)
+    private Object createCarRepair(@RequestBody CarRepair carRepair){
+
+        return carRepairService.createCarRepair(carRepair);
+    }
+
+    @API(value = "维修-操作日志-分页")
+    @RequestMapping(value = "/carRepair/getCarRepairLogListByPage",method = RequestMethod.POST)
+    private Object getCarRepairLogListByPage(){
+        //TODO
+        return null;
+    }
+
+    @API(value = "维修-状态修改")
+    @RequestMapping(value = "/carRepair/updateStatus",method = RequestMethod.POST)
+    private Object updateStatus(){
+        //TODO
+        return null;
+    }
+
+    @API(value = "维修-详情")
+    @RequestMapping(value = "/carRepair/getCarRepairById",method = RequestMethod.GET)
+    private Object getCarRepairById(@RequestParam Long id){
+
+        CarRepair carRepair = new CarRepair();
+        carRepair.setId(id);
+        return carRepairService.getCarRepairById(carRepair);
+    }
+}

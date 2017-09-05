@@ -1,0 +1,87 @@
+package cn.cuco.service.member;
+
+
+import java.util.List;
+
+import cn.cuco.entity.Member;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户模块接口
+ * @author zc.du
+ */
+public interface MemberService {
+	
+    /** 
+    * @Description: 创建用户基础方法
+    * @param member
+    * @return Member
+    * @throws 
+    */
+    public Member createMember(Member member) throws Exception;
+    
+    /** 
+    * @Description: 修改用户基础方法
+    * @param member
+    * @return Member
+    * @throws 
+    */
+    public Member updateMember(Member member) throws Exception;
+    
+    /** 
+    * @Description: 删除用户基础方法
+    * @param member
+    * @return Integer
+    * @throws 
+    */
+    public Integer deleteMember(Member member) throws Exception;
+    
+    /** 
+     * @Description: 查询用户基础方法
+     * @param member
+     * @return Member
+     * @throws 
+     */
+    public Member getMember(Member member) throws Exception; 
+    
+    /** 
+     * @Description: 查询用户列表基础方法
+     * @param member
+     * @return List<Member>
+     * @throws 
+     */
+    public List<Member> getMemberList(Member member) throws Exception;
+    
+    /** 
+     * @Description: 分页查询用户列表基础方法
+     * @param member
+     * @return PageResult<Member>
+     * @throws 
+     */
+    public PageResult<Member> getMemberListByPage(Member member) throws Exception;
+
+    /** 
+     * @Description: 查询用户数量基础方法
+     * @param member
+     * @return Integer
+     * @throws 
+     */
+    public Integer getMemberCount(Member member) throws Exception;
+    
+    /** 
+     * @Description: 冻结用户
+     * @param member
+     * @return Member
+     * @throws 
+     */
+    public Member  updateMemberByFreeze(Member member) throws Exception;
+
+    /** 
+     * @Description: 冻结用户
+     * @param member
+     * @return Member
+     * @throws 
+     */
+    public Member  updateMemberByUnfreeze(Member member) throws Exception;
+    
+}

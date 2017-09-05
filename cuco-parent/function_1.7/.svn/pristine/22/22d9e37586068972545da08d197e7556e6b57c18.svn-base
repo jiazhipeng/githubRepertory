@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>签约预约详情</title>
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/4v.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="greyBg">
+    <div class="fault-page">
+        <ul>
+            <li>
+                <span class="info-name info-name-time">
+                    预计送车时间：
+                </span>
+                <span class="info-val info-name-val">
+                    <input type="text" class="input">
+                </span>
+            </li>
+            <li>
+                <span class="info-name info-name-time">
+                    预计送车地点：
+                </span>
+                <span class="info-val info-name-val">
+                    <input type="text" class="input">
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="btns">
+        <a href="javscript:;" class="button cencle">返回</a>
+        <a href="javscript:;" class="button">确定</a>
+    </div>
+</body>
+
+</html>

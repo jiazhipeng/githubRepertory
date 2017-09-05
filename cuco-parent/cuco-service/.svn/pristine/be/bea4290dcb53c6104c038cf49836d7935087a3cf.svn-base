@@ -1,0 +1,57 @@
+package cn.cuco.service.order.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.ChargeOrderMapper;
+import cn.cuco.entity.ChargeOrder;
+import cn.cuco.service.order.ChargeOrderService;
+
+@Service(value = "chargeOrderService")
+public class ChargeOrderServiceImpl implements ChargeOrderService {
+
+    @Autowired
+    private ChargeOrderMapper<ChargeOrder> chargeOrderMapper;
+    
+    @Override
+    public Integer insertSelective(ChargeOrder chargeOrder) throws Exception {
+           return this.chargeOrderMapper.insertSelective(chargeOrder);
+        }
+
+    @Override
+    public Integer insertBatch(List<ChargeOrder> chargeOrder) throws Exception {
+           return this.chargeOrderMapper.insertBatch(chargeOrder) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.chargeOrderMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.chargeOrderMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(ChargeOrder chargeOrder) {
+           return this.chargeOrderMapper.updateByPrimaryKeySelective(chargeOrder);
+    }
+
+    @Override
+    public ChargeOrder findById(Object id) {
+           return (ChargeOrder) this.chargeOrderMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<ChargeOrder> selectByCondition(ChargeOrder chargeOrder) {
+           return (List<ChargeOrder>) this.chargeOrderMapper.selectByCondition(chargeOrder);
+    }
+
+    @Override
+    public Integer selectCountByCondition(ChargeOrder chargeOrder) {
+           return  this.chargeOrderMapper.selectCountByCondition(chargeOrder);
+    }
+
+}

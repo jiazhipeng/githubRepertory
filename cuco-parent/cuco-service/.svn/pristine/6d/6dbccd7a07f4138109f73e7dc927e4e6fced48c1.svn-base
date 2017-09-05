@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.MemberCarusedCostMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.MemberCarusedCost" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_carused_id" property="memberCarusedId" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="carport_id" property="carportId" jdbcType="BIGINT" />
+    <result column="cartype_id" property="cartypeId" jdbcType="BIGINT" />
+    <result column="caroperate_id" property="caroperateId" jdbcType="BIGINT" />
+    <result column="car_plate_num" property="carPlateNum" jdbcType="VARCHAR" />
+    <result column="mileage" property="mileage" jdbcType="DECIMAL" />
+    <result column="total" property="total" jdbcType="DECIMAL" />
+    <result column="kilometre_price" property="kilometrePrice" jdbcType="DECIMAL" />
+    <result column="insurance_price" property="insurancePrice" jdbcType="DECIMAL" />
+    <result column="usedcar_price" property="usedcarPrice" jdbcType="DECIMAL" />
+    <result column="gasoline_price" property="gasolinePrice" jdbcType="DECIMAL" />
+    <result column="service_price" property="servicePrice" jdbcType="DECIMAL" />
+    <result column="limited_back" property="limitedBack" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="gasoline" property="gasoline" jdbcType="DECIMAL" />
+    <result column="modifer" property="modifer" jdbcType="VARCHAR" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.MemberCarusedCost" >
+       select  count(1) 
+    from td_member_carused_cost  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberCarusedId != null ">
+        and member_carused_id = #{memberCarusedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+        and mobile = #{mobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carportId != null ">
+        and carport_id = #{carportId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cartypeId != null ">
+        and cartype_id = #{cartypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "caroperateId != null ">
+        and caroperate_id = #{caroperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "mileage != null ">
+        and mileage = #{mileage,jdbcType=DECIMAL}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "kilometrePrice != null ">
+        and kilometre_price = #{kilometrePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insurancePrice != null ">
+        and insurance_price = #{insurancePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "usedcarPrice != null ">
+        and usedcar_price = #{usedcarPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "gasolinePrice != null ">
+        and gasoline_price = #{gasolinePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "servicePrice != null ">
+        and service_price = #{servicePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "limitedBack != null ">
+        and limited_back = #{limitedBack,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "gasoline != null ">
+        and gasoline = #{gasoline,jdbcType=DECIMAL}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.MemberCarusedCost" >
+       select  <include refid="Base_Column_List" />
+    from td_member_carused_cost  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberCarusedId != null ">
+        and member_carused_id = #{memberCarusedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+        and mobile = #{mobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carportId != null ">
+        and carport_id = #{carportId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cartypeId != null ">
+        and cartype_id = #{cartypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "caroperateId != null ">
+        and caroperate_id = #{caroperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "mileage != null ">
+        and mileage = #{mileage,jdbcType=DECIMAL}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "kilometrePrice != null ">
+        and kilometre_price = #{kilometrePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "insurancePrice != null ">
+        and insurance_price = #{insurancePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "usedcarPrice != null ">
+        and usedcar_price = #{usedcarPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "gasolinePrice != null ">
+        and gasoline_price = #{gasolinePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "servicePrice != null ">
+        and service_price = #{servicePrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "limitedBack != null ">
+        and limited_back = #{limitedBack,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "gasoline != null ">
+        and gasoline = #{gasoline,jdbcType=DECIMAL}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, member_carused_id, member_id, 
+      member_name, mobile, carport_id, 
+      cartype_id, caroperate_id, car_plate_num, 
+      mileage, total, kilometre_price, 
+      insurance_price, usedcar_price, gasoline_price, 
+      service_price, limited_back, created, 
+      gasoline, modifer, modifier_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.MemberCarusedCost" >
+    select 
+      id, member_carused_id, member_id, 
+      member_name, mobile, carport_id, 
+      cartype_id, caroperate_id, car_plate_num, 
+      mileage, total, kilometre_price, 
+      insurance_price, usedcar_price, gasoline_price, 
+      service_price, limited_back, created, 
+      gasoline, modifer, modifier_id
+    from td_member_carused_cost where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.MemberCarusedCost" >
+    delete from td_member_carused_cost where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_member_carused_cost where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.MemberCarusedCost" >
+    insert into td_member_carused_cost
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberCarusedId != null ">
+         member_carused_id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+         mobile,
+      </if>
+      <if test= "carportId != null ">
+         carport_id,
+      </if>
+      <if test= "cartypeId != null ">
+         cartype_id,
+      </if>
+      <if test= "caroperateId != null ">
+         caroperate_id,
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         car_plate_num,
+      </if>
+      <if test= "mileage != null ">
+         mileage,
+      </if>
+      <if test= "total != null ">
+         total,
+      </if>
+      <if test= "kilometrePrice != null ">
+         kilometre_price,
+      </if>
+      <if test= "insurancePrice != null ">
+         insurance_price,
+      </if>
+      <if test= "usedcarPrice != null ">
+         usedcar_price,
+      </if>
+      <if test= "gasolinePrice != null ">
+         gasoline_price,
+      </if>
+      <if test= "servicePrice != null ">
+         service_price,
+      </if>
+      <if test= "limitedBack != null ">
+         limited_back,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "gasoline != null ">
+         gasoline,
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+         modifer,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberCarusedId != null ">
+         #{memberCarusedId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+         #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "carportId != null ">
+         #{carportId,jdbcType=BIGINT},
+      </if>
+      <if test= "cartypeId != null ">
+         #{cartypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "caroperateId != null ">
+         #{caroperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "mileage != null ">
+         #{mileage,jdbcType=DECIMAL},
+      </if>
+      <if test= "total != null ">
+         #{total,jdbcType=DECIMAL},
+      </if>
+      <if test= "kilometrePrice != null ">
+         #{kilometrePrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "insurancePrice != null ">
+         #{insurancePrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "usedcarPrice != null ">
+         #{usedcarPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "gasolinePrice != null ">
+         #{gasolinePrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "servicePrice != null ">
+         #{servicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "limitedBack != null ">
+         #{limitedBack,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "gasoline != null ">
+         #{gasoline,jdbcType=DECIMAL},
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+         #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_member_carused_cost (
+         id,
+         member_carused_id,
+         member_id,
+         member_name,
+         mobile,
+         carport_id,
+         cartype_id,
+         caroperate_id,
+         car_plate_num,
+         mileage,
+         total,
+         kilometre_price,
+         insurance_price,
+         usedcar_price,
+         gasoline_price,
+         service_price,
+         limited_back,
+         created,
+         gasoline,
+         modifer,
+         modifier_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.memberCarusedId,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.mobile,jdbcType=VARCHAR},
+         #{item.carportId,jdbcType=BIGINT},
+         #{item.cartypeId,jdbcType=BIGINT},
+         #{item.caroperateId,jdbcType=BIGINT},
+         #{item.carPlateNum,jdbcType=VARCHAR},
+         #{item.mileage,jdbcType=DECIMAL},
+         #{item.total,jdbcType=DECIMAL},
+         #{item.kilometrePrice,jdbcType=DECIMAL},
+         #{item.insurancePrice,jdbcType=DECIMAL},
+         #{item.usedcarPrice,jdbcType=DECIMAL},
+         #{item.gasolinePrice,jdbcType=DECIMAL},
+         #{item.servicePrice,jdbcType=DECIMAL},
+         #{item.limitedBack,jdbcType=DECIMAL},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.gasoline,jdbcType=DECIMAL},
+         #{item.modifer,jdbcType=VARCHAR},
+         #{item.modifierId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.MemberCarusedCost" >
+    update td_member_carused_cost
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberCarusedId != null ">
+      member_carused_id = #{memberCarusedId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "mobile != null and mobile != '' ">
+      mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "carportId != null ">
+      carport_id = #{carportId,jdbcType=BIGINT},
+      </if>
+      <if test= "cartypeId != null ">
+      cartype_id = #{cartypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "caroperateId != null ">
+      caroperate_id = #{caroperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+      car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "mileage != null ">
+      mileage = #{mileage,jdbcType=DECIMAL},
+      </if>
+      <if test= "total != null ">
+      total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test= "kilometrePrice != null ">
+      kilometre_price = #{kilometrePrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "insurancePrice != null ">
+      insurance_price = #{insurancePrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "usedcarPrice != null ">
+      usedcar_price = #{usedcarPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "gasolinePrice != null ">
+      gasoline_price = #{gasolinePrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "servicePrice != null ">
+      service_price = #{servicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "limitedBack != null ">
+      limited_back = #{limitedBack,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "gasoline != null ">
+      gasoline = #{gasoline,jdbcType=DECIMAL},
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+      modifer = #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,1008 @@
+package cn.cuco.service.task.impl;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.ButlerTaskMapper;
+import cn.cuco.dao.TransferListMapper;
+import cn.cuco.entity.ButlerTask;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarOperatePlan;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberCarUsed;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderCarUsed;
+import cn.cuco.entity.TransferList;
+import cn.cuco.enums.ButlerTaskType;
+import cn.cuco.enums.MemberCarUsedStatus;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.enums.TaskStatus;
+import cn.cuco.enums.TransferType;
+import cn.cuco.enums.UserCarType;
+import cn.cuco.enums.Valid;
+import cn.cuco.exception.RuntimeExceptionWarn;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.car.carInfo.CarService;
+import cn.cuco.service.car.carOperate.CarOperatePlanService;
+import cn.cuco.service.log.OperateLogService;
+import cn.cuco.service.member.carUsed.MemberCarUsedService;
+import cn.cuco.service.member.info.MemberService;
+import cn.cuco.service.order.OrderCarUsedService;
+import cn.cuco.service.task.ButlerTaskService;
+
+@Service(value = "butlerTaskService")
+public class ButlerTaskServiceImpl implements ButlerTaskService {
+
+    @Autowired
+    private ButlerTaskMapper<ButlerTask> butlerTaskMapper;
+    @Autowired
+    private TransferListMapper<TransferList> transferListMapper;
+    @Autowired
+    private OperateLogService operateLogService;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private CarService carService;
+    @Autowired
+    private MemberCarUsedService memberCarUsedService;
+    @Autowired
+    private CarOperatePlanService carOperatePlanService;
+    @Autowired
+    private OrderCarUsedService orderCarUsedService;
+    /**
+     * 创建送车任务
+     */
+	@Override
+	public ButlerTask createUserCarSendCarButlerTask(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"创建-送车任务-任务对象数据不能为空！");
+		ParamVerifyUtils.paramNotNull(butlerTask.getCarUsedId(), "创建任务-送车任务-用车记录id不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getTaskAddress(), "创建任务-送车任务-用车地址不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getPlanTime(), "创建任务-送车任务-取车时间不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getMemberId(), "创建任务-送车任务-用户ID不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "创建任务-送车任务-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "创建任务-送车任务-操作人id不能为空");		
+		
+		butlerTask.setCreateType(Valid.DOWN.getValue());
+		//验证用户
+		Member member = memberService.getMemberById(butlerTask.getMemberId());
+		ParamVerifyUtils.paramNotNull(member, "创建任务,用户不存在");		
+		butlerTask.setMemberName(member.getName());
+		butlerTask.setMemberMobile(member.getMobile());
+		butlerTask.setUseCarType(UserCarType.USERCARTYPE_USERUSECAR.getIndex());
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_PROCESSED.getIndex());
+		butlerTask.setType(ButlerTaskType.CAROPERATESTATUS_SENDCAR.getIndex());
+		//设置管家负责人
+		butlerTask = this.setCustomerAndOperater(butlerTask);
+		//创建取车任务
+		butlerTask = this.createTask(butlerTask);
+		
+		return butlerTask;
+	}
+
+	/**
+	 * 创建取车任务
+	 */
+	@Override
+	public ButlerTask createUserCarGetCarButlerTask(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"创建-取车任务-任务对象数据不能为空！");
+		ParamVerifyUtils.paramNotNull(butlerTask.getCarUsedId(), "创建任务-取车任务-用车记录id不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getTaskAddress(), "创建任务-取车任务-用车地址不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getPlanTime(), "创建任务-取车任务-取车时间不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getMemberId(), "创建任务-取车任务-用户ID不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "创建任务-取车任务-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "创建任务-取车任务-操作人id不能为空");		
+		
+		butlerTask.setCreateType(Valid.DOWN.getValue());
+		//验证用户
+		Member member = memberService.getMemberById(butlerTask.getMemberId());
+		ParamVerifyUtils.paramNotNull(member, "创建任务,用户不存在");		
+		butlerTask.setMemberName(member.getName());
+		butlerTask.setMemberMobile(member.getMobile());
+		butlerTask.setUseCarType(UserCarType.USERCARTYPE_USERUSECAR.getIndex());
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_PROCESSED.getIndex());
+		butlerTask.setType(ButlerTaskType.CAROPERATESTATUS_TASKCAR.getIndex());
+		//设置管家负责人
+		butlerTask = this.setCustomerAndOperater(butlerTask);
+		//创建取车任务
+		butlerTask = this.createTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 创建用户换车送车任务
+	 */
+	@Override
+	public ButlerTask createUserChangeSendCarButlerTask(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"创建-送车任务-任务对象数据不能为空！");
+		ParamVerifyUtils.paramNotNull(butlerTask.getOldTaskId(), "创建任务-送车任务-换车前任务ID不能为空");		
+		ParamVerifyUtils.paramNotNull(butlerTask.getCarUsedId(), "创建任务-送车任务-用车记录id不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getTaskAddress(), "创建任务-送车任务-用车地址不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getPlanTime(), "创建任务-送车任务-取车时间不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getMemberId(), "创建任务-送车任务-用户ID不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "创建任务-送车任务-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "创建任务-送车任务-操作人id不能为空");
+		
+		butlerTask.setCreateType(Valid.DOWN.getValue());
+		//验证用户
+		Member member = memberService.getMemberById(butlerTask.getMemberId());
+		ParamVerifyUtils.paramNotNull(member, "创建任务,用户不存在");		
+		butlerTask.setMemberName(member.getName());
+		butlerTask.setMemberMobile(member.getMobile());
+		butlerTask.setUseCarType(UserCarType.USERCARTYPE_USERCHANGE.getIndex());
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_PROCESSED.getIndex());
+		butlerTask.setType(ButlerTaskType.CAROPERATESTATUS_SENDCAR.getIndex());
+		//设置管家负责人
+		butlerTask = this.setCustomerAndOperater(butlerTask);
+		//创建取车任务
+		butlerTask = this.createTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 创建用户换车取车任务
+	 */
+	@Override
+	public ButlerTask createUserChangeGetCarButlerTask(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"创建-取车任务-任务对象数据不能为空！");
+		ParamVerifyUtils.paramNotNull(butlerTask.getOldTaskId(), "创建任务-取车任务-换车前任务ID不能为空");		
+		ParamVerifyUtils.paramNotNull(butlerTask.getCarUsedId(), "创建任务-取车任务-用车记录id不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getTaskAddress(), "创建任务-取车任务-用车地址不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getPlanTime(), "创建任务-取车任务-取车时间不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getMemberId(), "创建任务-取车任务-用户ID不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "创建任务-取车任务-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "创建任务-取车任务-操作人id不能为空");
+		
+		butlerTask.setCreateType(Valid.DOWN.getValue());
+		//验证用户
+		Member member = memberService.getMemberById(butlerTask.getMemberId());
+		ParamVerifyUtils.paramNotNull(member, "创建任务,用户不存在");		
+		butlerTask.setMemberName(member.getName());
+		butlerTask.setMemberMobile(member.getMobile());
+		butlerTask.setUseCarType(UserCarType.USERCARTYPE_USERCHANGE.getIndex());
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_PROCESSED.getIndex());
+		butlerTask.setType(ButlerTaskType.CAROPERATESTATUS_SENDCAR.getIndex());
+		//设置管家负责人
+		butlerTask = this.setCustomerAndOperater(butlerTask);
+		//创建取车任务
+		butlerTask = this.createTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 创建限号换车送车任务
+	 */
+	@Override
+	public ButlerTask createRestrictionChangeSendCarButlerTask(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"创建-送车任务-任务对象数据不能为空！");
+		ParamVerifyUtils.paramNotNull(butlerTask.getOldTaskId(), "创建任务-送车任务-换车前任务ID不能为空");		
+		ParamVerifyUtils.paramNotNull(butlerTask.getCarUsedId(), "创建任务-送车任务-用车记录id不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getTaskAddress(), "创建任务-送车任务-用车地址不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getPlanTime(), "创建任务-送车任务-取车时间不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getMemberId(), "创建任务-送车任务-用户ID不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "创建任务-送车任务-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "创建任务-送车任务-操作人id不能为空");
+		
+		butlerTask.setCreateType(Valid.DOWN.getValue());
+		//验证用户
+		Member member = memberService.getMemberById(butlerTask.getMemberId());
+		ParamVerifyUtils.paramNotNull(member, "创建任务,用户不存在");		
+		butlerTask.setMemberName(member.getName());
+		butlerTask.setMemberMobile(member.getMobile());
+		butlerTask.setUseCarType(UserCarType.USERCARTYPE_RESTRICTION.getIndex());
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_PROCESSED.getIndex());
+		butlerTask.setType(ButlerTaskType.CAROPERATESTATUS_SENDCAR.getIndex());
+		//设置管家负责人
+		butlerTask = this.setCustomerAndOperater(butlerTask);
+		//创建取车任务
+		butlerTask = this.createTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 创建限号换车取车任务
+	 */
+	@Override
+	public ButlerTask createRestrictionChangeGetCarButlerTask(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"创建-取车任务-任务对象数据不能为空！");
+		ParamVerifyUtils.paramNotNull(butlerTask.getOldTaskId(), "创建任务-取车任务-换车前任务ID不能为空");		
+		ParamVerifyUtils.paramNotNull(butlerTask.getCarUsedId(), "创建任务-取车任务-用车记录id不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getTaskAddress(), "创建任务-取车任务-用车地址不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getPlanTime(), "创建任务-取车任务-取车时间不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getMemberId(), "创建任务-取车任务-用户ID不能为空");	
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "创建任务-取车任务-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "创建任务-取车任务-操作人id不能为空");
+		
+		butlerTask.setCreateType(Valid.DOWN.getValue());
+		//验证用户
+		Member member = memberService.getMemberById(butlerTask.getMemberId());
+		ParamVerifyUtils.paramNotNull(member, "创建任务,用户不存在");		
+		butlerTask.setMemberName(member.getName());
+		butlerTask.setMemberMobile(member.getMobile());
+		butlerTask.setUseCarType(UserCarType.USERCARTYPE_RESTRICTION.getIndex());
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_PROCESSED.getIndex());
+		butlerTask.setType(ButlerTaskType.CAROPERATESTATUS_TASKCAR.getIndex());
+		//设置管家负责人
+		butlerTask = this.setCustomerAndOperater(butlerTask);
+		//创建取车任务
+		butlerTask = this.createTask(butlerTask);
+		return butlerTask;
+	}
+	
+	/**
+	 * 取任务详情
+	 */
+	@Override
+	public ButlerTask getButlerTaskById(Long id) {
+		ParamVerifyUtils.paramNotNull(id, "查询任务详情，id不能为空");
+		ButlerTask butlerTask = this.butlerTaskMapper.selectByPrimaryKey(id);
+		if(butlerTask!=null){
+			TransferList transferList = new TransferList();
+			transferList.setTaskId(butlerTask.getId());
+			//查询车辆图片数据
+			transferList.setType(TransferType.TRANSDERTYPE_RECEIPT.getIndex());
+			List<TransferList> receiptList =  this.getButerTaskTransferList(transferList);
+			butlerTask.setReceipeImages(receiptList);
+			//查询车辆交接单图片数据
+			transferList.setType(TransferType.TRANSDERTYPE_CAR.getIndex());
+			List<TransferList> carList =  this.getButerTaskTransferList(transferList);
+			butlerTask.setCarImages(carList);
+			if(butlerTask.getCarOperateId()!=null){
+				butlerTask.setCar(carService.getCarById(butlerTask.getCarOperateId()));
+			}
+		}
+		return butlerTask;
+	}
+
+	/**
+	 * 任务集合
+	 */
+	public List<ButlerTask> getButlerTaskList(ButlerTask butlerTask){
+		return this.butlerTaskMapper.selectByCondition(butlerTask);
+	}
+	
+	/**
+	 * 分页待处理任务
+	 */
+	@Override
+	public PageResult<ButlerTask> getButlerTaskPageForWaitDealWith(ButlerTask butlerTask) {
+		Integer page = butlerTask.getPage();
+	    Integer pageSize = butlerTask.getPageSize();
+	     /*搜索条件*/
+	    ButlerTask butlerTaskSearch = new ButlerTask();
+        if(StringUtils.isNotBlank(butlerTask.getMemberName())){
+        	butlerTaskSearch.setMemberName(butlerTask.getMemberName());
+        }
+        if(StringUtils.isNotBlank(butlerTask.getMemberMobile())){
+        	butlerTaskSearch.setMemberMobile(butlerTask.getMemberMobile());
+        }
+        if(butlerTask.getType()!=null){
+        	butlerTaskSearch.setType(butlerTask.getType());
+        }
+        if(butlerTask.getStatus()!=null){
+        	butlerTaskSearch.setStatus(butlerTask.getStatus());
+        }
+        if(butlerTask.getCustomerId()!=null){
+        	butlerTaskSearch.setCustomerId(butlerTask.getCustomerId());
+        }
+        //计划时间查询
+        if(butlerTask.getPlanTimeStart() != null && butlerTask.getPlanTimeEnd() != null){
+        	butlerTaskSearch.setPlanTimeStart(butlerTask.getPlanTimeStart());
+        	butlerTaskSearch.setPlanTimeEnd(butlerTask.getPlanTimeEnd());
+        }
+        //创建时间查询
+        if(butlerTask.getCreatedStart() != null && butlerTask.getCreatedEnd() != null){
+        	butlerTaskSearch.setCreatedStart(butlerTask.getCreatedStart());
+        	butlerTaskSearch.setCreatedEnd(butlerTask.getCreatedEnd());
+        }
+	    List<ButlerTask> butlerTasks = null;
+	    /*总记录数*/
+	    Integer totalSize = this.butlerTaskMapper.selectCountForWaitDealWithByPage(butlerTaskSearch);
+	    /*分页信息*/
+	    PageHelper.startPage(page,pageSize);
+	    butlerTasks = this.butlerTaskMapper.selectForWaitDealWithByPage(butlerTaskSearch);
+	    
+        PageResult<ButlerTask> pageResult = new PageResult<ButlerTask>(page,pageSize,totalSize,butlerTasks);
+		return pageResult;
+	}
+
+
+	/**
+	 * 分页处理中任务
+	 */
+	@Override
+	public PageResult<ButlerTask> getButlerTaskPageForProcessing(ButlerTask butlerTask) {
+		Integer page = butlerTask.getPage();
+	    Integer pageSize = butlerTask.getPageSize();
+	     /*搜索条件*/
+	    ButlerTask butlerTaskSearch = new ButlerTask();
+        if(StringUtils.isNotBlank(butlerTask.getMemberName())){
+        	butlerTaskSearch.setMemberName(butlerTask.getMemberName());
+        }
+        if(StringUtils.isNotBlank(butlerTask.getMemberMobile())){
+        	butlerTaskSearch.setMemberMobile(butlerTask.getMemberMobile());
+        }
+        if(butlerTask.getType()!=null){
+        	butlerTaskSearch.setType(butlerTask.getType());
+        }
+        if(butlerTask.getStatus()!=null){
+        	butlerTaskSearch.setStatus(butlerTask.getStatus());
+        }
+        if(butlerTask.getOperaterId()!=null){
+        	butlerTaskSearch.setOperaterId(butlerTask.getOperaterId());
+        }
+        //计划时间查询
+        if(butlerTask.getPlanTimeStart() != null && butlerTask.getPlanTimeEnd() != null){
+        	butlerTaskSearch.setPlanTimeStart(butlerTask.getPlanTimeStart());
+        	butlerTaskSearch.setPlanTimeEnd(butlerTask.getPlanTimeEnd());
+        }
+        //创建时间查询
+        if(butlerTask.getCreatedStart() != null && butlerTask.getCreatedEnd() != null){
+        	butlerTaskSearch.setCreatedStart(butlerTask.getCreatedStart());
+        	butlerTaskSearch.setCreatedEnd(butlerTask.getCreatedEnd());
+        }
+        //时间查询
+	    List<ButlerTask> butlerTasks = null;
+	    /*总记录数*/
+	    Integer totalSize = this.butlerTaskMapper.selectCountForProcessingByPage(butlerTaskSearch);
+	    /*分页信息*/
+	    PageHelper.startPage(page,pageSize);
+	    butlerTasks = this.butlerTaskMapper.selectForProcessingByPage(butlerTaskSearch);
+	    
+        PageResult<ButlerTask> pageResult = new PageResult<ButlerTask>(page,pageSize,totalSize,butlerTasks);
+		return pageResult;
+	}
+
+
+	/**
+	 * 分页已结束任务
+	 */
+	@Override
+	public PageResult<ButlerTask> getButlerTaskPageForComplete(ButlerTask butlerTask) {
+		Integer page = butlerTask.getPage();
+	    Integer pageSize = butlerTask.getPageSize();
+	     /*搜索条件*/
+	    ButlerTask butlerTaskSearch = new ButlerTask();
+        if(StringUtils.isNotBlank(butlerTask.getMemberName())){
+        	butlerTaskSearch.setMemberName(butlerTask.getMemberName());
+        }
+        if(StringUtils.isNotBlank(butlerTask.getMemberMobile())){
+        	butlerTaskSearch.setMemberMobile(butlerTask.getMemberMobile());
+        }
+        if(butlerTask.getType()!=null){
+        	butlerTaskSearch.setType(butlerTask.getType());
+        }
+        if(butlerTask.getStatus()!=null){
+        	butlerTaskSearch.setStatus(butlerTask.getStatus());
+        }
+        if(butlerTask.getOperaterId()!=null){
+        	butlerTaskSearch.setOperaterId(butlerTask.getOperaterId());
+        }
+        //计划时间查询
+        if(butlerTask.getPlanTimeStart() != null && butlerTask.getPlanTimeEnd() != null){
+        	butlerTaskSearch.setPlanTimeStart(butlerTask.getPlanTimeStart());
+        	butlerTaskSearch.setPlanTimeEnd(butlerTask.getPlanTimeEnd());
+        }
+        //创建时间查询
+        if(butlerTask.getCreatedStart() != null && butlerTask.getCreatedEnd() != null){
+        	butlerTaskSearch.setCreatedStart(butlerTask.getCreatedStart());
+        	butlerTaskSearch.setCreatedEnd(butlerTask.getCreatedEnd());
+        }
+        //时间查询
+	    List<ButlerTask> butlerTasks = null;
+	    /*总记录数*/
+	    Integer totalSize = this.butlerTaskMapper.selectCountForCompleteByPage(butlerTaskSearch);
+	    /*分页信息*/
+	    PageHelper.startPage(page,pageSize);
+	    butlerTasks = this.butlerTaskMapper.selectForCompleteByPage(butlerTaskSearch);
+	    
+        PageResult<ButlerTask> pageResult = new PageResult<ButlerTask>(page,pageSize,totalSize,butlerTasks);
+		return pageResult;
+	}
+
+	/**
+	 * 转派管家
+	 */
+	@Override
+	public ButlerTask updateTaskHousekeeper(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"转派管家对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getOperaterId(), "转派管家-管家ID不能为空");		
+		ParamVerifyUtils.paramNotNull(butlerTask.getOperaterName(), "转派管家-管家姓名不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "转派管家-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "转派管家-操作人id不能为空");
+		//修改任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 修改送车任务状态为-待处理
+	 */
+	public ButlerTask updateSendButlerTaskByHandle(ButlerTask butlerTask){
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改送车任务状态为-待处理-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改送车任务状态为-待处理-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改送车任务状态为-待处理-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改送车任务状态为-待处理-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_PROCESSED.getIndex());
+		//修改车辆运营计划信息
+		this.updateCarOpernatePlanInfo(butlerTask);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+	
+	/**
+	 * 修改送车任务状态为-待接单
+	 */
+	@Override
+	public ButlerTask updateSendButlerTaskByWaiting(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改送车任务状态为-待接单-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改送车任务状态为-待接单-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改送车任务状态为-待接单-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改送车任务状态为-待接单-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_WAITACCEPT.getIndex());
+		//修改车辆运营计划信息
+		this.updateCarOpernatePlanInfo(butlerTask);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 修改送车任务状态为-待送车
+	 */
+	@Override
+	public ButlerTask updateSendButlerTaskBySendCar(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-待送车-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-待送车-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-待送车-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-待送车-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_WAITSENDCAR.getIndex());
+		//修改车辆运营计划信息
+		this.updateCarOpernatePlanInfo(butlerTask);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 修改送车任务状态为-送车中
+	 */
+	@Override
+	public ButlerTask updateSendButlerTaskBySendIn(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-送车中-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-送车中-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-送车中-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-送车中-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_SENDCAR.getIndex());
+		//修改车辆运营计划信息
+		this.updateCarOpernatePlanInfo(butlerTask);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 修改送车任务状态为-已到达
+	 */
+	@Override
+	public ButlerTask updateSendButlerTaskByArrive(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-已到达-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-已到达-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-已到达-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-已到达-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_ARRIVE.getIndex());
+		//修改车辆运营计划信息
+		this.updateCarOpernatePlanInfo(butlerTask);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 修改送车任务状态为-已完成
+	 */
+	@Override
+	public ButlerTask updateSendButlerTaskByCompleted(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-已完成-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-已完成-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-已完成-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-已完成-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_COMPLETE.getIndex());
+		ButlerTask butlerTask_old = this.butlerTaskMapper.selectByPrimaryKey(butlerTask.getId());
+		//车辆运营状态变为 使用中
+        Car car = new Car();
+        car.setId(butlerTask_old.getCarOperateId());
+        car.setModifierId(butlerTask.getModifierId());
+        car.setModifier(butlerTask.getModifier());
+        carService.updateCarByMemberUsing(car);
+        //运营计划变为使用中
+        CarOperatePlan carOperatePlan=new CarOperatePlan();
+        carOperatePlan.setMemberUsecarId(butlerTask_old.getCarOperateId());
+	    carOperatePlanService.updateOperatePlan2ExecutingByCarUsedId(carOperatePlan);
+	    //用车记录变为使用中
+	    MemberCarUsed memberCarUsed= new MemberCarUsed();
+	    memberCarUsed.setId(butlerTask_old.getCarUsedId());
+	    memberCarUsed.setUsedStatus(MemberCarUsedStatus.MEMBERCARUSED_USEDR.getIndex());
+	    memberCarUsedService.updateMemberCarUsedForBackstage(memberCarUsed);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 修改任务状态为-已取消
+	 */
+	@Override
+	public ButlerTask updateButlerTaskByCancelled(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-已取消-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-已取消-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-已取消-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-已取消-操作人ID不能为空");
+		
+		ButlerTask butlerTask_old = this.butlerTaskMapper.selectByPrimaryKey(butlerTask.getId());
+
+      	//车辆运营状态变为 已取消
+        Car car = new Car();
+        car.setId(butlerTask_old.getCarOperateId());
+        car.setModifierId(butlerTask.getModifierId());
+        car.setModifier(butlerTask.getModifier());
+        carService.updateCarByWaitDistribute(car);
+        //运营计划变为取消
+        CarOperatePlan carOperatePlan=new CarOperatePlan();
+        carOperatePlan.setMemberUsecarId(butlerTask_old.getCarOperateId());
+	    carOperatePlanService.updateOperatePlan2CancelByCarUsedId(carOperatePlan);
+	    //用车记录变为已取消
+	    MemberCarUsed memberCarUsed= new MemberCarUsed();
+	    memberCarUsed.setId(butlerTask_old.getCarUsedId());
+	    memberCarUsed.setUsedStatus(MemberCarUsedStatus.MEMBERCARUSED_CANCEL.getIndex());
+	    memberCarUsedService.updateMemberCarUsedForBackstage(memberCarUsed);
+	    //结算
+  		OrderCarUsed orderCarUsed = new OrderCarUsed();
+  		orderCarUsed.setMemberCarUsedId(butlerTask_old.getCarUsedId());
+  		orderCarUsed.setGasoline(new BigDecimal("0"));
+  		orderCarUsed.setModifer(butlerTask.getModifier());
+  		orderCarUsed.setModifierId(butlerTask.getModifierId());
+  		orderCarUsedService.createOrderCarUsedForButtler(orderCarUsed);
+	    //将任务状态变为已取消
+	    this.updateButerTaskStatusForCancel(butlerTask);
+        return butlerTask;
+	}
+
+	/**
+	 * 待处理
+	 */
+	public ButlerTask updateGetButlerTaskByHandle(ButlerTask butlerTask){
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-待处理-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-待处理-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-待处理-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-待处理-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_PROCESSED.getIndex());
+		//修改车辆运营计划信息
+		this.updateCarOpernatePlanInfo(butlerTask);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+	
+
+	/**
+	 * 修改取车任务状态为-待接单
+	 */
+	@Override
+	public ButlerTask updateGetButlerTaskByWaiting(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-待接单-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-待接单-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-待接单-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-待接单-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_WAITACCEPT.getIndex());
+		//修改车辆运营计划信息
+		this.updateCarOpernatePlanInfo(butlerTask);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+
+
+	/**
+	 * 修改取车任务状态为-待取车
+	 */
+	@Override
+	public ButlerTask updateGetButlerTaskByTakeCar(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-待取车-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-待取车-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-待取车-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-待取车-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_WAITTASKCAR.getIndex());
+		//修改车辆运营计划信息
+		this.updateCarOpernatePlanInfo(butlerTask);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+
+
+	/**
+	 * 修改取车任务状态为-取车中
+	 */
+	@Override
+	public ButlerTask updateGetButlerTaskByGetIn(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-取车中-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-取车中-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-取车中-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-取车中-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_TASKCAR.getIndex());
+		//修改车辆运营计划信息
+		this.updateCarOpernatePlanInfo(butlerTask);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 修改取车任务状态为-已到达
+	 */
+	@Override
+	public ButlerTask updateGetButlerTaskByArrive(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-已到达-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-已到达-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-已到达-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-已到达-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_ARRIVE.getIndex());
+		//修改车辆运营计划信息
+		this.updateCarOpernatePlanInfo(butlerTask);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+
+	/**
+	 * 修改取车任务状态为-待入库
+	 */
+	public ButlerTask updateGetButlerTaskByStorage(ButlerTask butlerTask){
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-待入库-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-待入库-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-待入库-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-待入库-操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getGasoline(), "修改取车任务状态为-待入库-油耗不能为空");
+		
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_STORAGE.getIndex());
+		ButlerTask butlerTaskView = this.butlerTaskMapper.selectByPrimaryKey(butlerTask.getId());
+		
+		//车辆运营计划改为完成
+		CarOperatePlan carOperatePlan = new CarOperatePlan();
+		carOperatePlan.setMemberUsecarId(butlerTaskView.getCarUsedId());
+		carOperatePlanService.updateOperatePlan2CompeleteByCarUsedId(carOperatePlan);
+		//车辆改为待整备
+		Car car = new Car();
+		car.setId(butlerTaskView.getCarOperateId());
+		carService.updateCarByWaitReorganize(car);
+		//结算
+		OrderCarUsed orderCarUsed = new OrderCarUsed();
+		orderCarUsed.setMemberCarUsedId(butlerTaskView.getCarUsedId());
+		orderCarUsed.setGasoline(butlerTask.getGasoline());
+		orderCarUsed.setModifer(butlerTask.getModifier());
+		orderCarUsed.setModifierId(butlerTask.getModifierId());
+		orderCarUsedService.createOrderCarUsedForButtler(orderCarUsed);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		butlerTask.setCompleteTime(new Date());
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+	
+	/**
+	 * 修改取车任务状态为-已完成
+	 */
+	@Override
+	public ButlerTask updateGetButlerTaskByCompleted(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改取车任务状态为-已完成-任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改取车任务状态为-已完成-任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改取车任务状态为-已完成-操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改取车任务状态为-已完成-操作人ID不能为空");
+		butlerTask.setStatus(TaskStatus.TASKSTATUS_COMPLETE.getIndex());
+		ButlerTask butlerTaskView = this.butlerTaskMapper.selectByPrimaryKey(butlerTask.getId());
+		//车辆改为待整备
+		Car car = new Car();
+		car.setId(butlerTaskView.getCarOperateId());
+		carService.updateCarByReorganizing(car);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		//创建车务-待开发
+		
+		return butlerTask;
+	}
+
+	/**
+	 * 跟进中
+	 */
+	public ButlerTask updateButlerTaskByFollowUp(ButlerTask butlerTask){
+		ParamVerifyUtils.paramNotNull(butlerTask,"修改任务-跟进中--任务对象不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "修改任务-跟进中--任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifier(), "修改任务-跟进中--操作人不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getModifierId(), "修改任务-跟进中--操作人ID不能为空");
+		ButlerTask butlerTaskView = this.butlerTaskMapper.selectByPrimaryKey(butlerTask.getId());
+		butlerTask.setStatus(butlerTaskView.getStatus());
+		//修改车辆运营计划信息
+		this.updateCarOpernatePlanInfo(butlerTask);
+		//修改用车记录信息
+		this.updateMemberCarUsed(butlerTask);
+		//修改送车任务信息
+		this.updateTask(butlerTask);
+		return butlerTask;
+	}
+	
+	
+
+	/**
+	 *日志分页
+	 */
+	@Override
+	public PageResult<OperateLog> getButlerTaskLogByPage(OperateLog operateLog) {
+		ParamVerifyUtils.paramNotNull(operateLog);
+		ParamVerifyUtils.paramNotNull(operateLog.getOperationId(), "查询出险ID不能为空");
+		operateLog.setType(OperateLogEnum.TASK.getValue());
+		return operateLogService.getOperateLogByPage(operateLog);
+	}
+
+	/**
+	 * 创建任务附件
+	 */
+	@Override
+	public TransferList createButerTaskTransfer(TransferList transferList) {
+		ParamVerifyUtils.paramNotNull(transferList);
+    	ParamVerifyUtils.paramNotNull(transferList.getTaskId(), "新增管家任务附件，管家任务id不能为空");
+    	ParamVerifyUtils.paramNotNull(transferList.getType(), "新增管家任务附件，附件类型不能为空");
+    	ParamVerifyUtils.paramNotNull(transferList.getImageUrl(), "新增管家任务附件，附件路径不能为空");
+    	ParamVerifyUtils.paramNotNull(transferList.getCarUsedId(), "新增管家任务附件，用车记录id不能为空");
+    	TransferList transferListView = new TransferList(); 
+    	transferListView.setTaskId(transferList.getTaskId());
+    	if(transferList.getType()==TransferType.TRANSDERTYPE_CAR.getIndex()){
+    		transferListView.setType(TransferType.TRANSDERTYPE_CAR.getIndex());
+    		if(transferListMapper.selectCountByCondition(transferListView)>=10){
+    			throw new RuntimeExceptionWarn("车辆照片不得大于10张");
+    		}
+    	}
+    	if(transferList.getType()==TransferType.TRANSDERTYPE_RECEIPT.getIndex()){
+    		transferListView.setType(TransferType.TRANSDERTYPE_RECEIPT.getIndex());
+    		if(transferListMapper.selectCountByCondition(transferListView)>=10){
+    			throw new RuntimeExceptionWarn("车辆交接单不得大于10张");
+    		}
+    	}
+    	transferListMapper.insertSelective(transferList);
+		return transferList;
+	}
+	
+	/**
+	* @Title: getButerTaskTransferList 
+	* @Description: 取任务附件列表
+	* @author huanghua
+	* @param transferList
+	* @return
+	* @return List<TransferList>
+	 */
+	private List<TransferList> getButerTaskTransferList(TransferList transferList){
+		ParamVerifyUtils.paramNotNull(transferList);
+		ParamVerifyUtils.paramNotNull(transferList.getType(), "查询附件，附件类型不能为空");
+		ParamVerifyUtils.paramNotNull(transferList.getTaskId(), "查询附件，任务Id不能为空");
+		return  this.transferListMapper.selectByCondition(transferList);
+	}
+	
+	/**
+	 * 删除附件
+	 */
+	@Override
+	public Integer deleteButerTaskTransfer(Long id) {
+		ParamVerifyUtils.paramNotNull(id, "删除任务附件，附件id不能为空");
+    	TransferList transferList = transferListMapper.selectByPrimaryKey(id);
+    	if(transferList == null){
+    		throw new RuntimeExceptionWarn("无此附件");
+    	}
+		return transferListMapper.deleteByPrimaryKey(id);
+	}
+	
+	/**
+	* @Title: createTask 
+	* @Description: 创建
+	* @author huanghua
+	* @param butlerTask
+	* @return ButlerTask
+	 */
+	private ButlerTask createTask(ButlerTask butlerTask) {
+		butlerTask.setTaskNum(createTaskId());
+		butlerTask.setCreated(new Date());
+		butlerTask.setLasttimeModify(butlerTask.getCreated());
+		this.butlerTaskMapper.insertSelective(butlerTask);
+		//添加任务日志
+		operateLogService.createeOperateLogForButlerTask(butlerTask);
+		
+		return this.butlerTaskMapper.selectByPrimaryKey(butlerTask.getId());
+	}
+	
+	/**
+	* @Title: updateTask 
+	* @Description: 修改任务
+	* @author huanghua
+	* @param butlerTask
+	* @return void
+	 */
+	public void updateTask(ButlerTask butlerTask) {
+		butlerTask.setLasttimeModify(new Date());
+		//添加任务日志
+		operateLogService.createeOperateLogForButlerTask(butlerTask);
+		//修改任务信息
+		this.butlerTaskMapper.updateByPrimaryKeySelective(butlerTask);
+	}
+	
+	/**
+	 * 后台创建任务负责管家是选择的管家，负责客服是当前登录人的信息；前端创建任务负责管家以及负责客服都是后台设置的默认管家及客服
+	 * @param butlerTask
+	 * @return
+	 */
+	private ButlerTask setCustomerAndOperater(ButlerTask butlerTask){
+		//判断是后台操作还是前台操作
+		if(null==butlerTask.getOperaterId()){
+			//表示是前台操作，都取后台设置的默认管家
+			butlerTask = this.setCustomer(butlerTask);
+			if(ButlerTaskType.CAROPERATESTATUS_TASKCAR.getIndex()==butlerTask.getType().intValue()){
+				butlerTask = this.setOperater(butlerTask);
+			}
+			if(ButlerTaskType.CAROPERATESTATUS_SENDCAR.getIndex()==butlerTask.getType().intValue()){
+				butlerTask = this.setOperater(butlerTask);
+			}
+		}else{
+			//表示是后台操作（前端会传入管家的信息，controller会传入客服的信息-客服即登录人）
+			butlerTask.setOperaterId(butlerTask.getOperaterId());
+			butlerTask.setOperaterName(butlerTask.getOperaterId());
+			butlerTask.setCustomerId(null);
+			butlerTask.setCustomerName(null);
+		}
+		return butlerTask;
+	}
+	
+	/**
+	 * 设置任务客服
+	 * @param butlerTask
+	 * @return
+	 */
+	private ButlerTask setCustomer(ButlerTask butlerTask) {
+		butlerTask.setCustomerName(null);
+		butlerTask.setCustomerId(null);
+		return butlerTask;
+	}
+	
+	/**
+	 * 任务设置任务负责管家
+	 * @param butlerTask
+	 * @param type
+	 * @return
+	 */
+	private ButlerTask setOperater(ButlerTask butlerTask){
+		butlerTask.setOperaterName(null);
+		butlerTask.setOperaterId(null);
+		return butlerTask;
+	}
+	
+	// 订单编号生成规则
+	private static String createTaskId() {
+		return new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime())+RandomStringUtils.randomNumeric(4);
+	}
+	
+	/**
+	* @Title: editCarOpernatePlanInfo 
+	* @Description: 修改运营计划
+	* @author huanghua
+	* @param butlerTask
+	* @return void
+	 */
+	private void updateCarOpernatePlanInfo(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask);
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "客服操作，任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getStatus(), "客服操作，任务状态不能为空");
+		
+		ButlerTask old = this.butlerTaskMapper.selectByPrimaryKey(butlerTask.getId());
+		CarOperatePlan carOperatePlan = new CarOperatePlan();
+		carOperatePlan.setMemberUsecarId(old.getCarUsedId());
+		if(old.getType()== ButlerTaskType.CAROPERATESTATUS_SENDCAR.getIndex().intValue()){
+			if(butlerTask .getPlanTime() != null && old.getPlanTime().getTime() != butlerTask .getPlanTime().getTime()){
+				carOperatePlan.setStartTime(butlerTask.getPlanTime());
+			}
+		}
+		if(old.getType()== ButlerTaskType.CAROPERATESTATUS_TASKCAR.getIndex().intValue()){
+			if(butlerTask .getPlanTime() != null && old.getPlanTime().getTime() != butlerTask .getPlanTime().getTime()){
+				carOperatePlan.setEndTime(butlerTask.getPlanTime());
+			}
+		}
+		carOperatePlanService.updateOperatePlanInfoByCarUsedId(carOperatePlan);
+		
+	}
+	
+	/**
+	* @Title: updateCarUsedInfo 
+	* @Description: 修改用车记录信息
+	* @author huanghua
+	* @param butlerTask
+	* @return void
+	 */
+	private void updateMemberCarUsed(ButlerTask butlerTask) {
+		ParamVerifyUtils.paramNotNull(butlerTask);
+		ParamVerifyUtils.paramNotNull(butlerTask.getId(), "客服操作，任务ID不能为空");
+		ParamVerifyUtils.paramNotNull(butlerTask.getStatus(), "客服操作，任务状态不能为空");
+		
+		ButlerTask old = this.butlerTaskMapper.selectByPrimaryKey(butlerTask.getId());
+		MemberCarUsed memberCarUsed = new MemberCarUsed();
+		memberCarUsed.setId(old.getCarUsedId());
+		if(old.getType()== ButlerTaskType.CAROPERATESTATUS_SENDCAR.getIndex().intValue()){
+			if(butlerTask .getPlanTime() != null && old.getPlanTime().getTime()!= butlerTask .getPlanTime().getTime()){
+				memberCarUsed.setOrderCarUsedTime(butlerTask.getPlanTime());
+			}
+			if(StringUtils.isNotBlank(butlerTask.getTaskAddress()) && !old.getTaskAddress().equals(butlerTask.getTaskAddress())){
+				memberCarUsed.setOrderCarUsedAddress(butlerTask.getTaskAddress());
+			}
+		}
+		if(old.getType()== ButlerTaskType.CAROPERATESTATUS_TASKCAR.getIndex().intValue()){
+			if(butlerTask .getPlanTime() != null && old.getPlanTime().getTime()!= butlerTask .getPlanTime().getTime()){
+				memberCarUsed.setOrderCarReturnTime(butlerTask.getPlanTime());
+			}
+			if(StringUtils.isNotBlank(butlerTask.getTaskAddress()) && !old.getTaskAddress().equals(butlerTask.getTaskAddress())){
+				memberCarUsed.setOrderCarReturnAddress(butlerTask.getTaskAddress());
+			}
+		}
+		memberCarUsedService.updateMemberCarUsedForBackstage(memberCarUsed);
+	}
+	
+	/**
+	* @Title: updateButerTaskStatusForPowerUser 
+	* @Description: 改任务状态为取消
+	* @author huanghua
+	* @param butlerTask
+	* @return void
+	 */
+
+	private void updateButerTaskStatusForCancel(ButlerTask butlerTask){
+		ButlerTask butlerTaskInfo = this.butlerTaskMapper.selectByPrimaryKey(butlerTask.getId());
+		butlerTask.setCarUsedId(butlerTaskInfo.getCarUsedId());
+		List<ButlerTask> list = this.butlerTaskMapper.selectByCondition(butlerTask);
+		String remark = butlerTask.getRemark();
+		for (ButlerTask butlerTaskView : list) {
+			butlerTask = new ButlerTask();
+			butlerTask.setId(butlerTaskView.getId());
+			butlerTask.setCompleteTime(new Date());
+			butlerTask.setStatus(TaskStatus.TASKSTATUS_CANCEL.getIndex());
+			butlerTask.setRemark(remark);
+			//修改任务信息
+			this.updateTask(butlerTask);
+		}
+	}
+}

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.TransferListMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.TransferList" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="task_id" property="taskId" jdbcType="BIGINT" />
+    <result column="power_used_id" property="powerUsedId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.TransferList" >
+       select  count(1) 
+    from td_transfer_list  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "taskId != null ">
+        and task_id = #{taskId,jdbcType=BIGINT}      
+      </if>
+      <if test= "powerUsedId != null ">
+        and power_used_id = #{powerUsedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+        and image_url = #{imageUrl,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.TransferList" >
+       select  <include refid="Base_Column_List" />
+    from td_transfer_list  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "taskId != null ">
+        and task_id = #{taskId,jdbcType=BIGINT}      
+      </if>
+      <if test= "powerUsedId != null ">
+        and power_used_id = #{powerUsedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+        and image_url = #{imageUrl,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, task_id, power_used_id, 
+      type, image_url
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.TransferList" >
+    select 
+      id, task_id, power_used_id, 
+      type, image_url
+    from td_transfer_list where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.TransferList" >
+    delete from td_transfer_list where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <!-- 按表主键删除数据 -->
+    <delete id="deleteByTaskID" parameterType="com.hy.gcar.entity.TransferList" >
+        delete from td_transfer_list
+        where task_id = #{taskId,jdbcType=BIGINT}
+        and type = #{type,jdbcType=INTEGER}
+    </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_transfer_list where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.TransferList" >
+    insert into td_transfer_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "taskId != null ">
+         task_id,
+      </if>
+      <if test= "powerUsedId != null ">
+         power_used_id,
+      </if>
+      <if test= "type != null ">
+         type,
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+         image_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "taskId != null ">
+         #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test= "powerUsedId != null ">
+         #{powerUsedId,jdbcType=BIGINT},
+      </if>
+      <if test= "type != null ">
+         #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+         #{imageUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_transfer_list (
+         id,
+         task_id,
+         power_used_id,
+         type,
+         image_url)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.taskId,jdbcType=BIGINT},
+         #{item.powerUsedId,jdbcType=BIGINT},
+         #{item.type,jdbcType=INTEGER},
+         #{item.imageUrl,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.TransferList" >
+    update td_transfer_list
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "taskId != null ">
+      task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test= "powerUsedId != null ">
+      power_used_id = #{powerUsedId,jdbcType=BIGINT},
+      </if>
+      <if test= "type != null ">
+      type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+      image_url = #{imageUrl,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

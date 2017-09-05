@@ -1,0 +1,65 @@
+package cn.cuco.controller.entity;
+
+import cn.cuco.entity.CarAccident;
+
+import java.math.BigDecimal;
+
+/**
+ * @ClassName:
+ * @Description：
+ * @author：WangShuai
+ * @date：2017年02月27 14:52:00
+ */
+public class CarAccidentStatusVO {
+
+    private Long id;
+
+    private String remark;
+
+    private Integer status;
+
+    private BigDecimal claimPrice;
+
+
+    public CarAccident toCarAccident(){
+        CarAccident carAccident = new CarAccident();
+        carAccident.setId(this.getId());
+        carAccident.setRemark(this.getRemark());
+        //TODO claimPrice
+
+        return carAccident;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public BigDecimal getClaimPrice() {
+        return claimPrice;
+    }
+
+    public void setClaimPrice(BigDecimal claimPrice) {
+        this.claimPrice = claimPrice;
+    }
+}

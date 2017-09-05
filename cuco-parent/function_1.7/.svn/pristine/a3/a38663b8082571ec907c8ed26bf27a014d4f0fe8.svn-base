@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>用车信息</title>
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/4v.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="greyBg">
+    <div class="fault-page">
+        <ul>
+            <li>
+                <span class="info-name">
+                        任务类型：
+                    </span>
+                <span class="info-val">
+                        送车任务
+                    </span>
+            </li>
+           <li>
+                <span class="info-name">
+                        送车时间：
+                    </span>
+                <span class="info-val">
+                        2018-10-12
+                    </span>
+            </li>
+            <li>
+                <span class="info-name">
+                        送车地点：
+                    </span>
+                <span class="info-val">
+                        北辰世纪中心
+                    </span>
+            </li>
+        </ul>
+    </div>
+
+     <div class="fault-page fault-type">
+        <ul>
+            <li>
+                <span class="info_type">
+                        任务类型
+                    </span>
+                <span class="info_time">
+                        任务时间
+                    </span>
+            </li>
+           <li>
+                <span class="info_type">
+                        送车任务
+                    </span>
+                <span class="info_time">
+                        2018-10-12
+                    </span>
+            </li>
+            <li>
+                <span class="info_type">
+                        送车任务
+                    </span>
+                <span class="info_time">
+                        2018-10-12
+                    </span>
+            </li>
+        </ul>
+    </div>
+    <div class="btns">
+        <a href="javscript:;" class="button cencle">转派</a>
+        <a href="javscript:;" class="button">接单</a>
+    </div>
+</body>
+
+</html>

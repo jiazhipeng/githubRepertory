@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.GetmoneyApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.GetmoneyApply" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_mobile" property="memberMobile" jdbcType="VARCHAR" />
+    <result column="member_item_id" property="memberItemId" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="apply_payment" property="applyPayment" jdbcType="DECIMAL" />
+    <result column="payment" property="payment" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="modifer" property="modifer" jdbcType="VARCHAR" />
+    <result column="modifer_id" property="modiferId" jdbcType="VARCHAR" />
+    <result column="handle_time" property="handleTime" jdbcType="TIMESTAMP" />
+    <result column="remits_time" property="remitsTime" jdbcType="TIMESTAMP" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="branch_name" property="branchName" jdbcType="VARCHAR" />
+    <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.GetmoneyApply" >
+       select  count(1) 
+    from td_getmoney_apply  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "applyPayment != null ">
+        and apply_payment = #{applyPayment,jdbcType=DECIMAL}      
+      </if>
+      <if test= "payment != null ">
+        and payment = #{payment,jdbcType=DECIMAL}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modiferId != null and modiferId != '' ">
+        and modifer_id = #{modiferId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "handleTime != null ">
+        and handle_time = #{handleTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remitsTime != null ">
+        and remits_time = #{remitsTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "bankName != null and bankName != '' ">
+        and bank_name = #{bankName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "branchName != null and branchName != '' ">
+        and branch_name = #{branchName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "bankCard != null and bankCard != '' ">
+        and bank_card = #{bankCard,jdbcType=VARCHAR}      
+      </if>
+      <if test= "accountName != null and accountName != '' ">
+        and account_name = #{accountName,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.GetmoneyApply" >
+       select  <include refid="Base_Column_List" />
+    from td_getmoney_apply  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "applyPayment != null ">
+        and apply_payment = #{applyPayment,jdbcType=DECIMAL}      
+      </if>
+      <if test= "payment != null ">
+        and payment = #{payment,jdbcType=DECIMAL}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modiferId != null and modiferId != '' ">
+        and modifer_id = #{modiferId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "handleTime != null ">
+        and handle_time = #{handleTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remitsTime != null ">
+        and remits_time = #{remitsTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "bankName != null and bankName != '' ">
+        and bank_name = #{bankName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "branchName != null and branchName != '' ">
+        and branch_name = #{branchName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "bankCard != null and bankCard != '' ">
+        and bank_card = #{bankCard,jdbcType=VARCHAR}      
+      </if>
+      <if test= "accountName != null and accountName != '' ">
+        and account_name = #{accountName,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, member_id, member_name, 
+      member_mobile, member_item_id, created, 
+      apply_payment, payment, status, 
+      modifer, modifer_id, handle_time, 
+      remits_time, bank_name, branch_name, 
+      bank_card, account_name
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.GetmoneyApply" >
+    select 
+      id, member_id, member_name, 
+      member_mobile, member_item_id, created, 
+      apply_payment, payment, status, 
+      modifer, modifer_id, handle_time, 
+      remits_time, bank_name, branch_name, 
+      bank_card, account_name
+    from td_getmoney_apply where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.GetmoneyApply" >
+    delete from td_getmoney_apply where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_getmoney_apply where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.GetmoneyApply" >
+    insert into td_getmoney_apply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         member_mobile,
+      </if>
+      <if test= "memberItemId != null ">
+         member_item_id,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "applyPayment != null ">
+         apply_payment,
+      </if>
+      <if test= "payment != null ">
+         payment,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+         modifer,
+      </if>
+      <if test= "modiferId != null and modiferId != '' ">
+         modifer_id,
+      </if>
+      <if test= "handleTime != null ">
+         handle_time,
+      </if>
+      <if test= "remitsTime != null ">
+         remits_time,
+      </if>
+      <if test= "bankName != null and bankName != '' ">
+         bank_name,
+      </if>
+      <if test= "branchName != null and branchName != '' ">
+         branch_name,
+      </if>
+      <if test= "bankCard != null and bankCard != '' ">
+         bank_card,
+      </if>
+      <if test= "accountName != null and accountName != '' ">
+         account_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberItemId != null ">
+         #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "applyPayment != null ">
+         #{applyPayment,jdbcType=DECIMAL},
+      </if>
+      <if test= "payment != null ">
+         #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+         #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test= "modiferId != null and modiferId != '' ">
+         #{modiferId,jdbcType=VARCHAR},
+      </if>
+      <if test= "handleTime != null ">
+         #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remitsTime != null ">
+         #{remitsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "bankName != null and bankName != '' ">
+         #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test= "branchName != null and branchName != '' ">
+         #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test= "bankCard != null and bankCard != '' ">
+         #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test= "accountName != null and accountName != '' ">
+         #{accountName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_getmoney_apply (
+         id,
+         member_id,
+         member_name,
+         member_mobile,
+         member_item_id,
+         created,
+         apply_payment,
+         payment,
+         status,
+         modifer,
+         modifer_id,
+         handle_time,
+         remits_time,
+         bank_name,
+         branch_name,
+         bank_card,
+         account_name)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.memberMobile,jdbcType=VARCHAR},
+         #{item.memberItemId,jdbcType=BIGINT},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.applyPayment,jdbcType=DECIMAL},
+         #{item.payment,jdbcType=DECIMAL},
+         #{item.status,jdbcType=INTEGER},
+         #{item.modifer,jdbcType=VARCHAR},
+         #{item.modiferId,jdbcType=VARCHAR},
+         #{item.handleTime,jdbcType=TIMESTAMP},
+         #{item.remitsTime,jdbcType=TIMESTAMP},
+         #{item.bankName,jdbcType=VARCHAR},
+         #{item.branchName,jdbcType=VARCHAR},
+         #{item.bankCard,jdbcType=VARCHAR},
+         #{item.accountName,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.GetmoneyApply" >
+    update td_getmoney_apply
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+      member_mobile = #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberItemId != null ">
+      member_item_id = #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "applyPayment != null ">
+      apply_payment = #{applyPayment,jdbcType=DECIMAL},
+      </if>
+      <if test= "payment != null ">
+      payment = #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+      modifer = #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test= "modiferId != null and modiferId != '' ">
+      modifer_id = #{modiferId,jdbcType=VARCHAR},
+      </if>
+      <if test= "handleTime != null ">
+      handle_time = #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remitsTime != null ">
+      remits_time = #{remitsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "bankName != null and bankName != '' ">
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test= "branchName != null and branchName != '' ">
+      branch_name = #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test= "bankCard != null and bankCard != '' ">
+      bank_card = #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test= "accountName != null and accountName != '' ">
+      account_name = #{accountName,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+<!-- 查询权益下进行中的审核记录 -->
+<select id="selectMoneyApplyOfUnfinished" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.GetmoneyApply" >
+       select  <include refid="Base_Column_List" />
+    from td_getmoney_apply  
+ 	where  status in(0,1) and member_item_id = #{memberItemId,jdbcType=BIGINT}
+  </select>
+</mapper>

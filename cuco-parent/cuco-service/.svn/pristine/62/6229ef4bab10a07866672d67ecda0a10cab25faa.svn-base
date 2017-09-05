@@ -1,0 +1,156 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.math.BigDecimal;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-22 14:30:40
+ */
+public class CarTypePrice implements Serializable {
+
+    private static final long serialVersionUID = 6511116531550573L;
+
+    private Long id;//主键
+
+    private Long carTypeId;//车型ID
+
+    private Long cityId;//城市ID
+
+    private String cityCode;//城市编码
+
+    private String cityName;//城市名称
+
+    private BigDecimal kmOne;//公里价格 : >50 <=100；
+
+    private BigDecimal kmTwo;//公里价格： >100  <=200；
+
+    private BigDecimal kmThree;//公里价格 :>200  <=300；
+
+    private BigDecimal kmFour;//公里价格 :>300 <=500；
+
+    private BigDecimal kmFive;//公里价格 :>500；
+
+    private Date created;//创建时间
+
+    private String modifier;//操作人姓名
+
+    private Long modifierId;//操作人id
+    
+    private Date lasttimeModify;//最后修改时间
+    
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getCarTypeId() {
+        return this.carTypeId;
+    }
+
+    public void setCarTypeId(Long carTypeId) {
+        this.carTypeId = carTypeId;
+    }
+
+    public Long getCityId() {
+        return this.cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getCityCode() {
+        return this.cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getCityName() {
+        return this.cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public BigDecimal getKmOne() {
+        return this.kmOne;
+    }
+
+    public void setKmOne(BigDecimal kmOne) {
+        this.kmOne = kmOne;
+    }
+
+    public BigDecimal getKmTwo() {
+        return this.kmTwo;
+    }
+
+    public void setKmTwo(BigDecimal kmTwo) {
+        this.kmTwo = kmTwo;
+    }
+
+    public BigDecimal getKmThree() {
+        return this.kmThree;
+    }
+
+    public void setKmThree(BigDecimal kmThree) {
+        this.kmThree = kmThree;
+    }
+
+    public BigDecimal getKmFour() {
+        return this.kmFour;
+    }
+
+    public void setKmFour(BigDecimal kmFour) {
+        this.kmFour = kmFour;
+    }
+
+    public BigDecimal getKmFive() {
+        return this.kmFive;
+    }
+
+    public void setKmFive(BigDecimal kmFive) {
+        this.kmFive = kmFive;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+	public String getModifier() {
+		return modifier;
+	}
+
+	public void setModifier(String modifier) {
+		this.modifier = modifier;
+	}
+
+	public Long getModifierId() {
+		return modifierId;
+	}
+
+	public void setModifierId(Long modifierId) {
+		this.modifierId = modifierId;
+	}
+
+	public Date getLasttimeModify() {
+		return lasttimeModify;
+	}
+
+	public void setLasttimeModify(Date lasttimeModify) {
+		this.lasttimeModify = lasttimeModify;
+	}
+    
+}

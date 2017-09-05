@@ -1,0 +1,296 @@
+package cn.cuco.service.order.impl;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.date.DateUtils;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.OrderRenewalMapper;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderMemberCarUsed;
+import cn.cuco.entity.OrderRenewal;
+import cn.cuco.enums.MemberStatus;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.enums.OrderMemberCarUsedStatus;
+import cn.cuco.enums.OrderRenewalStatus;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.business.OperateSettingService;
+import cn.cuco.service.log.OperateLogService;
+import cn.cuco.service.member.account.MemberAccountService;
+import cn.cuco.service.member.info.MemberService;
+import cn.cuco.service.order.OrderMemberCarUsedService;
+import cn.cuco.service.order.OrderRenewalService;
+
+/**
+ * @ClassName: OrderRenewalServiceImpl
+ * @Description: 续费订单相关接口实现
+ * @author zc.du
+ * @date 2017年2月23日 上午10:56:07
+ */
+@Service(value = "orderRenewalService")
+public class OrderRenewalServiceImpl implements OrderRenewalService {
+
+	@Autowired
+	private OrderRenewalMapper<OrderRenewal> orderRenewalMapper;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private OperateLogService operateLogService;
+	@Autowired
+	private MemberAccountService memberAccountService;
+	@Autowired
+	private OrderMemberCarUsedService orderMemberCarUsedService;
+	@Autowired
+	private OperateSettingService operateSettingService;
+
+	@Override
+	public OrderRenewal createOrderRenewal(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		Long memberId = orderRenewal.getCreatedMemberId();
+		ParamVerifyUtils.paramNotNull(memberId, "储值时，用户ID不能为空");
+		Member member = this.memberService.getMemberById(memberId);
+		ParamVerifyUtils.paramNotNull(member, "储值时，用户不存在");
+		if (MemberStatus.FROZEN.getIndex().equals(member.getStatuts())) {
+			ExceptionUtil.throwWarn("用户已冻结，无法进行储值操作");
+		}
+		//是否存在未完成的订单
+		Integer unfinish = this.orderRenewalMapper.getUnFinishOrderRenewalCountByMemberId(memberId);
+		if(null != unfinish && unfinish.intValue() > 0){
+			ExceptionUtil.throwWarn("当前用户存在未完成的储值订单");
+		}
+		//验证储值金额
+		validateMoney(orderRenewal);
+		Date date = new Date();
+		OrderRenewal newOne = new OrderRenewal();
+		newOne.setCreatedMemberId(memberId);
+		newOne.setCreatedMemberMobile(member.getMobile());
+		newOne.setCreatedMemberName(member.getName());
+		newOne.setAccountType(orderRenewal.getAccountType());
+		newOne.setCreated(date);
+		newOne.setLasttimeModify(date);
+		newOne.setOrderNum(this.createOrderNum());
+		newOne.setModifier(member.getName());
+		newOne.setModifierId(memberId);
+		newOne.setTotal(orderRenewal.getTotal());
+		this.orderRenewalMapper.insertSelective(newOne);
+		// 创建续费日志
+		OperateLog log = new OperateLog(newOne.getId(), OperateLogEnum.ORDER_RENEWAL.getValue(), OrderRenewalStatus.WAIT_PAY.getIndex(), memberId, member.getName(), date, "创建订单");
+		this.operateLogService.createOperateLog(log);
+		return this.orderRenewalMapper.selectByPrimaryKey(newOne.getId());
+	}
+
+	@Override
+	public OrderRenewal getOrderRenewal(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		String orderNum = orderRenewal.getOrderNum();
+		Long id = orderRenewal.getId();
+		if (null == id && StringUtils.isEmpty(orderNum)) {
+			ParamVerifyUtils.paramNotNull("订单ID、订单编号不能同时为空");
+		}
+		List<OrderRenewal> list = this.orderRenewalMapper.selectByCondition(orderRenewal);
+		if (CollectionUtils.isNotEmpty(list)) {
+			return list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public PageResult<OrderRenewal> getOrderRenewalListByPage(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		Integer page = orderRenewal.getPage();
+		Integer pageSize = orderRenewal.getPageSize();
+		Integer totalSize = this.orderRenewalMapper.selectCountByCondition(orderRenewal);
+		PageHelper.startPage(page, pageSize);
+		List<OrderRenewal> list = this.orderRenewalMapper.getOrderRenewalListWithSort(orderRenewal);
+		PageResult<OrderRenewal> pageResult = new PageResult<OrderRenewal>(page, pageSize, totalSize, list);
+		return pageResult;
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByCancelForApp(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		ParamVerifyUtils.paramNotNull(orderRenewal.getId(),"用户取消储值订单时，储值订单ID不能为空");
+		OrderRenewal old = this.orderRenewalMapper.selectByPrimaryKey(orderRenewal.getId());
+		ParamVerifyUtils.paramNotNull(old,"储值订单不存在，无法取消");
+		if(!old.getStatus().equals(OrderRenewalStatus.WAIT_PAY.getIndex())){
+			ExceptionUtil.throwWarn("当前储值订单状态为"+OrderRenewalStatus.getName(old.getStatus())+"，无法取消");
+		}
+		//修改订单状态
+		Date date = new Date();
+		OrderRenewal target = new OrderRenewal();
+		target.setStatus(OrderRenewalStatus.CANCEL.getIndex());
+		target.setId(old.getId());
+		target.setLasttimeModify(date);
+		this.orderRenewalMapper.updateByPrimaryKeySelective(target);
+		//插入操作日志
+		OperateLog log = new OperateLog(orderRenewal.getId(), OperateLogEnum.ORDER_RENEWAL.getValue(), OrderRenewalStatus.CANCEL.getIndex(), old.getCreatedMemberId(), old.getCreatedMemberName(), date, "用户取消订单");
+		this.operateLogService.createOperateLog(log);
+		orderRenewal.setStatus(OrderRenewalStatus.CANCEL.getIndex());
+		orderRenewal.setLasttimeModify(date);
+		return this.getOrderRenewal(orderRenewal);
+	}
+
+	@Override
+	public void updateOrderRenewalStatusByCancelForTask() {
+		List<OrderRenewal> list = this.orderRenewalMapper.getOrderRenewalListForCancelForTask();
+		if (CollectionUtils.isNotEmpty(list)) {
+			Date date = new Date();
+			for (OrderRenewal cur : list) {
+				OrderRenewal newOne = new OrderRenewal();
+				newOne.setId(cur.getId());
+				newOne.setStatus(OrderRenewalStatus.CANCEL.getIndex());
+				newOne.setLasttimeModify(date);
+				this.orderRenewalMapper.updateByPrimaryKeySelective(newOne);
+				OperateLog log = new OperateLog(cur.getId(), OperateLogEnum.ORDER_RENEWAL.getValue(), OrderRenewalStatus.CANCEL.getIndex(), 1L, "系统", date, "超时未支付，系统自动取消订单");
+				this.operateLogService.createOperateLog(log);
+			}
+		}
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByPaying(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		ParamVerifyUtils.paramNotNull(orderRenewal.getId(),"修改储值订单状态为支付中时，储值订单ID不能为空");
+		OrderRenewal old = this.orderRenewalMapper.selectByPrimaryKey(orderRenewal.getId());
+		ParamVerifyUtils.paramNotNull(old,"储值订单不存在，无法执行该操作");
+		if(!old.getStatus().equals(OrderRenewalStatus.WAIT_PAY.getIndex())){
+			ExceptionUtil.throwWarn("当前储值订单状态为"+OrderRenewalStatus.getName(old.getStatus())+"，无法执行该操作");
+		}
+		//修改订单状态
+		Date date = new Date();
+		OrderRenewal target = new OrderRenewal();
+		target.setStatus(OrderRenewalStatus.PAYING.getIndex());
+		target.setId(old.getId());
+		target.setLasttimeModify(date);
+		this.orderRenewalMapper.updateByPrimaryKeySelective(target);
+		//插入操作日志
+		OperateLog log = new OperateLog(orderRenewal.getId(), OperateLogEnum.ORDER_RENEWAL.getValue(), OrderRenewalStatus.PAYING.getIndex(), old.getCreatedMemberId(), old.getCreatedMemberName(), date, "用户取消订单");
+		this.operateLogService.createOperateLog(log);
+		orderRenewal.setStatus(OrderRenewalStatus.PAYING.getIndex());
+		orderRenewal.setLasttimeModify(date);
+		return this.getOrderRenewal(orderRenewal);
+	}
+
+	@Override
+	public OrderRenewal updateOrderRenewalStatusByCompletePay(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		ParamVerifyUtils.paramNotNull(orderRenewal.getId(),"修改储值订单状态为已付款时，续费订单ID不能为空");
+		OrderRenewal old = this.orderRenewalMapper.selectByPrimaryKey(orderRenewal.getId());
+		ParamVerifyUtils.paramNotNull(old,"储值订单不存在，无法取消");
+		if(!old.getStatus().equals(OrderRenewalStatus.WAIT_PAY.getIndex()) &&
+				old.getStatus().equals(OrderRenewalStatus.PAYING.getIndex())){
+			ExceptionUtil.throwWarn("当前储值订单状态为"+OrderRenewalStatus.getName(old.getStatus())+"，无法执行该操作");
+		}
+		//修改订单状态
+		Date date = new Date();
+		OrderRenewal target = new OrderRenewal();
+		target.setStatus(OrderRenewalStatus.COMPLETE_PAY.getIndex());
+		target.setId(old.getId());
+		target.setLasttimeModify(date);
+		this.orderRenewalMapper.updateByPrimaryKeySelective(target);
+		//插入操作日志
+		OperateLog log = new OperateLog(orderRenewal.getId(), OperateLogEnum.ORDER_RENEWAL.getValue(), OrderRenewalStatus.COMPLETE_PAY.getIndex(), old.getCreatedMemberId(), old.getCreatedMemberName(), date, "用户取消订单");
+		this.operateLogService.createOperateLog(log);
+		//同步账户余额
+		target.setModifierId(old.getCreatedMemberId());
+		target.setModifier(old.getCreatedMemberName());
+		this.memberAccountService.updateMemberAccountForMemberRenewal(target);
+		//修改用户类型
+		this.updateMemberType(old.getCreatedMemberId());
+		orderRenewal.setStatus(OrderRenewalStatus.COMPLETE_PAY.getIndex());
+		orderRenewal.setLasttimeModify(date);
+		return this.getOrderRenewal(orderRenewal);
+	}
+
+	@Override
+	public PageResult<OperateLog> getOrderRenewalLogListByPage(OrderRenewal orderRenewal) {
+		ParamVerifyUtils.paramNotNull(orderRenewal);
+		ParamVerifyUtils.paramNotNull(orderRenewal.getId(),"分页查询续费订单日志列表时，续费订单Id不能为空");
+		OperateLog log = new OperateLog();
+		log.setPage(orderRenewal.getPage());
+		log.setPageSize(orderRenewal.getPageSize());
+		log.setType(OperateLogEnum.ORDER_RENEWAL.getValue());
+		log.setOperationId(orderRenewal.getId());
+		return this.operateLogService.getOperateLogByPage(log);
+	}
+
+	private String createOrderNum() {
+		return "XF" + DateUtils.getDate("yyyyMMdd") + RandomUtils.nextInt(99999, 999999);
+	}
+
+	public static void main(String[] args) {
+		BigDecimal total = new BigDecimal(0);
+		float a = total.divideAndRemainder(total)[1].floatValue();
+		System.out.println(a);
+	}
+
+	@Override
+	public Integer getOrderRenewalCount(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId,"根据用户ID查询充值次数时，用户ID不能为空");
+		OrderRenewal order = new OrderRenewal();
+		order.setAccountType(1);
+		order.setCreatedSource(1);
+		order.setStatus(OrderRenewalStatus.COMPLETE_PAY.getIndex());
+		order.setCreatedMemberId(memberId);
+		return this.orderRenewalMapper.selectCountByCondition(order);
+	}
+	
+	private boolean validateMoney(OrderRenewal orderRenewal){
+		BigDecimal min = new BigDecimal(5000);
+		BigDecimal total = orderRenewal.getTotal();
+		if (null == total || total.floatValue() <= 0 || total.divideAndRemainder(min)[1].floatValue() != 0) {
+			ExceptionUtil.throwWarn("储值金额必须为5000的正整数倍");
+		}
+		//验证是否为第一次储值
+		OrderRenewal search = new OrderRenewal();
+		search.setStatus(OrderRenewalStatus.COMPLETE_PAY.getIndex());
+		search.setCreatedMemberId(orderRenewal.getCreatedMemberId());
+		Integer count = this.orderRenewalMapper.selectCountByCondition(search);
+		if(null == count || count.intValue() == 0){
+			//第一次储值
+			BigDecimal base = new BigDecimal(this.operateSettingService.getOperateSettingForFuel().getParameterValue());
+			//是否存在待支付的用车订单
+			OrderMemberCarUsed order = new OrderMemberCarUsed();
+			order.setMemberId(orderRenewal.getCreatedMemberId());
+			order.setOrderStatus(OrderMemberCarUsedStatus.WAIT_PAY.getIndex());
+			List<OrderMemberCarUsed> orders = this.orderMemberCarUsedService.getOrderMemberCarUsedListByPage(order).getItems();
+			if(CollectionUtils.isNotEmpty(orders)){
+				order = orders.get(0);
+				base = base.add(order.getCarUsedCost());
+			}
+			if(total.subtract(base).doubleValue() < 0){
+				ExceptionUtil.throwWarn("储值金额不能低于"+base.floatValue()+"且必须为5000的正整数倍");
+			}
+		}
+		return true;
+	}
+	
+	private void updateMemberType(Long memberId){
+		//如果用户第一次储值成功，则修改其类型为已入会
+		Member member = this.memberService.getMemberById(memberId);
+		if(member.getType().equals(0)){
+			Member target = new Member();
+			target.setId(memberId);
+			target.setType(1);
+			target.setAddTime(new Date());
+			this.memberService.updateMember(target);
+		}
+	}
+
+	@Override
+	public Integer getUnfinishOrderRenewalCountByMemberId(Long memberId) {
+		ParamVerifyUtils.paramNotNull(memberId,"根据用户ID查询未完成的储值订单数时，用户ID不能为空");
+		return this.orderRenewalMapper.getUnFinishOrderRenewalCountByMemberId(memberId);
+	}
+}

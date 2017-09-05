@@ -1,0 +1,96 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.math.BigDecimal;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-21 11:08:14
+ */
+public class BasicCarTypePricing implements Serializable {
+
+    private static final long serialVersionUID = 4113081990371412L;
+
+    private Long id;//主键
+
+    private Long carTypeId;//车型ID
+
+    private Long cityId;//城市ID
+
+    private String cityCode;//城市编码
+
+    private String cityName;//城市名称
+
+    private Integer kmType;//公里类型 1:>50 <=100；2:>100  <=200；3:>200  <=300；4:>300 <=500；5:>500；(单位：公里)
+
+    private BigDecimal kmPrice;//公里费用
+
+    private Date created;//创建时间
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getCarTypeId() {
+        return this.carTypeId;
+    }
+
+    public void setCarTypeId(Long carTypeId) {
+        this.carTypeId = carTypeId;
+    }
+
+    public Long getCityId() {
+        return this.cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getCityCode() {
+        return this.cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getCityName() {
+        return this.cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public Integer getKmType() {
+        return this.kmType;
+    }
+
+    public void setKmType(Integer kmType) {
+        this.kmType = kmType;
+    }
+
+    public BigDecimal getKmPrice() {
+        return this.kmPrice;
+    }
+
+    public void setKmPrice(BigDecimal kmPrice) {
+        this.kmPrice = kmPrice;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+}

@@ -1,0 +1,43 @@
+package cn.cuco.service.basic.business.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.OperateSettingMapper;
+import cn.cuco.entity.OperateSetting;
+import cn.cuco.service.basic.business.OperateSettingService;
+
+@Service(value = "operateSettingService")
+public class OperateSettingServiceImpl implements OperateSettingService {
+
+    @Autowired
+    private OperateSettingMapper<OperateSetting> operateSettingMapper;
+
+	@Override
+	public OperateSetting updateOperateSetting(OperateSetting operateSetting) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OperateSetting getOperateSettingById(OperateSetting operateSetting) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OperateSetting> getOperateSettingParameterList(OperateSetting operateSetting) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OperateSetting> getOperateSettingCostList(OperateSetting operateSetting) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+  
+}

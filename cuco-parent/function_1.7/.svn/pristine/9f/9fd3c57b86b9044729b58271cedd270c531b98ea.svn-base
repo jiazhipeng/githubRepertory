@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, user-scalable=no">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="email=no" name="format-detection">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>平台预约-取消</title>
+
+    <link rel="stylesheet" href="../../css/normalize.css">
+
+    <style>
+
+
+        .pos-btn {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        .pos-btn a {
+            width: 50%;
+            display: block;
+            text-decoration:none;
+            float: left;
+            line-height: 2.15rem;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        .returns {
+            background: #fafafa;
+            color: #666;
+        }
+        .see {
+            background: #161616;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body style="background: #eeeeee">
+    <div class="cancel">
+        <p>取消原因</p>
+            <textarea class="text-info">
+
+            </textarea>
+
+    </div>
+    <div class="pos-btn">
+        <a href="javascript:" class="returns">返回</a>
+        <a href="javascript:" class="see">确定取消</a>
+    </div>
+    <script src="../../js/zepto.js"></script>
+
+</body>
+
+</html>

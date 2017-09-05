@@ -1,0 +1,69 @@
+package cn.cuco.service.member.carUsed.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberCarUsedAddressMapper;
+import cn.cuco.entity.MemberCarUsedAddress;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.carUsed.MemberCarUsedAddressService;
+
+@Service(value = "memberCarUsedAddressService")
+public class MemberCarUsedAddressServiceImpl implements MemberCarUsedAddressService {
+
+    @Autowired
+    private MemberCarUsedAddressMapper<MemberCarUsedAddress> memberCarUsedAddressMapper;
+
+	@Override
+	public MemberCarUsedAddress createMemberCarUsedAddress(
+			MemberCarUsedAddress memberCarUsedAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsedAddress updateMemberCarUsedAddress(
+			MemberCarUsedAddress memberCarUsedAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteMemberCarUsedAddress(
+			MemberCarUsedAddress memberCarUsedAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsedAddress getMemberCarUsedAddress(
+			MemberCarUsedAddress memberCarUsedAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemberCarUsedAddress> getMemberCarUsedAddressList(
+			MemberCarUsedAddress memberCarUsedAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberCarUsedAddress> getMemberCarUsedAddressListByPage(
+			MemberCarUsedAddress memberCarUsedAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMemberCarUsedAddressCount(
+			MemberCarUsedAddress memberCarUsedAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

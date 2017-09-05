@@ -1,0 +1,57 @@
+package cn.cuco.service.car.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarInsuranceDetailMapper;
+import cn.cuco.entity.CarInsuranceDetail;
+import cn.cuco.service.car.CarInsuranceDetailService;
+
+@Service(value = "carInsuranceDetailService")
+public class CarInsuranceDetailServiceImpl implements CarInsuranceDetailService {
+
+    @Autowired
+    private CarInsuranceDetailMapper<CarInsuranceDetail> carInsuranceDetailMapper;
+    
+    @Override
+    public Integer insertSelective(CarInsuranceDetail carInsuranceDetail) throws Exception {
+           return this.carInsuranceDetailMapper.insertSelective(carInsuranceDetail);
+        }
+
+    @Override
+    public Integer insertBatch(List<CarInsuranceDetail> carInsuranceDetail) throws Exception {
+           return this.carInsuranceDetailMapper.insertBatch(carInsuranceDetail) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.carInsuranceDetailMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.carInsuranceDetailMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(CarInsuranceDetail carInsuranceDetail) {
+           return this.carInsuranceDetailMapper.updateByPrimaryKeySelective(carInsuranceDetail);
+    }
+
+    @Override
+    public CarInsuranceDetail findById(Object id) {
+           return (CarInsuranceDetail) this.carInsuranceDetailMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<CarInsuranceDetail> selectByCondition(CarInsuranceDetail carInsuranceDetail) {
+           return (List<CarInsuranceDetail>) this.carInsuranceDetailMapper.selectByCondition(carInsuranceDetail);
+    }
+
+    @Override
+    public Integer selectCountByCondition(CarInsuranceDetail carInsuranceDetail) {
+           return  this.carInsuranceDetailMapper.selectCountByCondition(carInsuranceDetail);
+    }
+
+}

@@ -1,0 +1,57 @@
+package cn.cuco.service.task.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.ButlerTaskMapper;
+import cn.cuco.entity.ButlerTask;
+import cn.cuco.service.task.ButlerTaskService;
+
+@Service(value = "butlerTaskService")
+public class ButlerTaskServiceImpl implements ButlerTaskService {
+
+    @Autowired
+    private ButlerTaskMapper<ButlerTask> butlerTaskMapper;
+    
+    @Override
+    public Integer insertSelective(ButlerTask butlerTask) throws Exception {
+           return this.butlerTaskMapper.insertSelective(butlerTask);
+        }
+
+    @Override
+    public Integer insertBatch(List<ButlerTask> butlerTask) throws Exception {
+           return this.butlerTaskMapper.insertBatch(butlerTask) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.butlerTaskMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.butlerTaskMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(ButlerTask butlerTask) {
+           return this.butlerTaskMapper.updateByPrimaryKeySelective(butlerTask);
+    }
+
+    @Override
+    public ButlerTask findById(Object id) {
+           return (ButlerTask) this.butlerTaskMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<ButlerTask> selectByCondition(ButlerTask butlerTask) {
+           return (List<ButlerTask>) this.butlerTaskMapper.selectByCondition(butlerTask);
+    }
+
+    @Override
+    public Integer selectCountByCondition(ButlerTask butlerTask) {
+           return  this.butlerTaskMapper.selectCountByCondition(butlerTask);
+    }
+
+}

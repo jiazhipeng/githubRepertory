@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>极车服务</title>
+    <link href="../../css/service.css" rel="stylesheet" type="text/css" />
+    <style>
+        .package{padding-bottom:4%; background:#eee; margin-bottom:4%;border-bottom:1px solid #ccc;}
+        .package .box{background:#fff; padding:0 4%; line-height:4.5rem; border-bottom:1px solid #ccc; overflow:hidden;}
+        .package .right{color:#999; background:url("../../images/arrow_right_grey.png") no-repeat right center; background-size:7px; padding-right:16px; float:right;}
+    	.carShow ul li{position:relative; margin-top:4%;}
+    	.car-info-bar{position:absolute; bottom:0; left:0; width:100%; height:40px; line-height:40px; background:rgba(0,0,0,0.6); font-size:1.3rem; color:#fff;}
+    	.car-info-bar .name{float:left; padding-left:8px;}
+    	.car-info-bar .price{float:right; padding-right:8px;}
+    </style>
+</head>
+<body>
+    <!--头部-->
+    <header class="header">
+        <span class="userIcon"></span>
+        <ul class="tab">
+            <li class="flex " >
+                <span>我的极车</span>
+            </li>
+            <li class="flex active" >
+                <span>极车展厅</span>
+                <em class="line"></em>
+            </li>
+        </ul>
+    </header>
+
+   
+    <!--极车展厅 start-->
+    <div class="carShow" >
+        <!--<img src="../../images/carshowtit.jpg" class="title">-->
+        <ul class="section">
+            <li>
+            	<img src="../../images/car_1.png">
+            	<p class="car-info-bar">
+            		<span class="name">特斯拉 Model X 90D</span>
+            		<span class="price">700元/天起</span>
+            	</p>
+            </li>
+            <li>
+	            <img src="../../images/car_2.png">
+	            <p class="car-info-bar">
+            		<span class="name">特斯拉 Model X 90D</span>
+            		<span class="price">700元/天起</span>
+            	</p>
+            </li>
+            <li>
+            	<img src="../../images/car_3.png">
+            	<p class="car-info-bar">
+            		<span class="name">特斯拉 Model X 90D</span>
+            		<span class="price">700元/天起</span>
+            	</p>
+            </li>
+            <li>
+            	<img src="../../images/car_1.png">
+            	<p class="car-info-bar">
+            		<span class="name">特斯拉 Model X 90D</span>
+            		<span class="price">700元/天起</span>
+            	</p>
+            </li>
+            <li>
+	            <img src="../../images/car_2.png">
+	            <p class="car-info-bar">
+            		<span class="name">特斯拉 Model X 90D</span>
+            		<span class="price">700元/天起</span>
+            	</p>
+            </li>
+            <li>
+            	<img src="../../images/car_3.png">
+            	<p class="car-info-bar">
+            		<span class="name">特斯拉 Model X 90D</span>
+            		<span class="price">700元/天起</span>
+            	</p>
+            </li>
+        </ul>
+    </div>
+    <!--极车展厅 stop-->
+
+
+    <!--用户菜单-->
+    <div class="userSlider" style="display: block">
+        <div class="sliderSec">
+            <div class="userInfo">
+                <a href="../user/edit.html" class="icon">
+                    <img src="../../images/usr.png">
+                    <em class="vip"></em>
+                </a>
+                <span class="name">影子</span>
+            </div>
+
+            <div class="usrList">
+                <a href="javascript:;" class="active">
+                    <img src="../../images/coup_icon.png">
+                    我的优惠券
+                </a>
+                <a href="javascript:;">
+                    <img src="../../images/integral_icon.png">
+                    我的积分
+                </a>
+                <a href="javascript:;">
+                    <img src="../../images/membericon.png">
+                    会员权益
+                </a>
+                <a href="javascript:;">
+                    <img src="../../images/abouticon.png">
+                    关于极车
+                </a>
+                <a href="javascript:;">
+                    <img src="../../images/logout_icon.png">
+                    退出登录
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/zepto.js"></script>
+
+<script>
+    $('.header .userIcon').on('click',function(){
+        $('.userSlider').show();
+    });
+    $('.userSlider').click(function(){
+        $(this).hide();
+    });
+    
+    /* $('#casshow').on('click',function(){
+    	$(this).append('<em class="line"></em>');
+    	$(this).addClass('active');
+    	$('#mycar').removeClass('active');
+        $('.mycar.serviSec').hide();
+        $('.carShow').show();
+    });
+    $('#mycar').on('click',function(){
+    	$(this).append('<em class="line"></em>');
+    	$(this).addClass('active');
+    	$('#casshow').removeClass('active');
+        $('.mycar.serviSec').show();
+        $('.carShow').hide();
+    }); */
+    
+    
+    
+</script>
+</body>
+</html>

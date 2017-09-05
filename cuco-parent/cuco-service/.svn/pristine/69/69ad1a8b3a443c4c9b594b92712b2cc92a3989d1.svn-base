@@ -1,0 +1,68 @@
+package cn.cuco.service.car.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarAccidentMapper;
+import cn.cuco.entity.CarAccident;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.car.CarAccidentService;
+
+@Service(value = "carAccidentService")
+public class CarAccidentServiceImpl implements CarAccidentService {
+
+    @Autowired
+    private CarAccidentMapper<CarAccident> carAccidentMapper;
+
+	@Override
+	public CarAccident createSelective(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarAccident updateCarAccident(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarAccident updateCarAccidentByFollowUp(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarAccident updateCarAccidentByToBePaid(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarAccident updateCarAccidentBycompleted(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarAccident getCarAccidentById(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<CarAccident> getCarAccidentByCondition(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarAccident> getCarAccidentList(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+  
+}

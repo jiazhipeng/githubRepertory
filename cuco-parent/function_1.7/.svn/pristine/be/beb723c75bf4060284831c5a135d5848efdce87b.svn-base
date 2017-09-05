@@ -1,0 +1,86 @@
+@import url("css.css");
+body{background: #fff;}
+
+/*极车展厅*/
+/*.carShow .title{width: 80.8%; height: 30px; line-height: 30px; margin: auto; position: relative;}*/
+/*.carShow .title em{width: 100%; height: 1px; background: #333; position: absolute; top: 15px;}*/
+/*.carShow .title span{padding: 0 20px; background: #fff;}*/
+.carShow .title{width: 80.8%; margin: 4% auto; display: block}
+.carShow .carList li{padding-bottom: 15px; margin-bottom: 15px; border-bottom: 1px solid #ccc;}
+.carShow .carList li:last-child{border-bottom:0;}
+
+/*我的极车*/
+.noown{ text-align: center;}
+.noown img{width: 40%; margin-top: 40%;}
+.noown .button{width:92%; margin-top: 40%;}
+.carInfo .button{width:92%; margin: auto;}
+.myCars{background: #eee;}
+.carInfo .carName{border-bottom: 1px solid #ccc; padding: 15px; 20px; overflow: hidden; background: #fff; font-size: 1.6rem;}
+.carInfo .name,.carInfo .state{background: url("../images/caricon.png") no-repeat left center; background-size: 20px; padding-left: 26px;}
+.freeState .name,.freeState .state{opacity: 0.5}
+.carInfo .state{background-image: url("../images/stadusicon.png"); background-size: 15px; float: right; padding-left: 25px;}
+.carInfo .list{ margin: 2% auto 0; font-size: 1.5rem; background: #fff; border-top:1px solid #ccc;  border-bottom:1px solid #ccc;}
+.carInfo .list li{border-bottom: 1px solid #ccc; padding: 15px 0; width: 92%; margin: auto;}
+.carInfo .list li:last-child{border-bottom: 0;}
+.carInfo .list a,.carInfo .list li{display: block; overflow: hidden;}
+.carInfo .list a{background: url("../images/arrow_right_2.png") no-repeat right center; background-size: 8px;}
+.carInfo .list img{width: 17px; margin: 0 6px; vertical-align: middle; margin-top: -2px;}
+.carInfo .listVal{min-width: 90px; float: right; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.bgWhite{background:#fff; padding:6% 0;}
+.titBox .title{position: relative; color: #333; height: 60px; margin: 0 20px; margin-top: 5%; text-align: center}
+.carInfo .titBox .title{margin-top: 0;}
+.titBox .title span{position: relative; background: #fff; font-size: 1.4rem; padding: 0 5px; line-height: 60px;}
+.titBox .title em{width: 100%; height: 1px; background: #333; position: absolute; left: 0;  top: 50%;}
+
+/*代充电 救援*/
+.serviBox{margin: 3% 0; overflow: hidden; background: #fff; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;}
+
+.serviBox .charge{border-right: 1px solid #ccc;}
+.serviBox .serviceDis{opacity: 0.3;}
+.serviBox .charge,.serviBox .rescue{width: 50%; float: left; padding: 4% 0; text-align: center; box-sizing: border-box; font-size: 1.6rem;}
+.serviBox .charge a{background: url("../images/chargeservice.png") no-repeat left center; background-size: 16px; padding-left: 28px; }
+.serviBox .rescue a{background: url("../images/rescueicon.png") no-repeat left center; background-size: 22px; padding-left: 36px; }
+
+
+/*多辆车*/
+.myCarList{width: 92%; margin: auto;}
+.myCarList li{ margin-bottom: 4%;}
+
+/*用车记录*/
+.useCar{background: #eee;}
+.useInfo{background: #fff; font-size: 1.5rem; border-bottom: 1px solid #ccc;}
+.useInfo li{border-bottom: 1px solid #ccc; padding: 12px 15px; margin: 0 8px;}
+.useInfo li:last-child{border-bottom: 0;}
+.useInfo .title{color: #333; margin: 0;padding-left:23px;}
+
+
+
+/*专属定制*/
+.ownPage{ background: #eee;}
+.ownPageWhite{background: #fff}
+.ownPage .page{background: #fff; border-bottom: 1px solid #ccc; margin-bottom: 4%;}
+.ownPage .titBox .title{margin-top: 0;}
+.ownPage .options{border-top: 1px solid #ccc; border-radius: 2px; text-align: center; padding-bottom: 5%}
+.ownPage .options span{width: 47%; display: inline-block; padding: 1.5% 0; margin: 6% 0.5% 0; border: 1px solid #ccc; color: #666; font-size: 1.2rem; white-space: nowrap;}
+.ownPageWhite .options span{width: 44%; margin: 6% 1% 0;}
+.ownPage .title_2{font-size: 1.5rem;padding: 14px 4%; border-top: 1px solid #ccc;}
+.ownPageWhite .titBox .title span{padding: 0 10%; line-height: 50px;}
+.ownPageWhite .titBox .title{height: 50px;}
+.business .button{margin: 6% auto 8%;}
+.business .titBox .title span{font-size:1.6rem; padding: 0 15px;}
+.business input,.business textarea{-webkit-appearance: none; border-radius: 0;}
+
+.businessInfo{width: 75%; margin: auto; line-height: 32px; font-size: 1.4rem;}
+.businessInfo li{margin-bottom: 6%; padding-left: 70px; position: relative;}
+.businessInfo li.need{margin-top: -10px;}
+.businessInfo .name{width: 70px; position: absolute; top: 0; left: 0;}
+.businessInfo .busiVal{width: 100%; border: 1px solid #ccc; background: #f9f9f9; height: 32px; box-sizing: border-box; padding: 0 8px;}
+.businessInfo textarea.busiVal{height: 90px; padding: 8px; resize: none; margin-top: 10px;}
+
+
+
+
+@media screen and (max-width:330px){
+    .ownPage .options span{width: 46%;}
+}
+

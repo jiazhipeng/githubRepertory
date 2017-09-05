@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.PowerUsedMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.PowerUsed" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="member_item_id" property="memberItemId" jdbcType="BIGINT" />
+    <result column="member_item_name" property="memberItemName" jdbcType="VARCHAR" />
+    <result column="caroperate_id" property="caroperateId" jdbcType="BIGINT" />
+    <result column="member_type" property="memberType" jdbcType="INTEGER" />
+    <result column="car_used_time" property="carUsedTime" jdbcType="TIMESTAMP" />
+    <result column="car_used_day" property="carUsedDay" jdbcType="INTEGER" />
+    <result column="car_used_address" property="carUsedAddress" jdbcType="VARCHAR" />
+    <result column="car_return_time" property="carReturnTime" jdbcType="TIMESTAMP" />
+    <result column="car_return_address" property="carReturnAddress" jdbcType="VARCHAR" />
+    <result column="carType_id" property="carTypeId" jdbcType="BIGINT" />
+    <result column="change_caroperate_id" property="changeCaroperateId" jdbcType="BIGINT" />
+    <result column="change_status" property="changeStatus" jdbcType="INTEGER" />
+    <result column="used_status" property="usedStatus" jdbcType="INTEGER" />
+    <result column="change_carType_id" property="changeCarTypeId" jdbcType="BIGINT" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!-- 查询当前权益下所有待送车 、使用中、已完成、已取消-->
+  <select id="selectPowerUsedListOfStatus" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.PowerUsed" >
+    select 
+      id, member_id, member_item_id, member_item_name,
+      caroperate_id, member_type, car_used_time, 
+      car_used_day, car_used_address, car_return_time, 
+      car_return_address, carType_id, change_caroperate_id, 
+      change_status, used_status, change_carType_id, 
+      city_code,created,lasttime_modify
+    from td_power_used where member_item_id = #{memberItemId,jdbcType=BIGINT} order by created desc
+<!--     and used_status in (0,1,2,3,4,5,6,7) -->
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.PowerUsed" >
+       select  count(1) 
+    from td_power_used  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+       <if test= "memberItemName != null and memberItemName != '' ">
+        and member_item_name = #{memberItemName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "caroperateId != null ">
+        and caroperate_id = #{caroperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberType != null ">
+        and member_type = #{memberType,jdbcType=INTEGER}      
+      </if>
+      <if test= "carUsedTime != null ">
+        and car_used_time = #{carUsedTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "carUsedDay != null ">
+        and car_used_day = #{carUsedDay,jdbcType=INTEGER}      
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+        and car_used_address = #{carUsedAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carReturnTime != null ">
+        and car_return_time = #{carReturnTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "carReturnAddress != null and carReturnAddress != '' ">
+        and car_return_address = #{carReturnAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carTypeId != null ">
+        and carType_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "changeCaroperateId != null ">
+        and change_caroperate_id = #{changeCaroperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "changeStatus != null ">
+        and change_status = #{changeStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "usedStatus != null ">
+        and used_status = #{usedStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "changeCarTypeId != null ">
+        and change_carType_id = #{changeCarTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+        and city_code = #{cityCode,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.PowerUsed" >
+       select  <include refid="Base_Column_List" />
+    from td_power_used  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+        <if test= "memberItemName != null and memberItemName != '' ">
+        and member_item_name = #{memberItemName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "caroperateId != null ">
+        and caroperate_id = #{caroperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberType != null ">
+        and member_type = #{memberType,jdbcType=INTEGER}      
+      </if>
+      <if test= "carUsedTime != null ">
+        and car_used_time = #{carUsedTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "carUsedDay != null ">
+        and car_used_day = #{carUsedDay,jdbcType=INTEGER}      
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+        and car_used_address = #{carUsedAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carReturnTime != null ">
+        and car_return_time = #{carReturnTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "carReturnAddress != null and carReturnAddress != '' ">
+        and car_return_address = #{carReturnAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carTypeId != null ">
+        and carType_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "changeCaroperateId != null ">
+        and change_caroperate_id = #{changeCaroperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "changeStatus != null ">
+        and change_status = #{changeStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "usedStatus != null ">
+        and used_status = #{usedStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "changeCarTypeId != null ">
+        and change_carType_id = #{changeCarTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+        and city_code = #{cityCode,jdbcType=VARCHAR}      
+      </if>
+       <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, member_id, member_item_id, member_item_name,
+      caroperate_id, member_type, car_used_time, 
+      car_used_day, car_used_address, car_return_time, 
+      car_return_address, carType_id, change_caroperate_id, 
+      change_status, used_status, change_carType_id, 
+      city_code,created,lasttime_modify
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.PowerUsed" >
+    select 
+      id, member_id, member_item_id, member_item_name,
+      caroperate_id, member_type, car_used_time, 
+      car_used_day, car_used_address, car_return_time, 
+      car_return_address, carType_id, change_caroperate_id, 
+      change_status, used_status, change_carType_id, 
+      city_code,created,lasttime_modify
+    from td_power_used where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.PowerUsed" >
+    delete from td_power_used where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_power_used where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.PowerUsed" >
+    insert into td_power_used
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberItemId != null ">
+         member_item_id,
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+        member_item_name,      
+      </if>
+      <if test= "caroperateId != null ">
+         caroperate_id,
+      </if>
+      <if test= "memberType != null ">
+         member_type,
+      </if>
+      <if test= "carUsedTime != null ">
+         car_used_time,
+      </if>
+      <if test= "carUsedDay != null ">
+         car_used_day,
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+         car_used_address,
+      </if>
+      <if test= "carReturnTime != null ">
+         car_return_time,
+      </if>
+      <if test= "carReturnAddress != null and carReturnAddress != '' ">
+         car_return_address,
+      </if>
+      <if test= "carTypeId != null ">
+         carType_id,
+      </if>
+      <if test= "changeCaroperateId != null ">
+         change_caroperate_id,
+      </if>
+      <if test= "changeStatus != null ">
+         change_status,
+      </if>
+      <if test= "usedStatus != null ">
+         used_status,
+      </if>
+      <if test= "changeCarTypeId != null ">
+         change_carType_id,
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         city_code,
+      </if>
+        <if test= "created != null ">
+        created,   
+      </if>
+      <if test= "lasttimeModify != null ">
+        lasttime_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemId != null ">
+         #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+         #{memberItemName,jdbcType=VARCHAR},      
+      </if>
+      <if test= "caroperateId != null ">
+         #{caroperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberType != null ">
+         #{memberType,jdbcType=INTEGER},
+      </if>
+      <if test= "carUsedTime != null ">
+         #{carUsedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "carUsedDay != null ">
+         #{carUsedDay,jdbcType=INTEGER},
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+         #{carUsedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "carReturnTime != null ">
+         #{carReturnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "carReturnAddress != null and carReturnAddress != '' ">
+         #{carReturnAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "carTypeId != null ">
+         #{carTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "changeCaroperateId != null ">
+         #{changeCaroperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "changeStatus != null ">
+         #{changeStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "usedStatus != null ">
+         #{usedStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "changeCarTypeId != null ">
+         #{changeCarTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         #{cityCode,jdbcType=VARCHAR},
+      </if>
+        <if test= "created != null ">
+      	#{created,jdbcType=TIMESTAMP},      
+      </if>
+      <if test= "lasttimeModify != null ">
+        #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_power_used (
+         id,
+         member_id,
+         member_item_id,
+         member_item_name,
+         caroperate_id,
+         member_type,
+         car_used_time,
+         car_used_day,
+         car_used_address,
+         car_return_time,
+         car_return_address,
+         carType_id,
+         change_caroperate_id,
+         change_status,
+         used_status,
+         change_carType_id,
+         city_code,
+         created,
+         lasttime_modify)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.memberItemId,jdbcType=BIGINT},
+         #{item.memberItemName,jdbcType=VARCHAR},    
+         #{item.caroperateId,jdbcType=BIGINT},
+         #{item.memberType,jdbcType=INTEGER},
+         #{item.carUsedTime,jdbcType=TIMESTAMP},
+         #{item.carUsedDay,jdbcType=INTEGER},
+         #{item.carUsedAddress,jdbcType=VARCHAR},
+         #{item.carReturnTime,jdbcType=TIMESTAMP},
+         #{item.carReturnAddress,jdbcType=VARCHAR},
+         #{item.carTypeId,jdbcType=BIGINT},
+         #{item.changeCaroperateId,jdbcType=BIGINT},
+         #{item.changeStatus,jdbcType=INTEGER},
+         #{item.usedStatus,jdbcType=INTEGER},
+         #{item.changeCarTypeId,jdbcType=BIGINT},
+         #{item.cityCode,jdbcType=VARCHAR}
+         #{item.created,jdbcType=TIMESTAMP}
+         #{item.lasttimeModify,jdbcType=TIMESTAMP}
+         )
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.PowerUsed" >
+    update td_power_used
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemId != null ">
+      member_item_id = #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+        member_item_name = #{memberItemName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "caroperateId != null ">
+      caroperate_id = #{caroperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberType != null ">
+      member_type = #{memberType,jdbcType=INTEGER},
+      </if>
+      <if test= "carUsedTime != null ">
+      car_used_time = #{carUsedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "carUsedDay != null ">
+      car_used_day = #{carUsedDay,jdbcType=INTEGER},
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+      car_used_address = #{carUsedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "carReturnTime != null ">
+      car_return_time = #{carReturnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "carReturnAddress != null and carReturnAddress != '' ">
+      car_return_address = #{carReturnAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "carTypeId != null ">
+      carType_id = #{carTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "changeCaroperateId != null ">
+      change_caroperate_id = #{changeCaroperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "changeStatus != null ">
+      change_status = #{changeStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "usedStatus != null ">
+      used_status = #{usedStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "changeCarTypeId != null ">
+      change_carType_id = #{changeCarTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+       <if test= "created != null ">
+        created = #{created,jdbcType=TIMESTAMP},      
+      </if>
+      <if test= "lasttimeModify != null ">
+        lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+<!-- 查询正在使用的车型记录-->
+  <select id="selectPowerUsedOfUseingCars" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.PowerUsed" >
+       select  <include refid="Base_Column_List" />
+    from td_power_used where used_status not in(6,7)   
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+        and member_item_name = #{memberItemName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "caroperateId != null ">
+        and caroperate_id = #{caroperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberType != null ">
+        and member_type = #{memberType,jdbcType=INTEGER}      
+      </if>
+      <if test= "carUsedTime != null ">
+        and car_used_time = #{carUsedTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "carUsedDay != null ">
+        and car_used_day = #{carUsedDay,jdbcType=INTEGER}      
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+        and car_used_address = #{carUsedAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carReturnTime != null ">
+        and car_return_time = #{carReturnTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "carReturnAddress != null and carReturnAddress != '' ">
+        and car_return_address = #{carReturnAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carTypeId != null ">
+        and carType_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "changeCaroperateId != null ">
+        and change_caroperate_id = #{changeCaroperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "changeStatus != null ">
+        and change_status = #{changeStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "changeCarTypeId != null ">
+        and change_carType_id = #{changeCarTypeId,jdbcType=BIGINT}      
+      </if>
+       <if test= "cityCode != null and cityCode != '' ">
+     	and city_code = #{cityCode,jdbcType=VARCHAR}
+      </if>
+       <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      order by created asc
+  </select>
+  
+<select id="selectByPageList" parameterType="com.hy.gcar.entity.PowerUsed" resultMap="BaseResultMap">
+	  select  <include refid="Base_Column_List" />
+    from td_power_used
+	
+	<where>
+		 <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+	
+	</where>
+	 order by created desc
+	 limit ${beginPage} , ${pageSize}
+</select>
+
+<select id="selectByMemBerIdItemIdCarId" parameterType="com.hy.gcar.entity.PowerUsed" resultMap="BaseResultMap">
+	  select  <include refid="Base_Column_List" />
+    from td_power_used
+	where member_id = #{memberId,jdbcType=BIGINT} and
+	 member_item_id = #{memberItemId,jdbcType=BIGINT} and    
+	 caroperate_id	= #{caroperateId,jdbcType=BIGINT} and
+	 used_status in(3,4,5);
+</select>
+
+<select id="selectpowerUsedByCompleted" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.PowerUsed" >
+       select  <include refid="Base_Column_List" />
+    from td_power_used  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "usedStatus != null ">
+        and used_status = #{usedStatus,jdbcType=INTEGER}      
+      </if>
+  </where>
+  order by lasttime_modify desc
+  </select>
+ <!-- 查询未完成的用车记录-->
+ <select id="selectpowerUsedByNoCompleted" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.PowerUsed" >
+       select  <include refid="Base_Column_List" />
+    from td_power_used  where member_id = #{memberId,jdbcType=BIGINT} and used_status != 6 and used_status != 7;
+  </select>
+
+<!-- 可选择性添加数据 -->
+  <insert id="insertIntoSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.PowerUsed" >
+   <!-- INSERT INTO user(id,username,password)   SELECT  'xxxx','love','xxxxxxx'   FROM DUAL WHERE NOT EXISTS ( SELECT * FROM user WHERE username = 'love' ) -->
+    insert into td_power_used
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "memberItemId != null ">
+         member_item_id,
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+        member_item_name,      
+      </if>
+      <if test= "caroperateId != null ">
+         caroperate_id,
+      </if>
+      <if test= "memberType != null ">
+         member_type,
+      </if>
+      <if test= "carUsedTime != null ">
+         car_used_time,
+      </if>
+      <if test= "carUsedDay != null ">
+         car_used_day,
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+         car_used_address,
+      </if>
+      <if test= "carReturnTime != null ">
+         car_return_time,
+      </if>
+      <if test= "carReturnAddress != null and carReturnAddress != '' ">
+         car_return_address,
+      </if>
+      <if test= "carTypeId != null ">
+         carType_id,
+      </if>
+      <if test= "changeCaroperateId != null ">
+         change_caroperate_id,
+      </if>
+      <if test= "changeStatus != null ">
+         change_status,
+      </if>
+      <if test= "usedStatus != null ">
+         used_status,
+      </if>
+      <if test= "changeCarTypeId != null ">
+         change_carType_id,
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         city_code,
+      </if>
+        <if test= "created != null ">
+        created,   
+      </if>
+      <if test= "lasttimeModify != null ">
+        lasttime_modify,
+      </if>
+    </trim>
+    <trim prefix="select " suffix="" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemId != null ">
+         #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberItemName != null and memberItemName != '' ">
+         #{memberItemName,jdbcType=VARCHAR},      
+      </if>
+      <if test= "caroperateId != null ">
+         #{caroperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberType != null ">
+         #{memberType,jdbcType=INTEGER},
+      </if>
+      <if test= "carUsedTime != null ">
+         #{carUsedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "carUsedDay != null ">
+         #{carUsedDay,jdbcType=INTEGER},
+      </if>
+      <if test= "carUsedAddress != null and carUsedAddress != '' ">
+         #{carUsedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "carReturnTime != null ">
+         #{carReturnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "carReturnAddress != null and carReturnAddress != '' ">
+         #{carReturnAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "carTypeId != null ">
+         #{carTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "changeCaroperateId != null ">
+         #{changeCaroperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "changeStatus != null ">
+         #{changeStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "usedStatus != null ">
+         #{usedStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "changeCarTypeId != null ">
+         #{changeCarTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "cityCode != null and cityCode != '' ">
+         #{cityCode,jdbcType=VARCHAR},
+      </if>
+        <if test= "created != null ">
+      	#{created,jdbcType=TIMESTAMP},      
+      </if>
+      <if test= "lasttimeModify != null ">
+        #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+    </trim>
+    FROM DUAL
+    WHERE 
+    (select COUNT(id) count from td_power_used where used_status not in(6,7)  AND member_id=#{memberId,jdbcType=BIGINT})
+		&lt;
+		(
+		SELECT enable_count count FROM td_item WHERE id=(
+		SELECT item_id FROM td_memeber_item WHERE id=#{memberItemId,jdbcType=BIGINT})) 
+  </insert>
+
+
+</mapper>

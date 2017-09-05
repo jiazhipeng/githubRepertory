@@ -1,0 +1,104 @@
+package cn.cuco.service.order.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.OrderCarportMapper;
+import cn.cuco.entity.OrderCarport;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.order.OrderCarportService;
+
+@Service(value = "orderCarportService")
+public class OrderCarportServiceImpl implements OrderCarportService {
+
+    @Autowired
+    private OrderCarportMapper<OrderCarport> orderMapper;
+
+	@Override
+	public OrderCarport createOrderCarport(OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarport updateOrderCarport(OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteOrderCarport(OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarport getOrderCarport(OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderCarport> getOrderCarportList(OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OrderCarport> getOrderCarportListByPage(
+			OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getOrderCarportCount(OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarport createOrderCarportForApp(OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarport updateOrderCarportStatusByCancelForApp(
+			OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarport updateOrderCarportStatusByCancel(
+			OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarport updateOrderCarportStatusByPaying(
+			OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarport updateOrderCarportStatusByPartPay(
+			OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarport updateOrderCarportStatusByCompletePay(
+			OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

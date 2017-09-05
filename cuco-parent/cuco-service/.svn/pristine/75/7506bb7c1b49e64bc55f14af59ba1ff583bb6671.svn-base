@@ -1,0 +1,98 @@
+package cn.cuco.service.member.carUsed.impl;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.MemberCarportMapper;
+import cn.cuco.entity.Carport;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.enums.MemberCarportStatus;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.enums.Validate;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.carport.CarportService;
+import cn.cuco.service.log.OperateLogService;
+import cn.cuco.service.member.carUsed.MemberCarportService;
+import cn.cuco.service.member.info.MemberService;
+
+/** 
+* @ClassName: MemberCarportServiceImpl 
+* @Description: 用户车库相关接口实现
+* @author zc.du
+* @date 2017年2月23日 上午10:39:43
+*/
+@Service(value = "memberCarportService")
+public class MemberCarportServiceImpl implements MemberCarportService {
+
+	@Autowired
+	private MemberCarportMapper<MemberCarport> memberCarportMapper;
+	@Autowired
+	private CarportService carportService;
+	@Autowired
+	private OperateLogService logService;
+	@Autowired
+	private MemberService memberService;
+	
+	@Override
+	public MemberCarport createMemberCarport(MemberCarport memberCarport) {
+		ParamVerifyUtils.paramNotNull(memberCarport);
+		ParamVerifyUtils.paramNotNull(memberCarport.getMemberId(), "解锁车库时，用户ID不能为空");
+		Member member = memberService.getMemberById(memberCarport.getMemberId());
+		ParamVerifyUtils.paramNotNull(member, "用户不存在，无法解锁车库");
+		ParamVerifyUtils.paramNotNull(memberCarport.getCarportId(), "解锁车库时，车库ID不能为空");
+		Carport carport = carportService.getCarportById(memberCarport.getCarportId());
+		ParamVerifyUtils.paramNotNull(carport,"车库不存在，无法进行解锁操作");
+		if(carport.getValidate().equals(Validate.THE_SHELVES.getValue())){
+			ExceptionUtil.throwWarn("车库已下架，无法进行解锁操作");
+		}
+		//??问题：是否需要校验能否解锁，比如已成功解锁的会员数量过多
+		
+		Date date = new Date();
+		memberCarport.setCreated(date);
+		memberCarport.setLasttimeUsed(date);
+		this.memberCarportMapper.insertSelective(memberCarport);
+		
+		//插入日志
+		OperateLog log = new OperateLog();
+		log.setCreated(date);
+		log.setModifier(member.getName());
+		log.setModifierId(member.getId());
+		log.setOperationId(memberCarport.getId());
+		log.setRemark("用户创建车库");
+		log.setStatus(MemberCarportStatus.LOCK.getIndex());
+		log.setType(OperateLogEnum.MEMBER_CARPORT.getValue());
+		logService.createOperateLog(log);
+		return this.getMemberCarportById(memberCarport.getId());
+	}
+
+	@Override
+	public MemberCarport updateMemberCarport(MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberCarport> getMemberCarportListByPage(
+			MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarport getMemberCarportById(Long id) {
+		ParamVerifyUtils.paramNotNull(id, "车库ID不能为空");
+		return this.getMemberCarport(id);
+	}
+	
+	private MemberCarport getMemberCarport(Long id){
+		return this.memberCarportMapper.selectByPrimaryKey(id);
+	}
+
+
+}

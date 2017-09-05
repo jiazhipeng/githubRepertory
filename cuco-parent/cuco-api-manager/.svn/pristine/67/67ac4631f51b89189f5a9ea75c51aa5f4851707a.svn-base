@@ -1,0 +1,28 @@
+package cn.cuco.controller.manager.order;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(value = "/orderRenewal")
+public class OrderRenewalController {
+
+	@RequestMapping(value = "getOrderListByPage", method = RequestMethod.POST)
+	public Object getOrderListByPage(){
+		
+		return "";
+	}
+	
+	@RequestMapping(value = "getOrderLogById", method = RequestMethod.POST)
+	public Object getOrderLogById(){
+		
+		return "";
+	}
+	
+	@RequestMapping(value = "getOrderById", method = RequestMethod.POST)
+	public Object getOrderById(){
+		
+		return "";
+	}
+}

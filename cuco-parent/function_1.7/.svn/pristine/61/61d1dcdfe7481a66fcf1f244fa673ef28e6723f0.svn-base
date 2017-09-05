@@ -1,0 +1,192 @@
+2016-07-26 19:45:03,000 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]>
+2016-07-26 19:45:03,451 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/classes/spring/applicationContext-apps.xml]>
+2016-07-26 19:45:03,467 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from class path resource [spring/spring-context-jedis.xml]>
+2016-07-26 19:45:03,491 INFO [org.springframework.context.support.GenericApplicationContext] - <Refreshing org.springframework.context.support.GenericApplicationContext@4c419444: startup date [Tue Jul 26 19:45:03 CST 2016]; root of context hierarchy>
+2016-07-26 19:45:03,626 INFO [org.springframework.context.support.PropertySourcesPlaceholderConfigurer] - <Loading properties file from URL [file:/D:/workspace/pms/hy-security/target/classes/application.properties]>
+2016-07-26 19:45:04,664 INFO [com.alibaba.druid.pool.DruidDataSource] - <{dataSource-1} inited>
+2016-07-26 19:45:04,735 INFO [com.alibaba.druid.pool.DruidDataSource] - <{dataSource-1} closed>
+2016-07-26 19:45:04,736 ERROR [org.springframework.test.context.TestContextManager] - <Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@344f40f9] to prepare test instance [com.techstar.gcar.test.service.BusinessServiceTest@3f32b643]>
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContext(CacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.DefaultTestContext.getApplicationContext(DefaultTestContext.java:101)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:109)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:75)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:324)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:213)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:290)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:292)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:233)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:87)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:71)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:176)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'businessMapper' defined in file [D:\workspace\pms\hy-security\target\classes\com\hy\security\dao\BusinessMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory': : Error creating bean with name 'sqlSessionFactory' defined in URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]: Initialization of bean failed; nested exception is org.springframework.beans.TypeMismatchException: Failed to convert property value of type 'java.lang.String' to required type 'org.springframework.core.io.Resource[]' for property 'mapperLocations'; nested exception is java.lang.IllegalArgumentException: Could not resolve resource location pattern [classpath:/com/hy/security/mapper/*Mapper.xml]: class path resource [com/hy/security/mapper/] cannot be resolved to URL because it does not exist; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]: Initialization of bean failed; nested exception is org.springframework.beans.TypeMismatchException: Failed to convert property value of type 'java.lang.String' to required type 'org.springframework.core.io.Resource[]' for property 'mapperLocations'; nested exception is java.lang.IllegalArgumentException: Could not resolve resource location pattern [classpath:/com/hy/security/mapper/*Mapper.xml]: class path resource [com/hy/security/mapper/] cannot be resolved to URL because it does not exist
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireByType(AbstractAutowireCapableBeanFactory.java:1278)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1170)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:475)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:304)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:300)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:195)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:684)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:760)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:482)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:125)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:100)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:250)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContextInternal(CacheAwareContextLoaderDelegate.java:64)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContext(CacheAwareContextLoaderDelegate.java:91)
+	... 25 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]: Initialization of bean failed; nested exception is org.springframework.beans.TypeMismatchException: Failed to convert property value of type 'java.lang.String' to required type 'org.springframework.core.io.Resource[]' for property 'mapperLocations'; nested exception is java.lang.IllegalArgumentException: Could not resolve resource location pattern [classpath:/com/hy/security/mapper/*Mapper.xml]: class path resource [com/hy/security/mapper/] cannot be resolved to URL because it does not exist
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:547)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:475)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:304)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:300)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:195)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1017)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:960)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:858)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireByType(AbstractAutowireCapableBeanFactory.java:1263)
+	... 41 more
+Caused by: org.springframework.beans.TypeMismatchException: Failed to convert property value of type 'java.lang.String' to required type 'org.springframework.core.io.Resource[]' for property 'mapperLocations'; nested exception is java.lang.IllegalArgumentException: Could not resolve resource location pattern [classpath:/com/hy/security/mapper/*Mapper.xml]: class path resource [com/hy/security/mapper/] cannot be resolved to URL because it does not exist
+	at org.springframework.beans.BeanWrapperImpl.convertIfNecessary(BeanWrapperImpl.java:479)
+	at org.springframework.beans.BeanWrapperImpl.convertForProperty(BeanWrapperImpl.java:511)
+	at org.springframework.beans.BeanWrapperImpl.convertForProperty(BeanWrapperImpl.java:505)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.convertForProperty(AbstractAutowireCapableBeanFactory.java:1502)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1461)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1197)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	... 50 more
+Caused by: java.lang.IllegalArgumentException: Could not resolve resource location pattern [classpath:/com/hy/security/mapper/*Mapper.xml]: class path resource [com/hy/security/mapper/] cannot be resolved to URL because it does not exist
+	at org.springframework.core.io.support.ResourceArrayPropertyEditor.setAsText(ResourceArrayPropertyEditor.java:140)
+	at org.springframework.beans.TypeConverterDelegate.doConvertTextValue(TypeConverterDelegate.java:430)
+	at org.springframework.beans.TypeConverterDelegate.doConvertValue(TypeConverterDelegate.java:403)
+	at org.springframework.beans.TypeConverterDelegate.convertIfNecessary(TypeConverterDelegate.java:181)
+	at org.springframework.beans.BeanWrapperImpl.convertIfNecessary(BeanWrapperImpl.java:459)
+	... 56 more
+2016-07-26 19:48:54,386 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]>
+2016-07-26 19:48:54,639 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/classes/spring/applicationContext-apps.xml]>
+2016-07-26 19:48:54,654 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from class path resource [spring/spring-context-jedis.xml]>
+2016-07-26 19:48:54,674 INFO [org.springframework.context.support.GenericApplicationContext] - <Refreshing org.springframework.context.support.GenericApplicationContext@656d2378: startup date [Tue Jul 26 19:48:54 CST 2016]; root of context hierarchy>
+2016-07-26 19:48:54,794 INFO [org.springframework.context.support.PropertySourcesPlaceholderConfigurer] - <Loading properties file from URL [file:/D:/workspace/pms/hy-security/target/classes/application.properties]>
+2016-07-26 19:48:55,331 INFO [com.alibaba.druid.pool.DruidDataSource] - <{dataSource-1} inited>
+2016-07-26 19:48:55,399 INFO [com.alibaba.druid.pool.DruidDataSource] - <{dataSource-1} closed>
+2016-07-26 19:48:55,400 ERROR [org.springframework.test.context.TestContextManager] - <Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@1a5c091f] to prepare test instance [com.techstar.gcar.test.service.BusinessServiceTest@105adfbe]>
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContext(CacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.DefaultTestContext.getApplicationContext(DefaultTestContext.java:101)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:109)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:75)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:324)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:213)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:290)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:292)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:233)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:87)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:71)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:176)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'businessMapper' defined in file [D:\workspace\pms\hy-security\target\classes\com\hy\security\dao\BusinessMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory': : Error creating bean with name 'sqlSessionFactory' defined in URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]: Initialization of bean failed; nested exception is org.springframework.beans.TypeMismatchException: Failed to convert property value of type 'java.lang.String' to required type 'org.springframework.core.io.Resource[]' for property 'mapperLocations'; nested exception is java.lang.IllegalArgumentException: Could not resolve resource location pattern [classpath:/com/hy/security/mapper/*Mapper.xml]: class path resource [com/hy/security/mapper/] cannot be resolved to URL because it does not exist; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]: Initialization of bean failed; nested exception is org.springframework.beans.TypeMismatchException: Failed to convert property value of type 'java.lang.String' to required type 'org.springframework.core.io.Resource[]' for property 'mapperLocations'; nested exception is java.lang.IllegalArgumentException: Could not resolve resource location pattern [classpath:/com/hy/security/mapper/*Mapper.xml]: class path resource [com/hy/security/mapper/] cannot be resolved to URL because it does not exist
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireByType(AbstractAutowireCapableBeanFactory.java:1278)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1170)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:475)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:304)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:300)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:195)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:684)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:760)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:482)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:125)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:100)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:250)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContextInternal(CacheAwareContextLoaderDelegate.java:64)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContext(CacheAwareContextLoaderDelegate.java:91)
+	... 25 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]: Initialization of bean failed; nested exception is org.springframework.beans.TypeMismatchException: Failed to convert property value of type 'java.lang.String' to required type 'org.springframework.core.io.Resource[]' for property 'mapperLocations'; nested exception is java.lang.IllegalArgumentException: Could not resolve resource location pattern [classpath:/com/hy/security/mapper/*Mapper.xml]: class path resource [com/hy/security/mapper/] cannot be resolved to URL because it does not exist
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:547)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:475)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:304)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:300)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:195)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1017)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:960)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:858)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireByType(AbstractAutowireCapableBeanFactory.java:1263)
+	... 41 more
+Caused by: org.springframework.beans.TypeMismatchException: Failed to convert property value of type 'java.lang.String' to required type 'org.springframework.core.io.Resource[]' for property 'mapperLocations'; nested exception is java.lang.IllegalArgumentException: Could not resolve resource location pattern [classpath:/com/hy/security/mapper/*Mapper.xml]: class path resource [com/hy/security/mapper/] cannot be resolved to URL because it does not exist
+	at org.springframework.beans.BeanWrapperImpl.convertIfNecessary(BeanWrapperImpl.java:479)
+	at org.springframework.beans.BeanWrapperImpl.convertForProperty(BeanWrapperImpl.java:511)
+	at org.springframework.beans.BeanWrapperImpl.convertForProperty(BeanWrapperImpl.java:505)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.convertForProperty(AbstractAutowireCapableBeanFactory.java:1502)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1461)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1197)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	... 50 more
+Caused by: java.lang.IllegalArgumentException: Could not resolve resource location pattern [classpath:/com/hy/security/mapper/*Mapper.xml]: class path resource [com/hy/security/mapper/] cannot be resolved to URL because it does not exist
+	at org.springframework.core.io.support.ResourceArrayPropertyEditor.setAsText(ResourceArrayPropertyEditor.java:140)
+	at org.springframework.beans.TypeConverterDelegate.doConvertTextValue(TypeConverterDelegate.java:430)
+	at org.springframework.beans.TypeConverterDelegate.doConvertValue(TypeConverterDelegate.java:403)
+	at org.springframework.beans.TypeConverterDelegate.convertIfNecessary(TypeConverterDelegate.java:181)
+	at org.springframework.beans.BeanWrapperImpl.convertIfNecessary(BeanWrapperImpl.java:459)
+	... 56 more
+2016-07-26 19:50:35,597 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]>
+2016-07-26 19:50:35,859 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/classes/spring/applicationContext-apps.xml]>
+2016-07-26 19:50:35,875 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from class path resource [spring/spring-context-jedis.xml]>
+2016-07-26 19:50:35,895 INFO [org.springframework.context.support.GenericApplicationContext] - <Refreshing org.springframework.context.support.GenericApplicationContext@6625abb1: startup date [Tue Jul 26 19:50:35 CST 2016]; root of context hierarchy>
+2016-07-26 19:50:36,015 INFO [org.springframework.context.support.PropertySourcesPlaceholderConfigurer] - <Loading properties file from URL [file:/D:/workspace/pms/hy-security/target/classes/application.properties]>
+2016-07-26 19:50:36,556 INFO [com.alibaba.druid.pool.DruidDataSource] - <{dataSource-1} inited>
+2016-07-26 19:50:58,065 INFO [org.springframework.context.support.GenericApplicationContext] - <Closing org.springframework.context.support.GenericApplicationContext@6625abb1: startup date [Tue Jul 26 19:50:35 CST 2016]; root of context hierarchy>
+2016-07-26 19:50:58,069 INFO [com.alibaba.druid.pool.DruidDataSource] - <{dataSource-1} closed>
+2016-07-26 20:09:02,157 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]>
+2016-07-26 20:09:02,409 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/classes/spring/applicationContext-apps.xml]>
+2016-07-26 20:09:02,424 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from class path resource [spring/spring-context-jedis.xml]>
+2016-07-26 20:09:02,443 INFO [org.springframework.context.support.GenericApplicationContext] - <Refreshing org.springframework.context.support.GenericApplicationContext@65c82af8: startup date [Tue Jul 26 20:09:02 CST 2016]; root of context hierarchy>
+2016-07-26 20:09:02,560 INFO [org.springframework.context.support.PropertySourcesPlaceholderConfigurer] - <Loading properties file from URL [file:/D:/workspace/pms/hy-security/target/classes/application.properties]>
+2016-07-26 20:09:03,102 INFO [com.alibaba.druid.pool.DruidDataSource] - <{dataSource-1} inited>
+2016-07-26 20:13:03,161 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]>
+2016-07-26 20:13:03,424 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/classes/spring/applicationContext-apps.xml]>
+2016-07-26 20:13:03,439 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from class path resource [spring/spring-context-jedis.xml]>
+2016-07-26 20:13:03,459 INFO [org.springframework.context.support.GenericApplicationContext] - <Refreshing org.springframework.context.support.GenericApplicationContext@656d2378: startup date [Tue Jul 26 20:13:03 CST 2016]; root of context hierarchy>
+2016-07-26 20:13:03,576 INFO [org.springframework.context.support.PropertySourcesPlaceholderConfigurer] - <Loading properties file from URL [file:/D:/workspace/pms/hy-security/target/classes/application.properties]>
+2016-07-26 20:13:04,118 INFO [com.alibaba.druid.pool.DruidDataSource] - <{dataSource-1} inited>
+2016-07-26 20:15:35,853 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/test-classes/spring-junit-config/applicationContext-test.xml]>
+2016-07-26 20:15:36,116 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from URL [file:/D:/workspace/pms/hy-security/target/classes/spring/applicationContext-apps.xml]>
+2016-07-26 20:15:36,130 INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - <Loading XML bean definitions from class path resource [spring/spring-context-jedis.xml]>
+2016-07-26 20:15:36,151 INFO [org.springframework.context.support.GenericApplicationContext] - <Refreshing org.springframework.context.support.GenericApplicationContext@656d2378: startup date [Tue Jul 26 20:15:36 CST 2016]; root of context hierarchy>
+2016-07-26 20:15:36,273 INFO [org.springframework.context.support.PropertySourcesPlaceholderConfigurer] - <Loading properties file from URL [file:/D:/workspace/pms/hy-security/target/classes/application.properties]>
+2016-07-26 20:15:36,819 INFO [com.alibaba.druid.pool.DruidDataSource] - <{dataSource-1} inited>
+2016-07-26 20:16:07,698 INFO [org.springframework.context.support.GenericApplicationContext] - <Closing org.springframework.context.support.GenericApplicationContext@656d2378: startup date [Tue Jul 26 20:15:36 CST 2016]; root of context hierarchy>
+2016-07-26 20:16:07,703 INFO [com.alibaba.druid.pool.DruidDataSource] - <{dataSource-1} closed>

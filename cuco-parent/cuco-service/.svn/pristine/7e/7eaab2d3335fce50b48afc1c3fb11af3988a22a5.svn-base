@@ -1,0 +1,57 @@
+package cn.cuco.service.basic.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.BasicCarTypePricingMapper;
+import cn.cuco.entity.BasicCarTypePricing;
+import cn.cuco.service.basic.BasicCarTypePricingService;
+
+@Service(value = "basicCarTypePricingService")
+public class BasicCarTypePricingServiceImpl implements BasicCarTypePricingService {
+
+    @Autowired
+    private BasicCarTypePricingMapper<BasicCarTypePricing> basicCarTypePricingMapper;
+    
+    @Override
+    public Integer insertSelective(BasicCarTypePricing basicCarTypePricing) throws Exception {
+           return this.basicCarTypePricingMapper.insertSelective(basicCarTypePricing);
+        }
+
+    @Override
+    public Integer insertBatch(List<BasicCarTypePricing> basicCarTypePricing) throws Exception {
+           return this.basicCarTypePricingMapper.insertBatch(basicCarTypePricing) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.basicCarTypePricingMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.basicCarTypePricingMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(BasicCarTypePricing basicCarTypePricing) {
+           return this.basicCarTypePricingMapper.updateByPrimaryKeySelective(basicCarTypePricing);
+    }
+
+    @Override
+    public BasicCarTypePricing findById(Object id) {
+           return (BasicCarTypePricing) this.basicCarTypePricingMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<BasicCarTypePricing> selectByCondition(BasicCarTypePricing basicCarTypePricing) {
+           return (List<BasicCarTypePricing>) this.basicCarTypePricingMapper.selectByCondition(basicCarTypePricing);
+    }
+
+    @Override
+    public Integer selectCountByCondition(BasicCarTypePricing basicCarTypePricing) {
+           return  this.basicCarTypePricingMapper.selectCountByCondition(basicCarTypePricing);
+    }
+
+}

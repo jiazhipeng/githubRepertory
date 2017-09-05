@@ -1,0 +1,93 @@
+package cn.cuco.service.car.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.common.utils.ParamVerifyUtils;
+import cn.cuco.dao.CarMapper;
+import cn.cuco.entity.Car;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.car.CarService;
+
+@Service
+public class CarServiceImpl implements CarService {
+
+    @Autowired
+    private CarMapper<Car> carMapper;
+
+	@Override
+	public Car createCar(Car car) {
+		car.setCreated(new Date());
+		car.setLasttimeModify(car.getCreated());
+		this.carMapper.insertSelective(car);
+		return this.carMapper.selectByPrimaryKey(car.getId());
+	}
+
+	@Override
+	public Car updateCar(Car car) {
+		car.setLasttimeModify(car.getCreated());
+		this.carMapper.updateByPrimaryKeySelective(car);
+		return this.carMapper.selectByPrimaryKey(car.getId());
+	}
+
+	@Override
+	public void getCarByID(Car car) {
+		ParamVerifyUtils.paramNotNull(car,"根据ID删除车辆信息，车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car.getId(),"根据ID删除车辆信息，车辆ID不能为空");
+		this.carMapper.deleteByPrimaryKey(car.getId());
+	}
+
+	@Override
+	public List<Car> getCarList(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<Car> getCarListByPage(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Car updateCarByWaitDistribute(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Car updateCarByMemberUsing(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Car updateCarByNotMemberUsing(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Car updateCarByRepairing(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Car updateCarBySleepping(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Car updateCarByLosed(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+    
+
+}

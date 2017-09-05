@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.CardMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.Card" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="card_name" property="cardName" jdbcType="VARCHAR" />
+    <result column="card_mobile" property="cardMobile" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="INTEGER" />
+    <result column="buy_count" property="buyCount" jdbcType="INTEGER" />
+    <result column="submit_count" property="submitCount" jdbcType="INTEGER" />
+    <result column="forward_count" property="forwardCount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifer" property="modifer" jdbcType="VARCHAR" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="from_sales_id" property="fromSalesId" jdbcType="BIGINT" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.Card" >
+       select  count(1) 
+    from td_card  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "cardName != null and cardName != '' ">
+        and card_name = #{cardName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cardMobile != null and cardMobile != '' ">
+        and card_mobile = #{cardMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cardType != null ">
+        and card_type = #{cardType,jdbcType=INTEGER}      
+      </if>
+      <if test= "buyCount != null ">
+        and buy_count = #{buyCount,jdbcType=INTEGER}      
+      </if>
+      <if test= "submitCount != null ">
+        and submit_count = #{submitCount,jdbcType=INTEGER}      
+      </if>
+      <if test= "forwardCount != null ">
+        and forward_count = #{forwardCount,jdbcType=INTEGER}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "imgUrl != null and imgUrl != '' ">
+        and img_url = #{imgUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "fromSalesId != null ">
+        and from_sales_id = #{fromSalesId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Card" >
+       select  <include refid="Base_Column_List" />
+    from td_card  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "cardName != null and cardName != '' ">
+        and card_name = #{cardName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cardMobile != null and cardMobile != '' ">
+        and card_mobile = #{cardMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cardType != null ">
+        and card_type = #{cardType,jdbcType=INTEGER}      
+      </if>
+      <if test= "buyCount != null ">
+        and buy_count = #{buyCount,jdbcType=INTEGER}      
+      </if>
+      <if test= "submitCount != null ">
+        and submit_count = #{submitCount,jdbcType=INTEGER}      
+      </if>
+      <if test= "forwardCount != null ">
+        and forward_count = #{forwardCount,jdbcType=INTEGER}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "imgUrl != null and imgUrl != '' ">
+        and img_url = #{imgUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "fromSalesId != null ">
+        and from_sales_id = #{fromSalesId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, card_name, card_mobile, 
+      card_type, buy_count, submit_count, 
+      forward_count, status, img_url, 
+      created, modifer, modifier_id, 
+      lasttime_modify, from_sales_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.Card" >
+    select 
+      id, card_name, card_mobile, 
+      card_type, buy_count, submit_count, 
+      forward_count, status, img_url, 
+      created, modifer, modifier_id, 
+      lasttime_modify, from_sales_id
+    from td_card where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.Card" >
+    delete from td_card where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_card where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.Card" >
+    insert into td_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "cardName != null and cardName != '' ">
+         card_name,
+      </if>
+      <if test= "cardMobile != null and cardMobile != '' ">
+         card_mobile,
+      </if>
+      <if test= "cardType != null ">
+         card_type,
+      </if>
+      <if test= "buyCount != null ">
+         buy_count,
+      </if>
+      <if test= "submitCount != null ">
+         submit_count,
+      </if>
+      <if test= "forwardCount != null ">
+         forward_count,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "imgUrl != null and imgUrl != '' ">
+         img_url,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+         modifer,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "fromSalesId != null ">
+         from_sales_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "cardName != null and cardName != '' ">
+         #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test= "cardMobile != null and cardMobile != '' ">
+         #{cardMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "cardType != null ">
+         #{cardType,jdbcType=INTEGER},
+      </if>
+      <if test= "buyCount != null ">
+         #{buyCount,jdbcType=INTEGER},
+      </if>
+      <if test= "submitCount != null ">
+         #{submitCount,jdbcType=INTEGER},
+      </if>
+      <if test= "forwardCount != null ">
+         #{forwardCount,jdbcType=INTEGER},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "imgUrl != null and imgUrl != '' ">
+         #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+         #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "fromSalesId != null ">
+         #{fromSalesId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_card (
+         id,
+         card_name,
+         card_mobile,
+         card_type,
+         buy_count,
+         submit_count,
+         forward_count,
+         status,
+         img_url,
+         created,
+         modifer,
+         modifier_id,
+         lasttime_modify,
+         from_sales_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.cardName,jdbcType=VARCHAR},
+         #{item.cardMobile,jdbcType=VARCHAR},
+         #{item.cardType,jdbcType=INTEGER},
+         #{item.buyCount,jdbcType=INTEGER},
+         #{item.submitCount,jdbcType=INTEGER},
+         #{item.forwardCount,jdbcType=INTEGER},
+         #{item.status,jdbcType=INTEGER},
+         #{item.imgUrl,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.modifer,jdbcType=VARCHAR},
+         #{item.modifierId,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.fromSalesId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.Card" >
+    update td_card
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "cardName != null and cardName != '' ">
+      card_name = #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test= "cardMobile != null and cardMobile != '' ">
+      card_mobile = #{cardMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "cardType != null ">
+      card_type = #{cardType,jdbcType=INTEGER},
+      </if>
+      <if test= "buyCount != null ">
+      buy_count = #{buyCount,jdbcType=INTEGER},
+      </if>
+      <if test= "submitCount != null ">
+      submit_count = #{submitCount,jdbcType=INTEGER},
+      </if>
+      <if test= "forwardCount != null ">
+      forward_count = #{forwardCount,jdbcType=INTEGER},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "imgUrl != null and imgUrl != '' ">
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+      modifer = #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "fromSalesId != null ">
+      from_sales_id = #{fromSalesId,jdbcType=BIGINT}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

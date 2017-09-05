@@ -1,0 +1,62 @@
+package cn.cuco.service.basic.carport.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarTypeMapper;
+import cn.cuco.entity.CarType;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.carport.CarTypeService;
+
+@Service(value = "carTypeService")
+public class CarTypeServiceImpl implements CarTypeService {
+
+    @Autowired
+    private CarTypeMapper<CarType> carTypeMapper;
+
+	@Override
+	public CarType createCarType(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarType updateCarType(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarType getCarTypeById(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<CarType> getCarTypeByCondition(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarType> getCarTypeList(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarType updateCarTypeShelves(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarType updateCarTypeTheShelves(CarType carType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

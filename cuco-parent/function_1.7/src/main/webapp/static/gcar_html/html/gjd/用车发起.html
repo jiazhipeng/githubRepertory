@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, user-scalable=no">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="email=no" name="format-detection">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>用车发起</title>
+
+    <link rel="stylesheet" href="../../css/normalize.css">
+
+    <style>
+        /*.brand {*/
+        /*height: 2.125rem;*/
+        /*line-height: 2.125rem;*/
+        /*font-size: 0.8rem;*/
+        /*background: #191919;*/
+        /*color: #fff;*/
+        /*font-weight: normal;*/
+        /*padding-left: 0.625rem;*/
+        /*}*/
+        /*.brand-info li {*/
+        /*border-bottom: 1px #ccc solid;*/
+        /*padding: 0 0.625rem;*/
+        /*line-height: 2.5rem;*/
+        /*background: #fff;*/
+        /*}*/
+        /*.brand-type {*/
+        /*width: 3.5rem;*/
+        /*display: inline-block;*/
+        /*font-size: 0.85rem;*/
+        /*color: #666;*/
+        /*}*/
+        /*.ipt-text {*/
+        /*font-size: 0.8rem;*/
+        /*color: #666;*/
+        /*width: 12.5rem;*/
+        /*border: 0;*/
+        /*outline: 0;*/
+        /*}*/
+        /*.brand-mar {*/
+        /*margin-top: 0.8rem;*/
+        /*}*/
+        /*.brand-mar:last-child {*/
+        /*border-top: 1px #ccc solid;*/
+        /*}*/
+        /*.pos-btn {*/
+        /*position: absolute;*/
+        /*bottom: 0;*/
+        /*left: 0;*/
+        /*width: 100%;*/
+        /*}*/
+        /*.pos-btn a {*/
+        /*width: 50%;*/
+        /*display: block;*/
+        /*text-decoration:none;*/
+        /*float: left;*/
+        /*line-height: 2.15rem;*/
+        /*text-align: center;*/
+        /*font-size: 0.85rem;*/
+        /*}*/
+        /*.returns {*/
+        /*background: #fafafa;*/
+        /*color: #666;*/
+        /*}*/
+        /*.see {*/
+        /*background: #161616;*/
+        /*color: #fff;*/
+        /*}*/
+    
+        .carType_div {
+            font-family: "黑体";
+            /*width: 100%;*/
+            display: flex;
+            background: #fff;
+            border-top: #ccc 1px solid;
+            border-bottom: #ccc 1px solid;
+            padding: 0.4rem 0;
+            margin-bottom:.5rem;
+           
+        }
+        
+        .carType_brand {
+            align-items: center; 
+            justify-content:center;          
+            display: flex;
+            flex: 1;
+            font-size:0.6rem;
+           
+
+        }
+        
+        .carType_div_ul {
+            flex: 3;   
+            border-left: #ccc 1px solid;        
+
+        }
+        
+        .carType_div_li {
+            width: 95%;
+            margin-left:5%;
+            height: 2rem;
+            border-bottom: #ccc 1px solid;
+            line-height: 2rem;
+            font-size: 0.65rem;
+            position: relative;
+           
+        }
+        .car_name{
+            display: inline-block;
+            width: 58%;
+            color: #666;
+            font-size: 0.6rem;            
+        }
+        .Schedule {
+            font-size: 0.6rem;
+            color: #5ccfcd;
+            border-left: #ccc 1px solid;
+            padding: 0.1rem 0.4rem;
+        }
+        .carType_div_li:last-child{
+            border:none;
+        }
+        .car_succ {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAYCAYAAAB9ejRwAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OERBNjRDQUZBNzIxMTFFNkIwNDNCM0Y3RUVGMEU3MEEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OERBNjRDQjBBNzIxMTFFNkIwNDNCM0Y3RUVGMEU3MEEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4REE2NENBREE3MjExMUU2QjA0M0IzRjdFRUYwRTcwQSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4REE2NENBRUE3MjExMUU2QjA0M0IzRjdFRUYwRTcwQSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjneVtkAAAFfSURBVHjazNYxSwNBEIZhcxELEVKJhbFSsEl3fyBGSSq10SaFRYIgdv4ZtTWgjWIhaYSglmIpgoXaaSGpbAMSv4UZGJYN3pxj7g7eKkt4suF2thDH8UROnml0ieaiHIG6qIG+ohyBVtAD2oxyBqpnvVNT6MoHuQ+iDEEXaNUHZYVi0HoIlAVKgh5DIEaV0MyYQU9oLQRi1D16RktjBNVQf9Rih7pGZXT3TzAViFEH6BjNE2zBEFREpxoQo4ZoX8BuaecsQB20pQHJt0/CFmnHygagphbkHwkMO/kjTILe6C3ra77AP6ccrI3OUsJ8UBV9an9V6PD8RjspYCHQe5r/ftSJroWZgX4bMz6sh2YD6wroyAqUZPZJ2DK68WAOdIh2rUBJB7KEVQSMQXuWIPdMJlzHMDe4Nwjmrh0t9EF3axOQBsWwbTHHKgSq0k6ZPdr71IDGxjl6IdCr9QT/EWAA0dJqQbIsrfEAAAAASUVORK5CYII=") left no-repeat;
+            background-size:40%;
+            width: 2rem;
+            height: 1rem;
+            display: inline-block;
+            vertical-align: middle;
+           
+        }
+        .low_stocks{
+            /*float:right;         */
+           
+        }
+        .low_stocks:after{
+            clear: both;
+            display: block;
+        }
+        .low_stocksm{
+            width:130px;
+            height: 78px;
+        }
+        .low_stocks_p{
+            font-size:0.4rem;
+
+            /*line-height: .8rem;*/
+            position: absolute;
+            color:#ccc;
+            right:2.2rem;
+            top:-.4rem;
+        }
+        .low_stocks_a{
+            font-size:0.6rem;
+            height: 1rem;
+            width:2.5rem;
+            line-height: 1rem;
+            /*padding: 0.2rem;*/
+            border:1px solid #666;
+            border-radius:0.1rem;
+            margin-right: .2rem;
+            position: absolute;
+            right:1.9rem;
+            bottom:-.1rem;
+            display: inline;
+        }
+        .active{
+            color: #ccc;
+        }
+        .show{
+            display: block;
+        }
+        .hide{
+            display: none;
+        }
+       
+    </style>
+</head>
+
+<body style="background: #eeeeee">
+    <div class="carType">
+        <p class="carType_p">权益车型</p>
+        <div class="carType_div">
+            <div class="carType_brand">商务轿车</div>
+            <ul class="carType_div_ul">
+                <li class="carType_div_li">
+                    <span class="car_name">宝马X5</span>
+                    <a class="Schedule">查看排期</a>
+                    <span class="car_succ"></span>
+                    <div class="low_stocks hide">
+                        <p class="low_stocks_p">库存不足</p>
+                        <a class="low_stocks_a">查看排期</a>
+                    </div> 
+                    <!--<img  class="car_correct"/>                    -->
+                </li>
+                <li class="carType_div_li">
+                    <span class="car_name">宝马X5</span>
+                    <a class="Schedule">查看排期</a>
+                    <span class="car_succ"></span>
+                    <div class="low_stocks hide">
+                        <p class="low_stocks_p">库存不足</p>
+                        <a class="low_stocks_a">查看排期</a>
+                    </div> 
+                    <!--<img  class="car_correct"/>                    -->
+                </li>
+                
+            </ul>
+        </div>       
+        <div class="carType_div">
+            <div class="carType_brand">商务轿车</div>
+            <ul class="carType_div_ul">
+                <li class="carType_div_li">
+                    <span class="car_name active">宝马X5</span>   
+                    <a class="Schedule hide">查看排期</a>
+                    <span class="car_succ hide"></span>                
+                    <div class="low_stocks">
+                        <p class="low_stocks_p">库存不足</p>
+                        <a class="low_stocks_a">查看排期</a>
+                    </div> 
+                   
+                </li>    
+              
+            </ul>
+        </div>    
+        <div class="pos-btn">
+            <a href="javascript:" class="see" style="width:100%">确定</a>
+        </div>
+    </div>
+    <script src="../../js/zepto.js"></script>
+
+</body>
+
+</html>

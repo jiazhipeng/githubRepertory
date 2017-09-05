@@ -1,0 +1,120 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cn.cuco</groupId>
+		<artifactId>cuco-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../cuco-parent</relativePath>
+	</parent>
+
+	<artifactId>cuco-api-manager</artifactId>
+	<packaging>war</packaging>
+	<name>cuco::api</name>
+	
+	<properties>
+		<package.environment>test</package.environment>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>product</id>
+			<properties>
+				
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				
+			</properties>
+		</profile>
+		<profile>
+			<id>pre</id>
+			<properties>
+				
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>cn.cuco</groupId>
+			<artifactId>cuco-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.cuco</groupId>
+			<artifactId>cuco-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<!-- 数据库操作 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.jsqlparser</groupId>
+			<artifactId>jsqlparser</artifactId>
+			<version>0.9.4</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.tomcat</groupId>
+		  <artifactId>tomcat-jdbc</artifactId>
+		  <version>7.0.47</version>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<port>8080</port>
+					<systemProperties>
+						<JAVA_OPTS>-Xms1024m -Xmx1024m -XX:MaxPermSize=1024m</JAVA_OPTS>
+					</systemProperties>
+					<path>/</path>
+				</configuration>
+			</plugin>
+			<!-- 忽略单元测试 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

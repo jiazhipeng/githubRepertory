@@ -1,0 +1,26 @@
+package cn.cuco.dao;
+
+import java.util.List;
+
+import cn.cuco.entity.City;
+
+public interface CityMapper<T> extends BaseDao<T> {
+
+	/**
+	* @Title: selectByConditionByPage 
+	* @Description: 分页
+	* @author huanghua
+	* @param city
+	* @return List<Insurance>
+	 */
+	public List<City> selectByConditionByPage(City city);
+	
+	/**
+	* @Title: selectCountByConditionByPage 
+	* @Description: 数量
+	* @author huanghua
+	* @param city
+	* @return Integer
+	 */
+	public Integer selectCountByConditionByPage(City city);
+}

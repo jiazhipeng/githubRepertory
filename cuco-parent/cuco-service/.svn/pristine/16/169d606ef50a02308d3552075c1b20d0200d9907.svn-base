@@ -1,0 +1,57 @@
+package cn.cuco.service.member.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberCarusedMapper;
+import cn.cuco.entity.MemberCarused;
+import cn.cuco.service.member.MemberCarusedService;
+
+@Service(value = "memberCarusedService")
+public class MemberCarusedServiceImpl implements MemberCarusedService {
+
+    @Autowired
+    private MemberCarusedMapper<MemberCarused> memberCarusedMapper;
+    
+    @Override
+    public Integer insertSelective(MemberCarused memberCarused) throws Exception {
+           return this.memberCarusedMapper.insertSelective(memberCarused);
+        }
+
+    @Override
+    public Integer insertBatch(List<MemberCarused> memberCarused) throws Exception {
+           return this.memberCarusedMapper.insertBatch(memberCarused) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.memberCarusedMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.memberCarusedMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(MemberCarused memberCarused) {
+           return this.memberCarusedMapper.updateByPrimaryKeySelective(memberCarused);
+    }
+
+    @Override
+    public MemberCarused findById(Object id) {
+           return (MemberCarused) this.memberCarusedMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<MemberCarused> selectByCondition(MemberCarused memberCarused) {
+           return (List<MemberCarused>) this.memberCarusedMapper.selectByCondition(memberCarused);
+    }
+
+    @Override
+    public Integer selectCountByCondition(MemberCarused memberCarused) {
+           return  this.memberCarusedMapper.selectCountByCondition(memberCarused);
+    }
+
+}

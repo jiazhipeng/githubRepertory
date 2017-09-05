@@ -1,0 +1,405 @@
+package cn.cuco.service.car.carInfo.impl;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.CarInsuranceDetailMapper;
+import cn.cuco.dao.CarInsuranceDetailUrlMapper;
+import cn.cuco.dao.CarMapper;
+import cn.cuco.entity.Car;
+import cn.cuco.entity.CarInsuranceDetail;
+import cn.cuco.entity.CarInsuranceDetailUrl;
+import cn.cuco.entity.CarUsedLog;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.enums.CarEnum;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.exception.RuntimeExceptionWarn;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.car.carInfo.CarService;
+import cn.cuco.service.log.OperateLogService;
+
+/** 
+* @ClassName: CarServiceImpl 
+* @Description: 车辆主表service实现层 
+* @author gongbw
+* @date 2017年2月22日 下午3:32:43  
+*/
+@Service
+public class CarServiceImpl implements CarService {
+
+    @Autowired
+    private CarMapper<Car> carMapper;
+    @Autowired
+    private CarInsuranceDetailMapper<CarInsuranceDetail> carInsuranceDetailMapper;
+    @Autowired
+    private CarInsuranceDetailUrlMapper<CarInsuranceDetailUrl> carInsuranceDetailUrlMapper;
+    @Autowired
+    private OperateLogService operateLogService;
+
+	@Override
+	public Car createCar(Car car) {
+		//校验传入的信息的数据的完整性
+		this.vilidateCarInfo(car);
+		this.vilidateInsuranceInfo(car);
+		//根据车架号跟发动机号校验唯一性
+		List<Car> carList = this.carMapper.getCarListByCarVinAndEngineNum(car);
+		if(carList.size()>0){
+			throw new RuntimeExceptionWarn("车架号或者发动机号已存在");
+		}
+		//记录车辆日志
+		this.operateLogService.createLogForCar(car);
+		//补充基本数据
+		car.setCreated(new Date());
+		car.setValid(1);
+		car.setLasttimeModify(car.getCreated());
+		car.setTotalMileage(car.getDrivingMileage());
+		car.setStatus(CarEnum.CarStatus.WAITDISTRIBUTE.getIndex());
+		this.carMapper.insertSelective(car);
+		//创建车辆保险相关信息
+		this.createCarInsuranceDetail(car);
+		return this.carMapper.selectByPrimaryKey(car.getId());
+	}
+	
+	/**   
+	 * @Title: vilidateCarInfo   
+	 * @Description:校验传入的车辆信息的数据的完整性 
+	 * @param: Car     
+	 * @return: void      
+	 */
+	private void vilidateCarInfo(Car car){
+		ParamVerifyUtils.paramNotNull(car,"车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarPlateNum(),"车牌号不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarBrandId(),"车辆品牌ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarBrand(),"车辆品牌不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarTypeId(),"车型ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarType(),"车型不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarVin(),"车架号不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarEngineNum(),"发动机号不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarColor(),"车辆颜色不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarColor(),"车辆颜色不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarSupplierId(),"供应商ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarSupplierName(),"供应商名称不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCarSupplyPrice(),"供给成本不能为空");
+		ParamVerifyUtils.paramNotNull(car.getManufactureTime(),"出厂时间不能为空");
+		ParamVerifyUtils.paramNotNull(car.getDrivingMileage(),"行驶公里数不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCurrentParkingId(),"停车场ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCurrentParkingName(),"停车场不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCurrentParkingSpace(),"停车位不能为空");
+		ParamVerifyUtils.paramNotNull(car.getGpsNum(),"GPS设备号不能为空");
+		ParamVerifyUtils.paramNotNull(car.getInspectionTime(),"年检时间不能为空");
+		ParamVerifyUtils.paramNotNull(car.getTravelLicenseUrl(),"行驶证不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifierId(),"操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifier(),"操作人不能为空");
+	}
+	
+	/**   
+	 * @Title: vilidateInsuranceInfo   
+	 * @Description: 校验保险信息的完整性 
+	 * @param: car      
+	 * @return: void      
+	 */
+	private void vilidateInsuranceInfo(Car car){
+		ParamVerifyUtils.paramNotNull(car.getCompulsoryInsuranceNum(),"交强险保单号不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCompulsoryInsuranceStart(),"交强险开始时间不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCompulsoryInsuranceEnd(),"交强险结束时间不能为空");
+		ParamVerifyUtils.paramNotNull(car.getCompulsoryInsuranceUrl(),"交强险图片地址不能为空");
+		ParamVerifyUtils.paramNotNull(car.getBusinessInsuranceNum(),"商业险保单号不能为空");
+		ParamVerifyUtils.paramNotNull(car.getBusinessInsuranceStart(),"商业险开始时间不能为空");
+		ParamVerifyUtils.paramNotNull(car.getBusinessInsuranceEnd(),"商业险结束时间不能为空");
+		ParamVerifyUtils.paramNotNull(car.getBusinessInsuranceUrl(),"商业险图片地址不能为空");
+	}
+	
+	private void createCarInsuranceDetail(Car car){
+		CarInsuranceDetail carInsuranceDetail = new CarInsuranceDetail();
+		carInsuranceDetail.setCarId(car.getId());
+		carInsuranceDetail.setCompulsoryInsuranceNum(car.getCompulsoryInsuranceNum());
+		carInsuranceDetail.setCompulsoryInsuranceStart(car.getCompulsoryInsuranceStart());
+		carInsuranceDetail.setCompulsoryInsuranceEnd(car.getCompulsoryInsuranceEnd());
+		carInsuranceDetail.setCompulsoryInsuranceUrl(car.getCompulsoryInsuranceUrl());
+		carInsuranceDetail.setBusinessInsuranceNum(car.getBusinessInsuranceNum());
+		carInsuranceDetail.setBusinessInsuranceStart(car.getBusinessInsuranceStart());
+		carInsuranceDetail.setBusinessInsuranceEnd(car.getBusinessInsuranceEnd());
+		carInsuranceDetail.setBusinessInsuranceUrl(car.getBusinessInsuranceUrl());
+		carInsuranceDetail.setModifierId(car.getModifierId());
+		carInsuranceDetail.setModifier(car.getModifier());
+		this.createCarInsuranceDetail(carInsuranceDetail);
+	}
+
+	@Override
+	public Car updateCar(Car car) {
+		ParamVerifyUtils.paramNotNull(car,"修改车辆信息，车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car,"修改车辆信息，车辆ID不能为空");
+		//校验传入的车辆信息的数据的完整性
+		this.vilidateCarInfo(car);
+		return this.updateCarInfo(car);
+	}
+	
+	/**   
+	 * @Title: updateCarInfo   
+	 * @Description: 修改车辆的底层方法供自己底层调用  
+	 * @param: car
+	 * @return: Car      
+	 */
+	private Car updateCarInfo(Car car){
+		//记录车辆日志
+		this.operateLogService.createLogForCar(car);
+		car.setLasttimeModify(car.getCreated());
+		this.carMapper.updateByPrimaryKeySelective(car);
+		return this.carMapper.selectByPrimaryKey(car.getId());
+	}
+
+	@Override
+	public Car getCarById(Long id) {
+		ParamVerifyUtils.paramNotNull(id,"根据ID查询车辆信息，车辆ID不能为空");
+		return this.carMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public PageResult<Car> getCarListByPage(Car car) {
+		Integer page = car.getPage();
+	    Integer pageSize = car.getPageSize();
+	    
+	    int totalSize = this.carMapper.selectCountByCondition(car);
+	    PageHelper.startPage(page,pageSize);
+	    List<Car> list = this.carMapper.selectByConditionOrderByCreatedDesc(car);
+	    PageResult<Car> pageResult = new PageResult<Car>(page,pageSize,totalSize,list);
+		return pageResult;
+	}
+
+	@Override
+	public Car updateCarByWaitDistribute(Car car) {
+		ParamVerifyUtils.paramNotNull(car,"修改车辆状态为待分配，车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car,"修改车辆为待分配，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifierId(),"操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifier(),"操作人不能为空");
+		car.setStatus(CarEnum.CarStatus.WAITDISTRIBUTE.getIndex());
+		return this.updateCarInfo(car);
+	}
+	
+	@Override
+	public Car updateCarByDistributed(Car car) {
+		ParamVerifyUtils.paramNotNull(car,"修改车辆状态为已分配，车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car,"修改车辆为已分配，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifierId(),"操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifier(),"操作人不能为空");
+		car.setStatus(CarEnum.CarStatus.DISTRIBUTED.getIndex());
+		car.setAllocated(1);
+		return this.updateCarInfo(car);
+	}
+
+	@Override
+	public Car updateCarByMemberUsing(Car car) {
+		ParamVerifyUtils.paramNotNull(car,"修改车辆状态为会员使用中，车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car,"修改车辆为会员使用中，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifierId(),"操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifier(),"操作人不能为空");
+		car.setStatus(CarEnum.CarStatus.MEMBERUSING.getIndex());
+		return this.updateCarInfo(car);
+	}
+
+	@Override
+	public Car updateCarByNotMemberUsing(Car car) {
+		ParamVerifyUtils.paramNotNull(car,"修改车辆状态为非会员使用中，车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car,"修改车辆为非会员使用中，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifierId(),"操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifier(),"操作人不能为空");
+		car.setStatus(CarEnum.CarStatus.NOTMEMBERUSING.getIndex());
+		return this.updateCarInfo(car);
+	}
+
+	@Override
+	public Car updateCarByRepairing(Car car) {
+		ParamVerifyUtils.paramNotNull(car,"修改车辆状态为维修中，车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car,"修改车辆为维修中，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifierId(),"操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifier(),"操作人不能为空");
+		car.setStatus(CarEnum.CarStatus.REPAIRING.getIndex());
+		return this.updateCarInfo(car);
+	}
+
+	@Override
+	public Car updateCarByWaitReorganize(Car car) {
+		ParamVerifyUtils.paramNotNull(car,"修改车辆状态为待整备，车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car,"修改车辆为待整备，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifierId(),"操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifier(),"操作人不能为空");
+		car.setStatus(CarEnum.CarStatus.WAITREORGANIZE.getIndex());
+		return this.updateCarInfo(car);
+	}
+	
+	@Override
+	public Car updateCarByReorganizing(Car car) {
+		ParamVerifyUtils.paramNotNull(car,"修改车辆状态为整备中，车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car,"修改车辆为整备中，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifierId(),"操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifier(),"操作人不能为空");
+		car.setStatus(CarEnum.CarStatus.REORGANIZING.getIndex());
+		return this.updateCarInfo(car);
+	}
+
+	@Override
+	public void updateCarByReorganizedBySystem() {
+		//首先查询得到状态是整备中，并且X个小时没有整备完成的车辆列表
+		Car car = new Car();
+		car.setStatus(CarEnum.CarStatus.REORGANIZING.getIndex());
+		List<Car> carList = this.carMapper.selectCarListByNeedReorganized(car);
+		//将这些整备中的车辆自动整备完整变成待分配
+		for(Car carmodel : carList){
+			this.updateCar2WaitDistributeBySystem(carmodel);
+		}
+	}
+	
+	private void updateCar2WaitDistributeBySystem(Car car) {
+		car.setStatus(CarEnum.CarStatus.WAITDISTRIBUTE.getIndex());
+		car.setLasttimeModify(new Date());
+		this.carMapper.updateByPrimaryKeySelective(car);
+		//记录系统自动整备完成日志
+		OperateLog operateLog = new OperateLog();
+		operateLog.setType(OperateLogEnum.CAR.getValue());
+		operateLog.setOperationId(car.getId());
+		operateLog.setModifierId(Long.parseLong("0"));
+		operateLog.setModifier("系统");
+		operateLog.setRemark("系统自动整备完成");
+		this.operateLogService.createOperateLog(operateLog);
+	}
+
+	@Override
+	public Car updateCarByLosed(Car car) {
+		ParamVerifyUtils.paramNotNull(car,"修改车辆状态为已失联，车辆对象不能为空");
+		ParamVerifyUtils.paramNotNull(car,"修改车辆为已失联，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifierId(),"操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(car.getModifier(),"操作人不能为空");
+		car.setStatus(CarEnum.CarStatus.LOSED.getIndex());
+		return this.updateCarInfo(car);
+	}
+
+	@Override
+	public CarInsuranceDetail createCarInsuranceDetail(CarInsuranceDetail carInsuranceDetail) {
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail,"为车辆创建保险详情，车辆保险详情对象不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getCarId(),"为车辆创建保险详情，车辆ID不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getCompulsoryInsuranceNum(),"为车辆创建保险详情，交强险单号不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getCompulsoryInsuranceStart(),"为车辆创建保险详情，交强险开始时间不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getCompulsoryInsuranceEnd(),"为车辆创建保险详情，交强险结束时间不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getBusinessInsuranceNum(),"为车辆创建保险详情，商业险单号不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getBusinessInsuranceStart(),"为车辆创建保险详情，商业险开始时间不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getBusinessInsuranceEnd(),"为车辆创建保险详情，商业险结束时间不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getCompulsoryInsuranceUrl(),"为车辆创建保险详情，交强险未上传图片");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getBusinessInsuranceUrl(),"为车辆创建保险详情，商业险未上传图片");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getModifierId(),"为车辆创建保险详情，操作人ID不能为空");
+		ParamVerifyUtils.paramNotNull(carInsuranceDetail.getModifier(),"为车辆创建保险详情，操作人不能为空");
+		carInsuranceDetail.setCreated(new Date());
+		this.carInsuranceDetailMapper.insertSelective(carInsuranceDetail);
+		//创建车辆保险上传地址记录
+		this.createCarInsuranceDetailUrl(carInsuranceDetail);
+		//创建车辆保险日志
+		this.operateLogService.createLogForCarInsurance(carInsuranceDetail);
+		return this.getCarInsuranceDetailByCarId(carInsuranceDetail.getCarId());
+	}
+	
+	/**   
+	 * @Title: createCarInsuranceDetailUrl   
+	 * @Description: 创建车辆保单的上传信息 
+	 * @param: @param carInsuranceDetail      
+	 * @return: void      
+	 */
+	private void createCarInsuranceDetailUrl(CarInsuranceDetail carInsuranceDetail){
+		//封装要插入的强制险的图片地址list
+		List<CarInsuranceDetailUrl> cInsuranceDetailUrlList = new ArrayList<>();
+		for(int i=0;i<carInsuranceDetail.getCompulsoryInsuranceUrl().length;i++){
+			CarInsuranceDetailUrl carInsuranceDetailUrl = new CarInsuranceDetailUrl();
+			carInsuranceDetailUrl.setCarInsuranceDetailId(carInsuranceDetail.getId());
+			carInsuranceDetailUrl.setType(CarEnum.CarInsuranceUrlType.BUSINESS_INSURANCE_URL.COMPULSORY_INSURANCE_URL.getIndex());
+			cInsuranceDetailUrlList.add(carInsuranceDetailUrl);
+		}
+		//封装要插入的商业险的图片地址list
+		List<CarInsuranceDetailUrl> bInsuranceDetailUrlList = new ArrayList<>();
+		for(int i=0;i<carInsuranceDetail.getBusinessInsuranceUrl().length;i++){
+			CarInsuranceDetailUrl carInsuranceDetailUrl = new CarInsuranceDetailUrl();
+			carInsuranceDetailUrl.setCarInsuranceDetailId(carInsuranceDetail.getId());
+			carInsuranceDetailUrl.setType(CarEnum.CarInsuranceUrlType.BUSINESS_INSURANCE_URL.BUSINESS_INSURANCE_URL.getIndex());
+			bInsuranceDetailUrlList.add(carInsuranceDetailUrl);
+		}
+		if(cInsuranceDetailUrlList.size()>0){
+			this.carInsuranceDetailUrlMapper.insertBatch(cInsuranceDetailUrlList);
+		}
+		if(bInsuranceDetailUrlList.size()>0){
+			this.carInsuranceDetailUrlMapper.insertBatch(bInsuranceDetailUrlList);
+		}
+	}
+
+	@Override
+	public CarInsuranceDetail getCarInsuranceDetailByCarId(Long carId) {
+
+		ParamVerifyUtils.paramNotNull(carId,"查询保险详情，车辆ID不能为空");
+		CarInsuranceDetail carInsuranceDetail = new CarInsuranceDetail();
+		carInsuranceDetail.setCarId(carId);
+		List<CarInsuranceDetail> carInsuranceDetailList = this.carInsuranceDetailMapper.selectByCondition(carInsuranceDetail);
+		if(carInsuranceDetailList.size()<=0){
+			return null;
+		}
+		carInsuranceDetail = carInsuranceDetailList.get(0);
+		String[] compulsoryInsuranceUrl = carInsuranceDetail.getCompulsoryInsuranceUrl();
+		String[] businessInsuranceUrl = carInsuranceDetail.getBusinessInsuranceUrl();
+		//查询交强险图片
+		List<CarInsuranceDetailUrl> cInsuranceDetailUrlList = new ArrayList<>();
+		CarInsuranceDetailUrl cInsuranceDetailUrl = new CarInsuranceDetailUrl();
+		cInsuranceDetailUrl.setCarInsuranceDetailId(carInsuranceDetail.getId());
+		cInsuranceDetailUrl.setType(CarEnum.CarInsuranceUrlType.BUSINESS_INSURANCE_URL.COMPULSORY_INSURANCE_URL.getIndex());
+		cInsuranceDetailUrlList = this.carInsuranceDetailUrlMapper.selectByCondition(cInsuranceDetailUrl);
+		for(int i=0;i<cInsuranceDetailUrlList.size();i++){
+			compulsoryInsuranceUrl[i] = cInsuranceDetailUrlList.get(i).getUrl();
+		}
+		//查询商业险图片
+		List<CarInsuranceDetailUrl> bInsuranceDetailUrlList = new ArrayList<>();
+		CarInsuranceDetailUrl bInsuranceDetailUrl = new CarInsuranceDetailUrl();
+		bInsuranceDetailUrl.setCarInsuranceDetailId(carInsuranceDetail.getId());
+		bInsuranceDetailUrl.setType(CarEnum.CarInsuranceUrlType.BUSINESS_INSURANCE_URL.BUSINESS_INSURANCE_URL.getIndex());
+		bInsuranceDetailUrlList = this.carInsuranceDetailUrlMapper.selectByCondition(bInsuranceDetailUrl);
+		for(int i=0;i<bInsuranceDetailUrlList.size();i++){
+			businessInsuranceUrl[i] = bInsuranceDetailUrlList.get(i).getUrl();
+		}
+		carInsuranceDetail.setCompulsoryInsuranceUrl(compulsoryInsuranceUrl);
+		carInsuranceDetail.setBusinessInsuranceUrl(businessInsuranceUrl);
+		//查询保险日志
+		carInsuranceDetail.setOperateLog(this.getOperationLogList(carInsuranceDetail));
+		return carInsuranceDetail;
+	}
+
+	/**   
+	 * @Title: getOperationLogList   
+	 * @Description: 查询保险操作日志列表  
+	 * @param: carInsuranceDetail     
+	 * @return: List<OperateLog>      
+	 */
+	private List<OperateLog> getOperationLogList(CarInsuranceDetail carInsuranceDetail){
+		OperateLog log = new OperateLog();
+		log.setType(OperateLogEnum.INSURANCE.getValue());
+		log.setOperationId(carInsuranceDetail.getId());
+		return this.operateLogService.getOperateLogList(log);
+	}
+	@Override
+	public CarUsedLog createCarUsedLog(Car car) {
+		
+		return null;
+	}
+
+	@Override
+	public List<CarUsedLog> getCarUsedLogListByMonth(Car car) {
+		
+		return null;
+	}
+
+	@Override
+	public List<CarUsedLog> getCarUsedLogListByDay(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,57 @@
+package cn.cuco.service.payment.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.PaymentLogMapper;
+import cn.cuco.entity.PaymentLog;
+import cn.cuco.service.payment.PaymentLogService;
+
+@Service(value = "paymentLogService")
+public class PaymentLogServiceImpl implements PaymentLogService {
+
+    @Autowired
+    private PaymentLogMapper<PaymentLog> paymentLogMapper;
+    
+    @Override
+    public Integer insertSelective(PaymentLog paymentLog) throws Exception {
+           return this.paymentLogMapper.insertSelective(paymentLog);
+        }
+
+    @Override
+    public Integer insertBatch(List<PaymentLog> paymentLog) throws Exception {
+           return this.paymentLogMapper.insertBatch(paymentLog) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.paymentLogMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.paymentLogMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(PaymentLog paymentLog) {
+           return this.paymentLogMapper.updateByPrimaryKeySelective(paymentLog);
+    }
+
+    @Override
+    public PaymentLog findById(Object id) {
+           return (PaymentLog) this.paymentLogMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<PaymentLog> selectByCondition(PaymentLog paymentLog) {
+           return (List<PaymentLog>) this.paymentLogMapper.selectByCondition(paymentLog);
+    }
+
+    @Override
+    public Integer selectCountByCondition(PaymentLog paymentLog) {
+           return  this.paymentLogMapper.selectCountByCondition(paymentLog);
+    }
+
+}

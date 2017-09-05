@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.MemberAccountLogMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.MemberAccountLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="account_type" property="accountType" jdbcType="INTEGER" />
+    <result column="operate_type" property="operateType" jdbcType="INTEGER" />
+    <result column="transform_type" property="transformType" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="DECIMAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifer" property="modifer" jdbcType="VARCHAR" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.MemberAccountLog" >
+       select  count(1) 
+    from td_member_account_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "accountId != null ">
+        and account_id = #{accountId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "accountType != null ">
+        and account_type = #{accountType,jdbcType=INTEGER}      
+      </if>
+      <if test= "operateType != null ">
+        and operate_type = #{operateType,jdbcType=INTEGER}      
+      </if>
+      <if test= "transformType != null ">
+        and transform_type = #{transformType,jdbcType=INTEGER}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.MemberAccountLog" >
+       select  <include refid="Base_Column_List" />
+    from td_member_account_log  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "accountId != null ">
+        and account_id = #{accountId,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "accountType != null ">
+        and account_type = #{accountType,jdbcType=INTEGER}      
+      </if>
+      <if test= "operateType != null ">
+        and operate_type = #{operateType,jdbcType=INTEGER}      
+      </if>
+      <if test= "transformType != null ">
+        and transform_type = #{transformType,jdbcType=INTEGER}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+        and modifer = #{modifer,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, account_id, member_id, 
+      account_type, operate_type, transform_type, 
+      total, remark, created, 
+      modifer, modifier_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.MemberAccountLog" >
+    select 
+      id, account_id, member_id, 
+      account_type, operate_type, transform_type, 
+      total, remark, created, 
+      modifer, modifier_id
+    from td_member_account_log where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.MemberAccountLog" >
+    delete from td_member_account_log where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_member_account_log where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.MemberAccountLog" >
+    insert into td_member_account_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "accountId != null ">
+         account_id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "accountType != null ">
+         account_type,
+      </if>
+      <if test= "operateType != null ">
+         operate_type,
+      </if>
+      <if test= "transformType != null ">
+         transform_type,
+      </if>
+      <if test= "total != null ">
+         total,
+      </if>
+      <if test= "remark != null and remark != '' ">
+         remark,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+         modifer,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "accountId != null ">
+         #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "accountType != null ">
+         #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test= "operateType != null ">
+         #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test= "transformType != null ">
+         #{transformType,jdbcType=INTEGER},
+      </if>
+      <if test= "total != null ">
+         #{total,jdbcType=DECIMAL},
+      </if>
+      <if test= "remark != null and remark != '' ">
+         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+         #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_member_account_log (
+         id,
+         account_id,
+         member_id,
+         account_type,
+         operate_type,
+         transform_type,
+         total,
+         remark,
+         created,
+         modifer,
+         modifier_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.accountId,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.accountType,jdbcType=INTEGER},
+         #{item.operateType,jdbcType=INTEGER},
+         #{item.transformType,jdbcType=INTEGER},
+         #{item.total,jdbcType=DECIMAL},
+         #{item.remark,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.modifer,jdbcType=VARCHAR},
+         #{item.modifierId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.MemberAccountLog" >
+    update td_member_account_log
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "accountId != null ">
+      account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "accountType != null ">
+      account_type = #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test= "operateType != null ">
+      operate_type = #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test= "transformType != null ">
+      transform_type = #{transformType,jdbcType=INTEGER},
+      </if>
+      <if test= "total != null ">
+      total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test= "remark != null and remark != '' ">
+      remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifer != null and modifer != '' ">
+      modifer = #{modifer,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

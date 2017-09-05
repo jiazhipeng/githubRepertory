@@ -1,0 +1,28 @@
+package cn.cuco.service.wechatMessage;
+
+import cn.cuco.service.wechatMessage.template.parent.WechatMsgParent;
+
+/**
+ * 
+* @ClassName: IWechatMessageSender 
+* @Description: wechatMessage发送者
+* @author jiaxiaoxian
+* @date 2017年2月21日 上午11:43:34
+ */
+public interface IWechatMessageSender {
+
+	/**
+	 * 发送微信推送消息的总出口
+	* @Title: sendmessage 
+	* @Description: TODO
+	* @param @param openId
+	* @param @param wechatTemplateType 消息模板type
+	* @param @param wechatMsgParent
+	* @param @return
+	* @return int
+	* @throws
+	 */
+	public int sendmessage(String openId,String wechatTemplateType,WechatMsgParent wechatMsgParent) throws Exception;
+
+	
+}

@@ -1,0 +1,215 @@
+package cn.cuco.service.order.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import cn.cuco.common.utils.date.DateUtils;
+import cn.cuco.common.utils.param.ParamVerifyUtils;
+import cn.cuco.dao.OrderCarportMapper;
+import cn.cuco.entity.CarType;
+import cn.cuco.entity.Carport;
+import cn.cuco.entity.Member;
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.OrderCarport;
+import cn.cuco.enums.MemberStatus;
+import cn.cuco.enums.OperateLogEnum;
+import cn.cuco.enums.OrderCarportStatus;
+import cn.cuco.enums.RiskAuditStatus;
+import cn.cuco.enums.Valid;
+import cn.cuco.exception.ExceptionUtil;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.carport.CarportService;
+import cn.cuco.service.log.OperateLogService;
+import cn.cuco.service.member.carUsed.MemberCarportService;
+import cn.cuco.service.member.info.MemberService;
+import cn.cuco.service.order.OrderCarportService;
+
+/** 
+* @ClassName: OrderCarportServiceImpl 
+* @Description: 解锁订单相关接口实现
+* @author zc.du
+* @date 2017年2月23日 上午10:46:47  
+*/
+@Service(value = "orderCarportService")
+public class OrderCarportServiceImpl implements OrderCarportService {
+
+    @Autowired
+    private OrderCarportMapper<OrderCarport> orderCarportMapper;
+    @Autowired
+    private MemberCarportService memberCarportService;
+    @Autowired
+    private CarportService carportService;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private OperateLogService operateLogService;
+
+	@Override
+	public OrderCarport createOrderCarport(OrderCarport orderCarport) {
+		ParamVerifyUtils.paramNotNull(orderCarport);
+		ParamVerifyUtils.paramNotNull(orderCarport.getMemberId(),"解锁车库时，用户ID不能为空");
+		ParamVerifyUtils.paramNotNull(orderCarport.getCarportId(),"解锁车库时，车库ID不能为空");
+		ParamVerifyUtils.paramNotNull(orderCarport.getCartypeId(),"解锁车库时，车型ID不能为空");
+		
+		Member member = this.memberService.getMemberById(orderCarport.getMemberId());
+		ParamVerifyUtils.paramNotNull(member,"解锁车库时，用户不存在");
+		if(!RiskAuditStatus.MANUAL_PASS.getIndex().equals(member.getRiskAuditStatus())){
+			ExceptionUtil.throwWarn("用户未审核通过，无法进行解锁车库操作");
+		}
+		if(MemberStatus.FROZEN.getIndex().equals(member.getStatuts())){
+			ExceptionUtil.throwWarn("用户已冻结，无法进行解锁车库操作");
+		}
+		Carport carport = this.carportService.getCarportById(orderCarport.getCarportId());
+		ParamVerifyUtils.paramNotNull(carport,"解锁车库时，所选车库不存在");
+		if(Valid.DOWN.getValue().equals(carport.getValid())){
+			ExceptionUtil.throwWarn("车库已下架，无法进行解锁车库操作");
+		}
+		this.validateCarType(carport, orderCarport);
+		//创建解锁订单
+		Date date = new Date();
+		orderCarport.setCreated(date);
+		orderCarport.setOrderNum(this.createOrderNum());
+		orderCarport.setPayment(null);
+		orderCarport.setPaymentTime(null);
+		orderCarport.setStatus(OrderCarportStatus.WAIT_PAY.getIndex());
+		orderCarport.setTotal(carport.getUnlockPrice());
+		this.orderCarportMapper.insertSelective(orderCarport);
+		//创建操作日志
+		createOrderCarportLog(orderCarport,"用户创建订单");
+		return this.getOrderCarportById(orderCarport.getId());
+	}
+
+	@Override
+	public OrderCarport updateOrderCarport(OrderCarport orderCarport) {
+		
+		return null;
+	}
+
+	@Override
+	public OrderCarport getOrderCarport(OrderCarport orderCarport) {
+		List<OrderCarport> list = this.orderCarportMapper.selectByCondition(orderCarport);
+		if(CollectionUtils.isNotEmpty(list)){
+			return list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public PageResult<OrderCarport> getOrderCarportListByPage(OrderCarport orderCarport) {
+		ParamVerifyUtils.paramNotNull(orderCarport);
+		Integer page = orderCarport.getPage();
+		Integer pageSize = orderCarport.getPageSize();
+		Integer totalSize = this.orderCarportMapper.selectCountByCondition(orderCarport);
+		PageHelper.startPage(page, pageSize);
+		List<OrderCarport> list = this.orderCarportMapper.selectByCondition(orderCarport);
+		PageResult<OrderCarport> pageResult = new PageResult<OrderCarport>(page, pageSize, totalSize, list);
+		return pageResult;
+	}
+
+	@Override
+	public OrderCarport updateOrderCarportStatusByCancelForApp(OrderCarport orderCarport) {
+		//判断解锁订单状态
+		ParamVerifyUtils.paramNotNull(orderCarport);
+		ParamVerifyUtils.paramNotNull(orderCarport.getId(),"取消解锁订单时，订单ID不能为空");
+		OrderCarport old = this.orderCarportMapper.selectByPrimaryKey(orderCarport.getId());
+		ParamVerifyUtils.paramNotNull(old,"解锁订单不存在，无法取消");
+		if(!OrderCarportStatus.WAIT_PAY.getIndex().equals(old.getStatus())){
+			ExceptionUtil.throwWarn("当前订单状态为"+OrderCarportStatus.getName(old.getStatus())+"无法进行取消操作");
+		}
+		OrderCarport target = new OrderCarport();
+		target.setId(orderCarport.getId());
+		target.setStatus(OrderCarportStatus.CANCEL.getIndex());
+		this.orderCarportMapper.updateByPrimaryKeySelective(target);
+		old.setStatus(OrderCarportStatus.CANCEL.getIndex());
+		this.createOrderCarportLog(old,"用户取消订单");
+		return old;
+	}
+
+	@Override
+	public void updateOrderCarportStatusByCancelForTask() {
+//		List<OrderCarport> list = this.orderCarportMapper.getOrderListForCancelTask();
+		OrderCarport target = new OrderCarport();
+		/*target.setId(orderCarport.getId());
+		target.setStatus(OrderCarportStatus.CANCEL.getIndex());
+		this.orderCarportMapper.updateByPrimaryKeySelective(target);
+		old.setStatus(OrderCarportStatus.CANCEL.getIndex());
+		this.createOrderCarportLog(old,"用户取消订单");*/
+	}
+
+	@Override
+	public OrderCarport updateOrderCarportStatusByPaying(OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarport updateOrderCarportStatusByPartPay(OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderCarport updateOrderCarportStatusByCompletePay(OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OperateLog> getOrderCarportLogList(OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OperateLog> getOrderCarportLogListByPage(
+			OrderCarport orderCarport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean validateWhetherCanBuy(MemberCarport memberCarport) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	private boolean validateCarType(Carport carport,OrderCarport orderCarport){
+		int flag = 0;
+		List<CarType> types = carport.getCarTypes();
+		for(CarType type : types){
+			if(type.getId().equals(orderCarport.getCartypeId())){
+				flag++;
+				return true;
+			}
+		}
+		ExceptionUtil.throwWarn("请选择车库内存在的车型");
+		return false;
+	}
+	
+	private OrderCarport getOrderCarportById(Long id){
+		return this.orderCarportMapper.selectByPrimaryKey(id);
+	}
+	
+	private String createOrderNum(){
+		return "JS"+DateUtils.getDate("yyyyMMdd")+RandomUtils.nextInt(99999, 999999);
+	}
+	
+	private void createOrderCarportLog(OrderCarport orderCarport,String message){
+		OperateLog log = new OperateLog();
+		log.setCreated(new Date());
+		log.setStatus(orderCarport.getStatus());
+		log.setOperationId(orderCarport.getId());
+		log.setType(OperateLogEnum.ORDER_CARPORT.getValue());
+		log.setRemark(message);
+		this.operateLogService.createOperateLog(log);
+	}
+}

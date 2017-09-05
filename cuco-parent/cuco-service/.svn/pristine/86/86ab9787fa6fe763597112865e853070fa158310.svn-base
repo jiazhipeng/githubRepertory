@@ -1,0 +1,96 @@
+package cn.cuco.service.member.carUsed;
+
+import java.util.List;
+
+import cn.cuco.entity.MemberCarUsed;
+import cn.cuco.entity.MemberCarUsedAddress;
+import cn.cuco.page.PageResult;
+
+/** 
+* @ClassName: MemberCarUsedService 
+* @Description: 用户用车相关接口
+* @author zc.du
+* @date 2017年2月23日 上午10:40:12  
+*/
+public interface MemberCarUsedService {
+    /** 
+    * @Title: createMemberCarUsed 
+    * @Description: 创建用户用车
+    * @author zc.du
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed createMemberCarUsed(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Title: updateMemberCarUsed 
+    * @Description: 修改用户用车
+    * @author zc.du
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed updateMemberCarUsed(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Title: getMemberCarUsed 
+    * @Description: 查询用户用车详情
+    * @author zc.du
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed getMemberCarUsed(MemberCarUsed memberCarUsed); 
+    
+    /** 
+    * @Title: getMemberCarUsedList 
+    * @Description: 查询用户用车列表
+    * @author zc.du
+    * @param memberCarUsed
+    * @return List<MemberCarUsed>
+    */
+    public List<MemberCarUsed> getMemberCarUsedList(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Title: getMemberCarUsedListByPage 
+    * @Description: 分页查询用户用车列表
+    * @author zc.du
+    * @param memberCarUsed
+    * @return PageResult<MemberCarUsed>
+    */
+    public PageResult<MemberCarUsed> getMemberCarUsedListByPage(MemberCarUsed memberCarUsed);
+
+    /** 
+    * @Title: updateMemberCarUsedStatusByCancelForApp 
+    * @Description: app端用户取消用车
+    * @author zc.du
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed updateMemberCarUsedStatusByCancelForApp(MemberCarUsed memberCarUsed);
+    
+     /** 
+    * @Title: deleteMemberCarUsedAddress 
+    * @Description: 删除用户用车地址基础
+    * @author zc.du
+    * @param memberCarUsedAddress
+    * @return Integer
+    */
+    public Integer deleteMemberCarUsedAddress(MemberCarUsedAddress memberCarUsedAddress);
+     
+     /** 
+    * @Title: getMemberCarUsedAddressList 
+    * @Description: 查询用户用车地址列表
+    * @author zc.du
+    * @param memberCarUsedAddress
+    * @return List<MemberCarUsedAddress>
+    */
+    public List<MemberCarUsedAddress> getMemberCarUsedAddressList(MemberCarUsedAddress memberCarUsedAddress);
+     
+     /** 
+    * @Title: getMemberCarUsedAddressListByPage 
+    * @Description: 分页查询用户用车地址列表
+    * @author zc.du
+    * @param memberCarUsedAddress
+    * @return PageResult<MemberCarUsedAddress>
+    */
+    public PageResult<MemberCarUsedAddress> getMemberCarUsedAddressListByPage(MemberCarUsedAddress memberCarUsedAddress);
+}

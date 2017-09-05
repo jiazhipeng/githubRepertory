@@ -1,0 +1,57 @@
+package cn.cuco.service.log.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.OperationLogMapper;
+import cn.cuco.entity.OperationLog;
+import cn.cuco.service.log.OperationLogService;
+
+@Service(value = "operationLogService")
+public class OperationLogServiceImpl implements OperationLogService {
+
+    @Autowired
+    private OperationLogMapper<OperationLog> operationLogMapper;
+    
+    @Override
+    public Integer insertSelective(OperationLog operationLog) throws Exception {
+           return this.operationLogMapper.insertSelective(operationLog);
+        }
+
+    @Override
+    public Integer insertBatch(List<OperationLog> operationLog) throws Exception {
+           return this.operationLogMapper.insertBatch(operationLog) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.operationLogMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.operationLogMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(OperationLog operationLog) {
+           return this.operationLogMapper.updateByPrimaryKeySelective(operationLog);
+    }
+
+    @Override
+    public OperationLog findById(Object id) {
+           return (OperationLog) this.operationLogMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<OperationLog> selectByCondition(OperationLog operationLog) {
+           return (List<OperationLog>) this.operationLogMapper.selectByCondition(operationLog);
+    }
+
+    @Override
+    public Integer selectCountByCondition(OperationLog operationLog) {
+           return  this.operationLogMapper.selectCountByCondition(operationLog);
+    }
+
+}

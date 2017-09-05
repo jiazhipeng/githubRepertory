@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface CarBrandMapper<T> extends BaseDao<T> {
+
+}

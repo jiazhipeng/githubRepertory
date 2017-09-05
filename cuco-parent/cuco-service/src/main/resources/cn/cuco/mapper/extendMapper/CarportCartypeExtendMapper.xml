@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.CarportCartypeMapper" >
+
+  <!-- 按表车库ID删除数据 -->
+  <delete id="deleteCarportCartypeByCarprotId" parameterType="cn.cuco.entity.CarportCartype" >
+    delete from tr_carport_cartype where carport_id = #{carportId,jdbcType=BIGINT}
+  </delete>
+</mapper>

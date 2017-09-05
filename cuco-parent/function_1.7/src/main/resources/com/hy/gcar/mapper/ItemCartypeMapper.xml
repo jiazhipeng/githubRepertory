@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.ItemCartypeMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.ItemCartype" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="item_id" property="itemId" jdbcType="BIGINT" />
+    <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+    <result column="day_price" property="dayPrice" jdbcType="DECIMAL" />
+    <result column="cartype_id" property="cartypeId" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+    <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.ItemCartype" >
+        select  count(1)
+        from td_item_cartype
+        <where>
+            <if test= "id != null ">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test= "itemId != null ">
+                and item_id = #{itemId,jdbcType=BIGINT}
+            </if>
+            <if test= "itemName != null and itemName != '' ">
+                and item_name = #{itemName,jdbcType=VARCHAR}
+            </if>
+            <if test= "dayPrice != null ">
+                and day_price = #{dayPrice,jdbcType=DECIMAL}
+            </if>
+            <if test= "cartypeId != null ">
+                and cartype_id = #{cartypeId,jdbcType=BIGINT}
+            </if>
+            <if test= "created != null ">
+                and created = #{created,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ItemCartype" >
+       select  <include refid="Base_Column_List" />
+    from td_item_cartype  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "itemId != null ">
+        and item_id = #{itemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "itemName != null and itemName != '' ">
+        and item_name = #{itemName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "dayPrice != null ">
+        and day_price = #{dayPrice,jdbcType=DECIMAL}      
+      </if>
+      <if test= "cartypeId != null ">
+        and cartype_id = #{cartypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, item_id, item_name, 
+      day_price, cartype_id, created
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ItemCartype" >
+    select 
+      id, item_id, item_name, 
+      day_price, cartype_id, created
+    from td_item_cartype where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.ItemCartype" >
+    delete from td_item_cartype where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_item_cartype where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.gcar.entity.ItemCartype" useGeneratedKeys="true" keyProperty="id">
+    insert into td_item_cartype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "itemId != null ">
+         item_id,
+      </if>
+      <if test= "itemName != null and itemName != '' ">
+         item_name,
+      </if>
+      <if test= "dayPrice != null ">
+         day_price,
+      </if>
+      <if test= "cartypeId != null ">
+         cartype_id,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "itemId != null ">
+         #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test= "itemName != null and itemName != '' ">
+         #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test= "dayPrice != null ">
+         #{dayPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "cartypeId != null ">
+         #{cartypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_item_cartype (
+         id,
+         item_id,
+         item_name,
+         day_price,
+         cartype_id,
+         created)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.itemId,jdbcType=BIGINT},
+         #{item.itemName,jdbcType=VARCHAR},
+         #{item.dayPrice,jdbcType=DECIMAL},
+         #{item.cartypeId,jdbcType=BIGINT},
+         #{item.created,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.ItemCartype" >
+    update td_item_cartype
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "itemId != null ">
+      item_id = #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test= "itemName != null and itemName != '' ">
+      item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test= "dayPrice != null ">
+      day_price = #{dayPrice,jdbcType=DECIMAL},
+      </if>
+      <if test= "cartypeId != null ">
+      cartype_id = #{cartypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+<!-- 根据车型id查找已上架所属套餐 -->
+<select id="selectByCarTypeId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+	SELECT * from td_item_cartype c
+		LEFT JOIN td_item i on c.item_id = i.id
+		WHERE c.cartype_id=#{carTypeId,jdbcType=BIGINT} and i.`status`=1
+	
+</select>
+</mapper>

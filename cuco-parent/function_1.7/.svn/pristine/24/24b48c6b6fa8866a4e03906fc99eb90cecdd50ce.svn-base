@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>用车记录</title>
+    <link href="../../css/usedcar.css" rel="stylesheet" type="text/css" />
+    <title></title>
+</head>
+<body>
+<ul class="nodeList">
+    <li class="on">
+        <div class="node">
+            <div class="line"></div>
+            <div class="crile"></div>
+        </div>
+        <div class="nodeCon">
+            <p class="flex">充电发起</p>
+            <p class="flex">
+                【<span>王亮</span>】<span>已接收</span>
+                <br>联系电话：<span class="tel">15710633961</span>
+                <br>
+                <span>2016-06-23 9:00</span>
+            </p>
+        </div>
+    </li>
+    <li class="on">
+        <div class="node">
+            <div class="line"></div>
+            <div class="crile"></div>
+        </div>
+        <div class="nodeCon">
+            <p class="flex">管家响应</p>
+            <p class="flex">
+                【<span>王亮</span>】<span>已接收</span>
+                <br>联系电话：<span class="tel">15710633961</span>
+                <br>
+                <span>2016-06-23 9:00</span>
+            </p>
+        </div>
+    </li>
+
+    <li class="on">
+        <div class="node">
+            <div class="line"></div>
+            <div class="crile"></div>
+        </div>
+        <div class="nodeCon">
+            <p class="flex">管家送车</p>
+            <p class="flex">
+                【<span>王亮</span>】<span>已接收</span>
+                <br>联系电话：<span class="tel">15710633961</span>
+                <br>
+                <span>2016-06-23 9:00</span>
+            </p>
+        </div>
+    </li>
+
+    <li >
+        <div class="node">
+            <div class="line"></div>
+            <div class="crile"></div>
+        </div>
+        <div class="nodeCon">
+            <p class="flex">送车完成</p>
+            <p class="flex"></p>
+        </div>
+    </li>
+    <li >
+        <div class="node">
+            <div class="line"></div>
+            <div class="crile"></div>
+        </div>
+        <div class="nodeCon">
+            <p class="flex">取车发起</p>
+            <p class="flex"></p>
+        </div>
+    </li>
+    <li >
+        <div class="node">
+            <div class="line"></div>
+            <div class="crile"></div>
+        </div>
+        <div class="nodeCon">
+            <p class="flex">管家响应</p>
+            <p class="flex"></p>
+        </div>
+    </li>
+    <li >
+        <div class="node">
+            <div class="line"></div>
+            <div class="crile"></div>
+        </div>
+        <div class="nodeCon">
+            <p class="flex">管家取车</p>
+            <p class="flex"></p>
+        </div>
+    </li>
+    <li >
+        <div class="node">
+            <div class="line"></div>
+            <div class="crile"></div>
+        </div>
+        <div class="nodeCon">
+            <p class="flex">取车完成</p>
+            <p class="flex"></p>
+        </div>
+    </li>
+</ul>
+</body>
+</html>

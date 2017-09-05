@@ -1,0 +1,72 @@
+package cn.cuco.service.member;
+
+
+import java.util.List;
+
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户车库相关接口
+ * @author zc.du
+ */
+public interface MemberCarportService {
+	/** 
+    * @Description: 创建用户车库基础方法
+    * @param memberCarport
+    * @return MemberCarport
+    * @throws 
+    */
+    public MemberCarport createMemberCarport(MemberCarport memberCarport) throws Exception;
+    
+    /** 
+    * @Description: 修改用户车库基础方法
+    * @param memberCarport
+    * @return MemberCarport
+    * @throws 
+    */
+    public MemberCarport updateMemberCarport(MemberCarport memberCarport) throws Exception;
+    
+    /** 
+    * @Description: 删除用户车库基础方法
+    * @param memberCarport
+    * @return Integer
+    * @throws 
+    */
+    public Integer deleteMemberCarport(MemberCarport memberCarport) throws Exception;
+    
+    /** 
+     * @Description: 查询用户车库基础方法
+     * @param memberCarport
+     * @return MemberCarport
+     * @throws 
+     */
+    public MemberCarport getMemberCarport(MemberCarport memberCarport) throws Exception; 
+    
+    /** 
+     * @Description: 查询用户车库列表基础方法
+     * @param memberCarport
+     * @return List<MemberCarport>
+     * @throws 
+     */
+    public List<MemberCarport> getMemberCarportList(MemberCarport memberCarport) throws Exception;
+    
+    /** 
+     * @Description: 分页查询用户车库列表基础方法
+     * @param memberCarport
+     * @return PageResult<MemberCarport>
+     * @throws 
+     */
+    public PageResult<MemberCarport> getMemberCarportListByPage(MemberCarport memberCarport) throws Exception;
+
+    /** 
+     * @Description: 查询用户车库数量基础方法
+     * @param memberCarport
+     * @return Integer
+     * @throws 
+     */
+    public Integer getMemberCarportCount(MemberCarport memberCarport) throws Exception;
+
+
+
+}

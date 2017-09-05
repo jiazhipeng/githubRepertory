@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, user-scalable=no">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="email=no" name="format-detection">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>管家端</title>
+
+    <link rel="stylesheet" href="../css/normalize.css">
+
+    <style>
+      
+    </style>
+</head>
+
+<body>
+
+    
+    <script src="../js/zepto.min.js"></script>
+  
+
+</body>
+
+</html>

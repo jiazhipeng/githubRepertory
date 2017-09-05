@@ -1,0 +1,18 @@
+package cn.cuco.dao;
+
+import java.math.BigDecimal;
+
+import org.apache.ibatis.annotations.Param;
+
+public interface MemberAccountLogMapper<T> extends BaseDao<T> {
+	
+	/** 
+    * @Title: getALlCostByMemberId 
+    * @Description: 根据用户ID获取用户消费总额
+    * @author zc.du
+    * @param memberId
+    * @return BigDecimal
+    */
+    public BigDecimal getALlCostByMemberId(@Param("memberId")Long memberId);
+
+}

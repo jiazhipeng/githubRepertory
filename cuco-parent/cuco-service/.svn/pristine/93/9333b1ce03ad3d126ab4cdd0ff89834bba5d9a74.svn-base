@@ -1,0 +1,95 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-21 11:08:15
+ */
+public class OperationLog implements Serializable {
+
+    private static final long serialVersionUID = 8997226802933160L;
+
+    private Long id;//主键
+
+    private Long operationId;//操作ID
+
+    private Integer type;//日志类型 1：用户；2：订单；3：任务；4：车库；5：出险；6：运营参数；7：车型；8：停车场；9：服务城市；10：安全区间；11：维修
+
+    private Integer status;//状态：用户(0：冻结中；1：正常);  任务(1：待处理 2：待接单；3:待送车；4:送车中；5:待取车；6:取车中；7:已到达；8:已完成；9:已取消；)；车型(0：下架；1：上架)；车库(0：下架；1：上架);  停车场(0：删除；1：未删除);  保险：(1：待处理；2：跟进中；3：待赔付；4：已完成);  维修：(1：待维修；2：维修中；3：维修完成);订单：(1：支付中；2：已付款；3：待付款；4：部分付款；5：已取消);
+
+    private Long modifierId;//操作人ID
+
+    private String modifier;//操作人
+
+    private Date created;//创建时间
+
+    private String remark;//备注
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getOperationId() {
+        return this.operationId;
+    }
+
+    public void setOperationId(Long operationId) {
+        this.operationId = operationId;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Long getModifierId() {
+        return this.modifierId;
+    }
+
+    public void setModifierId(Long modifierId) {
+        this.modifierId = modifierId;
+    }
+
+    public String getModifier() {
+        return this.modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getRemark() {
+        return this.remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+}

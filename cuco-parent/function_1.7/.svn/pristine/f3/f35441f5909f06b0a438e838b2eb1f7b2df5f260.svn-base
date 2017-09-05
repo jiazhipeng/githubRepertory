@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>待分配</title>
+
+    <link rel="stylesheet" href="../../css/css.css">
+
+    <style>
+        header {
+            height: 4rem;
+            background: #191919;
+            padding: 0 1.3rem;
+        }
+        
+        header .date {
+            color: #fff;
+            line-height: 4rem;
+        }
+        
+        .list-block {}
+        
+        .item-content {
+            height: 4rem;
+            padding: 0 1.3rem;
+            border-bottom: 1px solid #ccc;
+            background: #fff;
+        }
+        
+        .item-content .item-inner {
+            position: relative;
+        }
+        
+        .item-inner .item-title,
+        .item-inner .item-after {
+            line-height: 4rem;
+            position: absolute;
+        }
+        
+        .item-title {
+            left: 0rem;
+        }
+        
+        .item-after {
+            right: 0rem;
+        }
+        
+        .list-title {
+            height: 3rem;
+            line-height: 3rem;
+            padding: 0 1.3rem;
+        }
+        
+        .list-title i {
+            font-size: 1.2rem;
+            margin-left: 1rem;
+            color: #c4c4c4;
+        }
+        
+        .list .item {
+            width: 30%;
+            display: inline-block;
+            vertical-align: middle;
+            height: 4rem;
+            line-height: 4rem;
+            overflow: hidden;
+        }
+        
+        .item:first-child {
+            width: 35%;
+        }
+        .item:nth-of-type(2){
+            text-align:center;
+        }
+        .item:last-child{
+            text-align:center;
+        }
+        
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4.5rem;
+            background: #1a1a1a;
+            width: 100%;
+            text-align: center;
+            display: flex;
+        }
+        
+        footer .back,
+        .wy {
+            line-height: 4.5rem;
+            flex: 1;
+        }
+        
+        .back {
+            background: #fafafa;
+        }
+        
+        .wy {
+            background: #161616;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body class="greyBg">
+
+    <header>
+        <span class="date">京P·A87D9（红）</span>
+    </header>
+    <section class="content">
+        <div class="list-block">
+            <ul>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">品牌</div>
+                        <div class="item-after">特斯拉</div>
+                    </div>
+                </li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">车架</div>
+                        <div class="item-after">极致超薄型</div>
+                    </div>
+                </li>
+                <li class="item-content">
+                    <div class="item-inner">
+                        <div class="item-title">车架号</div>
+                        <div class="item-after">极致超薄型</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="list">
+            <div class="list-title">
+                预约记录<i>更多日志请登录官网查看</i>
+            </div>
+            <ul>
+                <li class="item-content">
+                    <div class="item">时间</div>
+                    <div class="item">预约状态</div>
+                    <div class="item">预约人</div>
+
+                </li>
+                <li class="item-content">
+                    <div class="item">8月2日 12：00</div>
+                    <div class="item">未预约</div>
+                    <div class="item">-</div>
+                </li>
+                 <li class="item-content">
+                    <div class="item">8月2日 12：00</div>
+                    <div class="item">未预约</div>
+                    <div class="item">-</div>
+                </li>
+                 <li class="item-content">
+                    <div class="item">8月2日 12：00</div>
+                    <div class="item">未预约</div>
+                    <div class="item">-</div>
+                </li>
+                 <li class="item-content">
+                    <div class="item">8月2日 12：00</div>
+                    <div class="item">未预约</div>
+                    <div class="item">-</div>
+                </li>
+                
+            </ul>
+        </div>
+    </section>
+    <footer>
+        <label class="back">返回</label>
+        <label class="wy">平台运营</label>
+    </footer>
+</body>
+
+</html>

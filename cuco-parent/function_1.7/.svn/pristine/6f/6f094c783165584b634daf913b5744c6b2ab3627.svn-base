@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>预约试驾</title>
+    <link href="../../css/drive.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="greyBg">
+<img src="../../images/ad.png">
+<div class="section driveSec">
+    <p class="title">
+        <em></em>
+        <span>试驾信息</span>
+    </p>
+    <ul>
+        <li>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<span>吴国邦</span></li>
+        <li>手机号码：18210263136</li>
+        <li>选择城市：北京 <span class="small">(其他城市尽请期待)</span></li>
+        <li>试驾时间：2016-06-16</li>
+        <li>试驾时间：
+            <span class="dateBox">
+            <em id="plantime_show"></em>
+                <input type="datetime-local" id="plantime">
+            </span>
+        </li>
+        <li class="small">请携带驾照及身份证等证件</li>
+    </ul>
+    <!--<span class="button greyBtn">已提交</span> &lt;!&ndash;已提交&ndash;&gt;-->
+    <span class="button">提交</span><!--提交-->
+</div>
+
+</body>
+</html>

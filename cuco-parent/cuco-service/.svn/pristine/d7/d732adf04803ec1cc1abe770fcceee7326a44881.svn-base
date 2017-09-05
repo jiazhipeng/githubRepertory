@@ -1,0 +1,51 @@
+package cn.cuco.service.car.carInfo.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarUsedLogMapper;
+import cn.cuco.entity.CarUsedLog;
+import cn.cuco.service.car.carInfo.CarUsedLogService;
+
+/** 
+* @ClassName: CarUsedLogServiceImpl 
+* @Description: 车辆使用日志service实现层
+* @author gongbw
+* @date 2017年2月22日 下午3:33:05  
+*/
+@Service
+public class CarUsedLogServiceImpl implements CarUsedLogService {
+
+    @Autowired
+    private CarUsedLogMapper<CarUsedLog> carUsedLogMapper;
+
+	@Override
+	public CarUsedLog createCarUsedLog(CarUsedLog carUsedLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarUsedLog> getCarUsedLogList(CarUsedLog carUsedLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarUsedLog> getCarUsedLogListByMonth(CarUsedLog carUsedLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarUsedLog> getCarUsedLogListByDay(CarUsedLog carUsedLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+    
+
+}

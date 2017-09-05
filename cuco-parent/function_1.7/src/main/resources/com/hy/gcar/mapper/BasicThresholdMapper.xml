@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.BasicThresholdMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.BasicThreshold" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_usecar_advance" property="userUsecarAdvance" jdbcType="INTEGER" />
+    <result column="butler_usecar_advance" property="butlerUsecarAdvance" jdbcType="INTEGER" />
+    <result column="service_time_start" property="serviceTimeStart" jdbcType="TIME" />
+    <result column="service_time_end" property="serviceTimeEnd" jdbcType="TIME" />
+    <result column="ready_time" property="readyTime" jdbcType="INTEGER" />
+    <result column="user_usecar_cancel_advance" property="userUsecarCancelAdvance" jdbcType="INTEGER" />
+    <result column="user_returncar_update_advance" property="userReturncarUpdateAdvance" jdbcType="INTEGER" />
+    <result column="notice_advance" property="noticeAdvance" jdbcType="INTEGER" />
+    <result column="notice_start" property="noticeStart" jdbcType="TIME" />
+    <result column="notice_end" property="noticeEnd" jdbcType="TIME" />
+    <result column="deposit_usecar" property="depositUsecar" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.BasicThreshold" >
+       select  count(1) 
+    from tc_basic_threshold  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "userUsecarAdvance != null ">
+        and user_usecar_advance = #{userUsecarAdvance,jdbcType=INTEGER}      
+      </if>
+      <if test= "butlerUsecarAdvance != null ">
+        and butler_usecar_advance = #{butlerUsecarAdvance,jdbcType=INTEGER}      
+      </if>
+      <if test= "serviceTimeStart != null ">
+        and service_time_start = #{serviceTimeStart,jdbcType=TIME}      
+      </if>
+      <if test= "serviceTimeEnd != null ">
+        and service_time_end = #{serviceTimeEnd,jdbcType=TIME}      
+      </if>
+      <if test= "readyTime != null ">
+        and ready_time = #{readyTime,jdbcType=INTEGER}      
+      </if>
+      <if test= "userUsecarCancelAdvance != null ">
+        and user_usecar_cancel_advance = #{userUsecarCancelAdvance,jdbcType=INTEGER}      
+      </if>
+      <if test= "userReturncarUpdateAdvance != null ">
+        and user_returncar_update_advance = #{userReturncarUpdateAdvance,jdbcType=INTEGER}      
+      </if>
+      <if test= "noticeAdvance != null ">
+        and notice_advance = #{noticeAdvance,jdbcType=INTEGER}      
+      </if>
+      <if test= "noticeStart != null ">
+        and notice_start = #{noticeStart,jdbcType=TIME}      
+      </if>
+      <if test= "noticeEnd != null ">
+        and notice_end = #{noticeEnd,jdbcType=TIME}      
+      </if>
+      <if test= "depositUsecar != null ">
+        and deposit_usecar = #{depositUsecar,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.BasicThreshold" >
+       select  <include refid="Base_Column_List" />
+    from tc_basic_threshold  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "userUsecarAdvance != null ">
+        and user_usecar_advance = #{userUsecarAdvance,jdbcType=INTEGER}      
+      </if>
+      <if test= "butlerUsecarAdvance != null ">
+        and butler_usecar_advance = #{butlerUsecarAdvance,jdbcType=INTEGER}      
+      </if>
+      <if test= "serviceTimeStart != null ">
+        and service_time_start = #{serviceTimeStart,jdbcType=TIME}      
+      </if>
+      <if test= "serviceTimeEnd != null ">
+        and service_time_end = #{serviceTimeEnd,jdbcType=TIME}      
+      </if>
+      <if test= "readyTime != null ">
+        and ready_time = #{readyTime,jdbcType=INTEGER}      
+      </if>
+      <if test= "userUsecarCancelAdvance != null ">
+        and user_usecar_cancel_advance = #{userUsecarCancelAdvance,jdbcType=INTEGER}      
+      </if>
+      <if test= "userReturncarUpdateAdvance != null ">
+        and user_returncar_update_advance = #{userReturncarUpdateAdvance,jdbcType=INTEGER}      
+      </if>
+      <if test= "noticeAdvance != null ">
+        and notice_advance = #{noticeAdvance,jdbcType=INTEGER}      
+      </if>
+      <if test= "noticeStart != null ">
+        and notice_start = #{noticeStart,jdbcType=TIME}      
+      </if>
+      <if test= "noticeEnd != null ">
+        and notice_end = #{noticeEnd,jdbcType=TIME}      
+      </if>
+      <if test= "depositUsecar != null ">
+        and deposit_usecar = #{depositUsecar,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+        and modifier_id = #{modifierId,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, user_usecar_advance, butler_usecar_advance, 
+      service_time_start, service_time_end, ready_time, 
+      user_usecar_cancel_advance, user_returncar_update_advance, notice_advance, 
+      notice_start, notice_end, deposit_usecar, 
+      created, lasttime_modify, modifier, 
+      modifier_id
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.BasicThreshold" >
+    select 
+      id, user_usecar_advance, butler_usecar_advance, 
+      service_time_start, service_time_end, ready_time, 
+      user_usecar_cancel_advance, user_returncar_update_advance, notice_advance, 
+      notice_start, notice_end, deposit_usecar, 
+      created, lasttime_modify, modifier, 
+      modifier_id
+    from tc_basic_threshold where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.BasicThreshold" >
+    delete from tc_basic_threshold where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from tc_basic_threshold where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.BasicThreshold" >
+    insert into tc_basic_threshold
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "userUsecarAdvance != null ">
+         user_usecar_advance,
+      </if>
+      <if test= "butlerUsecarAdvance != null ">
+         butler_usecar_advance,
+      </if>
+      <if test= "serviceTimeStart != null ">
+         service_time_start,
+      </if>
+      <if test= "serviceTimeEnd != null ">
+         service_time_end,
+      </if>
+      <if test= "readyTime != null ">
+         ready_time,
+      </if>
+      <if test= "userUsecarCancelAdvance != null ">
+         user_usecar_cancel_advance,
+      </if>
+      <if test= "userReturncarUpdateAdvance != null ">
+         user_returncar_update_advance,
+      </if>
+      <if test= "noticeAdvance != null ">
+         notice_advance,
+      </if>
+      <if test= "noticeStart != null ">
+         notice_start,
+      </if>
+      <if test= "noticeEnd != null ">
+         notice_end,
+      </if>
+      <if test= "depositUsecar != null ">
+         deposit_usecar,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         modifier_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "userUsecarAdvance != null ">
+         #{userUsecarAdvance,jdbcType=INTEGER},
+      </if>
+      <if test= "butlerUsecarAdvance != null ">
+         #{butlerUsecarAdvance,jdbcType=INTEGER},
+      </if>
+      <if test= "serviceTimeStart != null ">
+         #{serviceTimeStart,jdbcType=TIME},
+      </if>
+      <if test= "serviceTimeEnd != null ">
+         #{serviceTimeEnd,jdbcType=TIME},
+      </if>
+      <if test= "readyTime != null ">
+         #{readyTime,jdbcType=INTEGER},
+      </if>
+      <if test= "userUsecarCancelAdvance != null ">
+         #{userUsecarCancelAdvance,jdbcType=INTEGER},
+      </if>
+      <if test= "userReturncarUpdateAdvance != null ">
+         #{userReturncarUpdateAdvance,jdbcType=INTEGER},
+      </if>
+      <if test= "noticeAdvance != null ">
+         #{noticeAdvance,jdbcType=INTEGER},
+      </if>
+      <if test= "noticeStart != null ">
+         #{noticeStart,jdbcType=TIME},
+      </if>
+      <if test= "noticeEnd != null ">
+         #{noticeEnd,jdbcType=TIME},
+      </if>
+      <if test= "depositUsecar != null ">
+         #{depositUsecar,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+         #{modifierId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into tc_basic_threshold (
+         id,
+         user_usecar_advance,
+         butler_usecar_advance,
+         service_time_start,
+         service_time_end,
+         ready_time,
+         user_usecar_cancel_advance,
+         user_returncar_update_advance,
+         notice_advance,
+         notice_start,
+         notice_end,
+         deposit_usecar,
+         created,
+         lasttime_modify,
+         modifier,
+         modifier_id)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.userUsecarAdvance,jdbcType=INTEGER},
+         #{item.butlerUsecarAdvance,jdbcType=INTEGER},
+         #{item.serviceTimeStart,jdbcType=TIME},
+         #{item.serviceTimeEnd,jdbcType=TIME},
+         #{item.readyTime,jdbcType=INTEGER},
+         #{item.userUsecarCancelAdvance,jdbcType=INTEGER},
+         #{item.userReturncarUpdateAdvance,jdbcType=INTEGER},
+         #{item.noticeAdvance,jdbcType=INTEGER},
+         #{item.noticeStart,jdbcType=TIME},
+         #{item.noticeEnd,jdbcType=TIME},
+         #{item.depositUsecar,jdbcType=DECIMAL},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.modifierId,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.BasicThreshold" >
+    update tc_basic_threshold
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "userUsecarAdvance != null ">
+      user_usecar_advance = #{userUsecarAdvance,jdbcType=INTEGER},
+      </if>
+      <if test= "butlerUsecarAdvance != null ">
+      butler_usecar_advance = #{butlerUsecarAdvance,jdbcType=INTEGER},
+      </if>
+      <if test= "serviceTimeStart != null ">
+      service_time_start = #{serviceTimeStart,jdbcType=TIME},
+      </if>
+      <if test= "serviceTimeEnd != null ">
+      service_time_end = #{serviceTimeEnd,jdbcType=TIME},
+      </if>
+      <if test= "readyTime != null ">
+      ready_time = #{readyTime,jdbcType=INTEGER},
+      </if>
+      <if test= "userUsecarCancelAdvance != null ">
+      user_usecar_cancel_advance = #{userUsecarCancelAdvance,jdbcType=INTEGER},
+      </if>
+      <if test= "userReturncarUpdateAdvance != null ">
+      user_returncar_update_advance = #{userReturncarUpdateAdvance,jdbcType=INTEGER},
+      </if>
+      <if test= "noticeAdvance != null ">
+      notice_advance = #{noticeAdvance,jdbcType=INTEGER},
+      </if>
+      <if test= "noticeStart != null ">
+      notice_start = #{noticeStart,jdbcType=TIME},
+      </if>
+      <if test= "noticeEnd != null ">
+      notice_end = #{noticeEnd,jdbcType=TIME},
+      </if>
+      <if test= "depositUsecar != null ">
+      deposit_usecar = #{depositUsecar,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "modifierId != null and modifierId != '' ">
+      modifier_id = #{modifierId,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

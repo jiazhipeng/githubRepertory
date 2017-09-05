@@ -1,0 +1,30 @@
+package cn.cuco.service.basic.dictionary.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CountriesMapper;
+import cn.cuco.entity.Countries;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.basic.dictionary.CountriesService;
+
+@Service(value = "countriesService")
+public class CountriesServiceImpl implements CountriesService {
+
+    @Autowired
+    private CountriesMapper<Countries> countriesMapper;
+
+	@Override
+	public PageResult<Countries> getCountriesPage(Countries countries){
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Countries getCountriesById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+   
+}

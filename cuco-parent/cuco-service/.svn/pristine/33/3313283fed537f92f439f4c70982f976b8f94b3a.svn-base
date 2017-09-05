@@ -1,0 +1,78 @@
+package cn.cuco.service.member.info;
+
+
+import java.util.List;
+
+import cn.cuco.entity.Member;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户模块接口
+ * @author zc.du
+ */
+public interface MemberService {
+	
+    /** 
+    * @Description: 创建用户基础方法
+    * @param member
+    * @return Member
+    */
+    public Member createMember(Member member);
+    
+    /** 
+    * @Description: 修改用户基础方法
+    * @param member
+    * @return Member
+    */
+    public Member updateMember(Member member);
+    
+    /** 
+    * @Description: 删除用户基础方法
+    * @param member
+    * @return Integer
+    */
+    public Integer deleteMember(Member member);
+    
+    /** 
+     * @Description: 查询用户基础方法
+     * @param member
+     * @return Member
+     */
+    public Member getMember(Member member); 
+    
+    /** 
+     * @Description: 查询用户列表基础方法
+     * @param member
+     * @return List<Member>
+     */
+    public List<Member> getMemberList(Member member);
+    
+    /** 
+     * @Description: 分页查询用户列表基础方法
+     * @param member
+     * @return PageResult<Member>
+     */
+    public PageResult<Member> getMemberListByPage(Member member);
+
+    /** 
+     * @Description: 查询用户数量基础方法
+     * @param member
+     * @return Integer
+     */
+    public Integer getMemberCount(Member member);
+    
+    /** 
+     * @Description: 冻结用户
+     * @param member
+     * @return Member
+     */
+    public Member  updateMemberByFreeze(Member member);
+
+    /** 
+     * @Description: 冻结用户
+     * @param member
+     * @return Member
+     */
+    public Member  updateMemberByUnfreeze(Member member);
+    
+}

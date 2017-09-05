@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>优惠价名称</title>
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/2v.css" rel="stylesheet" type="text/css" />
+    <style>
+    body {
+        background: #eee
+    }
+    .info-title {
+        font-size: 16px;
+        font-weight: normal;
+        padding: 10px;
+        color: #666;
+
+    }
+    .info-detail {
+        font-size: 15px;
+        background:#fff;
+        padding: 10px 10px;
+        border-top: 1px #ccc solid;
+        border-bottom: 1px #ccc solid;
+        line-height: 26px;
+        color: #666;
+    }
+    </style>
+</head>
+<body>
+    <div>
+        <h3 class="info-title">适用套餐</h3>
+        <p class="info-detail">套餐A，套餐B，套餐C，套餐D</p>
+        <h3 class="info-title">优惠券说明</h3>
+        <p class="info-detail">这里展示的是后台创建优惠券时，录入的规则。这里展
+示的是后台创建优惠券时，录入的规则。这里展示的是
+后台创建优惠券时，录入的规则。这里展示的是后台创
+建优惠券时，录入的规则。</p>
+    </div>
+</body>
+</html>

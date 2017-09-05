@@ -1,0 +1,67 @@
+package cn.cuco.service.car.carOperate.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarAccidentMapper;
+import cn.cuco.entity.CarAccident;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.car.carOperate.CarAccidentService;
+
+@Service
+public class CarAccidentServiceImpl implements CarAccidentService {
+
+    @Autowired
+    private CarAccidentMapper<CarAccident> carAccidentMapper;
+
+	@Override
+	public CarAccident createSelective(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarAccident updateCarAccident(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarAccident updateCarAccidentByFollowUp(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarAccident updateCarAccidentByRepairCompleted(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarAccident updateCarAccidentByCompleted(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CarAccident getCarAccidentById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<CarAccident> getCarAccidentByPage(CarAccident carAccident) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<OperateLog> getCarAccidentLogByPage(OperateLog operateLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+  
+}

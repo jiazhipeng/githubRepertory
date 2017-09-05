@@ -1,0 +1,57 @@
+package cn.cuco.service.member.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberAccountMapper;
+import cn.cuco.entity.MemberAccount;
+import cn.cuco.service.member.MemberAccountService;
+
+@Service(value = "memberAccountService")
+public class MemberAccountServiceImpl implements MemberAccountService {
+
+    @Autowired
+    private MemberAccountMapper<MemberAccount> memberAccountMapper;
+    
+    @Override
+    public Integer insertSelective(MemberAccount memberAccount) throws Exception {
+           return this.memberAccountMapper.insertSelective(memberAccount);
+        }
+
+    @Override
+    public Integer insertBatch(List<MemberAccount> memberAccount) throws Exception {
+           return this.memberAccountMapper.insertBatch(memberAccount) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.memberAccountMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.memberAccountMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(MemberAccount memberAccount) {
+           return this.memberAccountMapper.updateByPrimaryKeySelective(memberAccount);
+    }
+
+    @Override
+    public MemberAccount findById(Object id) {
+           return (MemberAccount) this.memberAccountMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<MemberAccount> selectByCondition(MemberAccount memberAccount) {
+           return (List<MemberAccount>) this.memberAccountMapper.selectByCondition(memberAccount);
+    }
+
+    @Override
+    public Integer selectCountByCondition(MemberAccount memberAccount) {
+           return  this.memberAccountMapper.selectCountByCondition(memberAccount);
+    }
+
+}

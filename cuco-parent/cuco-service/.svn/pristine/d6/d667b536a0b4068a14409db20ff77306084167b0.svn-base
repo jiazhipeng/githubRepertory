@@ -1,0 +1,38 @@
+package cn.cuco.service.basic.business.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.SecurityIntervalMapper;
+import cn.cuco.entity.SecurityInterval;
+import cn.cuco.service.basic.business.SecurityIntervalService;
+
+@Service(value = "securityIntervalService")
+public class SecurityIntervalServiceImpl implements SecurityIntervalService {
+
+    @Autowired
+    private SecurityIntervalMapper<SecurityInterval> securityIntervalMapper;
+
+	@Override
+	public SecurityInterval updateSecurityInterval(SecurityInterval securityInterval) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SecurityInterval getSecurityIntervalById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SecurityInterval> getSecurityIntervalPage(SecurityInterval securityInterval) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+  
+
+}

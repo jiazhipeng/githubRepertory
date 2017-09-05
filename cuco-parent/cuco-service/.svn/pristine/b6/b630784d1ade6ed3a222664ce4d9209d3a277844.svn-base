@@ -1,0 +1,72 @@
+package cn.cuco.service.basic.carport;
+
+
+import java.util.List;
+
+import cn.cuco.entity.BasicCarType;
+import cn.cuco.page.PageResult;
+
+/**
+* @ClassName: BasicCarTypeService 
+* @Description: 运营车型接口
+* @author huanghua
+* @date 2017年2月21日 下午1:49:38
+ */
+public interface CarTypeService {
+	
+    /**
+    * @Title: createBasicCarType 
+    * @Description: 创建运营车型
+    * @param basicCarType
+    * @return BasicCarType
+     */
+    public BasicCarType createBasicCarType(BasicCarType basicCarType);
+
+    /**
+    * @Title: updateByPrimaryKeyBasicCarType 
+    * @Description: 修改运营车型信息
+    * @param basicCarType
+    * @return BasicCarType
+     */
+    public BasicCarType updateBasicCarType(BasicCarType basicCarType);
+
+    /**
+    * @Title: getBasicCarTypeById 
+    * @Description: 取运营车型信息
+    * @param basicCarType
+    * @return BasicCarType
+     */
+    public BasicCarType getBasicCarTypeById(BasicCarType basicCarType);
+
+    /**
+    * @Title: getBasicCarTypeByCondition 
+    * @Description: 分页运营车型
+    * @param basicCarType
+    * @return List<BasicCarType>
+     */
+    public PageResult<BasicCarType> getBasicCarTypeByCondition(BasicCarType basicCarType);
+
+    /**
+    * @Title: getBasicCarTypeList 
+    * @Description: 运营车型列表
+    * @param basicCarType
+    * @return List<BasicCarType>
+     */
+    public List<BasicCarType> getBasicCarTypeList(BasicCarType basicCarType);
+
+    /**
+    * @Title: updateBasicCarTypeShelves 
+    * @Description: 运营车型上架
+    * @param basicCarType
+    * @return BasicCarType
+     */
+    public BasicCarType updateBasicCarTypeShelves(BasicCarType basicCarType);
+
+    /**
+    * @Title: updateBasicCarTypeTheShelves 
+    * @Description: 运营车型下架
+    * @param basicCarType
+    * @return BasicCarType
+     */
+    public BasicCarType updateBasicCarTypeTheShelves(BasicCarType basicCarType);
+}

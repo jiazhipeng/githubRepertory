@@ -1,0 +1,307 @@
+package cn.cuco.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import cn.cuco.page.PageQuery;
+
+/**
+ * 
+ * @author auto create
+ * @since 1.0,2017-02-24 10:41:17
+ */
+public class Member extends PageQuery<Car> implements Serializable {
+
+    private static final long serialVersionUID = 5530697938816824L;
+
+    private Long id;//用户ID
+
+    private String name;//用户昵称&姓名
+
+    private String mobile;//手机号
+
+    private String openid;//微信openid
+
+    private String unionid;//unionid来区分用户的唯一性
+
+    private Integer sex;//性别 -1未知;0:男;1:女;
+
+    private Integer source;//用户来源 0:线下;1:App-Android;2:App-IOS;3:自主关注(微信);4:市场活动;5:渠道;6:推荐
+
+    private Long sourceId;//来源ID
+
+    private String sourceName;//活动名称
+
+    private Integer statuts;//用户状态 0:冻结;1:正常;默认1
+
+    private Integer type;//用户类型 0:个人用户;1:企业用户;默认0
+
+    private Integer focusStatus;//关注状态 0:未关注;1:已关注;2:取消关注;默认0
+
+    private Long cityId;//城市id
+
+    private String cityCode;//城市编码
+
+    private String cityName;//城市名称
+
+    private String imageUrl;//用户头像地址
+
+    private String imageQrcode;//用户二维码URL
+
+    private String riskAuditNum;//风控审核编号
+
+    private Integer riskAuditStatus;//风控审核状态 0:未提交资料；1:系统审核通过；2：系统审核拒绝;3:等待人工审核;4:系统审核失败;5:人工审核通过;6:人工审核拒绝;默认0；
+
+    private String nationality;//国籍
+
+    private Long nationalityId;//国籍ID
+
+    private String idcard;//身份证/护照号码
+
+    private Date birthday;//生日
+
+    private Date created;//创建时间
+
+    private Long modifierId;//操作人id
+
+    private String modifier;//操作人姓名
+
+    private Date lasttimeModify;//最后修改时间
+    
+    private MemberInfo memberInfo;//用户证件信息
+    
+    private String remark;//备注
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobile() {
+        return this.mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getOpenid() {
+        return this.openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    public String getUnionid() {
+        return this.unionid;
+    }
+
+    public void setUnionid(String unionid) {
+        this.unionid = unionid;
+    }
+
+    public Integer getSex() {
+        return this.sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public Integer getSource() {
+        return this.source;
+    }
+
+    public void setSource(Integer source) {
+        this.source = source;
+    }
+
+    public Long getSourceId() {
+        return this.sourceId;
+    }
+
+    public void setSourceId(Long sourceId) {
+        this.sourceId = sourceId;
+    }
+
+    public String getSourceName() {
+        return this.sourceName;
+    }
+
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
+    }
+
+    public Integer getStatuts() {
+        return this.statuts;
+    }
+
+    public void setStatuts(Integer statuts) {
+        this.statuts = statuts;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getFocusStatus() {
+        return this.focusStatus;
+    }
+
+    public void setFocusStatus(Integer focusStatus) {
+        this.focusStatus = focusStatus;
+    }
+
+    public Long getCityId() {
+        return this.cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getCityCode() {
+        return this.cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getCityName() {
+        return this.cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageQrcode() {
+        return this.imageQrcode;
+    }
+
+    public void setImageQrcode(String imageQrcode) {
+        this.imageQrcode = imageQrcode;
+    }
+
+    public String getRiskAuditNum() {
+        return this.riskAuditNum;
+    }
+
+    public void setRiskAuditNum(String riskAuditNum) {
+        this.riskAuditNum = riskAuditNum;
+    }
+
+    public Integer getRiskAuditStatus() {
+        return this.riskAuditStatus;
+    }
+
+    public void setRiskAuditStatus(Integer riskAuditStatus) {
+        this.riskAuditStatus = riskAuditStatus;
+    }
+
+    public String getNationality() {
+        return this.nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public Long getNationalityId() {
+        return this.nationalityId;
+    }
+
+    public void setNationalityId(Long nationalityId) {
+        this.nationalityId = nationalityId;
+    }
+
+    public String getIdcard() {
+        return this.idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
+    }
+
+    public Date getBirthday() {
+        return this.birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Long getModifierId() {
+        return this.modifierId;
+    }
+
+    public void setModifierId(Long modifierId) {
+        this.modifierId = modifierId;
+    }
+
+    public String getModifier() {
+        return this.modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public Date getLasttimeModify() {
+        return this.lasttimeModify;
+    }
+
+    public void setLasttimeModify(Date lasttimeModify) {
+        this.lasttimeModify = lasttimeModify;
+    }
+
+	public MemberInfo getMemberInfo() {
+		return memberInfo;
+	}
+
+	public void setMemberInfo(MemberInfo memberInfo) {
+		this.memberInfo = memberInfo;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+}

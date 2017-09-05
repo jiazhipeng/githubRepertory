@@ -1,0 +1,57 @@
+package cn.cuco.service.basic.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.BasicOperatingParametersMapper;
+import cn.cuco.entity.BasicOperatingParameters;
+import cn.cuco.service.basic.BasicOperatingParametersService;
+
+@Service(value = "basicOperatingParametersService")
+public class BasicOperatingParametersServiceImpl implements BasicOperatingParametersService {
+
+    @Autowired
+    private BasicOperatingParametersMapper<BasicOperatingParameters> basicOperatingParametersMapper;
+    
+    @Override
+    public Integer insertSelective(BasicOperatingParameters basicOperatingParameters) throws Exception {
+           return this.basicOperatingParametersMapper.insertSelective(basicOperatingParameters);
+        }
+
+    @Override
+    public Integer insertBatch(List<BasicOperatingParameters> basicOperatingParameters) throws Exception {
+           return this.basicOperatingParametersMapper.insertBatch(basicOperatingParameters) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.basicOperatingParametersMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.basicOperatingParametersMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(BasicOperatingParameters basicOperatingParameters) {
+           return this.basicOperatingParametersMapper.updateByPrimaryKeySelective(basicOperatingParameters);
+    }
+
+    @Override
+    public BasicOperatingParameters findById(Object id) {
+           return (BasicOperatingParameters) this.basicOperatingParametersMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<BasicOperatingParameters> selectByCondition(BasicOperatingParameters basicOperatingParameters) {
+           return (List<BasicOperatingParameters>) this.basicOperatingParametersMapper.selectByCondition(basicOperatingParameters);
+    }
+
+    @Override
+    public Integer selectCountByCondition(BasicOperatingParameters basicOperatingParameters) {
+           return  this.basicOperatingParametersMapper.selectCountByCondition(basicOperatingParameters);
+    }
+
+}

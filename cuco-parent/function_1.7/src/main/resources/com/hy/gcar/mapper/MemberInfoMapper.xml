@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.MemberInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.MemberInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="idcard_front" property="idcardFront" jdbcType="VARCHAR" />
+    <result column="idcard_back" property="idcardBack" jdbcType="VARCHAR" />
+    <result column="drivercard_original" property="drivercardOriginal" jdbcType="VARCHAR" />
+    <result column="drivercard_copy" property="drivercardCopy" jdbcType="VARCHAR" />
+    <result column="license" property="license" jdbcType="VARCHAR" />
+    <result column="tax_reg" property="taxReg" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberInfo" >
+       select  <include refid="Base_Column_List" />
+    from td_member_info  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "memberId != null ">
+        and member_id = #{memberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "idcardFront != null and idcardFront != '' ">
+        and idcard_front = #{idcardFront,jdbcType=VARCHAR}      
+      </if>
+      <if test= "idcardBack != null and idcardBack != '' ">
+        and idcard_back = #{idcardBack,jdbcType=VARCHAR}      
+      </if>
+      <if test= "drivercardOriginal != null and drivercardOriginal != '' ">
+        and drivercard_original = #{drivercardOriginal,jdbcType=VARCHAR}      
+      </if>
+      <if test= "drivercardCopy != null and drivercardCopy != '' ">
+        and drivercard_copy = #{drivercardCopy,jdbcType=VARCHAR}      
+      </if>
+      <if test= "license != null and license != '' ">
+        and license = #{license,jdbcType=VARCHAR}      
+      </if>
+      <if test= "taxReg != null and taxReg != '' ">
+        and tax_reg = #{taxReg,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, member_id, idcard_front, 
+      idcard_back, drivercard_original, drivercard_copy, 
+      license, tax_reg, created
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.MemberInfo" >
+    select 
+      id, member_id, idcard_front, 
+      idcard_back, drivercard_original, drivercard_copy, 
+      license, tax_reg, created
+    from td_member_info where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.MemberInfo" >
+    delete from td_member_info where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_member_info where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.gcar.entity.MemberInfo" useGeneratedKeys="true" keyProperty="id">
+    insert into td_member_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "memberId != null ">
+         member_id,
+      </if>
+      <if test= "idcardFront != null and idcardFront != '' ">
+         idcard_front,
+      </if>
+      <if test= "idcardBack != null and idcardBack != '' ">
+         idcard_back,
+      </if>
+      <if test= "drivercardOriginal != null and drivercardOriginal != '' ">
+         drivercard_original,
+      </if>
+      <if test= "drivercardCopy != null and drivercardCopy != '' ">
+         drivercard_copy,
+      </if>
+      <if test= "license != null and license != '' ">
+         license,
+      </if>
+      <if test= "taxReg != null and taxReg != '' ">
+         tax_reg,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+         #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "idcardFront != null and idcardFront != '' ">
+         #{idcardFront,jdbcType=VARCHAR},
+      </if>
+      <if test= "idcardBack != null and idcardBack != '' ">
+         #{idcardBack,jdbcType=VARCHAR},
+      </if>
+      <if test= "drivercardOriginal != null and drivercardOriginal != '' ">
+         #{drivercardOriginal,jdbcType=VARCHAR},
+      </if>
+      <if test= "drivercardCopy != null and drivercardCopy != '' ">
+         #{drivercardCopy,jdbcType=VARCHAR},
+      </if>
+      <if test= "license != null and license != '' ">
+         #{license,jdbcType=VARCHAR},
+      </if>
+      <if test= "taxReg != null and taxReg != '' ">
+         #{taxReg,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_member_info (
+         id,
+         member_id,
+         idcard_front,
+         idcard_back,
+         drivercard_original,
+         drivercard_copy,
+         license,
+         tax_reg,
+         created)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.memberId,jdbcType=BIGINT},
+         #{item.idcardFront,jdbcType=VARCHAR},
+         #{item.idcardBack,jdbcType=VARCHAR},
+         #{item.drivercardOriginal,jdbcType=VARCHAR},
+         #{item.drivercardCopy,jdbcType=VARCHAR},
+         #{item.license,jdbcType=VARCHAR},
+         #{item.taxReg,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.MemberInfo" >
+    update td_member_info
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "memberId != null ">
+      member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test= "idcardFront != null and idcardFront != '' ">
+      idcard_front = #{idcardFront,jdbcType=VARCHAR},
+      </if>
+      <if test= "idcardBack != null and idcardBack != '' ">
+      idcard_back = #{idcardBack,jdbcType=VARCHAR},
+      </if>
+      <if test= "drivercardOriginal != null and drivercardOriginal != '' ">
+      drivercard_original = #{drivercardOriginal,jdbcType=VARCHAR},
+      </if>
+      <if test= "drivercardCopy != null and drivercardCopy != '' ">
+      drivercard_copy = #{drivercardCopy,jdbcType=VARCHAR},
+      </if>
+      <if test= "license != null and license != '' ">
+      license = #{license,jdbcType=VARCHAR},
+      </if>
+      <if test= "taxReg != null and taxReg != '' ">
+      tax_reg = #{taxReg,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

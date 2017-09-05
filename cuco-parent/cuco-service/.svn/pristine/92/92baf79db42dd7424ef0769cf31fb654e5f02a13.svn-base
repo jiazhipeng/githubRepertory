@@ -1,0 +1,11 @@
+package cn.cuco.service.repertory;
+
+/** 
+* @ClassName: Repertory 
+* @Description: 库存service层 
+* @author gongbw
+* @date 2017年2月21日 下午1:30:52  
+*/
+public interface RepertoryService {
+
+}

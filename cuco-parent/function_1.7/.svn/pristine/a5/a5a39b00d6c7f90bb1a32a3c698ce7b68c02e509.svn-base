@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.MarketingMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.Marketing" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="qr_code" property="qrCode" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="memberType" property="memberType" jdbcType="BIGINT" />
+    <result column="typeCount" property="typeCount" jdbcType="BIGINT" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="welcome_language" property="welcomeLanguage" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, qr_code, created, modifier_id, modifier,lasttime_modify,welcome_language
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from td_marketing
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+   <select id="getMarketingList" parameterType="com.hy.gcar.entity.Marketing" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from td_marketing
+    <where>
+    	<if test="name!=null">
+    		name like CONCAT('%',CONCAT(#{name,jdbcType=VARCHAR},'%'))
+    	</if>
+    	<if test="id!=null">
+    		and id = #{id,jdbcType=BIGINT}
+    	</if>
+    </where>
+    order by created desc
+  </select>
+    <select id="getMarketingStatis" parameterType="com.hy.gcar.entity.Marketing" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	,m.type memberType, count(*) typeCount
+    from td_marketing a, td_member m 
+	where a.id = #{id,jdbcType=BIGINT} and m.marketing_id = a.id group by m.type
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from td_marketing
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hy.gcar.entity.Marketing" >
+    insert into td_marketing (id, name, qr_code, 
+      created, modifier_id, modifier,lasttime_modify
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{qrCode,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{modifierId,jdbcType=VARCHAR}, #{modifier,jdbcType=VARCHAR},
+      #{lasttimeModify,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.Marketing" >
+    insert into td_marketing
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="qrCode != null" >
+        qr_code,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="modifierId != null" >
+        modifier_id,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="lasttimeModify != null" >
+        lasttime_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCode != null" >
+        #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasttimeModify != null" >
+        #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.Marketing" >
+    update td_marketing
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCode != null" >
+        qr_code = #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifierId != null" >
+        modifier_id = #{modifierId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lasttimeModify != null" >
+        lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hy.gcar.entity.Marketing" >
+    update td_marketing
+    set name = #{name,jdbcType=VARCHAR},
+      qr_code = #{qrCode,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      modifier_id = #{modifierId,jdbcType=VARCHAR},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      lasttime_modify = #{modifier,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

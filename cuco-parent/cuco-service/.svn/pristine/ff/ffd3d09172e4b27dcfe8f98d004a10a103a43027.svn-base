@@ -1,0 +1,43 @@
+package cn.cuco.service.basic.carport.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.BasicCarTypePricingMapper;
+import cn.cuco.entity.BasicCarTypePricing;
+import cn.cuco.service.basic.carport.CarTypePriceService;
+
+@Service(value = "basicCarTypePricingService")
+public class CarTypePriceServiceImpl implements CarTypePriceService {
+
+    @Autowired
+    private BasicCarTypePricingMapper<BasicCarTypePricing> basicCarTypePricingMapper;
+
+	@Override
+	public void createBasicCarTypePricingBatch(List<BasicCarTypePricing> basicCarTypePricing) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteBasicCarTypePricingBatchByCityId(BasicCarTypePricing basicCarTypePricing) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<BasicCarTypePricing> getBasicCarTypePricingsByCityId(BasicCarTypePricing basicCarTypePricing) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BasicCarTypePricing> getAllCarTypeCityAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+  
+}

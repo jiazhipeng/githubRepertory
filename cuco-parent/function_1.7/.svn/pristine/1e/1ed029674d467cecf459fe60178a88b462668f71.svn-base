@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.ButlerTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.ButlerTask" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="plan_time" property="planTime" jdbcType="TIMESTAMP" />
+    <result column="complete_time" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="operater_id" property="operaterId" jdbcType="VARCHAR" />
+    <result column="operater_name" property="operaterName" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="task_num" property="taskNum" jdbcType="VARCHAR" />
+    <result column="member_mobile" property="memberMobile" jdbcType="VARCHAR" />
+    <result column="message_status" property="messageStatus" jdbcType="INTEGER" />
+    <result column="member_item_id" property="memberItemId" jdbcType="BIGINT" />
+    <result column="task_sendcar_address" property="taskSendCarAddress" jdbcType="VARCHAR" />
+    <result column="create_type" property="createType" jdbcType="INTEGER" />
+    <result column="power_used_id" property="powerUsedId" jdbcType="BIGINT" />
+    <result column="car_operate_id" property="carOperateId" jdbcType="BIGINT" /> 
+    <result column="task_getcar_address" property="taskGetCarAddress" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="numOfdays" property="numOfdays" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+   <!-- 根据用车记录ID以及type获取任务 -->
+  <select id="getButlerTaskForCalendar" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask" >
+       select  
+       *
+    	from td_butler_task t
+	      WHERE  t.complete_time is NOT null
+	      <if test= "operaterId != null and operaterId != '' ">
+        	AND t.operater_id = #{operaterId,jdbcType=VARCHAR}      
+      	  </if>
+	      	AND t.type = #{type,jdbcType=INTEGER}
+			AND DATE_FORMAT(#{planTime,jdbcType=TIMESTAMP},'%Y/%m/%d') = DATE_FORMAT(t.complete_time, '%Y/%m/%d')
+            AND t.status != 9
+			UNION
+		select
+		*
+		from
+			td_butler_task t
+		WHERE t.type = #{type,jdbcType=INTEGER}
+		<if test= "operaterId != null and operaterId != '' ">
+        AND	t.operater_id = #{operaterId,jdbcType=VARCHAR}      
+      	</if>
+		AND
+			DATE_FORMAT(#{planTime,jdbcType=TIMESTAMP},'%Y/%m/%d') = DATE_FORMAT(t.plan_time, '%Y/%m/%d')
+		AND t.complete_time is null
+        AND t.status != 9
+  </select>
+    
+    <select id="findHaveInHandButlerTask" resultType="INTEGER"  parameterType="com.hy.gcar.entity.ButlerTask">
+    select  count(1)
+    from td_butler_task
+    where ((type =1 and status in (1,2,3,5,7,8))
+    or (type = 2 and status in (2,3,4,6))
+    or (type = 3 and status in (0,1,4,7)))
+    and member_id = #{memberId,jdbcType=VARCHAR}
+
+    </select>
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.ButlerTask" >
+       select  count(1) 
+    from td_butler_task  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "memberId != null and memberId != '' ">
+        and member_id = #{memberId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "planTime != null ">
+        and plan_time = #{planTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "completeTime != null ">
+        and complete_time = #{completeTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "operaterId != null and operaterId != '' ">
+        and operater_id = #{operaterId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operaterName != null and operaterName != '' ">
+        and operater_name = #{operaterName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "taskNum != null and taskNum != '' ">
+        and task_num = #{taskNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "messageStatus != null ">
+        and message_status = #{messageStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "taskSendCarAddress != null and taskSendCarAddress != '' ">
+        and task_sendcar_address = #{taskSendCarAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "createType != null ">
+        and create_type = #{createType,jdbcType=INTEGER}      
+      </if>
+      <if test= "powerUsedId != null ">
+        and power_used_id = #{powerUsedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carOperateId != null ">
+        and car_operate_id = #{carOperateId,jdbcType=BIGINT}      
+      </if>
+       <if test= "taskGetCarAddress != null and taskGetCarAddress != '' ">
+        and task_getcar_address = #{taskGetCarAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "customerId != null and customerId != '' ">
+          and customer_id = #{customerId,jdbcType=VARCHAR}
+      </if>
+      <if test= "customerName != null and customerName != '' ">
+          and customer_name = #{customerName,jdbcType=VARCHAR}
+      </if>
+      <if test= "lasttimeModify != null ">
+          and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+  </where>
+  </select>
+
+<!-- 根据用车记录ID以及type获取任务 -->
+  <select id="getButlerTaskByPowerUsedId" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask" >
+       select  <include refid="Base_Column_List" />
+    	from td_butler_task  
+	  <where>
+	      <if test= "type != null ">
+	        and type = #{type,jdbcType=INTEGER}      
+	      </if>
+	      <if test= "powerUsedId != null ">
+	        and power_used_id = #{powerUsedId,jdbcType=BIGINT}      
+	      </if>
+	  </where>
+  </select>
+  
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask" >
+       select  <include refid="Base_Column_List" />
+    from td_butler_task  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "type != null ">
+        and type = #{type,jdbcType=INTEGER}      
+      </if>
+      <if test= "memberId != null and memberId != '' ">
+        and member_id = #{memberId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+        and member_name = #{memberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "planTime != null ">
+        and plan_time = #{planTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "completeTime != null ">
+        and complete_time = #{completeTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "operaterId != null and operaterId != '' ">
+        and operater_id = #{operaterId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operaterName != null and operaterName != '' ">
+        and operater_name = #{operaterName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "taskNum != null and taskNum != '' ">
+        and task_num = #{taskNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+        and member_mobile = #{memberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "messageStatus != null ">
+        and message_status = #{messageStatus,jdbcType=INTEGER}      
+      </if>
+      <if test= "memberItemId != null ">
+        and member_item_id = #{memberItemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "taskSendCarAddress != null and taskSendCarAddress != '' ">
+        and task_sendcar_address = #{taskSendCarAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "createType != null ">
+        and create_type = #{createType,jdbcType=INTEGER}      
+      </if>
+      <if test= "powerUsedId != null ">
+        and power_used_id = #{powerUsedId,jdbcType=BIGINT}      
+      </if>
+      <if test= "carOperateId != null ">
+        and car_operate_id = #{carOperateId,jdbcType=BIGINT}      
+      </if>
+      <if test= "taskGetCarAddress != null and taskGetCarAddress != '' ">
+        and task_getcar_address = #{taskGetCarAddress,jdbcType=VARCHAR}      
+      </if>
+      <if test= "queryTime != null and queryTime != '' ">
+        and complete_time is NOT null and DATE_FORMAT(#{queryTime,jdbcType=VARCHAR},'%Y/%m/%d') = DATE_FORMAT(complete_time, '%Y/%m/%d')
+        UNION
+		select
+		<include refid="Base_Column_List" />
+		from
+			td_butler_task
+		WHERE 
+		type = #{type,jdbcType=INTEGER}
+      	<if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      	</if>
+		<if test= "operaterId != null and operaterId != '' ">
+        and operater_id = #{operaterId,jdbcType=VARCHAR}      
+      	</if>
+		AND
+			DATE_FORMAT(#{queryTime,jdbcType=VARCHAR},'%Y/%m/%d') = DATE_FORMAT(plan_time, '%Y/%m/%d')
+		AND complete_time is null
+            
+      </if>
+      <if test= "customerId != null and customerId != '' ">
+          and customer_id = #{customerId,jdbcType=VARCHAR}
+      </if>
+      <if test= "customerName != null and customerName != '' ">
+          and customer_name = #{customerName,jdbcType=VARCHAR}
+      </if>
+      <if test= "lasttimeModify != null ">
+          and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+  </where>
+  order by plan_time
+  </select>
+
+    <select id="selectListBySendCar" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask">
+        SELECT <include refid="Base_Column_List" />,count(plan_time) as total,DATE_FORMAT(plan_time, '%d') as numOfdays
+        FROM   td_butler_task
+        WHERE  DATE_FORMAT(plan_time, '%Y-%m') =  #{planTimeQuery,jdbcType=VARCHAR}
+        <if test= "operaterId != null and operaterId != '' ">
+            and operater_id = #{operaterId,jdbcType=VARCHAR}
+        </if>
+        AND    type = #{type,jdbcType=INTEGER}
+        GROUP BY DATE_FORMAT(plan_time, '%Y-%m-%d')
+        ORDER BY plan_time ;
+    </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, type, member_id, 
+      member_name, status, created, 
+      plan_time, complete_time, operater_id, 
+      operater_name, remark, task_num, 
+      member_mobile, message_status, member_item_id, 
+      task_sendcar_address, create_type, power_used_id, 
+      car_operate_id,task_getcar_address,customer_id,customer_name,lasttime_modify
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask" >
+    select 
+      id, type, member_id, 
+      member_name, status, created, 
+      plan_time, complete_time, operater_id, 
+      operater_name, remark, task_num, 
+      member_mobile, message_status, member_item_id, 
+      task_sendcar_address, create_type, power_used_id, 
+      car_operate_id, task_getcar_address,customer_id,customer_name,lasttime_modify
+    from td_butler_task where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.ButlerTask" >
+    delete from td_butler_task where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_butler_task where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.ButlerTask" >
+    insert into td_butler_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "type != null ">
+         type,
+      </if>
+      <if test= "memberId != null and memberId != '' ">
+         member_id,
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         member_name,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "planTime != null ">
+         plan_time,
+      </if>
+      <if test= "completeTime != null ">
+         complete_time,
+      </if>
+      <if test= "operaterId != null and operaterId != '' ">
+         operater_id,
+      </if>
+      <if test= "operaterName != null and operaterName != '' ">
+         operater_name,
+      </if>
+      <if test= "remark != null and remark != '' ">
+         remark,
+      </if>
+      <if test= "taskNum != null and taskNum != '' ">
+         task_num,
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         member_mobile,
+      </if>
+      <if test= "messageStatus != null ">
+         message_status,
+      </if>
+      <if test= "memberItemId != null ">
+         member_item_id,
+      </if>
+      <if test= "taskSendCarAddress != null and taskSendCarAddress != '' ">
+         task_sendcar_address,
+      </if>
+      <if test= "createType != null ">
+         create_type,
+      </if>
+      <if test= "powerUsedId != null ">
+         power_used_id,
+      </if>
+      <if test= "carOperateId != null ">
+         car_operate_id,
+      </if>
+      <if test= "taskGetCarAddress != null and taskGetCarAddress != '' ">
+         task_getcar_address,
+      </if>
+      <if test= "customerId != null and customerId != '' ">
+            customer_id,
+      </if>
+      <if test= "customerName != null and customerName != '' ">
+            customer_name,
+     </if>
+     <if test= "lasttimeModify != null ">
+           lasttime_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "type != null ">
+         #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "memberId != null and memberId != '' ">
+         #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+         #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "planTime != null ">
+         #{planTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "completeTime != null ">
+         #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "operaterId != null and operaterId != '' ">
+         #{operaterId,jdbcType=VARCHAR},
+      </if>
+      <if test= "operaterName != null and operaterName != '' ">
+         #{operaterName,jdbcType=VARCHAR},
+      </if>
+      <if test= "remark != null and remark != '' ">
+         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "taskNum != null and taskNum != '' ">
+         #{taskNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+         #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "messageStatus != null ">
+         #{messageStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "memberItemId != null ">
+         #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "taskSendCarAddress != null and taskSendCarAddress != '' ">
+         #{taskSendCarAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "createType != null ">
+         #{createType,jdbcType=INTEGER},
+      </if>
+      <if test= "powerUsedId != null ">
+         #{powerUsedId,jdbcType=BIGINT},
+      </if>
+      <if test= "carOperateId != null ">
+         #{carOperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "taskGetCarAddress != null and taskGetCarAddress != '' ">
+         #{taskGetCarAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "customerId != null and customerId != '' ">
+            #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test= "customerName != null and customerName != '' ">
+          #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+          #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_butler_task (
+         id,
+         type,
+         member_id,
+         member_name,
+         status,
+         created,
+         plan_time,
+         complete_time,
+         operater_id,
+         operater_name,
+         remark,
+         task_num,
+         member_mobile,
+         message_status,
+         member_item_id,
+         task_sendcar_address,
+         create_type,
+         power_used_id,
+         car_operate_id,
+         task_getcar_address,
+         customer_id,
+         customer_name,
+         lasttime_modify)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.type,jdbcType=INTEGER},
+         #{item.memberId,jdbcType=VARCHAR},
+         #{item.memberName,jdbcType=VARCHAR},
+         #{item.status,jdbcType=INTEGER},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.planTime,jdbcType=TIMESTAMP},
+         #{item.completeTime,jdbcType=TIMESTAMP},
+         #{item.operaterId,jdbcType=VARCHAR},
+         #{item.operaterName,jdbcType=VARCHAR},
+         #{item.remark,jdbcType=VARCHAR},
+         #{item.taskNum,jdbcType=VARCHAR},
+         #{item.memberMobile,jdbcType=VARCHAR},
+         #{item.messageStatus,jdbcType=INTEGER},
+         #{item.memberItemId,jdbcType=BIGINT},
+         #{item.taskSendCarAddress,jdbcType=VARCHAR},
+         #{item.createType,jdbcType=INTEGER},
+         #{item.powerUsedId,jdbcType=BIGINT},
+         #{item.carOperateId,jdbcType=BIGINT},
+         #{item.taskGetCarAddress,jdbcType=VARCHAR},
+         #{item.customerId,jdbcType=VARCHAR},
+         #{item.customerName,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+
+    <update id="updateSendCarButlerTaskByStatus" parameterType="com.hy.gcar.entity.ButlerTask">
+       update td_butler_task
+        <set>
+            <if test= "id != null ">
+                id = #{id,jdbcType=BIGINT},
+            </if>
+            <if test= "type != null ">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test= "memberId != null and memberId != '' ">
+                member_id = #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test= "memberName != null and memberName != '' ">
+                member_name = #{memberName,jdbcType=VARCHAR},
+            </if>
+            <if test= "status != null ">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test= "created != null ">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test= "planTime != null ">
+                plan_time = #{planTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test= "completeTime != null ">
+                complete_time = #{completeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test= "operaterId != null and operaterId != '' ">
+                operater_id = #{operaterId,jdbcType=VARCHAR},
+            </if>
+            <if test= "operaterName != null and operaterName != '' ">
+                operater_name = #{operaterName,jdbcType=VARCHAR},
+            </if>
+            <if test= "remark != null and remark != '' ">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test= "taskNum != null and taskNum != '' ">
+                task_num = #{taskNum,jdbcType=VARCHAR},
+            </if>
+            <if test= "memberMobile != null and memberMobile != '' ">
+                member_mobile = #{memberMobile,jdbcType=VARCHAR},
+            </if>
+            <if test= "messageStatus != null ">
+                message_status = #{messageStatus,jdbcType=INTEGER},
+            </if>
+            <if test= "memberItemId != null ">
+                member_item_id = #{memberItemId,jdbcType=BIGINT},
+            </if>
+            <if test= "taskSendCarAddress != null and taskSendCarAddress != '' ">
+                task_sendcar_address = #{taskSendCarAddress,jdbcType=VARCHAR},
+            </if>
+            <if test= "createType != null ">
+                create_type = #{createType,jdbcType=INTEGER},
+            </if>
+            <if test= "powerUsedId != null ">
+                power_used_id = #{powerUsedId,jdbcType=BIGINT},
+            </if>
+            <if test= "carOperateId != null ">
+                car_operate_id = #{carOperateId,jdbcType=BIGINT},
+            </if>
+            <if test= "taskGetCarAddress != null and taskGetCarAddress != '' ">
+                task_getcar_address = #{taskGetCarAddress,jdbcType=VARCHAR}
+            </if>
+            <if test= "customerId != null and customerId != '' ">
+                customer_id = #{customerId,jdbcType=VARCHAR}
+            </if>
+            <if test= "customerName != null and customerName != '' ">
+                customer_name = #{customerName,jdbcType=VARCHAR}
+            </if>
+            <if test= "lasttimeModify != null ">
+                lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      		</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT} and status = #{statusCondition,jdbcType=INTEGER}
+
+    </update>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.ButlerTask" >
+    update td_butler_task
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "type != null ">
+      type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test= "memberId != null and memberId != '' ">
+      member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberName != null and memberName != '' ">
+      member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "planTime != null ">
+      plan_time = #{planTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "completeTime != null ">
+      complete_time = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "operaterId != null and operaterId != '' ">
+      operater_id = #{operaterId,jdbcType=VARCHAR},
+      </if>
+      <if test= "operaterName != null and operaterName != '' ">
+      operater_name = #{operaterName,jdbcType=VARCHAR},
+      </if>
+      <if test= "remark != null and remark != '' ">
+      remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "taskNum != null and taskNum != '' ">
+      task_num = #{taskNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "memberMobile != null and memberMobile != '' ">
+      member_mobile = #{memberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "messageStatus != null ">
+      message_status = #{messageStatus,jdbcType=INTEGER},
+      </if>
+      <if test= "memberItemId != null ">
+      member_item_id = #{memberItemId,jdbcType=BIGINT},
+      </if>
+      <if test= "taskSendCarAddress != null and taskSendCarAddress != '' ">
+      task_sendcar_address = #{taskSendCarAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "createType != null ">
+      create_type = #{createType,jdbcType=INTEGER},
+      </if>
+      <if test= "powerUsedId != null ">
+      power_used_id = #{powerUsedId,jdbcType=BIGINT},
+      </if>
+      <if test= "carOperateId != null ">
+      car_operate_id = #{carOperateId,jdbcType=BIGINT},
+      </if>
+      <if test= "taskGetCarAddress != null and taskGetCarAddress != '' ">
+      task_getcar_address = #{taskGetCarAddress,jdbcType=VARCHAR},
+      </if>
+      <if test= "customerId != null and customerId != '' ">
+            customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test= "customerName != null and customerName != '' ">
+            customer_name = #{customerName,jdbcType=VARCHAR},
+     </if>
+     <if test= "lasttimeModify != null ">
+           lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getButlerTaskIsChargeing" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask" >
+    select 
+      <include refid="Base_Column_List" />
+    from td_butler_task where  car_operate_id = #{carOperateId,jdbcType=VARCHAR} and type = 1 and  status not in(7,8)
+  </select>
+  <!-- 给定一个车辆Id，查询开始时间在当前时间之后的所有任务-->
+  <select id="selectButlerTaskListByCarOperateId" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask" >
+    select 
+      <include refid="Base_Column_List" />
+    from td_butler_task where car_operate_id = #{carOperateId,jdbcType=BIGINT} and <![CDATA[ plan_time > #{planTime,jdbcType=TIMESTAMP} ]]> and status != 7 and status != 6 and status != 8
+  </select>
+  
+  <select id="selectButlerTaskListByCarOperateIdAndTime" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask" >
+    select 
+      <include refid="Base_Column_List" />
+    from td_butler_task where car_operate_id = #{carOperateId,jdbcType=BIGINT} and <![CDATA[ plan_time >= #{planTime,jdbcType=TIMESTAMP} and plan_time < #{completeTime,jdbcType=TIMESTAMP}]]>
+  </select>
+  
+   <!-- 按主键将任务上的车辆Id设置为null-->
+  <update id="updateButlerTaskCarOperateNull" parameterType="com.hy.gcar.entity.CarOperate" >
+  	update td_butler_task set car_operate_id = null where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 查询送车任务 预计开始用车时间大于等于   送车任务的开始用车时间并且用车开始时间小于等于 送车任务的结束时间（实际上是整备时间）并且用车状态 在 (1:送车中；2:待取车；3:取车中；4:已到达；5:充电中；6:已失联；)的车 这些车不在选择车辆列表中显示 -->
+  <select id="selectNotAvailableCar" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask">
+      select <include refid="Base_Column_List" />
+      FROM  td_butler_task task
+      where task.status >=1 
+      and task.status &lt;=6 
+      and task.type = 3
+      and task.plan_time >= #{planTime,jdbcType=TIMESTAMP}
+      and task.plan_time &lt;= DATE_ADD(#{planTime,jdbcType=TIMESTAMP},interval ${readyTime} hour)
+      <if test="carOperateIds != null and carOperateIds.size() > 0">
+           and task.car_operate_id in
+	      <foreach item="carOperateId" index="index" collection="carOperateIds" open="(" separator="," close=")">
+	            #{carOperateId}
+	       </foreach>
+      </if>
+
+   </select>
+   
+   <update id="updateClearCarOperateId" parameterType="java.util.List"> 
+   		update td_butler_task set car_operate_id = null where status in (0,2,9) and power_used_id in 
+   	      <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+	            #{id}
+	       </foreach>
+   </update>
+	
+	<select id="getButlerTaskBypowerUsedIds" parameterType="java.util.List" resultMap="BaseResultMap">
+	      select <include refid="Base_Column_List" />
+	      FROM  td_butler_task  
+	      where power_used_id in   	      
+	      <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+		            #{id}
+		  </foreach>
+	</select>
+	
+	
+    <select id="selectHaveInHandButlerTaskByPlanTime" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask">
+        select <include refid="Base_Column_List" /> from td_butler_task
+        where `status` in (0,1,2,3,4,5)
+        and type in (2,3)
+        and plan_time >= #{queryBegin,jdbcType=TIMESTAMP}
+        and plan_time &lt;= #{queryEnd,jdbcType=TIMESTAMP}
+        and operater_id = #{operaterId,jdbcType=VARCHAR}
+    </select>
+    
+    <!--根据车型ID查询两个时间段内的待接单待送车的送车任务-->
+    <select id="selectByCartypeIdAndStartEnd" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask">
+        select <include refid="Base_Column_List" /> from td_butler_task
+        where `status` in (0,10)
+        and type = 3
+        and plan_time >= #{queryBegin,jdbcType=TIMESTAMP}
+        and plan_time &lt; #{queryEnd,jdbcType=TIMESTAMP}
+        and power_used_id in (select id from td_power_used where carType_id = #{carTypeId,jdbcType=BIGINT} )
+
+    </select>
+    
+</mapper>

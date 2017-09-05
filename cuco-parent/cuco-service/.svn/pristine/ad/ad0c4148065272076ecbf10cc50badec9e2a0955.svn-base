@@ -1,0 +1,69 @@
+package cn.cuco.service.basic.dictionary;
+
+
+import cn.cuco.entity.City;
+import java.util.List;
+
+/**
+* @ClassName: CityService 
+* @Description: 城市接口
+* @author huanghua
+* @date 2017年2月21日 下午3:03:05
+ */
+public interface CityService {
+	
+	/**
+	* @Title: getCityList 
+	* @Description:查询省市地区列表的基础方法
+	* @param City
+	* @return List<City>
+	* @throws
+	 */
+	public List<City> getCityList(City city);
+	
+	/**
+	* @Title: getCityById 
+	* @Description: 根据ID查询省市地区
+	* @param city
+	* @return City
+	* @throws
+	 */
+	public City getCityById(City city);
+	
+	/**
+	* @Title: getCityByParent 
+	* @Description: 根据父id获取城市信息
+	* @param city
+	* @return List<City>
+	* @throws
+	 */
+	public List<City> getCityByParent(City city);
+	
+	/**
+	* @Title: getCityByCityCode 
+	* @Description: 根据code查询城市信息
+	* @param city
+	* @return City
+	* @throws
+	 */
+	public City getCityByCityCode(City city);
+	
+	/**
+	* @Title: getCityByCity 
+	* @Description: 根据城市名称获取城市信息
+	* @param city
+	* @return List<City>
+	* @throws
+	 */
+	public List<City> getCityByCityName(City city);
+	
+	/**
+	* @Title: getParentCity 
+	* @Description: 查询父级city
+	* @param city
+	* @return City
+	* @throws
+	 */
+	public City getParentCity(City city);
+
+}

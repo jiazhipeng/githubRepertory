@@ -1,0 +1,164 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cn.cuco</groupId>
+		<artifactId>cuco-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../cuco-parent</relativePath>
+	</parent>
+
+	<artifactId>cuco-service</artifactId>
+	<packaging>jar</packaging>
+
+	<properties>
+		<package.environment>test</package.environment>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>product</id>
+			<properties>
+				<!-- weChatPay -->
+				<appidPay>wx77b567355ce87b40</appidPay>
+				<appid>wxb9cbb99c39a74651</appid>
+				<appsecret>fee3c3964bee58b5ecbd76b4dee12577</appsecret>
+				<token>test156</token>
+				<url_prefix>http://app.gcarclub.com/</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>http://app.gcarclub.com/</domain>
+				<mchid>1314892501</mchid>
+				<key>hycx0001pay1mobility000111222333</key>
+				<!-- jdbc -->
+				<jdbc.url>jdbc:mysql://rm-2zeee63utfya99538.mysql.rds.aliyuncs.com:3306/g-car2?characterEncoding=utf-8</jdbc.url>
+				<jdbc.username>haiyiuser</jdbc.username>
+				<jdbc.password>Haiyiuser000</jdbc.password>
+				<redis.keyPrefix></redis.keyPrefix>
+				
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<!-- weChatPay -->
+				<appidPay>wx77b567355ce87b40</appidPay>
+				<appid>wxb9cbb99c39a74651</appid>
+				<appsecret>fee3c3964bee58b5ecbd76b4dee12577</appsecret>
+				<token>test156</token>
+				<url_prefix>http://app.gcarclub.com/</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>http://app.gcarclub.com/</domain>
+				<mchid>1314892501</mchid>
+				<key>hycx0001pay1mobility000111222333</key>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<!-- weChatPay -->
+				<appidPay>wx77b567355ce87b40</appidPay>
+				<appid>wxb9cbb99c39a74651</appid>
+				<appsecret>fee3c3964bee58b5ecbd76b4dee12577</appsecret>
+				<token>test156</token>
+				<url_prefix>http://app.gcarclub.com/</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>http://app.gcarclub.com/</domain>
+				<mchid>1314892501</mchid>
+				<key>hycx0001pay1mobility000111222333</key>
+			</properties>
+		</profile>
+		<profile>
+			<id>pre</id>
+			<properties>
+				<!-- weChatPay -->
+				<appidPay>wx77b567355ce87b40</appidPay>
+				<appid>wxb9cbb99c39a74651</appid>
+				<appsecret>fee3c3964bee58b5ecbd76b4dee12577</appsecret>
+				<token>test156</token>
+				<url_prefix>http://app.gcarclub.com/</url_prefix>
+				<openidKey>openid_224</openidKey>
+				<domain>http://app.gcarclub.com/</domain>
+				<mchid>1314892501</mchid>
+				<key>hycx0001pay1mobility000111222333</key>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>cn.cuco</groupId>
+			<artifactId>cuco-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+		  <groupId>cn.cuco</groupId>
+		  <artifactId>cuco-authorization</artifactId>
+		  <version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<!-- 数据库操作 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.jsqlparser</groupId>
+			<artifactId>jsqlparser</artifactId>
+			<version>0.9.4</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.tomcat</groupId>
+		  <artifactId>tomcat-jdbc</artifactId>
+		  <version>7.0.47</version>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources/</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<port>8080</port>
+					<systemProperties>
+						<JAVA_OPTS>-Xms1024m -Xmx1024m -XX:MaxPermSize=1024m</JAVA_OPTS>
+					</systemProperties>
+					<path>/</path>
+				</configuration>
+			</plugin>
+			<!-- 忽略单元测试 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

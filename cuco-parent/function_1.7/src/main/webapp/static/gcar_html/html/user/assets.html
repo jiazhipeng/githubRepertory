@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>我的资产</title>
+    <link href="../../css/user.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="greyBg">
+<!--头部-->
+<header class="header">
+    <ul class="tab tab_three">
+        <li class="flex">
+            <span>余额</span>
+            <em class="line"></em>
+        </li>
+        <li class="flex active">
+            <span>优惠券</span>
+            <em class="line"></em>
+        </li>
+        <li class="flex">
+            <span>积分</span>
+        </li>
+    </ul>
+</header>
+
+<!--余额 start-->
+<div class="balanceBox assetSec" style="display: none;">
+    <div class="balance">
+        <span class="balNum">可用余额：￥1356</span>
+    </div>
+    <p class="title">余额明细</p>
+    <ul>
+        <li>
+            <p>2016-04-01</p>
+            <p>分享交易奖励</p>
+            <p>5000</p>
+        </li>
+        <li>
+            <p>2016-04-01</p>
+            <p>分享交易奖励</p>
+            <p>5000</p>
+        </li>
+        <li>
+            <p>2016-04-01</p>
+            <p>分享交易奖励</p>
+            <p>5000</p>
+        </li>
+        <li>
+            <p>2016-04-01</p>
+            <p>分享交易奖励</p>
+            <p>5000</p>
+        </li>
+        <li>
+            <p>2016-04-01</p>
+            <p>分享交易奖励</p>
+            <p>5000</p>
+        </li>
+    </ul>
+
+</div>
+<!--余额 stop-->
+
+<!--优惠券 start-->
+<div class="balanceBox coupSec" style="display: block;">
+    <div class="balance">
+        <span>可用劵 ：<em>2</em></span>
+    </div>
+    <p class="title">优惠券明细</p>
+    <!--<p class="noData">暂无数据</p>-->
+    <ul class="coupList">
+        <li>
+            <a href="coupinfo.html">
+                <div class="leftSite">
+                    <p>体验试用</p>
+                    <span class="info">有效期2016.05.09—2016.10.27</span>
+                </div>
+                <div class="rightSite">
+                    <p>待使用</p>
+                </div>
+                <em class="circ"></em>
+            </a>
+        </li>
+        <li>
+            <a href="coupinfo.html">
+                <div class="leftSite">
+                    <p>体验试用</p>
+                    <span class="info">有效期2016.05.09—2016.10.27</span>
+                </div>
+                <div class="rightSite">
+                    <p>审核中</p>
+                </div>
+                <em class="circ"></em>
+            </a>
+        </li>
+        <li>
+            <a href="coupinfo.html">
+                <div class="leftSite">
+                    <p>体验试用</p>
+                    <span class="info">有效期2016.05.09—2016.10.27</span>
+                </div>
+                <div class="rightSite">
+                    <p>待使用</p>
+                </div>
+                <em class="circ"></em>
+            </a>
+        </li>
+        <li>
+            <a href="coupinfo.html">
+                <div class="leftSite">
+                    <p>体验试用</p>
+                    <span class="info">有效期2016.05.09—2016.10.27</span>
+                </div>
+                <div class="rightSite">
+                    <p>审核中</p>
+                </div>
+                <em class="circ"></em>
+            </a>
+        </li>
+    </ul>
+
+    <div class="fixHeight"></div>
+    <div class="fixBottom greyBg">
+        <a href="javascript:;" class="cleCoup">一键清除不可用券</a>
+        <div class="coupBt">
+            <input type="text" placeholder="请输入优惠券兑换码">
+            <a href="javascript:;" class="getCoup">兑换</a>
+        </div>
+    </div>
+
+</div>
+<!--优惠券 stop-->
+
+<!--积分 start-->
+<div class="balanceBox assetSec" style="display: none;">
+    <div class="balance">
+    <p class="noData">暂无页面</p>
+</div>
+<!--积分 stop-->
+
+<script src="../../js/zepto.js"></script>
+
+
+
+
+</body>
+</html>

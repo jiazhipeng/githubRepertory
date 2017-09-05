@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.gcar.dao.CarOperateMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.gcar.entity.CarOperate" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="car_color" property="carColor" jdbcType="VARCHAR" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="car_plate_num" property="carPlateNum" jdbcType="VARCHAR" />
+    <result column="car_vin" property="carVin" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="operate_num" property="operateNum" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="operate_type_id" property="operateTypeId" jdbcType="BIGINT" />
+    <result column="operate_type_name" property="operateTypeName" jdbcType="VARCHAR" />
+    <result column="car_brand" property="carBrand" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="INTEGER" />
+    <result column="car_type" property="carType" jdbcType="VARCHAR" />
+    <result column="driving_km" property="drivingKm" jdbcType="VARCHAR" />
+    <result column="manufacture_time" property="manufactureTime" jdbcType="TIMESTAMP" />
+    <result column="car_qrcode_url" property="carQrcodeUrl" jdbcType="VARCHAR" />
+    <result column="engine_num" property="engineNum" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="car_type_id" property="carTypeId" jdbcType="BIGINT" />
+    <result column="endTime" property="endTime" jdbcType="TIMESTAMP"/>
+    <result column="operatePlanStatus" property="operatePlanStatus" jdbcType="INTEGER"/>
+    <result column="carStatus" property="carStatus" jdbcType="INTEGER"/>
+    <result column="readyTime" property="readyTime" jdbcType="TIMESTAMP"/>
+    <result column="failure_time" property="failureTime" jdbcType="TIMESTAMP"/>
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.gcar.entity.CarOperate" >
+       select  count(1) 
+    from td_car_operate  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carColor != null and carColor != '' ">
+        and car_color = #{carColor,jdbcType=VARCHAR}      
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+        and image_url = #{imageUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carVin != null and carVin != '' ">
+        and car_vin = #{carVin,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+        and city_id = #{cityId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+        and city_name = #{cityName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+        and operate_num = #{operateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "operateTypeId != null ">
+        and operate_type_id = #{operateTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "operateTypeName != null and operateTypeName != '' ">
+        and operate_type_name = #{operateTypeName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carBrand != null and carBrand != '' ">
+        and car_brand = #{carBrand,jdbcType=VARCHAR}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+      <if test= "carType != null and carType != '' ">
+        and car_type = #{carType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "drivingKm != null and drivingKm != '' ">
+        and driving_km = #{drivingKm,jdbcType=VARCHAR}      
+      </if>
+      <if test= "manufactureTime != null ">
+        and manufacture_time = #{manufactureTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "carQrcodeUrl != null and carQrcodeUrl != '' ">
+        and car_qrcode_url = #{carQrcodeUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "engineNum != null and engineNum != '' ">
+        and engine_num = #{engineNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "carTypeId != null ">
+        and car_type_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperate" >
+       select  <include refid="Base_Column_List" />
+    from td_car_operate  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "carColor != null and carColor != '' ">
+        and car_color = #{carColor,jdbcType=VARCHAR}      
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+        and image_url = #{imageUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carVin != null and carVin != '' ">
+        and car_vin = #{carVin,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+        and city_id = #{cityId,jdbcType=VARCHAR}      
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+        and city_name = #{cityName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+        and operate_num = #{operateNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "operateTypeId != null ">
+        and operate_type_id = #{operateTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "operateTypeName != null and operateTypeName != '' ">
+        and operate_type_name = #{operateTypeName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "carBrand != null and carBrand != '' ">
+        and car_brand = #{carBrand,jdbcType=VARCHAR}      
+      </if>
+      <if test= "valid != null ">
+        and valid = #{valid,jdbcType=INTEGER}      
+      </if>
+      <if test= "carType != null and carType != '' ">
+        and car_type = #{carType,jdbcType=VARCHAR}      
+      </if>
+      <if test= "drivingKm != null and drivingKm != '' ">
+        and driving_km = #{drivingKm,jdbcType=VARCHAR}      
+      </if>
+      <if test= "manufactureTime != null ">
+        and manufacture_time = #{manufactureTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "carQrcodeUrl != null and carQrcodeUrl != '' ">
+        and car_qrcode_url = #{carQrcodeUrl,jdbcType=VARCHAR}      
+      </if>
+      <if test= "engineNum != null and engineNum != '' ">
+        and engine_num = #{engineNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "carTypeId != null ">
+        and car_type_id = #{carTypeId,jdbcType=BIGINT}      
+      </if>
+      <if test= "readyTime != null ">
+        and readyTime = #{readyTime,jdbcType=BIGINT}      
+      </if>
+      <if test= "failureTime != null ">
+        and failure_time = #{failureTime,jdbcType=BIGINT}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, car_color, image_url, 
+      car_plate_num, car_vin, city_id, 
+      city_name, operate_num, status, 
+      operate_type_id, operate_type_name, car_brand, 
+      valid, car_type, driving_km, 
+      manufacture_time, car_qrcode_url, engine_num, 
+      created, car_type_id,readyTime,failure_time
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperate" >
+    select 
+      id, car_color, image_url, 
+      car_plate_num, car_vin, city_id, 
+      city_name, operate_num, status, 
+      operate_type_id, operate_type_name, car_brand, 
+      valid, car_type, driving_km, 
+      manufacture_time, car_qrcode_url, engine_num, 
+      created, car_type_id,readyTime,failure_time
+    from td_car_operate where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.gcar.entity.CarOperate" >
+    delete from td_car_operate where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_car_operate where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.gcar.entity.CarOperate" >
+    insert into td_car_operate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "carColor != null and carColor != '' ">
+         car_color,
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+         image_url,
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         car_plate_num,
+      </if>
+      <if test= "carVin != null and carVin != '' ">
+         car_vin,
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+         city_id,
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         city_name,
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+         operate_num,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "operateTypeId != null ">
+         operate_type_id,
+      </if>
+      <if test= "operateTypeName != null and operateTypeName != '' ">
+         operate_type_name,
+      </if>
+      <if test= "carBrand != null and carBrand != '' ">
+         car_brand,
+      </if>
+      <if test= "valid != null ">
+         valid,
+      </if>
+      <if test= "carType != null and carType != '' ">
+         car_type,
+      </if>
+      <if test= "drivingKm != null and drivingKm != '' ">
+         driving_km,
+      </if>
+      <if test= "manufactureTime != null ">
+         manufacture_time,
+      </if>
+      <if test= "carQrcodeUrl != null and carQrcodeUrl != '' ">
+         car_qrcode_url,
+      </if>
+      <if test= "engineNum != null and engineNum != '' ">
+         engine_num,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "carTypeId != null ">
+         car_type_id,
+      </if>
+       <if test= "readyTime != null ">
+       		readyTime,
+      </if>
+      <if test= "failureTime != null ">
+       	 failure_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carColor != null and carColor != '' ">
+         #{carColor,jdbcType=VARCHAR},
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+         #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+         #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "carVin != null and carVin != '' ">
+         #{carVin,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+         #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+         #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+         #{operateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "operateTypeId != null ">
+         #{operateTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "operateTypeName != null and operateTypeName != '' ">
+         #{operateTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test= "carBrand != null and carBrand != '' ">
+         #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test= "valid != null ">
+         #{valid,jdbcType=INTEGER},
+      </if>
+      <if test= "carType != null and carType != '' ">
+         #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test= "drivingKm != null and drivingKm != '' ">
+         #{drivingKm,jdbcType=VARCHAR},
+      </if>
+      <if test= "manufactureTime != null ">
+         #{manufactureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "carQrcodeUrl != null and carQrcodeUrl != '' ">
+         #{carQrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "engineNum != null and engineNum != '' ">
+         #{engineNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "carTypeId != null ">
+         #{carTypeId,jdbcType=BIGINT},
+      </if>
+       <if test= "readyTime != null ">
+      	 #{readyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "failureTime != null ">
+      	#{failureTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_car_operate (
+         id,
+         car_color,
+         image_url,
+         car_plate_num,
+         car_vin,
+         city_id,
+         city_name,
+         operate_num,
+         status,
+         operate_type_id,
+         operate_type_name,
+         car_brand,
+         valid,
+         car_type,
+         driving_km,
+         manufacture_time,
+         car_qrcode_url,
+         engine_num,
+         created,
+         car_type_id,
+         readyTime,
+         failure_time)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.carColor,jdbcType=VARCHAR},
+         #{item.imageUrl,jdbcType=VARCHAR},
+         #{item.carPlateNum,jdbcType=VARCHAR},
+         #{item.carVin,jdbcType=VARCHAR},
+         #{item.cityId,jdbcType=VARCHAR},
+         #{item.cityName,jdbcType=VARCHAR},
+         #{item.operateNum,jdbcType=VARCHAR},
+         #{item.status,jdbcType=INTEGER},
+         #{item.operateTypeId,jdbcType=BIGINT},
+         #{item.operateTypeName,jdbcType=VARCHAR},
+         #{item.carBrand,jdbcType=VARCHAR},
+         #{item.valid,jdbcType=INTEGER},
+         #{item.carType,jdbcType=VARCHAR},
+         #{item.drivingKm,jdbcType=VARCHAR},
+         #{item.manufactureTime,jdbcType=TIMESTAMP},
+         #{item.carQrcodeUrl,jdbcType=VARCHAR},
+         #{item.engineNum,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.carTypeId,jdbcType=BIGINT}),
+         #{readyTime,jdbcType=TIMESTAMP},
+         #{failureTime,jdbcType=TIMESTAMP},
+   		)
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.gcar.entity.CarOperate" >
+    update td_car_operate
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "carColor != null and carColor != '' ">
+      car_color = #{carColor,jdbcType=VARCHAR},
+      </if>
+      <if test= "imageUrl != null and imageUrl != '' ">
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != '' ">
+      car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "carVin != null and carVin != '' ">
+      car_vin = #{carVin,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityId != null and cityId != '' ">
+      city_id = #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test= "cityName != null and cityName != '' ">
+      city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test= "operateNum != null and operateNum != '' ">
+      operate_num = #{operateNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "operateTypeId != null ">
+      operate_type_id = #{operateTypeId,jdbcType=BIGINT},
+      </if>
+      <if test= "operateTypeName != null and operateTypeName != '' ">
+      operate_type_name = #{operateTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test= "carBrand != null and carBrand != '' ">
+      car_brand = #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test= "valid != null ">
+      valid = #{valid,jdbcType=INTEGER},
+      </if>
+      <if test= "carType != null and carType != '' ">
+      car_type = #{carType,jdbcType=VARCHAR},
+      </if>
+      <if test= "drivingKm != null and drivingKm != '' ">
+      driving_km = #{drivingKm,jdbcType=VARCHAR},
+      </if>
+      <if test= "manufactureTime != null ">
+      manufacture_time = #{manufactureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "carQrcodeUrl != null and carQrcodeUrl != '' ">
+      car_qrcode_url = #{carQrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test= "engineNum != null and engineNum != '' ">
+      engine_num = #{engineNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "carTypeId != null ">
+      car_type_id = #{carTypeId,jdbcType=BIGINT},
+      </if>
+       <if test= "readyTime != null ">
+       		readyTime = #{readyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "failureTime != null ">
+       	 failure_time = #{failureTime,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+    <select id="selectListByDay" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperate">
+        select o.id,o.car_brand,o.car_plate_num,o.car_type,o.created,o.status,p.`status` operatePlanStatus,p.operate_to operateTo,o.failure_time failureTime,p.started,p.butlerName,p.member_name memberName from td_car_operate o left join td_car_operate_plan p on o.valid=1  
+   <if test= "type == 1 ">
+   and (p.`status`=#{status,jdbcType=INTEGER} or p.`status`=#{statusIng,jdbcType=INTEGER}) and  p.operate_num=o.operate_num  and <![CDATA[p.ended >#{miniDate,jdbcType=TIMESTAMP} and p.started <#{maxDate,jdbcType=TIMESTAMP}]]> 
+       where (o.`status`=#{stay,jdbcType=INTEGER} or o.`status`=#{readinessing,jdbcType=INTEGER})
+  		 order by o.`status` desc,created asc;
+   </if>
+   <if test= "type == 2 ">
+   and (p.`status`=#{status,jdbcType=INTEGER} or p.`status`=#{statusIng,jdbcType=INTEGER}) and  p.operate_num=o.operate_num  and <![CDATA[p.ended >#{miniDate,jdbcType=TIMESTAMP} and p.started <#{maxDate,jdbcType=TIMESTAMP}]]> 
+      where 
+      <!-- 等定时任务做好了放开 -->
+     <!--  p.`operate_status`=#{memberuse,jdbcType=INTEGER} and -->
+       member_id != 0 and <![CDATA[p.ended >#{miniDate,jdbcType=TIMESTAMP} and p.started <#{maxDate,jdbcType=TIMESTAMP}]]>
+  		 order by o.`status` desc,created asc;
+   </if>
+    <if test= "type == 3 ">
+   and (p.`status`=#{status,jdbcType=INTEGER} or p.`status`=#{statusIng,jdbcType=INTEGER})	and  p.operate_num=o.operate_num  and <![CDATA[p.ended >#{miniDate,jdbcType=TIMESTAMP} and p.started <#{maxDate,jdbcType=TIMESTAMP}]]> 
+      where
+       <!-- 等定时任务做好了放开 -->
+     <!--   p.`operate_status`=#{platformuse,jdbcType=INTEGER} and  -->
+       member_id = 0 and <![CDATA[p.ended >#{miniDate,jdbcType=TIMESTAMP} and p.started <#{maxDate,jdbcType=TIMESTAMP}]]>
+  		 order by o.`status` desc,created asc;
+   </if>
+   
+   <if test= "type == 6 ">
+    and (p.operate_num=o.operate_num or p.operate_id=o.id)  where o.`status`=#{repairsing,jdbcType=INTEGER} and o.failure_time !='' 
+      GROUP BY `car_plate_num`   order by p.failure_time
+   </if>
+   
+    </select>
+    
+    <select id="selectListBystatus" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperate">
+        select <include refid="Base_Column_List" /> from  td_car_operate where status=#{stay,jdbcType=INTEGER};
+    </select>
+    
+    <select id="selectAvailableVehicles" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.ButlerTask">
+      SELECT
+        <include refid="Base_Column_List" />
+      FROM  td_car_operate
+      WHERE
+        status = 1
+    </select>
+    
+    <select id="getCountByStatus" resultType="INTEGER" parameterType="com.hy.gcar.entity.CarOperate" >
+       select  count(1) 
+    from td_car_operate  
+  <where>
+      <if test= "status == 1 ">
+        and (status = #{status,jdbcType=INTEGER} or status = 7)      
+      </if>
+      <if test= "status == 6 ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "status == 8 ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "status == 9 ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "carPlateNum != null and carPlateNum != ''">
+        and car_plate_num = #{carPlateNum,jdbcType=VARCHAR}      
+      </if>
+  </where>
+  </select>
+  
+   <select id="searchCarPlateNum" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperatePlan">
+        select <include refid="Base_Column_List" /> from  td_car_operate 
+    <where>
+      <if test= "carPlateNum != null and carPlateNum != ''  ">
+         and car_plate_num like #{carPlateNum,jdbcType=VARCHAR};      
+      </if>
+  </where>
+    </select>
+    
+       <select id="selectStoreTotal" resultMap="BaseResultMap" parameterType="com.hy.gcar.entity.CarOperate">
+      SELECT * from td_car_operate t 
+		WHERE  t.`status` not in (6,8,9)
+		
+		and car_ignedto_id = 1 AND t.car_type_id=#{carTypeId,jdbcType=BIGINT} AND t.valid=1;
+    </select>
+    
+     <select id="selectCountlimitNumber" resultType="INTEGER" parameterType="com.hy.gcar.entity.CarOperate">
+    	 select count(*) from td_car_operate t where  t.car_type = #{carType,jdbcType=VARCHAR} and 
+		<foreach collection="limitNumber" index="index" item="tag" open="("
+   separator="or" close=")">
+  	 	t.car_plate_num like '%tag'
+   		</foreach>	
+    </select>
+    
+</mapper>

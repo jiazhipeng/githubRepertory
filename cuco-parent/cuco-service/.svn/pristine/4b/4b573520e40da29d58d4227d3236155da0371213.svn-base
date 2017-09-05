@@ -1,0 +1,43 @@
+package cn.cuco.service.car.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.CarLogMapper;
+import cn.cuco.entity.CarLog;
+import cn.cuco.service.car.CarLogService;
+
+@Service
+public class CarLogServiceImpl implements CarLogService {
+
+    @Autowired
+    private CarLogMapper<CarLog> carLogMapper;
+
+	@Override
+	public CarLog createCarLog(CarLog carLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarLog> getCarLogList(CarLog carLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarLog> getCarLogListByMonth(CarLog carLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CarLog> getCarLogListByDay(CarLog carLog) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+
+}

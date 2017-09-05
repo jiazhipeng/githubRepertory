@@ -1,0 +1,57 @@
+package cn.cuco.service.member.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberMapper;
+import cn.cuco.entity.Member;
+import cn.cuco.service.member.MemberService;
+
+@Service(value = "memberService")
+public class MemberServiceImpl implements MemberService {
+
+    @Autowired
+    private MemberMapper<Member> memberMapper;
+    
+    @Override
+    public Integer insertSelective(Member member) throws Exception {
+           return this.memberMapper.insertSelective(member);
+        }
+
+    @Override
+    public Integer insertBatch(List<Member> member) throws Exception {
+           return this.memberMapper.insertBatch(member) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.memberMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.memberMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(Member member) {
+           return this.memberMapper.updateByPrimaryKeySelective(member);
+    }
+
+    @Override
+    public Member findById(Object id) {
+           return (Member) this.memberMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Member> selectByCondition(Member member) {
+           return (List<Member>) this.memberMapper.selectByCondition(member);
+    }
+
+    @Override
+    public Integer selectCountByCondition(Member member) {
+           return  this.memberMapper.selectCountByCondition(member);
+    }
+
+}

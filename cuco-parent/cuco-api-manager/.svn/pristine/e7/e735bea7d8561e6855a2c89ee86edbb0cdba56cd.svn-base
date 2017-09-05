@@ -1,0 +1,110 @@
+package cn.cuco.controller.manager.basic.cartype;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.cuco.annotation.API;
+import cn.cuco.entity.CarBrand;
+import cn.cuco.entity.CarType;
+import cn.cuco.service.basic.carport.CarTypeService;
+
+
+/** 
+ * @ClassName: CartypeController 
+ * @Description: 车型控制
+ * @author: wangchuntao 
+ * @date: 2017年2月23日 上午9:31:38  
+ */
+@RestController
+public class CartypeController {
+	protected Logger logger = Logger.getLogger(this.getClass());
+	
+    @Autowired
+	CarTypeService carTypeService;
+    /**
+     * @Title: getCartypeListByPage 
+     * @Description: 车型列表
+     * @author: wangchuntao 
+     * @param carType
+     * @return Object
+     * @date: 2017年2月23日 上午9:36:03
+     */
+	@API(value="车型列表")
+    @RequestMapping(value = "/cartype/getCartypeListByPage",method = RequestMethod.POST)
+    public Object getCartypeListByPage(CarType carType){
+        return carTypeService.getCarTypeByPage(carType);
+    }
+    /**
+     * @Title: createCartype 
+     * @Description: 新建车型
+     * @author: wangchuntao 
+     * @param carType
+     * @return Object
+     * @date: 2017年2月23日 上午9:36:56
+     */
+	@API(value="新建车型")
+    @RequestMapping(value = "/cartype/createCartype",method = RequestMethod.POST)
+    public Object createCartype(CarType carType){
+    	return carTypeService.createCarType(carType);
+    }
+    /**
+     * @Title: getCartypeDetail 
+     * @Description:查看详情
+     * @author: wangchuntao 
+     * @param id
+     * @return 
+     * @return Object
+     * @date: 2017年2月23日 上午9:38:55
+     */
+	@API(value="车型详情")
+    @RequestMapping(value = "/cartype/getCartypeDetail",method = RequestMethod.GET)
+    public Object getCartypeDetail(Long id){
+    	return carTypeService.getCarTypeById(id);
+    }
+    
+    /** 
+     * @Title: updateCartype 
+     * @Description: 修改车型（含上下架）
+     * @author: wangchuntao 
+     * @param carType
+     * @return Object
+     * @date: 2017年2月23日 上午9:40:58
+     */
+	@API(value="修改车型")
+    @RequestMapping(value = "/cartype/updateCartype",method = RequestMethod.POST)
+    public Object updateCartype(CarType carType){
+    	return carTypeService.updateCarType(carType);
+    }
+    /**
+     * @Title: getAllBrand 
+     * @Description: 获取车辆品牌集合
+     * @author: wangchuntao 
+     * @return 
+     * @return Object
+     * @date: 2017年2月23日 下午4:06:28
+     */
+    @API(value="获取车辆品牌集合")
+    @RequestMapping(value = "/cartype/getAllBrand",method = RequestMethod.GET)
+    public Object getAllBrand(){
+    	return carTypeService.getCarBrandForAll();
+    }
+    /**
+     * @Title: getCartypeByBrandId 
+     * @Description: 根据品牌获取车型
+     * @author: wangchuntao 
+     * @param id
+     * @return 
+     * @return Object
+     * @date: 2017年2月23日 下午4:06:38
+     */
+    @API(value="根据品牌获取车型")
+    @RequestMapping(value = "/cartype/getCartypeByBrandId",method = RequestMethod.GET)
+    public Object getCartypeByBrandId(Long id){
+    	CarBrand carBrand = new CarBrand();
+    	carBrand.setId(id);
+		return carTypeService.getCartypeByBrand(carBrand );
+    }
+}

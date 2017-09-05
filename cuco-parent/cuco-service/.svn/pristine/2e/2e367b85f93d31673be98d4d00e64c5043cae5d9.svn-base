@@ -1,0 +1,113 @@
+package cn.cuco.service.member.carUsed.impl;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberCarUsedMapper;
+import cn.cuco.entity.MemberCarUsed;
+import cn.cuco.entity.MemberCarUsedAddress;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.carUsed.MemberCarUsedService;
+
+/** 
+* @ClassName: MemberCarUsedServiceImpl 
+* @Description: 用户用车相关接口实现
+* @author zc.du
+* @date 2017年2月23日 上午10:42:37  
+*/
+@Service(value = "memberCarUsedService")
+public class MemberCarUsedServiceImpl implements MemberCarUsedService {
+
+    @Autowired
+    private MemberCarUsedMapper<MemberCarUsed> memberCarUsedMapper;
+
+	@Override
+	public MemberCarUsed createMemberCarUsedForApp(
+			MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsed updateMemberCarUsedForChangeCar(
+			MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsed updateMemberCarUsedForLimitChangeCar(
+			MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsed updateMemberCarUsed(MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsed getMemberCarUsed(MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberCarUsed> getMemberCarUsedListByPage(
+			MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMemberCarUsedCountByMemberId(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BigDecimal getMemberCarUsedMileagesByMemberId(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Integer> getMemberDriveMileageStatistics(Long memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Integer> getMemberCarTypeUsedStatistics(Long memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberCarUsed updateMemberCarUsedStatusByCancelForApp(
+			MemberCarUsed memberCarUsed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteMemberCarUsedAddress(
+			MemberCarUsedAddress memberCarUsedAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<MemberCarUsedAddress> getMemberCarUsedAddressListByPage(
+			MemberCarUsedAddress memberCarUsedAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

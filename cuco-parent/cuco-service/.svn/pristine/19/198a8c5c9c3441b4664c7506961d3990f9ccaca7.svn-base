@@ -1,0 +1,72 @@
+package cn.cuco.dao;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import cn.cuco.entity.Member;
+
+/** 
+* @ClassName: MemberMapper 
+* @Description: 用户模块相关接口
+* @author zc.du
+* @date 2017年2月24日 下午6:14:54 
+* @param <T> 
+*/
+public interface MemberMapper<T> extends BaseDao<T> {
+	/**
+	 * @Title: getMemberCountByFuzzy
+	 * @Description: 模糊查询用户数量
+	 * @author zc.du
+	 * @param member
+	 * @return Integer
+	 */
+	public Integer getMemberCountByFuzzy(Member member);
+
+	/**
+	 * @Title: getMemberListByFuzzy
+	 * @Description: 模糊查询用户列表
+	 * @author zc.du
+	 * @param member
+	 * @return List<Member>
+	 */
+	public List<Member> getMemberListByFuzzy(Member member);
+	
+	/**
+	 * @Title: getMemberCountWithUseCarTimeByFuzzy
+	 * @Description: 模糊查询用户数量(附带用户用车时间)
+	 * @author zc.du
+	 * @param member
+	 * @return Integer
+	 */
+	public Integer getMemberCountWithUseCarTimeByFuzzy(Member member);
+	/**
+	 * @Title: getMemberListWithUseCarTimeByFuzzy
+	 * @Description: 模糊查询用户列表(附带用户用车时间)
+	 * @author zc.du
+	 * @param membe
+	 * @return List<Member>
+	 */
+	public List<Member> getMemberListWithUseCarTimeByFuzzy(Member member);
+	
+	/** 
+	* @Title: getMemberCountByDate 
+	* @Description: 查询指定时间段内注册的会员数
+	* @author zc.du
+	* @param start
+	* @param end
+	* @return Integer
+	*/
+	public Integer getRegisterMemberCountByDate(@Param("start") Date start,@Param("end") Date end);
+	
+	/** 
+	* @Title: getMemberCountByDate 
+	* @Description: 查询指定时间段内入会的会员数
+	* @author zc.du
+	* @param start
+	* @param end
+	* @return Integer
+	*/
+	public Integer getMemberCountByDate(@Param("start") Date start,@Param("end") Date end);
+}

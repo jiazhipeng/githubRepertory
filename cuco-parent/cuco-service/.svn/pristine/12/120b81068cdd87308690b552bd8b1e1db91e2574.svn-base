@@ -1,0 +1,58 @@
+package cn.cuco.dao;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import cn.cuco.entity.MemberCarUsed;
+
+public interface MemberCarUsedMapper<T> extends BaseDao<T> {
+	
+	/** 
+	* @Title: getMemberCarUsedCountByMemberId
+	* @Description: 根据用户ID查询用户用车次数
+	* @author zc.du
+	* @param memberId
+	* @return Integer
+	*/
+	public Integer getMemberCarUsedCountByMemberId(@Param("memberId") Long memberId);
+	
+	/** 
+	* @Title: getMemberCarUsedMileagesByMemberId 
+	* @Description: 根据用户ID查询用户行驶公里数
+	* @author zc.du
+	* @param memberId
+	* @return BigDecimal
+	*/
+	public BigDecimal getMemberCarUsedMileagesByMemberId(@Param("memberId") Long memberId);
+	
+	/** 
+	* @Title: getLastMemberCarUsed 
+	* @Description: 查询用户最后一次用车记录
+	* @author zc.du
+	* @param memberCarUsed
+	* @return MemberCarUsed
+	*/
+	public MemberCarUsed getLastMemberCarUsed(MemberCarUsed memberCarUsed);
+	
+	/** 
+	* @Title: getMemberCarUsedListWithSort 
+	* @Description: 获取用车记录列表
+	* @author zc.du
+	* @param memberCarUsed
+	* @return List<MemberCarUsed>
+	*/
+	public List<MemberCarUsed> getMemberCarUsedListWithSort(MemberCarUsed memberCarUsed);
+	
+	/** 
+	* @Title: getMemberCarTypeUsedStatisticsByMemberId 
+	* @Description: 根据用户ID统计用户用车车型
+	* @author zc.du
+	* @param memberId
+	* @return HashMap<Long,Integer>
+	*/
+	public HashMap<Long,Integer> getMemberCarTypeUsedStatisticsByMemberId(@Param("memberId") Long memberId);
+
+}

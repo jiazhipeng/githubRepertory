@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface OrderRenewalMapper<T> extends BaseDao<T> {
+
+}

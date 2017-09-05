@@ -1,0 +1,75 @@
+package cn.cuco.service.member.info.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberMapper;
+import cn.cuco.entity.Member;
+import cn.cuco.page.PageResult;
+import cn.cuco.service.member.info.MemberService;
+
+@Service(value = "memberService")
+public class MemberServiceImpl implements MemberService {
+
+    @Autowired
+    private MemberMapper<Member> memberMapper;
+
+	@Override
+	public Member createMember(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Member updateMember(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteMember(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Member getMember(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Member> getMemberList(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageResult<Member> getMemberListByPage(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMemberCount(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Member updateMemberByFreeze(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Member updateMemberByUnfreeze(Member member) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+   
+
+}

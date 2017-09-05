@@ -1,0 +1,68 @@
+package cn.cuco.service.member.carUsed;
+
+import java.util.List;
+
+import cn.cuco.entity.MemberCarUsed;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户用车相关接口
+ * @author zc.du
+ */
+public interface MemberCarUsedService {
+	/** 
+    * @Description: 创建用户用车基础方法
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed createMemberCarUsed(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Description: 修改用户用车基础方法
+    * @param memberCarUsed
+    * @return MemberCarUsed
+    */
+    public MemberCarUsed updateMemberCarUsed(MemberCarUsed memberCarUsed);
+    
+    /** 
+    * @Description: 删除用户用车基础方法
+    * @param memberCarUsed
+    * @return Integer
+    */
+    public Integer deleteMemberCarUsed(MemberCarUsed memberCarUsed);
+    
+    /** 
+     * @Description: 查询用户用车基础方法
+     * @param memberCarUsed
+     * @return MemberCarUsed
+     */
+    public MemberCarUsed getMemberCarUsed(MemberCarUsed memberCarUsed); 
+    
+    /** 
+     * @Description: 查询用户用车列表基础方法
+     * @param memberCarUsed
+     * @return List<MemberCarUsed>
+     */
+    public List<MemberCarUsed> getMemberCarUsedList(MemberCarUsed memberCarUsed);
+    
+    /** 
+     * @Description: 分页查询用户用车列表基础方法
+     * @param memberCarUsed
+     * @return PageResult<MemberCarUsed>
+     */
+    public PageResult<MemberCarUsed> getMemberCarUsedListByPage(MemberCarUsed memberCarUsed);
+
+    /** 
+     * @Description: 查询用户用车数量基础方法
+     * @param memberCarUsed
+     * @return Integer
+     */
+    public Integer getMemberCarUsedCount(MemberCarUsed memberCarUsed);
+
+    /** 
+     * @Description: app端用户取消用车
+     * @param memberCarUsed
+     * @return Integer
+     */
+    public MemberCarUsed updateMemberCarUsedStatusByCancelForApp(MemberCarUsed memberCarUsed);
+}

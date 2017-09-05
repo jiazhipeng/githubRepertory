@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.security.dao.ApiMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.security.entity.Api" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="uri" property="uri" jdbcType="VARCHAR" />
+    <result column="disabled" property="disabled" jdbcType="INTEGER" />
+    <result column="auth" property="auth" jdbcType="INTEGER" />
+    <result column="system_id" property="systemId" jdbcType="BIGINT" />
+    <result column="method" property="method" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Api" >
+       select  <include refid="Base_Column_List" />
+    from td_api  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test= "name != null and name != '' ">
+        and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+      </if>
+      <if test= "uri != null and uri != '' ">
+        and uri = #{uri,jdbcType=VARCHAR}
+      </if>
+      <if test= "disabled != null ">
+        and disabled = #{disabled,jdbcType=INTEGER}
+      </if>
+      <if test= "auth != null ">
+        and auth = #{auth,jdbcType=INTEGER}
+      </if>
+      <if test= "systemId != null ">
+        and system_id = #{systemId,jdbcType=BIGINT}
+      </if>
+      <if test= "method != null and method != '' ">
+        and method = #{method,jdbcType=VARCHAR}
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+  </where>
+  </select>
+
+    <!-- 分条件查询sql 语句 记录数-->
+    <select id="countByCondition" resultType="java.lang.Integer" parameterType="com.hy.security.entity.Api" >
+        select  count(1)
+        from td_api
+        <where>
+            <if test= "id != null ">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test= "name != null and name != '' ">
+                and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+            </if>
+            <if test= "uri != null and uri != '' ">
+                and uri = #{uri,jdbcType=VARCHAR}
+            </if>
+            <if test= "disabled != null ">
+                and disabled = #{disabled,jdbcType=INTEGER}
+            </if>
+            <if test= "auth != null ">
+                and auth = #{auth,jdbcType=INTEGER}
+            </if>
+            <if test= "systemId != null ">
+                and system_id = #{systemId,jdbcType=BIGINT}
+            </if>
+            <if test= "method != null and method != '' ">
+                and method = #{method,jdbcType=VARCHAR}
+            </if>
+            <if test= "created != null ">
+                and created = #{created,jdbcType=TIMESTAMP}
+            </if>
+            <if test= "modifierId != null ">
+                and modifier_id = #{modifierId,jdbcType=BIGINT}
+            </if>
+            <if test= "modifier != null and modifier != '' ">
+                and modifier = #{modifier,jdbcType=VARCHAR}
+            </if>
+            <if test= "lasttimeModify != null ">
+                and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, name, uri, 
+      disabled, auth, system_id, 
+      method, created, modifier_id, 
+      modifier, lasttime_modify
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.security.entity.Api" >
+    select 
+      id, name, uri, 
+      disabled, auth, system_id, 
+      method, created, modifier_id, 
+      modifier, lasttime_modify
+    from td_api where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.security.entity.Api" >
+    delete from td_api where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_api where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  parameterType="com.hy.security.entity.Api" useGeneratedKeys="true" keyProperty="id">
+    insert into td_api
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "name != null and name != '' ">
+         name,
+      </if>
+      <if test= "uri != null and uri != '' ">
+         uri,
+      </if>
+      <if test= "disabled != null ">
+         disabled,
+      </if>
+      <if test= "auth != null ">
+         auth,
+      </if>
+      <if test= "systemId != null ">
+         system_id,
+      </if>
+      <if test= "method != null and method != '' ">
+         method,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "uri != null and uri != '' ">
+         #{uri,jdbcType=VARCHAR},
+      </if>
+      <if test= "disabled != null ">
+         #{disabled,jdbcType=INTEGER},
+      </if>
+      <if test= "auth != null ">
+         #{auth,jdbcType=INTEGER},
+      </if>
+      <if test= "systemId != null ">
+         #{systemId,jdbcType=BIGINT},
+      </if>
+      <if test= "method != null and method != '' ">
+         #{method,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_api (
+         id,
+         name,
+         uri,
+         disabled,
+         auth,
+         system_id,
+         method,
+         created,
+         modifier_id,
+         modifier,
+         lasttime_modify)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.name,jdbcType=VARCHAR},
+         #{item.uri,jdbcType=VARCHAR},
+         #{item.disabled,jdbcType=INTEGER},
+         #{item.auth,jdbcType=INTEGER},
+         #{item.systemId,jdbcType=BIGINT},
+         #{item.method,jdbcType=VARCHAR},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.modifierId,jdbcType=BIGINT},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.security.entity.Api" >
+    update td_api
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "name != null and name != '' ">
+      name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test= "uri != null and uri != '' ">
+      uri = #{uri,jdbcType=VARCHAR},
+      </if>
+      <if test= "disabled != null ">
+      disabled = #{disabled,jdbcType=INTEGER},
+      </if>
+      <if test= "auth != null ">
+      auth = #{auth,jdbcType=INTEGER},
+      </if>
+      <if test= "systemId != null ">
+      system_id = #{systemId,jdbcType=BIGINT},
+      </if>
+      <if test= "method != null and method != '' ">
+      method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 根据操作ID获取对应的api -->
+  <select id="findAllByOperationId" resultMap="BaseResultMap">
+    select  
+		a.id, a.name, a.uri,a.disabled, a.auth, a.system_id, a.method, 
+        a.created, a.modifier_id, a.modifier, a.lasttime_modify
+    from td_api a left join tr_operation_api b on a.id = b.api_id
+    where b.operation_id = #{operation_id,jdbcType=BIGINT}
+  </select>
+
+
+    <!-- 自定义 start -->
+    <select id="findAvailableApisByUserIdAndSystemId" resultMap="BaseResultMap" >
+        select DISTINCT t5.*
+        from tr_user_role t1
+        left join td_role t2 on t1.role_id=t2.id
+        left join tr_role__menu_operation t3 on t3.role_id=t2.id
+        left join tr_operation_api t4 on t4.operation_id=t3.operation_id
+        left join td_api t5 on t5.id=t4.api_id
+        LEFT JOIN td_user u on t1.user_id = u.id
+        where t2.is_value=0 and t5.disabled=0 and u.freezing=0
+        and t1.user_id=#{user_id,jdbcType=BIGINT} and t2.system_id=#{system_id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 自定义 end -->
+</mapper>

@@ -1,0 +1,40 @@
+package cn.cuco.service.basic.business;
+
+
+import java.util.List;
+
+import cn.cuco.entity.OperateSetting;
+
+/**
+* @ClassName: OperateSettingService 
+* @Description: 运营参数接口
+* @author huanghua
+* @date 2017年2月22日 下午2:33:38
+ */
+public interface OperateSettingService {
+
+    /**
+    * @Title: updateOperateSetting 
+    * @Description: 修改运营参数
+    * @param @param pperateSetting
+    * @return OperateSetting
+     */
+    public OperateSetting updateOperateSetting(OperateSetting operateSetting);
+
+    /**
+    * @Title: getOperateSettingById 
+    * @Description: 取运营参数详情
+    * @param @param operateSetting
+    * @return OperateSetting
+     */
+    public OperateSetting getOperateSettingById(OperateSetting operateSetting);
+
+    /**
+    * @Title: getOperateSettingList 
+    * @Description:  取运营参数集合
+    * @param @param operateSetting
+    * @return List<OperateSetting>
+     */
+    public List<OperateSetting> getOperateSettingList(OperateSetting operateSetting);
+
+}

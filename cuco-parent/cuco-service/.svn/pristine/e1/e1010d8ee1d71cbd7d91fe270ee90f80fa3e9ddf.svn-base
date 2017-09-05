@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface ButlerTaskMapper<T> extends BaseDao<T> {
+
+}

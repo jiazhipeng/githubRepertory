@@ -1,0 +1,297 @@
+package cn.cuco.service.task;
+
+
+import cn.cuco.entity.ButlerTask;
+import cn.cuco.entity.OperateLog;
+import cn.cuco.entity.TransferList;
+import cn.cuco.page.PageResult;
+
+import java.util.List;
+
+/**
+* @ClassName: ButlerTaskService 
+* @Description: 任务接口
+* @author huanghua
+* @date 2017年2月21日 下午3:40:32
+ */
+public interface ButlerTaskService {
+	
+    /**
+    * @Title: createUserCarSendCarButlerTask 
+    * @Description: 创建用户用车送车任务
+    * @param  butlerTask
+    * @return ButlerTask
+     */
+    public ButlerTask createUserCarSendCarButlerTask(ButlerTask butlerTask);
+    
+    /**
+    * @Title: createUserCarGetCarButlerTask 
+    * @Description:  创建用户用车取车任务
+    * @author huanghua
+    * @param butlerTask
+    * @return ButlerTask
+     */
+    public ButlerTask createUserCarGetCarButlerTask(ButlerTask butlerTask);
+
+    /**
+    * @Title: createUserChangeSendCarButlerTask 
+    * @Description: 创建用户换车送车任务
+    * @param  butlerTask
+    * @return ButlerTask
+     */
+    public ButlerTask createUserChangeSendCarButlerTask(ButlerTask butlerTask);
+    
+    /**
+    * @Title: createUserChangeGetCarButlerTask 
+    * @Description:  创建用户换车取车任务
+    * @author huanghua
+    * @param butlerTask
+    * @return ButlerTask
+     */
+    public ButlerTask createUserChangeGetCarButlerTask(ButlerTask butlerTask);
+    
+    /**
+     * @Title: createRestrictionChangeSendCarButlerTask 
+     * @Description: 创建限号换车送车任务
+     * @param  butlerTask
+     * @return ButlerTask
+      */
+     public ButlerTask createRestrictionChangeSendCarButlerTask(ButlerTask butlerTask);
+     
+     /**
+     * @Title: createRestrictionChangeGetCarButlerTask 
+     * @Description:  创建限号换车取车任务
+     * @author huanghua
+     * @param butlerTask
+     * @return ButlerTask
+      */
+     public ButlerTask createRestrictionChangeGetCarButlerTask(ButlerTask butlerTask);
+    
+    
+    /**
+    * @Title: getButlerTaskById 
+    * @Description: 取任务信息详情
+    * @author huanghua
+    * @param id
+    * @return ButlerTask
+     */
+    public ButlerTask getButlerTaskById(Long id);
+
+    /**
+    * @Title: getButlerTaskList 
+    * @Description: 任务集合
+    * @author huanghua
+    * @param butlerTask
+    * @return
+    * @return List<ButlerTask>
+     */
+    public List<ButlerTask> getButlerTaskList(ButlerTask butlerTask);
+    
+    /**
+    * @Title: getButlerTaskPage 
+    * @Description: 分页取管家端任务
+    * @author huanghua
+    * @param butlerTask
+    * @return PageResult<ButlerTask>
+     */
+    public PageResult<ButlerTask> getButlerTaskPageForOfficialEnd(ButlerTask butlerTask); 
+    
+    /**
+    * @Title: getButlerTaskPageForCarService 
+    * @Description: 分页取车务车务
+    * @author huanghua
+    * @param butlerTask
+    * @return
+    * @return PageResult<ButlerTask>
+     */
+    public PageResult<ButlerTask> getButlerTaskPageForCarService(ButlerTask butlerTask); 
+    
+	/**
+	* @Title: getButlerTaskListByPageForWaitDealWith 
+	* @Description: 分页获取待处理的任务
+	* @param  butlerTask
+	* @return PageResult<ButlerTask>
+	 */
+	public PageResult<ButlerTask> getButlerTaskPageForWaitDealWith(ButlerTask butlerTask);
+	
+	/**
+	* @Title: getButlerTaskListByPageForProcessing 
+	* @Description: 分页获取处理中的任务
+	* @param  butlerTask
+	* @return PageResult<ButlerTask>
+	 */
+	public PageResult<ButlerTask> getButlerTaskPageForProcessing(ButlerTask butlerTask);
+	
+	/**
+	* @Title: getButlerTaskPageForComplete 
+	* @Description: 分页获取结束的任务
+	* @param  butlerTask
+	* @return PageResult<ButlerTask>
+	 */
+	public PageResult<ButlerTask> getButlerTaskPageForComplete(ButlerTask butlerTask);
+	
+	 /**
+	 * @Title: updateTaskHousekeeper 
+	 * @Description: 转派管家
+	 * @param  butlerTask
+	 * @return ButlerTask
+	  */
+    public ButlerTask updateTaskHousekeeper(ButlerTask butlerTask);
+    
+    /**
+    * @Title: updateSendButlerTaskByHandle 
+    * @Description: 待处理
+    * @author huanghua
+    * @param butlerTask
+    * @return
+    * @return ButlerTask
+     */
+     public ButlerTask updateSendButlerTaskByHandle(ButlerTask butlerTask);
+    
+    
+    /**
+    * @Title: updateSendButlerTaskByWaiting 
+    * @Description: 修改送车任务状态为-待接单
+    * @param  butlerTask
+    * @return ButlerTask
+     */
+    public ButlerTask updateSendButlerTaskByWaiting(ButlerTask butlerTask);
+    
+    /**
+    * @Title: updateButlerTaskBySendCar 
+    * @Description: 修改送车任务状态为-待送车
+    * @param  butlerTask
+    * @return ButlerTask
+     */
+    public ButlerTask updateSendButlerTaskBySendCar(ButlerTask butlerTask);
+    
+    /**
+    * @Title: updateButlerTaskBySendIn 
+    * @Description: 修改送车任务状态为-送车中
+    * @param  butlerTask
+    * @return ButlerTask
+     */
+    public ButlerTask updateSendButlerTaskBySendIn(ButlerTask butlerTask);
+    
+    /**
+    * @Title: updateSendButlerTaskByArrive 
+    * @Description: 修改送车任务状态为-已到达
+    * @param  butlerTask
+    * @return ButlerTask
+     */
+    public ButlerTask updateSendButlerTaskByArrive(ButlerTask butlerTask);
+    
+    /**
+     * @Title: updateSendButlerTaskByCompleted 
+     * @Description:修改送车任务状态为-已完成
+     * @param  butlerTask
+     * @return ButlerTask
+      */
+     public ButlerTask updateSendButlerTaskByCompleted(ButlerTask butlerTask);
+     
+     /**
+      * @Title: updateButlerTaskByCancelled 
+      * @Description:修改任务状态为-已取消
+      * @param  butlerTask
+      * @return ButlerTask
+     */
+     public ButlerTask updateButlerTaskByCancelled(ButlerTask butlerTask);
+      
+     /**
+     * @Title: updateGetButlerTaskByHandle 
+     * @Description: 修改取车任务状态为-待处理
+     * @author huanghua
+     * @param butlerTask
+     * @return ButlerTask
+      */
+    public ButlerTask updateGetButlerTaskByHandle(ButlerTask butlerTask);
+     
+    /**
+     * @Title: updateGetButlerTaskByWaiting 
+     * @Description: 修改取车任务状态为-待接单
+     * @param  butlerTask
+     * @return ButlerTask
+      */
+    public ButlerTask updateGetButlerTaskByWaiting(ButlerTask butlerTask);
+    
+    /**
+    * @Title: updateButlerTaskByTakeCar 
+    * @Description: 修改取车任务状态为-待取车
+    * @param  butlerTask
+    * @return ButlerTask
+     */
+    public ButlerTask updateGetButlerTaskByTakeCar(ButlerTask butlerTask);
+    
+    /**
+    * @Title: updateButlerTaskByGetIn 
+    * @Description: 修改取车任务状态为-取车中
+    * @param  butlerTask
+    * @return ButlerTask
+     */
+    public ButlerTask updateGetButlerTaskByGetIn(ButlerTask butlerTask);
+    
+    /**
+     * @Title: updateGetButlerTaskByArrive 
+     * @Description: 修改取车任务状态为-已到达
+     * @param  butlerTask
+     * @return ButlerTask
+      */
+    public ButlerTask updateGetButlerTaskByArrive(ButlerTask butlerTask);
+    
+    /**
+    * @Title: updateGetButlerTaskByStorage 
+    * @Description: 改取车任务状态为-待入库
+    * @author huanghua
+    * @param butlerTask
+    * @return
+    * @return ButlerTask
+     */
+    public ButlerTask updateGetButlerTaskByStorage(ButlerTask butlerTask);
+    
+    
+    /**
+     * @Title: updateSendButlerTaskByCompleted 
+     * @Description:修改取车任务状态为-已完成
+     * @param  butlerTask
+     * @return ButlerTask
+      */
+    public ButlerTask updateGetButlerTaskByCompleted(ButlerTask butlerTask);
+    
+    /**
+    * @Title: updateButlerTaskByFollowUp 
+    * @Description: 修改任务-跟进中修改任务信息
+    * @author huanghua
+    * @param butlerTask
+    * @return
+    * @return ButlerTask
+     */
+    public ButlerTask updateButlerTaskByFollowUp(ButlerTask butlerTask);
+    
+	/**
+	* @Title: getButlerTaskLogByPage 
+	* @Description: 分页查询任务日志
+	* @author huanghua
+	* @param operateLog
+	* @return PageResult<OperateLog>
+	 */
+	public PageResult<OperateLog> getButlerTaskLogByPage(OperateLog operateLog);
+	
+	/**
+	* @Title: createButerTaskTransfer 
+	* @Description: TODO(任务添加附件) 
+	* @param @param transferList
+	* @param @return    设定文件 
+	* @return TransferList    返回类型 
+	 */
+	public TransferList createButerTaskTransfer(TransferList transferList);
+	
+	/**
+	* @Title: deleteButerTaskTransfer 
+	* @Description: 删除附件
+	* @author huanghua
+	* @param id
+	* @return Integer
+	 */
+	public Integer deleteButerTaskTransfer(Long id);
+	
+}

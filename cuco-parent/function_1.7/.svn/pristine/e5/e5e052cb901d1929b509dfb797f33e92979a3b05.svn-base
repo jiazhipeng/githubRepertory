@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1, user-scalable=no">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="email=no" name="format-detection">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>平台预约</title>
+
+    <link rel="stylesheet" href="../../css/normalize.css">
+
+    <style>
+
+        /*.brand {*/
+            /*height: 2.125rem;*/
+            /*line-height: 2.125rem;*/
+            /*font-size: 0.8rem;*/
+            /*background: #191919;*/
+            /*color: #fff;*/
+            /*font-weight: normal;*/
+            /*padding-left: 0.625rem;*/
+        /*}*/
+        /*.brand-info li {*/
+            /*border-bottom: 1px #ccc solid;*/
+            /*padding: 0 0.625rem;*/
+            /*line-height: 2.5rem;*/
+            /*background: #fff;*/
+
+        /*}*/
+        /*.brand-type {*/
+            /*width: 3.5rem;*/
+            /*display: inline-block;*/
+            /*font-size: 0.85rem;*/
+            /*color: #666;*/
+        /*}*/
+        /*.ipt-text {*/
+            /*font-size: 0.8rem;*/
+            /*color: #666;*/
+            /*width: 12.5rem;*/
+            /*border: 0;*/
+            /*outline: 0;*/
+        /*}*/
+        /*.brand-mar {*/
+            /*margin-top: 0.8rem;*/
+        /*}*/
+        /*.brand-mar:last-child {*/
+            /*border-top: 1px #ccc solid;*/
+        /*}*/
+        /*.pos-btn {*/
+            /*position: absolute;*/
+            /*bottom: 0;*/
+            /*left: 0;*/
+            /*width: 100%;*/
+        /*}*/
+        /*.pos-btn a {*/
+            /*width: 50%;*/
+            /*display: block;*/
+            /*text-decoration:none;*/
+            /*float: left;*/
+            /*line-height: 2.15rem;*/
+            /*text-align: center;*/
+            /*font-size: 0.85rem;*/
+        /*}*/
+        /*.returns {*/
+            /*background: #fafafa;*/
+            /*color: #666;*/
+        /*}*/
+        /*.see {*/
+            /*background: #161616;*/
+            /*color: #fff;*/
+        /*}*/
+    </style>
+</head>
+
+<body style="background: #eeeeee">
+    <div>
+        <h3 class="brand">京A・TOP13</h3>
+       <div>
+            <ul class="brand-info">
+                <li>
+                    <span class="brand-type">品牌</span>
+                    <input type="text" class="ipt-text" placeholder="特斯拉"/>
+                </li>
+                <li>
+                    <span class="brand-type">车型</span>
+                    <input type="text" class="ipt-text" placeholder="Model s 75D"/>
+
+                </li>
+                <li>
+                    <span class="brand-type">车架号</span>
+                    <input type="text" class="ipt-text" placeholder="Fa23497239487"/>
+                </li>
+            </ul>
+
+           <ul class="brand-info brand-mar">
+               <li>
+                   <span class="brand-type">平台方式</span>
+                   <input type="text" class="ipt-text" placeholder="会员预约"/>
+               </li>
+               <li>
+                   <span class="brand-type">开放时间</span>
+                   <input type="text" class="ipt-text" placeholder="2016-10-20 12:00"/>
+
+               </li>
+               <li>
+                   <span class="brand-type">结束时间</span>
+                   <input type="text" class="ipt-text" placeholder="2016-10-20 12:00"/>
+               </li>
+               <li>
+                   <span class="brand-type">预计收益</span>
+                   <input type="text" class="ipt-text" placeholder="800元/日"/>
+               </li>
+               <li>
+                   <span class="brand-type">用车方</span>
+                   <input type="text" class="ipt-text" placeholder="北京xxx"/>
+               </li>
+               <li>
+                   <span class="brand-type">联系电话</span>
+                   <input type="text" class="ipt-text" placeholder="18310014515"/>
+               </li>
+               <li>
+                   <span class="brand-type">用车备注</span>
+                   <input type="text" class="ipt-text" placeholder="用车备注内容"/>
+               </li>
+           </ul>
+       </div>
+        <div class="pos-btn">
+            <a href="javascript:" class="returns">返回</a>
+            <a href="javascript:" class="see">取消平台运营</a>
+        </div>
+    </div>
+    <script src="../../js/zepto.js"></script>
+
+</body>
+
+</html>

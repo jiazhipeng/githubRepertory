@@ -1,0 +1,72 @@
+package cn.cuco.service.basic.carport;
+
+
+import java.util.List;
+
+import cn.cuco.entity.CarType;
+import cn.cuco.page.PageResult;
+
+/**
+* @ClassName: CarTypeService 
+* @Description: 运营车型接口
+* @author huanghua
+* @date 2017年2月21日 下午1:49:38
+ */
+public interface CarTypeService {
+	
+    /**
+    * @Title: createCarType 
+    * @Description: 创建运营车型
+    * @param carType
+    * @return CarType
+     */
+    public CarType createCarType(CarType carType);
+
+    /**
+    * @Title: updateByPrimaryKeyCarType 
+    * @Description: 修改运营车型信息
+    * @param carType
+    * @return CarType
+     */
+    public CarType updateCarType(CarType carType);
+
+    /**
+    * @Title: getCarTypeById 
+    * @Description: 取运营车型信息
+    * @param carType
+    * @return CarType
+     */
+    public CarType getCarTypeById(CarType carType);
+
+    /**
+    * @Title: getCarTypeByCondition 
+    * @Description: 分页运营车型
+    * @param carType
+    * @return List<CarType>
+     */
+    public PageResult<CarType> getCarTypeByCondition(CarType carType);
+
+    /**
+    * @Title: getCarTypeList 
+    * @Description: 运营车型列表
+    * @param carType
+    * @return List<CarType>
+     */
+    public List<CarType> getCarTypeList(CarType carType);
+
+    /**
+    * @Title: updateCarTypeShelves 
+    * @Description: 运营车型上架
+    * @param carType
+    * @return CarType
+     */
+    public CarType updateCarTypeShelves(CarType carType);
+
+    /**
+    * @Title: updateCarTypeTheShelves 
+    * @Description: 运营车型下架
+    * @param carType
+    * @return CarType
+     */
+    public CarType updateCarTypeTheShelves(CarType carType);
+}

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hy.security.dao.AccessTokenMapper" >
+  <resultMap id="BaseResultMap" type="com.hy.security.entity.AccessToken" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="system_id" property="systemId" jdbcType="BIGINT" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="live_time" property="liveTime" jdbcType="INTEGER" />
+    <result column="invalid_time" property="invalidTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="com.hy.security.entity.AccessToken" >
+       select  count(1) 
+    from td_access_token  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "userId != null ">
+        and user_id = #{userId,jdbcType=BIGINT}      
+      </if>
+      <if test= "systemId != null ">
+        and system_id = #{systemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "token != null and token != '' ">
+        and token = #{token,jdbcType=VARCHAR}      
+      </if>
+      <if test= "createDate != null ">
+        and create_date = #{createDate,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "liveTime != null ">
+        and live_time = #{liveTime,jdbcType=INTEGER}      
+      </if>
+      <if test= "invalidTime != null ">
+        and invalid_time = #{invalidTime,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.hy.security.entity.AccessToken" >
+       select  <include refid="Base_Column_List" />
+    from td_access_token  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "userId != null ">
+        and user_id = #{userId,jdbcType=BIGINT}      
+      </if>
+      <if test= "systemId != null ">
+        and system_id = #{systemId,jdbcType=BIGINT}      
+      </if>
+      <if test= "token != null and token != '' ">
+        and token = #{token,jdbcType=VARCHAR}      
+      </if>
+      <if test= "createDate != null ">
+        and create_date = #{createDate,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "liveTime != null ">
+        and live_time = #{liveTime,jdbcType=INTEGER}      
+      </if>
+      <if test= "invalidTime != null ">
+        and invalid_time = #{invalidTime,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, user_id, system_id, 
+      token, create_date, live_time, 
+      invalid_time
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hy.security.entity.AccessToken" >
+    select 
+      id, user_id, system_id, 
+      token, create_date, live_time, 
+      invalid_time
+    from td_access_token where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="com.hy.security.entity.AccessToken" >
+    delete from td_access_token where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_access_token where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.hy.security.entity.AccessToken" >
+    insert into td_access_token
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "userId != null ">
+         user_id,
+      </if>
+      <if test= "systemId != null ">
+         system_id,
+      </if>
+      <if test= "token != null and token != '' ">
+         token,
+      </if>
+      <if test= "createDate != null ">
+         create_date,
+      </if>
+      <if test= "liveTime != null ">
+         live_time,
+      </if>
+      <if test= "invalidTime != null ">
+         invalid_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "userId != null ">
+         #{userId,jdbcType=BIGINT},
+      </if>
+      <if test= "systemId != null ">
+         #{systemId,jdbcType=BIGINT},
+      </if>
+      <if test= "token != null and token != '' ">
+         #{token,jdbcType=VARCHAR},
+      </if>
+      <if test= "createDate != null ">
+         #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "liveTime != null ">
+         #{liveTime,jdbcType=INTEGER},
+      </if>
+      <if test= "invalidTime != null ">
+         #{invalidTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_access_token (
+         id,
+         user_id,
+         system_id,
+         token,
+         create_date,
+         live_time,
+         invalid_time)
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.userId,jdbcType=BIGINT},
+         #{item.systemId,jdbcType=BIGINT},
+         #{item.token,jdbcType=VARCHAR},
+         #{item.createDate,jdbcType=TIMESTAMP},
+         #{item.liveTime,jdbcType=INTEGER},
+         #{item.invalidTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hy.security.entity.AccessToken" >
+    update td_access_token
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "userId != null ">
+      user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test= "systemId != null ">
+      system_id = #{systemId,jdbcType=BIGINT},
+      </if>
+      <if test= "token != null and token != '' ">
+      token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test= "createDate != null ">
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "liveTime != null ">
+      live_time = #{liveTime,jdbcType=INTEGER},
+      </if>
+      <if test= "invalidTime != null ">
+      invalid_time = #{invalidTime,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

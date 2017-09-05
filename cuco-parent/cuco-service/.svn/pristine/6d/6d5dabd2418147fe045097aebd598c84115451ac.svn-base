@@ -1,0 +1,47 @@
+package cn.cuco.service.car;
+
+import java.util.List;
+
+import cn.cuco.entity.CarLog;
+
+/** 
+* @ClassName: CarLogService 
+* @Description: 车辆日志表service
+* @author gongbw
+* @date 2017年2月21日 下午2:15:53  
+*/
+public interface CarLogService {
+  
+	/**   
+     * @Title: createCarLog   
+     * @Description: 创建车辆日志的基础方法   
+     * @param: CarLog
+     * @return: CarLog      
+     */
+	 public CarLog createCarLog(CarLog carLog);
+	 
+	 /**   
+     * @Title: createCarLog   
+     * @Description: 根据条件查询车辆日志列表的基础方法   
+     * @param: CarLog
+     * @return: List<CarLog>      
+     */
+	 public List<CarLog> getCarLogList(CarLog carLog);
+	 
+	 /**   
+     * @Title: createCarLog   
+     * @Description: 按月查询车辆日志的业务方法  
+     * @param: CarLog
+     * @return: List<CarLog>      
+     */
+	 public List<CarLog> getCarLogListByMonth(CarLog carLog);
+	 
+	 /**   
+     * @Title: createCarLog   
+     * @Description: 按天查询车辆日志的业务方法  
+     * @param: CarLog
+     * @return: List<CarLog>      
+     */
+	 public List<CarLog> getCarLogListByDay(CarLog carLog);
+
+}

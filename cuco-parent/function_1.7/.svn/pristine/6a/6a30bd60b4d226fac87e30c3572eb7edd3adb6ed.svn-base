@@ -1,0 +1,40 @@
+#============================#
+#===== weixin sttings =====#
+#============================#
+#new
+#appid=wxb9cbb99c39a74651
+appid=wx60a4abe71b2961e3
+#appsecret=d84e282c722b9c3aad6b933c264cdb64
+appsecret=fee3c3964bee58b5ecbd76b4dee12577
+token=test224224
+url_prefix=http://appprebug.gcarclub.com
+openidKey=openid_224
+
+
+#\u9ad8\u5fb7\u5730\u56fe \u9006\u5730\u7406\u7f16\u7801 url
+geocodeRegeo_url=http://restapi.amap.com/v3/geocode/regeo?key={key}&location={location}&sig={sig}
+#\u9ad8\u5fb7\u5730\u56fe key
+geocodeRegeo_key = 8c54368e68e37eee41fbf34d26b1f985
+#\u9ad8\u5fb7\u5730\u56fe \u79c1\u94a5
+geocodeRegeo_private_Key=8058ceee875dfc45c3230c125615f4c6
+#\u6743\u76caH5\u9875\u9762
+#power_h5=http://www.1mobility.cn/about/h5/info12.html
+power_h5=http://appprebug.gcarclub.com
+
+power_app=http://wwwpre.gcarclub.com/h5/new_11_07/index3.html?orderFrom=72
+
+order_detail=http://appprebug.gcarclub.com/wechat/order/detail
+
+#\u9500\u552e\u8f6c\u53d1
+market_Task=http://appprebug.gcarclub.com/wechat/order/detail?id={id}&loginId={loginId}
+
+charingTask_detail=http://appprebug.gcarclub.com/wechat/butlerTask/charging/detail?id={id}&loginId={loginId}
+
+getCarTask_detail=http://appprebug.gcarclub.com/wechat/butlerTask/getCar/detail?id={id}&loginId={loginId}
+
+sendCarTask_detail=http://appprebug.gcarclub.com/wechat/butler/task/sendCar/toEditSendCarTask?taskId={id}&loginId={loginId}&from=wechatMessage
+#\u4efb\u52a1\u5904\u7406
+handleTask_detail=http://appprebug.gcarclub.com/wechat/mycars/toMyUsedLogView?id={powerUsedId}
+
+#\u524d\u7aef\u53e3H5\u6b63\u5f0f\u5730\u5740
+h5_url=http://waph5.gcarclub.com

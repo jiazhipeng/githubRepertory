@@ -1,0 +1,77 @@
+/**   
+
+ * @Title: MemberCarusedController.java 
+ * @Prject: cuco-api-manager
+ * @Package: cn.cuco.controller.manager.carUsed 
+ * @Description: TODO
+ * @author: wangchuntao 
+ * @date: 2017年2月23日 下午2:06:48 
+ * @version: V1.0   
+ */
+package cn.cuco.controller.manager.carUsed;
+
+import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.cuco.annotation.API;
+import cn.cuco.entity.MemberCarUsed;
+import cn.cuco.entity.OrderCarUsed;
+
+/** 
+ * @ClassName: MemberCarusedController 
+ * @Description: TODO
+ * @author: wangchuntao 
+ * @date: 2017年2月23日 下午2:06:48  
+ */
+@RestController
+public class MemberCarusedController {
+//	根据手机号查询用户用车信息接口
+	protected Logger logger = Logger.getLogger(this.getClass());
+	
+	/**
+	 * @Title: getMemberCarusedInfo 
+	 * @Description: 查询用户用车信息(保险)
+	 * @author: wangchuntao 
+	 * @param memberCarUsed
+	 * @return Object
+	 * @date: 2017年2月23日 下午4:56:29
+	 */
+	@API(value="查询用户用车信息")
+	@RequestMapping(value = "/memberCarused/getMemberCarusedInfo",method = RequestMethod.POST)
+	public Object getMemberCarusedInfo(MemberCarUsed memberCarUsed){
+		return null;
+	}
+	
+	
+	/**
+	 * @Title: getOrderCarUsedListByPage 
+	 * @Description: 用车详情
+	 * @author: wangchuntao 
+	 * @param memberId
+	 * @return Object
+	 * @date: 2017年2月23日 下午4:32:15
+	 */
+	@API(value="用车详情")
+    @RequestMapping(value = "/memberCarused/getmemberCarusedDetail",method = RequestMethod.GET)
+    public Object getmemberCarusedDetail(long memberId){
+		
+        return null;
+    }
+	/**
+	 * @Title: getmemberCarusedLogs 
+	 * @Description: 用车明细日志
+	 * @author: wangchuntao 
+	 * @param memberId
+	 * @return 
+	 * @return Object
+	 * @date: 2017年2月23日 下午4:59:01
+	 */
+	@API(value="用车明细")
+	@RequestMapping(value = "/memberCarused/getmemberCarusedLogs",method = RequestMethod.GET)
+	public Object getmemberCarusedLogs(long memberId){
+		
+		return null;
+	}
+}

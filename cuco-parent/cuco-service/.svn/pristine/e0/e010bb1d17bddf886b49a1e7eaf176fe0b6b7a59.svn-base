@@ -1,0 +1,6 @@
+package cn.cuco.dao;
+
+
+public interface MemberCarUsedMapper<T> extends BaseDao<T> {
+
+}

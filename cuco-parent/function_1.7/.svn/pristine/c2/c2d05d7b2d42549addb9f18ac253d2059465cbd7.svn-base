@@ -1,0 +1,36 @@
+@charset "utf-8";
+@import url("css.css");
+@import url("node.css");
+.usedDl{margin-bottom: 4%; border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; font-size: 1.5rem; background: #fff; color: #333;}
+.usedDl:first-child{border-top: 0;}
+.usedDl dt{text-align: center; border-bottom: 1px solid #ccc; padding: 12px 0;}
+.usedDl dd{width: 92%; margin: auto; padding: 12px 0; border-top: 1px solid #ccc; box-sizing: border-box;}
+.usedDl dd:nth-child(2){border-top: 0;}
+.usedDl dd a{display: block; background: url("../images/arrow_right_3.png") no-repeat 96.5% center; background-size: 9px; color: #333;}
+.usedDl dd p{display: inline-block}
+.usedDl .usedDate{background: url("../images/dateicon.png") no-repeat 5% center; background-size: 18px; width: 100%; padding-left: 12%; font-size: 1.6rem;}
+
+.nodeList li{ height: 76px; line-height: normal;}
+.nodeList .line{top: 40px;}
+.nodeList .nodeCon{display:-webkit-box; -webkit-box-align: center; height: 76px; color: #999;}
+.nodeList .nodeCon .flex{-webkit-box-flex: 1; float: none; line-height: 20px;}
+.nodeList .nodeCon .flex:first-child{min-width: 75px; max-width: 75px; font-size: 1.5rem;}
+.nodeList .on .nodeCon .flex:first-child{color: #333}
+.nodeList .tel{color: #157dd6;}
+
+.usedCarNode .nodeCon .flex{white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+.usedCarNode .nodeCon .flex:last-child{text-align: right;}
+.usedCarNode .nodeCon .flex:first-child{min-width: 60%; max-width: 60%;}
+
+.coupNode{border-bottom: 0;}
+.coupNode.nodeList li:last-child .nodeCon{border-bottom: 1px solid #ccc;}
+.coupInfo{font-size: 1.3rem; color: #adadad; text-align: center;padding-bottom: 30px;}
+
+
+
+
+
+
+
+
+

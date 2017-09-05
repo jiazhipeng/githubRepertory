@@ -1,0 +1,57 @@
+package cn.cuco.service.member.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.cuco.dao.MemberCarportMapper;
+import cn.cuco.entity.MemberCarport;
+import cn.cuco.service.member.MemberCarportService;
+
+@Service(value = "memberCarportService")
+public class MemberCarportServiceImpl implements MemberCarportService {
+
+    @Autowired
+    private MemberCarportMapper<MemberCarport> memberCarportMapper;
+    
+    @Override
+    public Integer insertSelective(MemberCarport memberCarport) throws Exception {
+           return this.memberCarportMapper.insertSelective(memberCarport);
+        }
+
+    @Override
+    public Integer insertBatch(List<MemberCarport> memberCarport) throws Exception {
+           return this.memberCarportMapper.insertBatch(memberCarport) ;
+        }
+
+    @Override
+    public Integer deleteByPrimaryKey(Object id) {
+            return this.memberCarportMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatchByPrimaryKey(List<Object> ids) {
+           return this.memberCarportMapper.deleteBatchByPrimaryKey(ids);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(MemberCarport memberCarport) {
+           return this.memberCarportMapper.updateByPrimaryKeySelective(memberCarport);
+    }
+
+    @Override
+    public MemberCarport findById(Object id) {
+           return (MemberCarport) this.memberCarportMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<MemberCarport> selectByCondition(MemberCarport memberCarport) {
+           return (List<MemberCarport>) this.memberCarportMapper.selectByCondition(memberCarport);
+    }
+
+    @Override
+    public Integer selectCountByCondition(MemberCarport memberCarport) {
+           return  this.memberCarportMapper.selectCountByCondition(memberCarport);
+    }
+
+}

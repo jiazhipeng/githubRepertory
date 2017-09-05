@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=320, user-scalable=0, initial-scale=1,maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <title>用车详情</title>
+    <link href="../../css/css.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/2v.css" rel="stylesheet" type="text/css" />
+    <script src="../../jquery/jquery-1.10.2.min.js"></script>
+</head>
+
+<body class="greyBg">
+    <div class="use-info-body">
+        <div class="use-info-t">2016-07-06至2016-08-09</div>
+        <div class="use-sec">
+            <div class="use-state display-box">
+                <div class="state">已完成</div>
+                <div class="info">
+                    特斯拉 Model X 90D(京A.88888)，<br>
+                    <span>￥1050</span>(使用2天)
+                </div>
+            </div>
+        </div>
+        <div class="use-sec">
+            <div class="u-row">
+                <div class="u-name">权益</div>
+                <div class="u-val">800元套餐</div>
+            </div>
+        </div>
+
+        <div class="use-sec">
+            <div class="u-row">
+                <div class="u-name">使用人</div>
+                <div class="u-val">王二小</div>
+            </div>
+        </div>
+
+        <div class="use-sec">
+            <div class="u-row u-row-line">
+                <div class="u-name">车辆使用费</div>
+                <div class="u-val">
+                    <div class="val-row">
+                        <p class="l-site">2天</p>
+                        <p class="r-site red">700元</p>
+                    </div>
+                    <div class="val-row">
+                        <p>优惠券低值300元</p>
+                        <p>余额低值400元</p>
+                    </div>
+                </div>
+            </div>
+            <div class="u-row u-row-line">
+                <div class="u-name">加急费</div>
+                <div class="u-val red">300元</div>
+            </div>
+            <div class="u-row u-row-line">
+                <div class="u-name">换车费用</div>
+                <div class="u-val red">1000元</div>
+            </div>
+        </div>
+
+        <div class="img-list-sec">
+            <div class="img-list-row">
+                <div class="u-name">用车交接单</div>
+                <div class="u-val">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                </div>
+            </div>
+            <div class="img-list-row">
+                <div class="u-name">用车交接单</div>
+                <div class="u-val">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                    <img src="../../images/list_icon.jpg">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fixBottom">
+        <a href="javascript:;" class="button">确定</a>
+    </div>
+
+    <div class="show-big-img">
+        <div class="big-img-box">
+            <div class="img-sec-row">
+                <div class="img-sec">
+                    <div class="close"></div>
+                    <img src="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $('.img-list-sec img').on('click',function(){
+        $('.show-big-img').css('display','block');
+        $('.show-big-img img').attr('src',$(this).attr('src'));
+        $('.show-big-img .close').on('click',function(){
+             $('.show-big-img').hide();
+        })
+    })
+</script>
+</body>
+
+</html>

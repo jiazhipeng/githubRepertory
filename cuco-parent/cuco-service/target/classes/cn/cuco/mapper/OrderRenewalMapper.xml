@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.cuco.dao.OrderRenewalMapper" >
+  <resultMap id="BaseResultMap" type="cn.cuco.entity.OrderRenewal" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="DECIMAL" />
+    <result column="payment" property="payment" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="payment_type" property="paymentType" jdbcType="INTEGER" />
+    <result column="payment_num" property="paymentNum" jdbcType="VARCHAR" />
+    <result column="completed_time" property="completedTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="lasttime_modify" property="lasttimeModify" jdbcType="TIMESTAMP" />
+    <result column="created_source" property="createdSource" jdbcType="INTEGER" />
+    <result column="account_type" property="accountType" jdbcType="INTEGER" />
+    <result column="created_member_id" property="createdMemberId" jdbcType="BIGINT" />
+    <result column="created_member_name" property="createdMemberName" jdbcType="VARCHAR" />
+    <result column="created_member_mobile" property="createdMemberMobile" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="gift_amount" property="giftAmount" jdbcType="DECIMAL" />
+    <result column="modifier_id" property="modifierId" jdbcType="BIGINT" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="last_payment_time" property="lastPaymentTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectCountByCondition" resultType="INTEGER" parameterType="cn.cuco.entity.OrderRenewal" >
+       select  count(1) 
+    from td_order_renewal  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "orderNum != null and orderNum != '' ">
+        and order_num = #{orderNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "payment != null ">
+        and payment = #{payment,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "paymentType != null ">
+        and payment_type = #{paymentType,jdbcType=INTEGER}      
+      </if>
+      <if test= "paymentNum != null and paymentNum != '' ">
+        and payment_num = #{paymentNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "completedTime != null ">
+        and completed_time = #{completedTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "createdSource != null ">
+        and created_source = #{createdSource,jdbcType=INTEGER}      
+      </if>
+      <if test= "accountType != null ">
+        and account_type = #{accountType,jdbcType=INTEGER}      
+      </if>
+      <if test= "createdMemberId != null ">
+        and created_member_id = #{createdMemberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "createdMemberName != null and createdMemberName != '' ">
+        and created_member_name = #{createdMemberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "createdMemberMobile != null and createdMemberMobile != '' ">
+        and created_member_mobile = #{createdMemberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "bank != null and bank != '' ">
+        and bank = #{bank,jdbcType=VARCHAR}      
+      </if>
+      <if test= "giftAmount != null ">
+        and gift_amount = #{giftAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lastPaymentTime != null ">
+        and last_payment_time = #{lastPaymentTime,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- 分条件查询sql 语句 -->
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="cn.cuco.entity.OrderRenewal" >
+       select  <include refid="Base_Column_List" />
+    from td_order_renewal  
+  <where>
+      <if test= "id != null ">
+        and id = #{id,jdbcType=BIGINT}      
+      </if>
+      <if test= "orderNum != null and orderNum != '' ">
+        and order_num = #{orderNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "total != null ">
+        and total = #{total,jdbcType=DECIMAL}      
+      </if>
+      <if test= "payment != null ">
+        and payment = #{payment,jdbcType=DECIMAL}      
+      </if>
+      <if test= "created != null ">
+        and created = #{created,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "status != null ">
+        and status = #{status,jdbcType=INTEGER}      
+      </if>
+      <if test= "paymentType != null ">
+        and payment_type = #{paymentType,jdbcType=INTEGER}      
+      </if>
+      <if test= "paymentNum != null and paymentNum != '' ">
+        and payment_num = #{paymentNum,jdbcType=VARCHAR}      
+      </if>
+      <if test= "completedTime != null ">
+        and completed_time = #{completedTime,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lasttimeModify != null ">
+        and lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP}      
+      </if>
+      <if test= "createdSource != null ">
+        and created_source = #{createdSource,jdbcType=INTEGER}      
+      </if>
+      <if test= "accountType != null ">
+        and account_type = #{accountType,jdbcType=INTEGER}      
+      </if>
+      <if test= "createdMemberId != null ">
+        and created_member_id = #{createdMemberId,jdbcType=BIGINT}      
+      </if>
+      <if test= "createdMemberName != null and createdMemberName != '' ">
+        and created_member_name = #{createdMemberName,jdbcType=VARCHAR}      
+      </if>
+      <if test= "createdMemberMobile != null and createdMemberMobile != '' ">
+        and created_member_mobile = #{createdMemberMobile,jdbcType=VARCHAR}      
+      </if>
+      <if test= "bank != null and bank != '' ">
+        and bank = #{bank,jdbcType=VARCHAR}      
+      </if>
+      <if test= "giftAmount != null ">
+        and gift_amount = #{giftAmount,jdbcType=DECIMAL}      
+      </if>
+      <if test= "modifierId != null ">
+        and modifier_id = #{modifierId,jdbcType=BIGINT}      
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+        and modifier = #{modifier,jdbcType=VARCHAR}      
+      </if>
+      <if test= "lastPaymentTime != null ">
+        and last_payment_time = #{lastPaymentTime,jdbcType=TIMESTAMP}      
+      </if>
+  </where>
+  </select>
+
+<!-- select部分查询字段集合 -->
+  <sql id="Base_Column_List">
+      id, order_num, total, 
+      payment, created, status, 
+      payment_type, payment_num, completed_time, 
+      remark, lasttime_modify, created_source, 
+      account_type, created_member_id, created_member_name, 
+      created_member_mobile, bank, gift_amount, 
+      modifier_id, modifier,last_payment_time
+  </sql>
+
+  <!-- 按主键实体查询表信息 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.cuco.entity.OrderRenewal" >
+    select 
+      id, order_num, total, 
+      payment, created, status, 
+      payment_type, payment_num, completed_time, 
+      remark, lasttime_modify, created_source, 
+      account_type, created_member_id, created_member_name, 
+      created_member_mobile, bank, gift_amount, 
+      modifier_id, modifier,last_payment_time
+    from td_order_renewal where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 按表主键删除数据 -->
+  <delete id="deleteByPrimaryKey" parameterType="cn.cuco.entity.OrderRenewal" >
+    delete from td_order_renewal where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 按表主键批量删除数据 -->
+  <delete id="deleteBatchByPrimaryKey" parameterType="java.util.List" >
+    delete from td_order_renewal where 
+    <foreach collection="list" item="item" index="index" open="(" separator="or" close=")">
+        id = #{item}
+    </foreach>
+  </delete>
+
+  <!-- 可选择性添加数据 -->
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="cn.cuco.entity.OrderRenewal" >
+    insert into td_order_renewal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         id,
+      </if>
+      <if test= "orderNum != null and orderNum != '' ">
+         order_num,
+      </if>
+      <if test= "total != null ">
+         total,
+      </if>
+      <if test= "payment != null ">
+         payment,
+      </if>
+      <if test= "created != null ">
+         created,
+      </if>
+      <if test= "status != null ">
+         status,
+      </if>
+      <if test= "paymentType != null ">
+         payment_type,
+      </if>
+      <if test= "paymentNum != null and paymentNum != '' ">
+         payment_num,
+      </if>
+      <if test= "completedTime != null ">
+         completed_time,
+      </if>
+      <if test= "remark != null and remark != '' ">
+         remark,
+      </if>
+      <if test= "lasttimeModify != null ">
+         lasttime_modify,
+      </if>
+      <if test= "createdSource != null ">
+         created_source,
+      </if>
+      <if test= "accountType != null ">
+         account_type,
+      </if>
+      <if test= "createdMemberId != null ">
+         created_member_id,
+      </if>
+      <if test= "createdMemberName != null and createdMemberName != '' ">
+         created_member_name,
+      </if>
+      <if test= "createdMemberMobile != null and createdMemberMobile != '' ">
+         created_member_mobile,
+      </if>
+      <if test= "bank != null and bank != '' ">
+         bank,
+      </if>
+      <if test= "giftAmount != null ">
+         gift_amount,
+      </if>
+      <if test= "modifierId != null ">
+         modifier_id,
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         modifier,
+      </if>
+      <if test= "lastPaymentTime != null ">
+         last_payment_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test= "id != null ">
+         #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "orderNum != null and orderNum != '' ">
+         #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "total != null ">
+         #{total,jdbcType=DECIMAL},
+      </if>
+      <if test= "payment != null ">
+         #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "status != null ">
+         #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "paymentType != null ">
+         #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test= "paymentNum != null and paymentNum != '' ">
+         #{paymentNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "completedTime != null ">
+         #{completedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remark != null and remark != '' ">
+         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+         #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "createdSource != null ">
+         #{createdSource,jdbcType=INTEGER},
+      </if>
+      <if test= "accountType != null ">
+         #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test= "createdMemberId != null ">
+         #{createdMemberId,jdbcType=BIGINT},
+      </if>
+      <if test= "createdMemberName != null and createdMemberName != '' ">
+         #{createdMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "createdMemberMobile != null and createdMemberMobile != '' ">
+         #{createdMemberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "bank != null and bank != '' ">
+         #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test= "giftAmount != null ">
+         #{giftAmount,jdbcType=DECIMAL},
+      </if>
+      <if test= "modifierId != null ">
+         #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test= "lastPaymentTime != null ">
+         #{lastPaymentTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 可批量添加数据 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into td_order_renewal (
+         id,
+         order_num,
+         total,
+         payment,
+         created,
+         status,
+         payment_type,
+         payment_num,
+         completed_time,
+         remark,
+         lasttime_modify,
+         created_source,
+         account_type,
+         created_member_id,
+         created_member_name,
+         created_member_mobile,
+         bank,
+         gift_amount,
+         modifier_id,
+         modifier,
+         last_payment_time
+         )
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+         (
+         #{item.id,jdbcType=BIGINT},
+         #{item.orderNum,jdbcType=VARCHAR},
+         #{item.total,jdbcType=DECIMAL},
+         #{item.payment,jdbcType=DECIMAL},
+         #{item.created,jdbcType=TIMESTAMP},
+         #{item.status,jdbcType=INTEGER},
+         #{item.paymentType,jdbcType=INTEGER},
+         #{item.paymentNum,jdbcType=VARCHAR},
+         #{item.completedTime,jdbcType=TIMESTAMP},
+         #{item.remark,jdbcType=VARCHAR},
+         #{item.lasttimeModify,jdbcType=TIMESTAMP},
+         #{item.createdSource,jdbcType=INTEGER},
+         #{item.accountType,jdbcType=INTEGER},
+         #{item.createdMemberId,jdbcType=BIGINT},
+         #{item.createdMemberName,jdbcType=VARCHAR},
+         #{item.createdMemberMobile,jdbcType=VARCHAR},
+         #{item.bank,jdbcType=VARCHAR},
+         #{item.giftAmount,jdbcType=DECIMAL},
+         #{item.modifierId,jdbcType=BIGINT},
+         #{item.modifier,jdbcType=VARCHAR},
+         #{item.lastPaymentTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 按主键更新表中所有字段信息（create_time,c_time_stamp字段除外）-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cuco.entity.OrderRenewal" >
+    update td_order_renewal
+    <set>
+      <if test= "id != null ">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test= "orderNum != null and orderNum != '' ">
+      order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "total != null ">
+      total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test= "payment != null ">
+      payment = #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test= "created != null ">
+      created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "status != null ">
+      status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test= "paymentType != null ">
+      payment_type = #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test= "paymentNum != null and paymentNum != '' ">
+      payment_num = #{paymentNum,jdbcType=VARCHAR},
+      </if>
+      <if test= "completedTime != null ">
+      completed_time = #{completedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "remark != null and remark != '' ">
+      remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test= "lasttimeModify != null ">
+      lasttime_modify = #{lasttimeModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test= "createdSource != null ">
+      created_source = #{createdSource,jdbcType=INTEGER},
+      </if>
+      <if test= "accountType != null ">
+      account_type = #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test= "createdMemberId != null ">
+      created_member_id = #{createdMemberId,jdbcType=BIGINT},
+      </if>
+      <if test= "createdMemberName != null and createdMemberName != '' ">
+      created_member_name = #{createdMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test= "createdMemberMobile != null and createdMemberMobile != '' ">
+      created_member_mobile = #{createdMemberMobile,jdbcType=VARCHAR},
+      </if>
+      <if test= "bank != null and bank != '' ">
+      bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test= "giftAmount != null ">
+      gift_amount = #{giftAmount,jdbcType=DECIMAL},
+      </if>
+      <if test= "modifierId != null ">
+      modifier_id = #{modifierId,jdbcType=BIGINT},
+      </if>
+      <if test= "modifier != null and modifier != '' ">
+      modifier = #{modifier,jdbcType=VARCHAR}
+      </if>
+      <if test= "lastPaymentTime != null ">
+      last_payment_time = #{lastPaymentTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

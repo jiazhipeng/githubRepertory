@@ -1,0 +1,69 @@
+package cn.cuco.service.member;
+
+import java.util.List;
+
+import cn.cuco.entity.MemberCarusedCost;
+import cn.cuco.page.PageResult;
+
+/**
+ * 用户用车费用计算相关接口
+ * @author zc.du
+ */
+public interface MemberCarusedCostService {
+	/** 
+    * @Description: 创建用户用车费用基础方法
+    * @param memberCarusedCost
+    * @return MemberCarusedCost
+    * @throws 
+    */
+    public MemberCarusedCost createMemberCarusedCost(MemberCarusedCost memberCarusedCost) throws Exception;
+    
+    /** 
+    * @Description: 修改用户用车费用基础方法
+    * @param memberCarusedCost
+    * @return MemberCarusedCost
+    * @throws 
+    */
+    public MemberCarusedCost updateMemberCarusedCost(MemberCarusedCost memberCarusedCost) throws Exception;
+    
+    /** 
+    * @Description: 删除用户用车费用基础方法
+    * @param memberCarusedCost
+    * @return Integer
+    * @throws 
+    */
+    public Integer deleteMemberCarusedCost(MemberCarusedCost memberCarusedCost) throws Exception;
+    
+    /** 
+     * @Description: 查询用户用车费用基础方法
+     * @param memberCarusedCost
+     * @return MemberCarusedCost
+     * @throws 
+     */
+    public MemberCarusedCost getMemberCarusedCost(MemberCarusedCost memberCarusedCost) throws Exception; 
+    
+    /** 
+     * @Description: 查询用户用车费用列表基础方法
+     * @param memberCarusedCost
+     * @return List<MemberCarusedCost>
+     * @throws 
+     */
+    public List<MemberCarusedCost> getMemberCarusedCostList(MemberCarusedCost memberCarusedCost) throws Exception;
+    
+    /** 
+     * @Description: 分页查询用户用车费用列表基础方法
+     * @param memberCarusedCost
+     * @return PageResult<MemberCarusedCost>
+     * @throws 
+     */
+    public PageResult<MemberCarusedCost> getMemberCarusedCostListByPage(MemberCarusedCost memberCarusedCost) throws Exception;
+
+    /** 
+     * @Description: 查询用户用车费用数量基础方法
+     * @param memberCarusedCost
+     * @return Integer
+     * @throws 
+     */
+    public Integer getMemberCarusedCostCount(MemberCarusedCost memberCarusedCost) throws Exception;
+
+}

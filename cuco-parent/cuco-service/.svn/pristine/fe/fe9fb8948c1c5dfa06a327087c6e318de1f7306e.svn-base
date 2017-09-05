@@ -1,0 +1,16 @@
+package cn.cuco.dao;
+
+import java.util.List;
+
+import cn.cuco.entity.CarUsedLog;
+
+public interface CarUsedLogMapper<T> extends BaseDao<T> {
+	
+	/**   
+	 * @Title: selectCarUsedLogByCarId   
+	 * @Description: 根据车辆ID获取车辆使用日志
+	 * @param: carUsedLog
+	 * @return: CarUsedLog      
+	 */
+	public List<CarUsedLog> selectCarUsedLogByCarId(CarUsedLog carUsedLog);
+}
