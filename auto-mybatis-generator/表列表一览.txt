@@ -1,0 +1,3 @@
+数据库->g-car2中表如下所示:
+	td_member_status_log	
+
